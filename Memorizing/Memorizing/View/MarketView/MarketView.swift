@@ -92,7 +92,7 @@ struct MarketView: View {
                         }
                 }
             }
-            .sheet(isPresented: $isSheetOpen) {
+            .fullScreenCover(isPresented: $isSheetOpen) {
                 // TODO: 단어장 클릭시 단어 목록 리스트 보여주기
                 MarketViewSheet(wordNote: marketStore.sendWordNote)
             }
