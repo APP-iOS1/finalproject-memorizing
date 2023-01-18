@@ -34,15 +34,17 @@ struct MarketView: View {
         
         // MARK: - 검색창 하단 구분선
         Divider()
-            .padding(.horizontal, 25)
-            .padding(.vertical, 10)
+            .frame(width: 340, height: 3)
+            .overlay(Color("Gray5"))
         
         // MARK: - 카테고리 버튼들
-        MarketViewCategoryButton(selectedCategory: $selectedCategory,
-                                 categoryArray: MarketView.categoryArray)
+        ScrollView(.horizontal, showsIndicators: false) {
+            MarketViewCategoryButton(selectedCategory: $selectedCategory,
+                                     categoryArray: MarketView.categoryArray)
+        }
         
         ZStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 // MARK: - Grid View
                 
                 let columns = [
