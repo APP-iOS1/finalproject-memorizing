@@ -32,6 +32,7 @@
 		488F0AA82967E8AB007EAAC1 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */; };
 		488F0AAA2967E8BC007EAAC1 /* OnBoardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */; };
 		48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */; };
+		48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */; };
 		5239182E2967CBA800D76C57 /* PointChargeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5239182D2967CBA800D76C57 /* PointChargeView.swift */; };
 		5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5280DDF72967248E00C959CA /* FirstTryCardView.swift */; };
 		52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCE8D0296690E700A85A1F /* MyMemoryNote.swift */; };
@@ -86,6 +87,7 @@
 		488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingData.swift; sourceTree = "<group>"; };
 		48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviews.swift; sourceTree = "<group>"; };
+		48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
 		5239182D2967CBA800D76C57 /* PointChargeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChargeView.swift; sourceTree = "<group>"; };
 		5280DDF72967248E00C959CA /* FirstTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTryCardView.swift; sourceTree = "<group>"; };
 		52BCE8D0296690E700A85A1F /* MyMemoryNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMemoryNote.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				484D657E296733F900C56E87 /* FaceProgressView.swift */,
 				2645958B29673FB0007114B7 /* GoodJobStampView.swift */,
 				2645958D2967431B007114B7 /* TryAgainView.swift */,
+				48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */,
 				3FF9B3E22966625900A47C5A /* WordNoteAddView */,
 			);
 			path = WordNotesView;
@@ -422,6 +425,7 @@
 				484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */,
 				F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */,
 				52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */,
+				48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */,
 				2645958829669FC6007114B7 /* NewMakeMemoryNote.swift in Sources */,
 				2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */,
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
