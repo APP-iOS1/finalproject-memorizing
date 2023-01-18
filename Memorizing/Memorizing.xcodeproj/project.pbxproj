@@ -39,6 +39,9 @@
 		52BCE8DD2966936A00A85A1F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8DC2966936A00A85A1F /* FirebaseAuth */; };
 		52BCE8DF2966936A00A85A1F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8DE2966936A00A85A1F /* FirebaseFirestore */; };
 		52BCE8E12966936A00A85A1F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8E02966936A00A85A1F /* FirebaseFirestoreSwift */; };
+		52C222A92977827500181367 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222A82977827500181367 /* AuthStore.swift */; };
+		52C222AB2977828A00181367 /* MyNoteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222AA2977828A00181367 /* MyNoteStore.swift */; };
+		52C222AE297782EE00181367 /* ReviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222AD297782EE00181367 /* ReviewStore.swift */; };
 		52D8F23E2965F2C600755E5A /* MemorizingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F23D2965F2C600755E5A /* MemorizingApp.swift */; };
 		52D8F2402965F2C600755E5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F23F2965F2C600755E5A /* ContentView.swift */; };
 		52D8F2422965F2C800755E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2412965F2C800755E5A /* Assets.xcassets */; };
@@ -88,6 +91,9 @@
 		52BCE8D52966915700A85A1F /* View+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		52BCE8D72966918100A85A1F /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		52BCE8D92966931100A85A1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		52C222A82977827500181367 /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
+		52C222AA2977828A00181367 /* MyNoteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteStore.swift; sourceTree = "<group>"; };
+		52C222AD297782EE00181367 /* ReviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStore.swift; sourceTree = "<group>"; };
 		52D8F23A2965F2C600755E5A /* Memorizing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorizing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D8F23D2965F2C600755E5A /* MemorizingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizingApp.swift; sourceTree = "<group>"; };
 		52D8F23F2965F2C600755E5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -225,6 +231,9 @@
 				52D8F2542965F54A00755E5A /* UserStore.swift */,
 				52D8F2562965F56300755E5A /* MarketStore.swift */,
 				3F2002732967551400FCFC3A /* NotificationManager.swift */,
+				52C222A82977827500181367 /* AuthStore.swift */,
+				52C222AA2977828A00181367 /* MyNoteStore.swift */,
+				52C222AD297782EE00181367 /* ReviewStore.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -413,6 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */,
+				52C222AE297782EE00181367 /* ReviewStore.swift in Sources */,
 				484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */,
 				F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */,
 				52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */,
@@ -421,6 +431,7 @@
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
+				52C222AB2977828A00181367 /* MyNoteStore.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
 				52D8F2522965F37E00755E5A /* Model.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
@@ -428,6 +439,7 @@
 				52D8F2572965F56300755E5A /* MarketStore.swift in Sources */,
 				5239182E2967CBA800D76C57 /* PointChargeView.swift in Sources */,
 				2645958C29673FB0007114B7 /* GoodJobStampView.swift in Sources */,
+				52C222A92977827500181367 /* AuthStore.swift in Sources */,
 				52D8F2402965F2C600755E5A /* ContentView.swift in Sources */,
 				18FC714429672FEB00E3CED5 /* OtherTryCardView.swift in Sources */,
 				3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */,
