@@ -81,12 +81,12 @@ struct AddListView: View {
                         AddListRow(word: list)
                     }
                     .onDelete(perform: removeList)
-                    .onMove(perform: moveList)
+//                    .onMove(perform: moveList)
                 }
                 .listStyle(.inset)
-                .toolbar {
-                    EditButton()
-                }
+//                .toolbar {
+//                    EditButton()
+//                }
             }
             
         }
@@ -111,9 +111,9 @@ struct AddListView: View {
     }
     
     // MARK: 리스트 순서 수정 함수
-    func moveList(from source: IndexSet, to destination: Int) {
-        word.move(fromOffsets: source, toOffset: destination)
-    }
+//    func moveList(from source: IndexSet, to destination: Int) {
+//        word.move(fromOffsets: source, toOffset: destination)
+//    }
 }
 
 // struct AddListView_Previews: PreviewProvider {
