@@ -60,6 +60,7 @@
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
+		F2C37163297790BD009C9242 /* MyWordNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C37162297790BD009C9242 /* MyWordNote.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +114,7 @@
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
+		F2C37162297790BD009C9242 /* MyWordNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWordNote.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,10 +231,10 @@
 			isa = PBXGroup;
 			children = (
 				52D8F2542965F54A00755E5A /* UserStore.swift */,
+				52C222AA2977828A00181367 /* MyNoteStore.swift */,
 				52D8F2562965F56300755E5A /* MarketStore.swift */,
 				3F2002732967551400FCFC3A /* NotificationManager.swift */,
 				52C222A82977827500181367 /* AuthStore.swift */,
-				52C222AA2977828A00181367 /* MyNoteStore.swift */,
 				52C222AD297782EE00181367 /* ReviewStore.swift */,
 			);
 			path = ViewModel;
@@ -243,6 +245,7 @@
 			children = (
 				52D8F2512965F37E00755E5A /* Model.swift */,
 				3F200271296754EB00FCFC3A /* LocalNotification.swift */,
+				F2C37162297790BD009C9242 /* MyWordNote.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				52C222AB2977828A00181367 /* MyNoteStore.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
 				52D8F2522965F37E00755E5A /* Model.swift in Sources */,
+				F2C37163297790BD009C9242 /* MyWordNote.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
 				52D8F25E2965F67C00755E5A /* MyPageView.swift in Sources */,
 				52D8F2572965F56300755E5A /* MarketStore.swift in Sources */,

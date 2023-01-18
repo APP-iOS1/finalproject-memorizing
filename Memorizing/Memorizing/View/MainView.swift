@@ -42,10 +42,10 @@ struct MainView: View {
             }.tag(3)
         }
         .onAppear {
-            if userStore.user != nil {
-                userStore.myNotesWillFetchDB()
+            
+            myNoteStore.myNotesWillFetchDB()
                 marketStore.marketNotesWillFetchDB()
-            }
+            
         }
     }
 }
