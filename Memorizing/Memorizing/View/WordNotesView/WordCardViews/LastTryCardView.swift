@@ -30,12 +30,7 @@ struct LastTryCardView: View {
     @State var totalScore: Double = 0
     
     // MARK: 카드 뒤집는데 쓰일 것들
-    @State var backDegree = 0.0
-    @State var frontDegree = -90.0
     @State var isFlipped = false
-    let width: CGFloat = 200
-    let height: CGFloat = 250
-    let durationAndDelay: CGFloat = 0.3
     
     var body: some View {
         //        if num > wordCount {
@@ -53,20 +48,23 @@ struct LastTryCardView: View {
             
             // MARK: 카드뷰
             ZStack {
-                WordCardFrontView(
-                    listLength: word.count,
-                    currentListLength: $num,
-                    currentWord: word[num].wordString,
-                    degree: $frontDegree
-                )
-                WordCardBackView(
-                    listLength: word.count,
-                    currentListLength: $num,
-                    currentWordDef: word[num].wordMeaning,
-                    degree: $backDegree
-                )
+                if isFlipped {
+                    WordCardMeaningView(
+                        listLength: word.count,
+                        currentListLength: $num,
+                        currentWordDef: word[num].wordString
+                    )
+                } else {
+                    WordCardWordView(
+                        listLength: word.count,
+                        currentListLength: $num,
+                        currentWord: word[num].wordMeaning
+                    )
+                }
             }
             .onTapGesture {
+                print("flipcard 실행")
+                print(isFlipped)
                 flipCard()
             }
             
@@ -124,24 +122,8 @@ struct LastTryCardView: View {
     
     // MARK: 카드 뒤집기 함수
     func flipCard () {
-        isFlipped = !isFlipped
-        if isFlipped {
-            withAnimation(.linear(duration: durationAndDelay)) {
-                backDegree = 90
-            }
-            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-                frontDegree = 0
-            }
-        } else {
-            withAnimation(.linear(duration: durationAndDelay)) {
-                frontDegree = -90
-            }
-            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-                backDegree = 0
-            }
-        }
+        isFlipped.toggle()
     }
-    
 }
 
 struct LevelCheckForLast: View {
@@ -162,9 +144,7 @@ struct LevelCheckForLast: View {
                 // TODO: 모르겠어요 액션
                 userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
                 if lastWordIndex != num {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        num += 1
-                    }
+                    num += 1
                     isFlipped = false
                 } else {
                     //                    isShowingAlert = true
@@ -186,9 +166,7 @@ struct LevelCheckForLast: View {
                 // TODO: 애매해요 액션
                 userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 1)
                 if lastWordIndex != num {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        num += 1
-                    }
+                    num += 1
                     isFlipped = false
                     totalScore += 0.25
                 } else {
@@ -210,9 +188,7 @@ struct LevelCheckForLast: View {
                 // TODO: 외웠어요 액션
                 userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
                 if lastWordIndex != num {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        num += 1
-                    }
+                    num += 1
                     isFlipped = false
                     totalScore += 1
                 } else {

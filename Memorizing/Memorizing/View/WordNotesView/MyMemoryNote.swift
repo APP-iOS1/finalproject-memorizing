@@ -10,7 +10,6 @@ struct MyMemoryNote: View {
     @EnvironmentObject var userStore: UserStore
     var myWordNote: WordNote
     var body: some View {
-        
         VStack(spacing: 30) {
             
             //            if userStore.myWords.count == 0 {
@@ -23,7 +22,6 @@ struct MyMemoryNote: View {
         //        .onAppear {
         //            userStore.fetchMyWords(wordNote: myWordNote)
         //        }
-        
     }
     
     // MARK: - 진행중인 암기만 보기
@@ -60,7 +58,7 @@ struct WordRegistrationView: View {
     @State private var noteLists: [Word] = []
     @State private var isShowingSheet: Bool = false
     @State private var opacityValue: Double = 0
-//    @State var isAddShowing: Bool = false
+    //    @State var isAddShowing: Bool = false
     
     // 한 번도 안 하면 -1, 한 번씩 할 때마다 1씩 증가
     @State var progressStep: Int = 0
@@ -145,13 +143,16 @@ struct WordRegistrationView: View {
                 .onTapGesture(perform: {
                     isShowingSheet.toggle()
                 })
-                .sheet(isPresented: $isShowingSheet) {
-                    if noteLists.isEmpty {
-                        AddWordView(wordNote: myWordNote, noteLists: $noteLists)
-                    } else {
-                        AddListView(wordNote: myWordNote, word: noteLists)
-                    }
+            
+        }
+        .fullScreenCover(isPresented: $isShowingSheet) {
+            NavigationStack {
+                if noteLists.isEmpty {
+                    AddWordView(wordNote: myWordNote, noteLists: $noteLists)
+                } else {
+                    AddListView(wordNote: myWordNote, word: noteLists)
                 }
+            }
         }
         .onAppear {
             if userStore.user != nil {
