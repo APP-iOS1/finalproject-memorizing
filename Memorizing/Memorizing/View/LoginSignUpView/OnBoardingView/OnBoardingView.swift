@@ -10,7 +10,7 @@ import SwiftUI
 struct OnBoardingView: View {
     
     var data: OnBoardingData
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @Binding var email: String
     @Binding var password: String
     
@@ -31,7 +31,7 @@ struct OnBoardingView: View {
             if data.id == 3 {
                 Button {
                     Task.init {
-                        await userStore.signInDidAuth(email: email, password: password)
+                        await authStore.signInDidAuth(email: email, password: password)
                     }
                 } label: {
                     Text("메모라이징 시작하기")
@@ -51,6 +51,6 @@ struct OnBoardingView_Previews: PreviewProvider {
         OnBoardingView(data: OnBoardingData.list[1],
                        email: .constant(""),
                        password: .constant(""))
-            .environmentObject(UserStore())
+            .environmentObject(AuthStore())
     }
 }

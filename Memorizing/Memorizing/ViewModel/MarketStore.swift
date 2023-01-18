@@ -25,7 +25,7 @@ class MarketStore: ObservableObject {
     // MARK: - 마켓의 전체 단어장들을 fetch 하는 함수 / Market View에서 전체 Notes를 Fetch 함
     func marketNotesWillFetchDB() {
         Firestore.firestore().collection("marketWordNotes")
-            .getDocuments { snapshot, error in
+            .getDocuments { snapshot, _ in
                 self.marketWordNotes.removeAll()
                 
                 if let snapshot {
@@ -59,7 +59,7 @@ class MarketStore: ObservableObject {
         Firestore.firestore().collection("marketWordNotes")
             .document(noteId)
             .collection("words")
-            .getDocuments { snapshot, error in
+            .getDocuments { snapshot, _ in
                 self.words.removeAll()
                 if let snapshot {
                     for document in snapshot.documents {
@@ -87,7 +87,7 @@ class MarketStore: ObservableObject {
             .document(userId)
             .collection("myWordNotes")
             .document(noteId)
-            .getDocument { document, error in
+            .getDocument { document, _ in
                 if let document {
                     let docData = document.data()
                     let id: String = docData?["id"] as? String ?? ""
@@ -113,7 +113,7 @@ class MarketStore: ObservableObject {
             .collection("myWordNotes")
             .document(noteId)
             .collection("words")
-            .getDocuments { snapshot, error in
+            .getDocuments { snapshot, _ in
                 if let snapshot {
                     for document in snapshot.documents {
                         let docData = document.data()

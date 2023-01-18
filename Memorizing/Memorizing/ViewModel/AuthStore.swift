@@ -1,23 +1,48 @@
 //
-//  UserStore.swift
+//  AuthStore.swift
 //  Memorizing
 //
-//  Created by 진준호 on 2023/01/05.
+//  Created by 진태영 on 2023/01/18.
 //
 
-/*
 import Foundation
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
-
-// MARK: 회원가입, 로그인, 로그아웃, 내 암기장 등록, 암기장에 단어 추가, 암기장, 마이페이지 탭에서 필요한 모든 기능
+import GoogleSignIn
+import GoogleSignInSwift
 
 @MainActor
-class UserStore: ObservableObject {
-   
+class AuthStore: ObservableObject {
     
-    // MARK: - Firebase Auth
+    // 태영
+    @Published var state: SignInState = .signedOut
+    @Published var user: User?
+    @Published var errorMessage: String = "" // Firestore 관련 에러 메세지
+    
+    // 종현님
+    @Published var myWordNotes: [WordNote] = []
+    @Published var myWords: [Word] = []
+    
+    // 준호
+    @Published var filterWordNotes: [WordNote] = []
+    @Published var myWordNoteIdArray: [String] = []
+    enum SignInState {
+        case signedIn
+        case signedOut
+        case firstIn    // 현기 추가
+        case check    // 현기 추가
+    }
+    let database = Firestore.firestore()
+    
+    // MARK: - FirebaseAuth listen To Auth State
+    func signInDidExistingAuth() async {
+        if let user = Auth.auth().currentUser {
+            self.state = .signedIn
+            self.user = User(id: user.uid, email: user.email ?? "email", nickName: "", coin: 0)
+            await self.userInfoWillFetchDB()
+        }
+    }
     
     // MARK: - FirebaseAuth SignIn Function / Auth에 signIn을 진행함
     func signInDidAuth(email: String, password: String) async {
@@ -29,28 +54,11 @@ class UserStore: ObservableObject {
                 print("userId: ", result.uid)
                 self.user = User(id: result.uid, email: result.email ?? "No Email", nickName: "", coin: 0)
                 // 기기에 로그인 정보 저장
-                UserDefaults.standard.set(email, forKey: UserDefaults.Keys.email.rawValue)
-                UserDefaults.standard.set(password, forKey: UserDefaults.Keys.password.rawValue)
+                UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                 self.state = .signedIn
                 print("signed In complete")
                 
             }
-            /*
-             {result, error in
-             print("emailAuth.auth.signIn function")
-             if let error = error{
-             self.errorMessage = error.localizedDescription
-             print("Login error: ", self.errorMessage)}
-             if let user = result?.user{
-             print("User SignIn")
-             print("userId: ", user.uid)
-             self.user = User(id: user.uid, email: user.email ?? "No Email", nickName: "", coin: 0)
-             // 기기에 로그인 정보 저장
-             UserDefaults.standard.set(email, forKey: UserDefaults.Keys.email.rawValue)
-             UserDefaults.standard.set(password, forKey: UserDefaults.Keys.password.rawValue)
-             self.state = .signedIn
-             print("signed In complete")}}
-             */
             await self.userInfoWillFetchDB()
         } catch {
             errorMessage = "로그인 정보가 맞지 않습니다."
@@ -59,6 +67,78 @@ class UserStore: ObservableObject {
         }
         
     } // emailAuthSignIn
+    
+    // MARK: - GoogleAuth SignIN Function
+    func signInDidGoogleAuth() async {
+        // 사전 로그인 기록이 있다면,
+        if GIDSignIn.sharedInstance.hasPreviousSignIn() {
+            GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
+                Task {
+                    await authenticateUser(for: user, with: error)
+                    self.user = User(
+                        id: user?.userID ?? "No User Id",
+                        email: user?.profile?.email ?? "No Email",
+                        nickName: user?.profile?.name ?? "No name",
+                        coin: 0
+                    )
+                    print("Google restore Login")
+                    UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
+                    await userInfoWillFetchDB()
+                    self.state = .signedIn
+                }
+            }
+        } else {
+            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+            let configuration = GIDConfiguration(clientID: clientID)
+            
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+            guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
+            
+            GIDSignIn.sharedInstance.signIn(
+                with: configuration,
+                presenting: rootViewController
+            ) { [unowned self] user, error in
+                Task {
+                    await authenticateUser(for: user, with: error)
+                    
+                    guard error == nil else { return }
+                    guard let user = user else { return }
+                    
+                    self.user = User(
+                        id: user.userID ?? "No ID",
+                        email: user.profile?.email ?? "No Email",
+                        nickName: user.profile?.name ?? "No name",
+                        coin: 0
+                    )
+                    print("Google first Login")
+                    UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
+                    await userInfoWillFetchDB()
+                    self.state = .signedIn
+                }
+            }
+        }
+    }
+    
+    // MARK: 구글의 id Token 발급받아 FirebaseAuth에 접근하여 로그인하는 함수
+    private func authenticateUser(for user: GIDGoogleUser?, with error: Error?) async {
+        self.errorMessage = ""
+        if let error = error {
+            self.errorMessage = error.localizedDescription
+            print("Google Login error: ", errorMessage)
+            return
+        }
+        guard let authentication = user?.authentication, let idToken = authentication.idToken else { return }
+        
+        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+        do {
+            try await Auth.auth().signIn(with: credential)
+            print("google sign state signIn")
+            self.state = .signedIn
+        } catch let error as NSError {
+            errorMessage = error.localizedDescription
+            print("Error sign In:", errorMessage)
+        }
+    }
     
     // MARK: - FirebaseAuth SignUp Function /
     func signUpDidAuth(email: String, password: String, nickName: String) {
@@ -90,7 +170,7 @@ class UserStore: ObservableObject {
                 "id": user.id,
                 "email": user.email,
                 "nickName": user.nickName,
-                "coin": user.coin
+                "coin": 1000
             ])
     } // FireStore-DB에 UserInfo를 저장함
     
@@ -112,27 +192,35 @@ class UserStore: ObservableObject {
         }
     } // emailAuthSignOut
     
+    // MARK: - GoogleAuth SignOut Function
+    func signOutDidGoogleAuth() {
+        self.errorMessage = ""
+        GIDSignIn.sharedInstance.signOut()
+        
+        do {
+            try Auth.auth().signOut()
+            state = .signedOut
+            UserDefaults.standard.reset()
+            self.user = nil
+        } catch {
+            self.errorMessage = error.localizedDescription
+            print("google Sign Out error: ", self.errorMessage)
+        }
+    }
+    
     // MARK: - FetchUser Function / FireStore-DB에서 UserInfo를 불러옴
     func userInfoWillFetchDB() async {
         print("Start FetchUser")
         do {
             let document = try await database.collection("users").document(user?.id ?? "").getDocument()
-            /*
-             {(document, error) in
-             if let document{
-             print("start fetchUser function")
-             let docData = document.data()
-             self.user?.nickName = docData?["nickName"] as! String
-             self.user?.coin = docData?["coin"] as! Int
-             }
-             
-             }
-             */
             if document.exists {
                 let docData = document.data()
                 self.user?.nickName = docData?["nickName"] as? String ?? ""
                 self.user?.coin = docData?["coin"] as? Int ?? 0
                 print("complete fetchUser Function")
+            } else {
+                self.userInfoDidSaveDB(user: self.user!)
+                self.user?.coin = 1000
             }
         } catch {
             print("Fail: fetchUser")
@@ -145,32 +233,32 @@ class UserStore: ObservableObject {
         print("start fetchMyWordNotes")
         database.collection("users").document(user?.id ?? "").collection("myWordNotes")
             .order(by: "repeatCount")
-            .getDocuments { snapshot, error in
-            self.myWordNotes.removeAll()
-            if let snapshot {
-                for document in snapshot.documents {
-                    let docData = document.data()
-                    let id: String = docData["id"] as? String ?? ""
-                    let noteName: String = docData["noteName"] as? String ?? ""
-                    let noteCategory: String = docData["noteCategory"] as? String ?? ""
-                    let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
-                    let repeatCount: Int = docData["repeatCount"] as? Int ?? 0
-                    let notePrice: Int = docData["notePrice"] as? Int ?? 0
-                    
-                    let myWordNote = WordNote(
-                        id: id,
-                        noteName: noteName,
-                        noteCategory: noteCategory,
-                        enrollmentUser: enrollmentUser,
-                        repeatCount: repeatCount,
-                        notePrice: notePrice
-                    )
-                    self.myWordNotes.append(myWordNote)
+            .getDocuments { snapshot, _ in
+                self.myWordNotes.removeAll()
+                if let snapshot {
+                    for document in snapshot.documents {
+                        let docData = document.data()
+                        let id: String = docData["id"] as? String ?? ""
+                        let noteName: String = docData["noteName"] as? String ?? ""
+                        let noteCategory: String = docData["noteCategory"] as? String ?? ""
+                        let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+                        let repeatCount: Int = docData["repeatCount"] as? Int ?? 0
+                        let notePrice: Int = docData["notePrice"] as? Int ?? 0
+                        
+                        let myWordNote = WordNote(
+                            id: id,
+                            noteName: noteName,
+                            noteCategory: noteCategory,
+                            enrollmentUser: enrollmentUser,
+                            repeatCount: repeatCount,
+                            notePrice: notePrice
+                        )
+                        self.myWordNotes.append(myWordNote)
+                    }
+                    print("finished fetchMyWordNotes")
+                    print("MyWordNotes: ", self.myWordNotes)
                 }
-                print("finished fetchMyWordNotes")
-                print("MyWordNotes: ", self.myWordNotes)
             }
-        }
     }
     
     // MARK: - myWordNotes를 추가하는 함수 / 내가 작성한 Notes를 DB에 저장함
@@ -193,7 +281,7 @@ class UserStore: ObservableObject {
             .collection("myWordNotes").document(wordNote.id)
             .collection("words")
             .order(by: "wordLevel")
-            .getDocuments { snapshot, error in
+            .getDocuments { snapshot, _ in
                 self.myWords.removeAll()
                 print("removed")
                 if let snapshot {
@@ -345,7 +433,7 @@ class UserStore: ObservableObject {
         }
         
         for myWordNote in myWordNotes where myWordNote.enrollmentUser == user?.id {
-                self.filterWordNotes.append(myWordNote)
+            self.filterWordNotes.append(myWordNote)
         }
     }
     
@@ -389,12 +477,13 @@ extension UserDefaults {
     
     enum Keys: String, CaseIterable {
         
+        case isExistingAuth
         case email
         case password
+        
     }
     
     func reset() {
         Keys.allCases.forEach { removeObject(forKey: $0.rawValue) }
     }
 }
-*/

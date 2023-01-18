@@ -21,12 +21,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct MemorizingApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject var userStore: UserStore = UserStore()
+    @StateObject var authStore: AuthStore = AuthStore()
     @StateObject var notiManager: NotificationManager = NotificationManager()
+    
     var body: some Scene {
         WindowGroup {
             ContentView(email: "", password: "")
-                .environmentObject(userStore)
+                .environmentObject(authStore)
                 .environmentObject(notiManager)
         }
     }
