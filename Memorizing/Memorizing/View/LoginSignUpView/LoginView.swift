@@ -96,6 +96,22 @@ struct LoginView: View {
                     }
                     .padding(.horizontal, 50)
                     
+                    HStack {
+                        Button {
+                            Task {
+                                await authStore.signInDidKakaoAuth()
+                            }
+                        } label: {
+                            Text("kakao")
+                        }
+                        
+                        Button {
+                            authStore.signOutDidKakao()
+                        } label: {
+                            Text("Logout")
+                        }
+                    }
+                    
                 } // vstack
             } // scroll view
         } // navigationstack

@@ -203,10 +203,12 @@ struct SignUpView: View {
                     ) {
                         Button {
                             if termsAgreed {
-                                authStore.signUpDidAuth(email: signUpEmail,
-                                                          password: signUpPassWord,
-                                                          nickName: nickName)
-                                dismiss()
+                                Task {
+                                    await authStore.signUpDidAuth(email: signUpEmail,
+                                                                  password: signUpPassWord,
+                                                                  nickName: nickName)
+                                    dismiss()
+                                }
                             }
                             signUpProcessing.toggle()
                         } label: {

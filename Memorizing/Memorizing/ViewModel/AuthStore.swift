@@ -11,6 +11,8 @@ import FirebaseAuth
 import FirebaseFirestore
 import GoogleSignIn
 import GoogleSignInSwift
+import KakaoSDKAuth
+import KakaoSDKUser
 
 @MainActor
 class AuthStore: ObservableObject {
@@ -140,26 +142,98 @@ class AuthStore: ObservableObject {
         }
     }
     
-    // MARK: - FirebaseAuth SignUp Function /
-    func signUpDidAuth(email: String, password: String, nickName: String) {
+    // MARK: - KakaoAuth SignIn Function
+    func signInDidKakaoAuth() async {
         self.errorMessage = ""
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+        if AuthApi.hasToken() { // 발급된 토큰이 있는지
+            UserApi.shared.accessTokenInfo { _, error in // 해당 토큰이 유효한지
+                if let error = error { // 에러가 발생했으면 토큰이 유효하지 않다.
+                    self.errorMessage = error.localizedDescription
+                    print("Kakao loading token Info error: ", self.errorMessage)
+                    print("Kakao loading token info error code: ", error.asAFError?.responseCode as Any)
+                    self.openKakaoService()
+                } else { // 유효한 토큰
+                    Task {
+                        await self.loadingInfoDidKakaoAuth()
+                    }
+                }
+            } // 토큰 접근
+        } else { // 발급된 토큰 만료
+            self.openKakaoService()
+        }
+    }
+    
+    func loadingInfoDidKakaoAuth() async {  // 사용자 정보 불러오기
+        
+        UserApi.shared.me { kakaoUser, error in
             if let error = error {
                 self.errorMessage = error.localizedDescription
-                return
+                print("Kakao loading user Info error: ", self.errorMessage)
+            } else {
+                Task {
+                    print("Kakao Email: ", kakaoUser?.kakaoAccount?.email ?? "No Email")
+                    await self.signUpDidAuth(
+                        email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
+                        password: "\(String(describing: kakaoUser?.id))",
+                        nickName: kakaoUser?.kakaoAccount?.profile?.nickname ?? "No NickName"
+                    )
+                    await self.signInDidAuth(
+                        email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
+                        password: "\(String(describing: kakaoUser?.id))"
+                    )
+                }
             }
             
-            switch result {
-            case .none:
-                self.errorMessage = "계정을 생성할 수 없습니다."
-            case .some:
-                let id = result?.user.uid ?? UUID().uuidString
-                let nickName = nickName
-                let email = email
-                let coin = 1000
-                let user: User = User(id: id, email: email, nickName: nickName, coin: coin)
-                self.userInfoDidSaveDB(user: user)
-            }
+        }
+    }
+    
+    func openKakaoService() {
+        if UserApi.isKakaoTalkLoginAvailable() { // 카카오톡 앱 이용 가능한지
+            UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    print("Kakao Sign In Error: ", self.errorMessage)
+                } else { // 로그인 성공
+                    print("New kakao Login")
+                    _ = oauthToken
+                    Task {
+                        await self.loadingInfoDidKakaoAuth() // 사용자 정보 불러와서 Firebase Auth 로그인하기
+                    }
+                }
+            } // 카카오톡 앱 로그인
+        } else { // 카카오톡 앱 이용 불가능한 사람
+            UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    self.errorMessage = error.localizedDescription
+                    print("Kakao web Sign in error: ", self.errorMessage)
+                    print("Kakao web Sign in error code: ", error.asAFError?.responseCode as Any)
+                } else { // 로그인 성공
+                    print("New kakao Login")
+                    _ = oauthToken
+                    Task {
+                        await self.loadingInfoDidKakaoAuth() // 사용자 정보 불러와서 Firebase Auth 로그인하기
+                    }                                } // 로그인 성공
+            } // 카톡 로그인
+        } // 웹 로그인
+    }
+    
+    // MARK: - FirebaseAuth SignUp Function /
+    func signUpDidAuth(email: String, password: String, nickName: String) async {
+        self.errorMessage = ""
+        do {
+            let result = try await Auth.auth().createUser(withEmail: email, password: password)
+            
+            let id = result.user.uid
+            let nickName = nickName
+            let email = email
+            let coin = 1000
+            let user: User = User(id: id, email: email, nickName: nickName, coin: coin)
+            self.userInfoDidSaveDB(user: user)
+            
+        } catch let error as NSError {
+            self.errorMessage = error.localizedDescription
+            print("Email Sign up Error: ", self.errorMessage)
         }
     } // emailAuthSignUp
     
@@ -208,6 +282,17 @@ class AuthStore: ObservableObject {
         }
     }
     
+    // MARK: - KakaoAuth SignOut Function
+    func signOutDidKakao() {
+        UserApi.shared.logout { error in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                print("Kakao logout error: ", self.errorMessage)
+            } else {
+                print("Kakao SignOut")
+            }
+        }
+    }
     // MARK: - FetchUser Function / FireStore-DB에서 UserInfo를 불러옴
     func userInfoWillFetchDB() async {
         print("Start FetchUser")
