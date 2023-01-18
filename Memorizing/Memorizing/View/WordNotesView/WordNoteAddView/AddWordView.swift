@@ -211,6 +211,9 @@ struct AddWordView: View {
                             }
                         }
                     }
+                    .onAppear {
+                        UIApplication.shared.hideKeyboard()
+                    }
                 }
                 .padding()
             }
