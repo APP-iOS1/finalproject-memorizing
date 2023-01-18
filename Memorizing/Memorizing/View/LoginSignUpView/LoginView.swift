@@ -102,7 +102,7 @@ struct LoginView: View {
                                 await authStore.signInDidKakaoAuth()
                             }
                         } label: {
-                            Text("kakao")
+                            Text("Kakao SignIn")
                         }
                         
                         Button {
