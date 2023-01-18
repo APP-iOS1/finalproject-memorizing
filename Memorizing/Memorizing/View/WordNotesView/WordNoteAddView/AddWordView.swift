@@ -232,7 +232,7 @@ struct AddWordView: View {
                                 }
                         }
                         .sheet(isPresented: $displayLists) {
-                            AddListView(wordNote: wordNote, word: userStore.myWords)
+                            AddListView(wordNote: wordNote, word: $userStore.myWords)
                         }
                         // MARK: - 빈 TextField에 데이터를 입력할 때, 버튼(암기목록 추가하기)을 누르면 Store에 저장됨
                         Button {

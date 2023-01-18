@@ -33,6 +33,7 @@
 		488F0AAA2967E8BC007EAAC1 /* OnBoardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */; };
 		48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */; };
 		48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */; };
+		48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */; };
 		5239182E2967CBA800D76C57 /* PointChargeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5239182D2967CBA800D76C57 /* PointChargeView.swift */; };
 		5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5280DDF72967248E00C959CA /* FirstTryCardView.swift */; };
 		52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCE8D0296690E700A85A1F /* MyMemoryNote.swift */; };
@@ -88,6 +89,7 @@
 		488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingData.swift; sourceTree = "<group>"; };
 		48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviews.swift; sourceTree = "<group>"; };
 		48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
+		48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviewsMore.swift; sourceTree = "<group>"; };
 		5239182D2967CBA800D76C57 /* PointChargeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChargeView.swift; sourceTree = "<group>"; };
 		5280DDF72967248E00C959CA /* FirstTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTryCardView.swift; sourceTree = "<group>"; };
 		52BCE8D0296690E700A85A1F /* MyMemoryNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMemoryNote.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */,
 				484D657729669CDE00C56E87 /* MarketViewSheet.swift */,
 				48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */,
+				48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */,
 				484D657929669E6600C56E87 /* MarketViewAddButton.swift */,
 			);
 			path = MarketView;
@@ -459,6 +462,7 @@
 				3F20026E29672F2900FCFC3A /* AddListView.swift in Sources */,
 				488F0AA62967E8A1007EAAC1 /* OnBoardingTabView.swift in Sources */,
 				484D657329669B5F00C56E87 /* MarketViewCategoryButton.swift in Sources */,
+				48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */,
 				52DE9D882966FAFB0037F64A /* TextFieldModifier.swift in Sources */,
 				52D8F23E2965F2C600755E5A /* MemorizingApp.swift in Sources */,
 				52D8F2622965F72600755E5A /* MainView.swift in Sources */,

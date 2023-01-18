@@ -150,7 +150,7 @@ struct WordRegistrationView: View {
                 if noteLists.isEmpty {
                     AddWordView(wordNote: myWordNote, noteLists: $noteLists)
                 } else {
-                    AddListView(wordNote: myWordNote, word: noteLists)
+                    AddListView(wordNote: myWordNote, word: $noteLists)
                 }
             }
         }
