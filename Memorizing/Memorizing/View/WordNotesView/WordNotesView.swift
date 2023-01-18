@@ -63,7 +63,7 @@ struct WordNotesView: View {
                         print("알림확인 버튼이 눌렸습니다.")
                     } label: {
                         Image(systemName: "bell")
-                            .foregroundColor(.mainBlue)
+                            .foregroundColor(.mainDarkBlue)
                     }
                 }
             }

@@ -66,8 +66,8 @@ struct MarketView: View {
                         }
                     })
                 .padding(.horizontal)
-                
             }   // ScrollView end
+            .padding(.bottom,1)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
