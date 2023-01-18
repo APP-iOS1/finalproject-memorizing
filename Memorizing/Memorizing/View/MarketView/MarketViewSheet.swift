@@ -23,47 +23,61 @@ struct MarketViewSheet: View {
         ScrollView {
             
             // MARK: - 단어장 정보
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.gray5)
-                .backgroundStyle(Color.gray7)
-                .frame(width: 343, height: 116)
-                .padding(.top, 30)
-                .overlay {
-                    VStack {
-                        // 암기장 카테고리
-                        HStack {
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(wordNote.noteColor)
-                                .frame(width: 40, height: 20)
-                                .overlay {
-                                    Text(wordNote.noteCategory)
-                                        .font(.caption2)
-                                        .foregroundColor(.white)
-                                }
-                            
-                            Spacer()
-                            
-                            Text("\(wordNote.notePrice) P")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.mainBlue)
-                        }
-                        
-                        // 암기장 제목
-                        HStack {
-                            Text(wordNote.noteName)
-                                .foregroundColor(.mainBlack)
-                                .bold()
-                                .multilineTextAlignment(.leading)
-                                .lineLimit(1)
-                            
-                            Spacer()
-                        }
-                        .padding(.top)
-                        
+            VStack {
+                HStack {
+                    Spacer()
+                    Button("취소") {
+                        dismiss()
                     }
-                    .padding()
+                    .font(.headline)
+                    .foregroundColor(.gray1)
                 }
+                
+                // 암기장 카테고리
+                HStack {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(wordNote.noteColor)
+                        .frame(width: 40, height: 20)
+                        .overlay {
+                            Text(wordNote.noteCategory)
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                        }
+                    
+                    Spacer()
+                }
+                
+                // 암기장 제목
+                HStack {
+                    Text(wordNote.noteName)
+                        .foregroundColor(.mainBlack)
+                        .font(.title3)
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
+                    
+                    Spacer()
+                }
+                .padding(.vertical, 5)
+                
+                // 암기장 마켓등록일, 판매 금액
+                HStack {
+                    // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
+                    Text("\("2023.01.18")")
+                        .font(.footnote)
+                        .foregroundColor(.gray2)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
+                    
+                    Spacer()
+                    
+                    Text("\(wordNote.notePrice) P")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.mainDarkBlue)
+                }
+            }
+            .padding(.horizontal, 30)
             
             // MARK: - 암기장 구매하기 버튼
             if userStore.myWordNoteIdArray.contains(wordNote.id) {
@@ -77,7 +91,6 @@ struct MarketViewSheet: View {
                             .foregroundColor(.white)
                     }
             } else {
-                
                 Button(action: {
                     if userStore.user?.coin ?? 0 >= wordNote.notePrice {
                         isAlertToggle.toggle()
@@ -86,14 +99,13 @@ struct MarketViewSheet: View {
                     } else {
                         isAlertToggle.toggle()
                         isCoinCheckToggle = false
-                        // iscoinCheckToggle.toggle()
                     }
                 }, label: {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.mainBlue)
                         .frame(width: 355, height: 44)
                         .overlay {
-                            Text("암기장 구매하기")
+                            Text("\(wordNote.notePrice)P로 지식 구매하기!")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
@@ -124,14 +136,18 @@ struct MarketViewSheet: View {
                 
             }
             
+            // MARK: - 암기장 리뷰
+            MarketViewSheetReviews()
+            
             // MARK: - 구분선
             Divider()
-                .padding()
+                .frame(width: 400, height: 5)
+                .overlay { Color.gray5 }
+                .padding(.bottom)
             
             // MARK: - 단어 미리보기
             HStack {
-                Text("Preview")
-                    .font(.subheadline)
+                Text("미리보기")
                     .foregroundColor(.gray3)
                 
                 Spacer()
@@ -144,6 +160,7 @@ struct MarketViewSheet: View {
                 }
             }
             .padding(.horizontal, 30)
+            .font(.subheadline)
             .bold()
             
             // 5개의 단어만 가져오도록 함
@@ -218,6 +235,20 @@ struct MarketViewSheet: View {
                         .animation(.spring(), value: selectedWord)
                 }
             }
+            
+            VStack(spacing: 3) {
+                ForEach(0...3, id: \.self) { _ in
+                    Circle()
+                        .frame(width: 5, height: 5)
+                        .foregroundColor(.gray3)
+                }
+            }
+            .padding(.vertical)
+            
+            Text("모든 암기장은 구매한 후에 확인할 수 있어요")
+                .font(.footnote)
+                .foregroundColor(.gray2)
+                .padding(.bottom)
             
         }
         .onAppear {
