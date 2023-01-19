@@ -10,33 +10,25 @@ import SwiftUI
 struct AddWordView: View {
     // MARK: - 바인딩
     @EnvironmentObject var marketStore: MarketStore
+    @EnvironmentObject var userStore: UserStore
     @EnvironmentObject var authStore: AuthStore
     // 상위뷰랑 꼬일 수 있으므로, 그냥 var 선언하기 (Binding X)
     var wordNote: WordNote
     @Binding var noteLists: [Word]
+    
     // MARK: - 단어, 문장, 질문과 답 피커 만들기 -> 아래 Enum으로 유형 선언되어 있음
     @State private var segmnetationSelection: AddWordCategory = .word
-    //    init(wordNote: WordNote, list: [Word]) {
-    //        self.wordNote = wordNote
-    //        self.list = list
-    //        UISegmentedControl.appearance().selectedSegmentTintColor = .systemBlue
-    //        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-    //        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
-    //        // TextEditor 백그라운드 지우기
-    //        UISegmentedControl.appearance().backgroundColor = .clear
-    //    }
+
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
+    
     // MARK: - 값(변수들)
     @State private var wordString: String = ""
     @State private var wordMeaning: String = ""
     @State private var wordLevel: Int = 0
     @State private var showingAlert = false
-//    @State private var isAddButton: Bool = false
     @State private var displayLists: Bool = false
-    // MARK: - TextEditor Plceholder
-    //    let placeholder: String = "사용자 입력"
-    // MARK: - 추가하기(+) 버튼을 눌렀을 때 이동할 AddWordView
+
     // MARK: - Navigation Stack 사용 안함
     var body: some View {
         VStack(alignment: .center) {
@@ -71,11 +63,13 @@ struct AddWordView: View {
                         }
                         .alert(isPresented: $showingAlert) {
                             Alert(title: Text("암기장을 저장하시겠습니까?"),
-                                  message: Text("취소시 저장된 데이터는 사라집니다"),
+                                  message: Text(""),
                                   primaryButton: .destructive(Text("취소하기"),
                                                               action: {}),
                                   secondaryButton: .cancel(Text("저장하기"),
                                                            action: {
+                                // TODO: - 저장을 할 때 Store에 패치를 하게 되는데..
+                                // TODO: - 상위뷰인 MyMemoryNote에서도 동일하게 중복적으로 패치를 진행하게 되는 문제 해결 필요
                                 authStore.myWordsWillFetchDB(wordNote: wordNote) {
                                     self.noteLists = authStore.myWords
                                 }
@@ -211,6 +205,10 @@ struct AddWordView: View {
                             }
                         }
                     }
+                    //MARK: - 빈 공간을 눌렀을 때, 키보드 자동으로 감추기
+                    .onAppear {
+                        UIApplication.shared.hideKeyboard()
+                    }
                 }
                 .padding()
             }
@@ -218,13 +216,15 @@ struct AddWordView: View {
             Section {
                 VStack {
                     HStack {
+                        
+                        // MARK: - 작성된 Word의 리스트를 보여주는 버튼
                         Button {
                             // TODO: - List 확인하기
                             displayLists.toggle()
                         } label: {
                             Circle()
                                 .frame(width: 50, height: 50)
-                                .foregroundColor(Color.mainBlue)
+                                .foregroundColor(Color.mainDarkBlue)
                                 .overlay {
                                     Image(systemName: "list.number")
                                         .foregroundColor(.white)
@@ -235,6 +235,7 @@ struct AddWordView: View {
                         .sheet(isPresented: $displayLists) {
                             AddListView(wordNote: wordNote, word: authStore.myWords)
                         }
+                        // MARK: - 빈 TextField에 데이터를 입력할 때, 버튼(암기목록 추가하기)을 누르면 Store에 저장됨
                         Button {
                             authStore.myWordsDidSaveDB(wordNote: wordNote,
                                                 word: Word(
@@ -248,6 +249,7 @@ struct AddWordView: View {
                             wordLevel = 0
                         } label: {
                             Rectangle()
+                                .foregroundColor(.mainBlue)
                                 .frame(width: 272, height: 50)
                                 .cornerRadius(20, corners: .allCorners)
                                 .overlay {
@@ -272,10 +274,17 @@ enum AddWordCategory: String, CaseIterable {
     case qustionAndAnswer = "질문과 답"
 }
 
-// struct AddWordView_Previews: PreviewProvider {
-//    static var previews: some View {
-// AddWordView(wordNote:
-// WordNote(id: "", noteName: "", noteCategory: "", enrollmentUser: "", repeatCount: 0, notePrice: 0)
-// ,list: [Word(id: "", wordString: "", wordMeaning: "", wordLevel: 0)])
-//    }
-// }
+struct AddWordView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddWordView(wordNote: WordNote(id: "",
+                                       noteName: "이상한 나라의 앨리스",
+                                       noteCategory: "IT",
+                                       enrollmentUser: "",
+                                       repeatCount: 0,
+                                       notePrice: 0),
+                    noteLists: .constant([Word(id: "",
+                                          wordString: "Hello",
+                                          wordMeaning: "안녕",
+                                          wordLevel: 0)]))
+    }
+}

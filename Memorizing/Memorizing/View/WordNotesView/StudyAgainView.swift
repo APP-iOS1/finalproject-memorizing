@@ -134,6 +134,7 @@ struct StudyAgainView: View {
                                                         .font(.caption2)
                                                     
                                                 }
+                                                .foregroundColor(.white)
                                             }
                                     }
                                 } else {

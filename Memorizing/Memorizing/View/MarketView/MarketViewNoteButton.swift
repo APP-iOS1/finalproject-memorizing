@@ -47,23 +47,27 @@ struct MarketViewNoteButton: View {
                                         .overlay {
                                             Text(selectedWordNote.noteCategory)
                                                 .font(.caption2)
+                                                .fontWeight(.bold)
                                                 .foregroundColor(selectedWordNote.noteColor)
                                         }
                                     
                                     Spacer()
                                 }
+                                .frame(height : 20)
                                 
                                 // 암기장 제목
-                                HStack {
+                                HStack(alignment: .top){
                                     Text(selectedWordNote.noteName)
                                         .foregroundColor(.mainBlack)
-                                        .font(.caption)
+                                        .font(.footnote)
+                                        .fontWeight(.heavy)
                                         .bold()
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(2)
                                     
                                     Spacer()
                                 }
+                                .frame(width : 140, height : 40)
                                 .padding(.bottom, 3)
                                 
                                 // 암기장 판매 가격
@@ -75,6 +79,7 @@ struct MarketViewNoteButton: View {
                                         .foregroundColor(.mainDarkBlue)
                                         .padding(.trailing, 5)
                                 }
+                                .frame(height : 20)
                             }
                             .padding(.horizontal, 3)
                             .padding(.vertical, 10)
@@ -85,8 +90,15 @@ struct MarketViewNoteButton: View {
     }
 }
 
-// struct MarketViewNoteButton_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MarketViewNoteButton(isSheetOpen: .constant(false), index: 0)
-//    }
-// }
+ struct MarketViewNoteButton_Previews: PreviewProvider {
+    static var previews: some View {
+        MarketViewNoteButton(isSheetOpen: .constant(true),
+                             selectedCategory: .constant("IT"),
+                             selectedWordNote: WordNote(id: "",
+                                                        noteName: "이상한 나라의 앨리스가 더 이상함",
+                                                        noteCategory: "IT",
+                                                        enrollmentUser: "",
+                                                        repeatCount: 0,
+                                                        notePrice: 0))
+    }
+ }

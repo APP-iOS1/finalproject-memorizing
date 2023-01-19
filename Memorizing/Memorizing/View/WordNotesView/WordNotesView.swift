@@ -63,32 +63,34 @@ struct WordNotesView: View {
                         print("알림확인 버튼이 눌렸습니다.")
                     } label: {
                         Image(systemName: "bell")
-                            .foregroundColor(.mainBlue)
+                            .foregroundColor(.mainDarkBlue)
                     }
                 }
             }
+            
             VStack {
                 
-                Button {
-                    print("새로운 일기장 만들기 버튼이 눌렸습니다.")
-                    isShowingNewMemorySheet.toggle()
-                } label: {
-                    Circle()
-                        .foregroundColor(.mainBlue)
-                        .frame(width: 65, height: 65)
-                        .overlay {
-                            Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .font(.title3)
-                                .bold()
-                        }
-                        .shadow(radius: 1, x: 1, y: 1)
+                if memoryStepToggle == true && reviewStepToggle == false {
+                    Button {
+                        print("새로운 일기장 만들기 버튼이 눌렸습니다.")
+                        isShowingNewMemorySheet.toggle()
+                    } label: {
+                        Circle()
+                            .foregroundColor(.mainBlue)
+                            .frame(width: 65, height: 65)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .foregroundColor(.white)
+                                    .font(.title3)
+                                    .bold()
+                            }
+                            .shadow(radius: 1, x: 1, y: 1)
+                    }
+                    .offset(x: 140, y: 250)
+                    .sheet(isPresented: $isShowingNewMemorySheet) {
+                        NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
+                    }
                 }
-                .offset(x: 140, y: 250)
-                .sheet(isPresented: $isShowingNewMemorySheet) {
-                    NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
-                }
-                
             }
             
             //            if(onboard.showOnboardScreen) {

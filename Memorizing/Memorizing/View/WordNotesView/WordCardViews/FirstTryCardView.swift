@@ -32,12 +32,7 @@ struct FirstTryCardView: View {
     }
     
     // MARK: 카드 뒤집는데 쓰일 것들
-    @State var backDegree = 0.0
-    @State var frontDegree = -90.0
     @State var isFlipped = false
-    let width: CGFloat = 200
-    let height: CGFloat = 250
-    let durationAndDelay: CGFloat = 0.3
     
     var body: some View {
         VStack {
@@ -52,20 +47,23 @@ struct FirstTryCardView: View {
             
             // MARK: 카드뷰
             ZStack {
-                WordCardFrontView(
-                    listLength: word.count,
-                    currentListLength: $num,
-                    currentWord: word[num].wordString,
-                    degree: $frontDegree
-                )
-                WordCardBackView(
-                    listLength: word.count,
-                    currentListLength: $num,
-                    currentWordDef: word[num].wordMeaning,
-                    degree: $backDegree
-                )
+                if isFlipped {
+                    WordCardMeaningView(
+                        listLength: word.count,
+                        currentListLength: $num,
+                        currentWordDef: word[num].wordMeaning
+                    )
+                } else {
+                    WordCardWordView(
+                        listLength: word.count,
+                        currentListLength: $num,
+                        currentWord: word[num].wordString
+                    )
+                }
             }
             .onTapGesture {
+                print("flipcard 실행")
+                print(isFlipped)
                 flipCard()
             }
             
@@ -124,26 +122,12 @@ struct FirstTryCardView: View {
     // MARK: 카드 뒤집기 함수
     func flipCard () {
         isFlipped.toggle()
-        if isFlipped {
-            withAnimation(.linear(duration: durationAndDelay)) {
-                backDegree = 90
-            }
-            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-                frontDegree = 0
-            }
-        } else {
-            withAnimation(.linear(duration: durationAndDelay)) {
-                frontDegree = -90
-            }
-            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-                backDegree = 0
-            }
-        }
     }
+    
 }
 
-// MARK: 카드 뒷 뷰
-struct WordCardBackView: View {
+// MARK: 카드 단어 뜻 뷰
+struct WordCardMeaningView: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -151,8 +135,6 @@ struct WordCardBackView: View {
     @Binding var currentListLength: Int
     // MARK: 현재 단어 뜻
     var currentWordDef: String
-    // MARK: 카드 뒤집기 각도
-    @Binding var degree: Double
     
     var body: some View {
         ZStack {
@@ -183,6 +165,7 @@ struct WordCardBackView: View {
                 
                 // MARK: 현재 단어
                 Text("\(currentWordDef)")
+                    .foregroundColor(Color("MainBlue"))
                     .padding(.bottom, 70)
                     .font(.largeTitle).bold()
                 
@@ -191,12 +174,11 @@ struct WordCardBackView: View {
             }
         }
         .frame(width: 330, height: 330)
-        .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
     }
 }
 
-// MARK: 카드 앞 뷰
-struct WordCardFrontView: View {
+// MARK: 카드 단어 뷰
+struct WordCardWordView: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -204,8 +186,6 @@ struct WordCardFrontView: View {
     @Binding var currentListLength: Int
     // MARK: 현재 단어
     var currentWord: String
-    // MARK: 카드 뒤집기 각도
-    @Binding var degree: Double
     
     var body: some View {
         ZStack {
@@ -236,7 +216,7 @@ struct WordCardFrontView: View {
                 
                 // MARK: 현재 단어 뜻
                 Text("\(currentWord)")
-                    .foregroundColor(Color("MainBlue"))
+                    .foregroundColor(Color("MainBlack"))
                     .padding(.bottom, 70)
                     .font(.largeTitle).bold()
                 
@@ -245,7 +225,6 @@ struct WordCardFrontView: View {
             }
         }
         .frame(width: 330, height: 330)
-        .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
     }
 }
 
@@ -272,9 +251,7 @@ struct LevelCheck: View {
                 authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
                 if lastWordIndex != num {
                     isFlipped = false
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        num += 1
-                    }
+                    num += 1
                     
                 } else {
                     isShowingAlert = true
@@ -298,9 +275,7 @@ struct LevelCheck: View {
                 if lastWordIndex != num {
                     isFlipped = false
                     totalScore += 0.25
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        num += 1
-                    }
+                    num += 1
                 } else {
                     isShowingAlert = true
                     isShowingModal = true
@@ -321,9 +296,7 @@ struct LevelCheck: View {
                 authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
                 if lastWordIndex != num {
                     isFlipped = false
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        num += 1
-                    }
+                    num += 1
                     totalScore += 1
                     
                 } else {
@@ -371,14 +344,6 @@ struct LevelCheck: View {
         } message: {
             Text("모든 단어를 공부했습니다 :)")
         }
-        //                .sheet(isPresented: $isShowingModal) {
-        //                    if totalScore / Double(lastWordIndex) >= 0.75 {
-        //                        GoodJobStampView(wordNote: wordNote, isDismiss: $isDismiss)
-        //                    }
-        //                        else {
-        //                        TryAgainView()
-        //                    }
-        //                }
     }
 }
 

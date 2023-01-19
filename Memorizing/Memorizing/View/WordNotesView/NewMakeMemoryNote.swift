@@ -103,6 +103,9 @@ struct NewMakeMemoryNote: View {
                 .cornerRadius(20, corners: .allCorners)
                 .fontWeight(.semibold)
                 .font(.subheadline)
+                .onAppear {
+                    UIApplication.shared.hideKeyboard()
+                }
         }
     }
     
