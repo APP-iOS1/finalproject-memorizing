@@ -12,6 +12,8 @@ struct MainView: View {
     @State private var tabSelection = 1
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    
     var body: some View {
         TabView(selection: $tabSelection) {
             NavigationStack {
@@ -43,8 +45,10 @@ struct MainView: View {
         }
         .onAppear {
             if authStore.user != nil {
-                authStore.myNotesWillFetchDB()
-                marketStore.marketNotesWillFetchDB()
+                myNoteStore.myNotesWillBeFetchedFromDB()
+                Task {
+                    await marketStore.marketNotesWillFetchDB()
+                }
             }
         }
     }

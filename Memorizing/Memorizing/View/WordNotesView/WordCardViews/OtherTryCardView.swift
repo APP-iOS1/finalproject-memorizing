@@ -22,7 +22,7 @@ struct OtherTryCardView: View {
     //    @State private var currentWordDef: String = "현기"
     
     @Environment(\.dismiss) private var dismiss
-    var myWordNote: WordNote
+    var myWordNote: MyWordNote
     var word: [Word]
     @State var isDismiss: Bool = false
     @State var num = 0
@@ -222,14 +222,16 @@ struct WordCardWordView2: View {
 
 // MARK: 이전 다음 버튼
 struct NextPreviousButton: View {
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var notiManager: NotificationManager
+    
     @Binding var isFlipped: Bool
-    @EnvironmentObject var authStore: AuthStore
     @Binding var isDismiss: Bool
     @Binding var num: Int
     @State var isShowingAlert: Bool = false
-    var wordNote: WordNote
+    
+    var wordNote: MyWordNote
     var lastWordIndex: Int
-    @EnvironmentObject var notiManager: NotificationManager
     
     var body: some View {
         HStack {
@@ -282,7 +284,7 @@ struct NextPreviousButton: View {
         ) {
             Button("Ok") {
                 Task {
-                    await authStore.repeatCountDidPlusOne(wordNote: wordNote)
+                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
                     
                     // 알림 설정 권한 확인
                     if !notiManager.isGranted {

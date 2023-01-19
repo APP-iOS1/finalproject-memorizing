@@ -9,11 +9,11 @@ import SwiftUI
 
 struct StudyAgainView: View {
     @EnvironmentObject var authStore: AuthStore
-    var myWordNote: WordNote
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    
+    var myWordNote: MyWordNote
     @State private var noteLists: [Word] = []
-    
     // 한 번도 안 하면 -1, 한 번씩 할 때마다 1씩 증가
-    
     @State var progressStep: Int = 0
     
     var body: some View {
@@ -159,10 +159,8 @@ struct StudyAgainView: View {
         }
         .onAppear {
             if authStore.user != nil {
-                authStore.myWordsWillFetchDB(wordNote: myWordNote) {
-                    dump(authStore.myWords)
-                    noteLists = authStore.myWords
-                    
+                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
+                    noteLists = myNoteStore.myWords
                 }
             }
         }

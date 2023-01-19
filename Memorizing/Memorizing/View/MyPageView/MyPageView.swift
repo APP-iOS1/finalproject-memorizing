@@ -10,9 +10,11 @@ import SwiftUI
 // MARK: 마이페이지 탭에서 가장 메인으로 보여주는 View
 struct MyPageView: View {
     @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var notiManager: NotificationManager
+    
     @State private var signOutAlertToggle: Bool = false
     @State private var isShownNickNameToggle: Bool = false
-    @EnvironmentObject var notiManager: NotificationManager
     
     var body: some View {
         
@@ -41,9 +43,9 @@ struct MyPageView: View {
                       
                     HStack {
                         
-                        Text("내 암기장 개수 \(authStore.myWordNotes.count)")
+                        Text("내 암기장 개수 \(myNoteStore.myWordNotes.count)")
                         Text("|")
-                        Text("받은 도장 개수 \(calculateStamp(myWordNotes: authStore.myWordNotes))")
+                        Text("받은 도장 개수 \(myNoteStore.calculateStamp(myWordNotes: myNoteStore.myWordNotes))")
                         
                     } // 내 암기장개수 . 받은 도장 개수
                     .font(.footnote)
@@ -229,19 +231,7 @@ struct MyPageView: View {
                 }
             }
             .padding(.horizontal, 30)
-        
         }
-        
-    }
-    
-    // MARK: - 도장 숫자 계산 함수
-    func calculateStamp(myWordNotes: [WordNote]) -> Int {
-        var count: Int = 0
-        
-        for wordNote in myWordNotes where wordNote.repeatCount == 4 {
-                count += 1
-        }
-        return count
     }
 }
 

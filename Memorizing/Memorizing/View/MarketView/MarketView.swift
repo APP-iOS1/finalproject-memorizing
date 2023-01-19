@@ -67,7 +67,7 @@ struct MarketView: View {
                     })
                 .padding(.horizontal)
             }   // ScrollView end
-            .padding(.bottom,1)
+            .padding(.bottom, 1)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -99,19 +99,19 @@ struct MarketView: View {
                 MarketViewSheet(wordNote: marketStore.sendWordNote)
             }
             
-            NavigationLink(destination: MarketViewAddButton()) {
-                Circle()
-                    .foregroundColor(.mainBlue)
-                    .frame(width: 65, height: 65)
-                    .overlay {
-                        Image(systemName: "plus")
-                            .foregroundColor(.white)
-                            .font(.title3)
-                            .bold()
-                    }
-                    .shadow(radius: 1, x: 1, y: 1)
-            }
-            .offset(x: 140, y: 184)
+//            NavigationLink(destination: MarketViewAddButton()) {
+//                Circle()
+//                    .foregroundColor(.mainBlue)
+//                    .frame(width: 65, height: 65)
+//                    .overlay {
+//                        Image(systemName: "plus")
+//                            .foregroundColor(.white)
+//                            .font(.title3)
+//                            .bold()
+//                    }
+//                    .shadow(radius: 1, x: 1, y: 1)
+//            }
+//            .offset(x: 140, y: 184)
         }
 //        .onAppear {
 //            marketStore.fetchMarketWordNotes()

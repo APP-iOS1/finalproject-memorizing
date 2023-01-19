@@ -86,8 +86,6 @@ struct CreateReviewView: View {
                         .lineLimit(3)
                         .font(.caption2)
                 }
-            
-            
         }
         .padding(.horizontal, 30)
     }

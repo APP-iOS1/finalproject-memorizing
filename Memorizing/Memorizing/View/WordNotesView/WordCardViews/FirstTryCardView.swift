@@ -10,7 +10,7 @@ import AVFoundation
 
 struct FirstTryCardView: View {
     @Environment(\.dismiss) private var dismiss
-    var myWordNote: WordNote
+    var myWordNote: MyWordNote
     @State var word: [Word]
     @State var isDismiss: Bool = false
     @State var num = 0
@@ -237,10 +237,10 @@ struct LevelCheck: View {
     var lastWordIndex: Int
     @Binding var num: Int
     @Binding var isShowingAlert: Bool
-    var wordNote: WordNote
+    var wordNote: MyWordNote
     var word: Word
     
-    @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
     
     var body: some View {
@@ -248,7 +248,7 @@ struct LevelCheck: View {
             // sfsymbols에 얼굴이 다양하지 않아 하나로 통일함
             Button {
                 // TODO: 모르겠어요 액션
-                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
+                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 0)
                 if lastWordIndex != num {
                     isFlipped = false
                     num += 1
@@ -271,7 +271,7 @@ struct LevelCheck: View {
             
             Button {
                 // TODO: 애매해요 액션
-                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 1)
+                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 1)
                 if lastWordIndex != num {
                     isFlipped = false
                     totalScore += 0.25
@@ -293,7 +293,7 @@ struct LevelCheck: View {
             
             Button {
                 // TODO: 외웠어요 액션
-                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
+                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 2)
                 if lastWordIndex != num {
                     isFlipped = false
                     num += 1
@@ -321,7 +321,7 @@ struct LevelCheck: View {
         ) {
             Button("Ok") {
                 Task {
-                    await authStore.repeatCountDidPlusOne(wordNote: wordNote)
+                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
                     if !notiManager.isGranted {
                         notiManager.openSetting()
                     } else {

@@ -14,6 +14,8 @@ import FirebaseFirestore
 class MarketStore: ObservableObject {
     @Published var marketWordNotes: [MarketWordNote] = []
     @Published var words: [Word] = []
+    @Published var filterWordNotes: [MarketWordNote] = []
+    @Published var myWordNoteIdArray: [String] = []
     
     @Published var sendWordNote = MarketWordNote(id: "",
                                                  noteName: "",
@@ -58,7 +60,9 @@ class MarketStore: ObservableObject {
                                                     starScoreTotal: starScoreTotal,
                                                     reviewCount: reviewCount)
                 
-                self.marketWordNotes.append(marketWordNote)
+                await MainActor.run(body: {
+                    self.marketWordNotes.append(marketWordNote)
+                })
             }
         } catch {
             print("marketNotesWillFetchDB Function Error: \(error)")
@@ -249,18 +253,18 @@ class MarketStore: ObservableObject {
     
     // TODO: - 마켓에서 구매하고 나면 다시 중복구매를 방지하기위해 filterWordNotes와 myWordNoteIDArray를 넣어줬는데
     // TODO: - 기존에 만들어져 있는 함수 및 다른 방법을 사용해서 구할 수 있도록 변경해볼것(View에서 변경)
-//    // MARK: - Market에서 Note를 구매할 경우, 해당 Notes를 My Notes DB에 저장
+    // MARK: - Market에서 Note를 구매할 경우, 해당 Notes를 My Notes DB에 저장
 //    func notesWillFetchDB() {
 //        self.filterWordNotes.removeAll()
 //
-//        let marketWordNotes = MarketStore().marketWordNotes
+//        let myWordNotes = MyNoteStore().myWordNotes
 //        var marketNoteId: [String] = []
 //
 //        for marketWordNote in marketWordNotes {
 //            marketNoteId.append(marketWordNote.id)
 //        }
 //
-//        for myWordNote in myWordNotes where myWordNote.enrollmentUser == user?.id {
+//        for myWordNote in myWordNotes where myWordNote.enrollmentUser == currentUser?.uid {
 //                self.filterWordNotes.append(myWordNote)
 //        }
 //    }

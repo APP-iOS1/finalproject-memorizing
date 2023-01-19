@@ -15,7 +15,7 @@ struct MarketViewNoteButton: View {
     @Binding var selectedCategory: String
     private let categoryArray: [String] = ["전체", "영어", "한국사", "IT", "경제", "시사", "기타"]
     
-    var selectedWordNote: WordNote
+    var selectedWordNote: MarketWordNote
     
     var body: some View {
         
@@ -53,10 +53,10 @@ struct MarketViewNoteButton: View {
                                     
                                     Spacer()
                                 }
-                                .frame(height : 20)
+                                .frame(height: 20)
                                 
                                 // 암기장 제목
-                                HStack(alignment: .top){
+                                HStack(alignment: .top) {
                                     Text(selectedWordNote.noteName)
                                         .foregroundColor(.mainBlack)
                                         .font(.footnote)
@@ -67,7 +67,7 @@ struct MarketViewNoteButton: View {
                                     
                                     Spacer()
                                 }
-                                .frame(width : 140, height : 40)
+                                .frame(width: 140, height: 40)
                                 .padding(.bottom, 3)
                                 
                                 // 암기장 판매 가격
@@ -79,7 +79,7 @@ struct MarketViewNoteButton: View {
                                         .foregroundColor(.mainDarkBlue)
                                         .padding(.trailing, 5)
                                 }
-                                .frame(height : 20)
+                                .frame(height: 20)
                             }
                             .padding(.horizontal, 3)
                             .padding(.vertical, 10)
@@ -94,11 +94,15 @@ struct MarketViewNoteButton: View {
     static var previews: some View {
         MarketViewNoteButton(isSheetOpen: .constant(true),
                              selectedCategory: .constant("IT"),
-                             selectedWordNote: WordNote(id: "",
-                                                        noteName: "이상한 나라의 앨리스가 더 이상함",
-                                                        noteCategory: "IT",
-                                                        enrollmentUser: "",
-                                                        repeatCount: 0,
-                                                        notePrice: 0))
+                             selectedWordNote: MarketWordNote(id: "",
+                                                              noteName: "",
+                                                              noteCategory: "",
+                                                              enrollmentUser: "",
+                                                              notePrice: 0,
+                                                              updateDate: Date.now,
+                                                              salesCount: 0,
+                                                              starScoreTotal: 0,
+                                                              reviewCount: 0)
+                             )
     }
  }

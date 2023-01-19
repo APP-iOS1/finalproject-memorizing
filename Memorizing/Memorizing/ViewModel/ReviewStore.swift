@@ -17,7 +17,6 @@ class ReviewStore: ObservableObject {
     @Published var reviewWriter: String = ""
     @Published var reviewStarScore: Double = 0.0
     
-    
     // Todo - user를 CurrentUser 적용하기
     
     let database = Firestore.firestore()
@@ -26,7 +25,7 @@ class ReviewStore: ObservableObject {
 
     ///  내가 작성한 review를 fetch함
     /// - Returns: reviews배열에 review를 담고 쉽게 말해 추가 되는게 있으면 새로고침을 한다.
-    func reviewsWillFetchDB() async -> Void {
+    func reviewsWillFetchDB() async {
         do {
             print("start fetchReviews")
             let documents = try await  database
@@ -47,8 +46,11 @@ class ReviewStore: ObservableObject {
                 let createDate: Date = createdAtTimeStamp.dateValue()
                 let starScore: Double = docData["starScore"] as? Double ?? 0.0
                 
-                
-                let myReview = Review(id: id, writer: writer, reviewText: reviewText, createDate: createDate, starScore: starScore)
+                let myReview = Review(id: id,
+                                      writer: writer,
+                                      reviewText: reviewText,
+                                      createDate: createDate,
+                                      starScore: starScore)
                 self.reviews.append(myReview)
                 print("finished fetchMyWordNotes")
             }
@@ -57,14 +59,13 @@ class ReviewStore: ObservableObject {
         }
     }
     
-    
     // MARK: - reviews를 추가하는 함수 / 내가 작성한 review를 DB에 저장함
     
     // Todo - WordNote --> MarketWordNotes로 변경
     /// marketWordNotes DB의 Id의 컬렉션에 review를 컬렉션을 추가한다.
     /// - Parameter marketWord: marketWordnote의 id의 컬레션에 reviews를 추가한다.
     ///  reviews안에 현재 user의 id로 구조체로된 review가 생성된다.
-    func reviewDidSaveDB(marketWord: WordNote) {
+    func reviewDidSaveDB(marketWord: MarketWordNote) {
         
         let createDate: Date = Date.now
         database
@@ -87,7 +88,7 @@ class ReviewStore: ObservableObject {
     // Todo - WordNote --> MarketWordNotes로 변경
     /// marketWordNote.id에 StarScore를 추가한다.
     /// - Parameter marketWordNote: review에서 평가한 starScore를 marketWordNote.id의 starScore에 추가한다.
-    func starScoreDidPlusMarketWordNote(marketWordNote: WordNote) {
+    func starScoreDidPlusMarketWordNote(marketWordNote: MarketWordNote) {
         print("스코어를 추가합니다.")
         // marketWord.id로 간다음 starScore에 reviewDidSaveDB에서 추가한 starScore를 더해준다.
         database
@@ -105,7 +106,7 @@ class ReviewStore: ObservableObject {
     /// marketWordNote.id에 있는 reviewCount를 +1씩 한다.
     /// - Parameter marketWordNote: reviewDidSaveDB를 통해 생성이 되면 review가 작성되고,
     /// marketWordNote.id안에 있는 reviewCount를 +1를 한다.
-    func reviewCountDidPlusOne(marketWordNote: WordNote) {
+    func reviewCountDidPlusOne(marketWordNote: MarketWordNote) {
         print("리뷰 카운트를 1증가 시킵니다.")
         // marketWord.id로 접근해서 reviewCount에 +1를 해준다.
         database
@@ -123,12 +124,12 @@ class ReviewStore: ObservableObject {
     /// - Parameters:
     ///   - marketWordNote: marketWordNote의 정보를 가져온다. ??? 왜 필요한지 모르겠음
     ///   - review: 지우고자 하는 리뷰를 가져온다.
-    func reviewDidDeleteDB(marketWordNote: WordNote, review: Review) {
+    func reviewDidDeleteDB(marketWordNote: MarketWordNote, review: Review) {
         database.collection("marketWordNotes")
             .document(marketWordNote.id)
             .collection("reviews")
             .document(currentUser?.id ?? "")
-            .delete() { err in
+            .delete { err in
                 if let err = err {
                     print("reviewDidDeleteDB 데이터를 삭제할 때 오류 발생 : \(err.localizedDescription)")
                 } else {
@@ -137,14 +138,13 @@ class ReviewStore: ObservableObject {
             }
     }
     
-    
     // MARK: - 해당 review 수정
     
     /// review를 수정한다.
     /// - Parameters:
     ///   - marketWordNote: marketWordNote의 정보를 가져온다.? 왜 필요한가
     ///   - review: 수정하고자 하는 리뷰를 가져온다.
-    func reviewDidModifyDB(marketWordNote: WordNote, review: Review) {
+    func reviewDidModifyDB(marketWordNote: MarketWordNote, review: Review) {
         // 수정 버튼을 누르고 수정하게 되면 수정한 내용(리뷰 내용, 평점) 다시 업데이트
         database
             .collection("marketWordNotes")

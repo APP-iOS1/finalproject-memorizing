@@ -11,9 +11,10 @@ import SwiftUI
 struct MarketViewSheet: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
     @Environment(\.dismiss) private var dismiss
     
-    var wordNote: WordNote
+    var wordNote: MarketWordNote
     
     @State private var selectedWord: [String] = []
     @State private var isAlertToggle: Bool = false
@@ -81,7 +82,7 @@ struct MarketViewSheet: View {
                 .padding(.horizontal, 30)
 
                 // MARK: - 암기장 구매하기 버튼
-                if userStore.myWordNoteIdArray.contains(wordNote.id) {
+                if marketStore.myWordNoteIdArray.contains(wordNote.id) {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.gray3)
                         .frame(width: 355, height: 44)
@@ -93,10 +94,9 @@ struct MarketViewSheet: View {
                         }
                 } else {
                     Button(action: {
-                        if userStore.user?.coin ?? 0 >= wordNote.notePrice {
+                        if authStore.user?.coin ?? 0 >= wordNote.notePrice {
                             isAlertToggle.toggle()
                             isCoinCheckToggle = true
-                            print("\(userStore.user?.coin ?? 0)")
                         } else {
                             isAlertToggle.toggle()
                             isCoinCheckToggle = false
@@ -119,12 +119,12 @@ struct MarketViewSheet: View {
                                          message: Text("\(wordNote.noteName)을(를) 구매하시겠습니까?"),
                                          primaryButton: .destructive(Text("구매하기"),
                                                                      action: {
-                                userStore.userCoinWillCheckDB(marketWordNote: wordNote,
+                                marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
                                                               words: marketStore.words)
                                 dismiss()
                                 
                                 Task {
-                                    await userStore.userInfoWillFetchDB()
+                                    await authStore.userInfoWillFetchDB()
                                 }
                             }),
                                          secondaryButton: .cancel(Text("취소")))
@@ -252,13 +252,13 @@ struct MarketViewSheet: View {
                     .padding(.bottom)
             } // ScrollView
         } // NavigationStack
-        .onAppear {
-            marketStore.wordsWillFetchDB(wordNoteId: wordNote.id)
-            authStore.notesArrayWillFetchDB()
-        }
         .onDisappear {
-            authStore.myNotesWillFetchDB()
+            myNoteStore.myNotesWillBeFetchedFromDB()
         }
+//        .onAppear {
+//            marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
+//            authStore.notesArrayWillFetchDB()
+//        }
     }
 }
 

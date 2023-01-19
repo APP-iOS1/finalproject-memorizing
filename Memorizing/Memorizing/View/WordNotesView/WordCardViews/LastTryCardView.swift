@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LastTryCardView: View {
     @Environment(\.dismiss) private var dismiss
-    var myWordNote: WordNote
+    var myWordNote: MyWordNote
     var word: [Word]
     @State var isDismiss: Bool = false
     @State var num = 0
@@ -133,16 +133,16 @@ struct LevelCheckForLast: View {
     @Binding var totalScore: Double
     var lastWordIndex: Int
     @Binding var num: Int
-    var wordNote: WordNote
+    var wordNote: MyWordNote
     var word: Word
     
-    @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
     var body: some View {
         HStack(spacing: 15) {
             // sfsymbols에 얼굴이 다양하지 않아 하나로 통일함
             Button {
                 // TODO: 모르겠어요 액션
-                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
+                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 0)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false
@@ -164,7 +164,7 @@ struct LevelCheckForLast: View {
             
             Button {
                 // TODO: 애매해요 액션
-                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 1)
+                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 1)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false
@@ -186,7 +186,7 @@ struct LevelCheckForLast: View {
             
             Button {
                 // TODO: 외웠어요 액션
-                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
+                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 2)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false

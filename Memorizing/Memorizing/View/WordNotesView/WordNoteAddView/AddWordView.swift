@@ -9,11 +9,10 @@ import SwiftUI
 
 struct AddWordView: View {
     // MARK: - 바인딩
-    @EnvironmentObject var marketStore: MarketStore
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var authStore: AuthStore
     // 상위뷰랑 꼬일 수 있으므로, 그냥 var 선언하기 (Binding X)
-    var wordNote: WordNote
+    var wordNote: MyWordNote
     @Binding var noteLists: [Word]
     
     // MARK: - 단어, 문장, 질문과 답 피커 만들기 -> 아래 Enum으로 유형 선언되어 있음
@@ -70,8 +69,8 @@ struct AddWordView: View {
                                                            action: {
                                 // TODO: - 저장을 할 때 Store에 패치를 하게 되는데..
                                 // TODO: - 상위뷰인 MyMemoryNote에서도 동일하게 중복적으로 패치를 진행하게 되는 문제 해결 필요
-                                authStore.myWordsWillFetchDB(wordNote: wordNote) {
-                                    self.noteLists = authStore.myWords
+                                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+                                    self.noteLists = myNoteStore.myWords
                                 }
                                 dismiss()
                             }))
@@ -205,7 +204,7 @@ struct AddWordView: View {
                             }
                         }
                     }
-                    //MARK: - 빈 공간을 눌렀을 때, 키보드 자동으로 감추기
+                    // MARK: - 빈 공간을 눌렀을 때, 키보드 자동으로 감추기
                     .onAppear {
                         UIApplication.shared.hideKeyboard()
                     }
@@ -216,7 +215,6 @@ struct AddWordView: View {
             Section {
                 VStack {
                     HStack {
-                        
                         // MARK: - 작성된 Word의 리스트를 보여주는 버튼
                         Button {
                             // TODO: - List 확인하기
@@ -232,12 +230,10 @@ struct AddWordView: View {
                                         .font(.title2)
                                 }
                         }
-                        .sheet(isPresented: $displayLists) {
-                            AddListView(wordNote: wordNote, word: authStore.myWords)
-                        }
+                        
                         // MARK: - 빈 TextField에 데이터를 입력할 때, 버튼(암기목록 추가하기)을 누르면 Store에 저장됨
                         Button {
-                            authStore.myWordsDidSaveDB(wordNote: wordNote,
+                            myNoteStore.myWordsWillBeSavedOnDB(wordNote: wordNote,
                                                 word: Word(
                                                     id: UUID().uuidString,
                                                     wordString: wordString,
@@ -263,6 +259,9 @@ struct AddWordView: View {
                 }
             }
         }// ------- 전체 VStack
+        .sheet(isPresented: $displayLists) {
+            AddListView(wordNote: wordNote, word: $myNoteStore.myWords)
+        }
         .padding()
     }
 }
@@ -276,12 +275,14 @@ enum AddWordCategory: String, CaseIterable {
 
 struct AddWordView_Previews: PreviewProvider {
     static var previews: some View {
-        AddWordView(wordNote: WordNote(id: "",
-                                       noteName: "이상한 나라의 앨리스",
-                                       noteCategory: "IT",
-                                       enrollmentUser: "",
-                                       repeatCount: 0,
-                                       notePrice: 0),
+        AddWordView(wordNote: MyWordNote(id: "",
+                                         noteName: "",
+                                         noteCategory: "",
+                                         enrollmentUser: "",
+                                         repeatCount: 0,
+                                         firstTestResult: 0,
+                                         lastTestResult: 0,
+                                         updateDate: Date.now),
                     noteLists: .constant([Word(id: "",
                                           wordString: "Hello",
                                           wordMeaning: "안녕",

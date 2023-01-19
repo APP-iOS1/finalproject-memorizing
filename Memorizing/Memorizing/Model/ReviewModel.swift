@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-
 // MARK: - Review 모델 id, 작성자, 리뷰 내용, 날짜, 평점 
 struct Review: Identifiable {
     var id: String

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddListView: View {
-    var wordNote: WordNote
+    var wordNote: MyWordNote
     @Binding var word: [Word]
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss

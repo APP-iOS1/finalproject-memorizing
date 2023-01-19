@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: 단어장 진행도 view
 struct FaceProgressView: View {
     
-    var myWordNote: WordNote
+    var myWordNote: MyWordNote
     
     var body: some View {
         ZStack {
@@ -151,13 +151,14 @@ struct FaceProgressView: View {
 
 struct FaceProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        FaceProgressView(myWordNote: WordNote(id: "9MvRSpz3zdisXon4ZTtI",
-                                              noteName: "테스트노트",
-                                              noteCategory: "영어",
-                                              enrollmentUser: "hKWRjBcFi0NTuR5IjGHSsGMZUaV2",
-                                              repeatCount: 3,
-                                              notePrice: 0)
-                         //                         repeatCount: 0
+        FaceProgressView(myWordNote: MyWordNote(id: "",
+                                                noteName: "",
+                                                noteCategory: "",
+                                                enrollmentUser: "",
+                                                repeatCount: 0,
+                                                firstTestResult: 0,
+                                                lastTestResult: 0,
+                                                updateDate: Date.now)
         )
     }
 }
