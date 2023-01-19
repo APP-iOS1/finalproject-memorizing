@@ -10,7 +10,7 @@ import SwiftUI
 struct AddWordView: View {
     // MARK: - 바인딩
     @EnvironmentObject var marketStore: MarketStore
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     // 상위뷰랑 꼬일 수 있으므로, 그냥 var 선언하기 (Binding X)
     var wordNote: WordNote
     @Binding var noteLists: [Word]
@@ -76,8 +76,8 @@ struct AddWordView: View {
                                                               action: {}),
                                   secondaryButton: .cancel(Text("저장하기"),
                                                            action: {
-                                userStore.myWordsWillFetchDB(wordNote: wordNote) {
-                                    self.noteLists = userStore.myWords
+                                authStore.myWordsWillFetchDB(wordNote: wordNote) {
+                                    self.noteLists = authStore.myWords
                                 }
                                 dismiss()
                             }))
@@ -233,10 +233,10 @@ struct AddWordView: View {
                                 }
                         }
                         .sheet(isPresented: $displayLists) {
-                            AddListView(wordNote: wordNote, word: userStore.myWords)
+                            AddListView(wordNote: wordNote, word: authStore.myWords)
                         }
                         Button {
-                            userStore.myWordsDidSaveDB(wordNote: wordNote,
+                            authStore.myWordsDidSaveDB(wordNote: wordNote,
                                                 word: Word(
                                                     id: UUID().uuidString,
                                                     wordString: wordString,

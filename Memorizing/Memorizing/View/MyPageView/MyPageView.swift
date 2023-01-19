@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: 마이페이지 탭에서 가장 메인으로 보여주는 View
 struct MyPageView: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @State private var signOutAlertToggle: Bool = false
     @State private var isShownNickNameToggle: Bool = false
     @EnvironmentObject var notiManager: NotificationManager
@@ -27,10 +27,10 @@ struct MyPageView: View {
                             Text("안녕하세요")
                                 .font(.headline)
                                 .fontWeight(.semibold)
-                            Text("\(userStore.user?.nickName ?? "")님!")
+                            Text("\(authStore.user?.nickName ?? "")님!")
                                 .font(.title)
                                 .fontWeight(.semibold)
-                            Text("\(userStore.user?.email ?? "")")
+                            Text("\(authStore.user?.email ?? "")")
                                 .font(.footnote)
                                 .fontWeight(.light)
                                 .foregroundColor(.gray2)
@@ -41,9 +41,9 @@ struct MyPageView: View {
                       
                     HStack {
                         
-                        Text("내 암기장 개수 \(userStore.myWordNotes.count)")
+                        Text("내 암기장 개수 \(authStore.myWordNotes.count)")
                         Text("|")
-                        Text("받은 도장 개수 \(calculateStamp(myWordNotes: userStore.myWordNotes))")
+                        Text("받은 도장 개수 \(calculateStamp(myWordNotes: authStore.myWordNotes))")
                         
                     } // 내 암기장개수 . 받은 도장 개수
                     .font(.footnote)
@@ -191,7 +191,7 @@ struct MyPageView: View {
                     ) {
                         HStack {
                             Button {
-                                userStore.signOutDidAuth()
+                                authStore.signOutDidAuth()
                             }label: {
                                 Text("로그아웃")
                                     .foregroundColor(.accentColor)
@@ -248,6 +248,6 @@ struct MyPageView: View {
 struct MyPageView_Previews: PreviewProvider {
     static var previews: some View {
         MyPageView()
-            .environmentObject(UserStore())
+            .environmentObject(AuthStore())
     }
 }
