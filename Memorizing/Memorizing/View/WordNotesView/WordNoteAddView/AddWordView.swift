@@ -11,7 +11,8 @@ struct AddWordView: View {
     // MARK: - 바인딩
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var userStore: UserStore
-    
+    @EnvironmentObject var authStore: AuthStore
+    // 상위뷰랑 꼬일 수 있으므로, 그냥 var 선언하기 (Binding X)
     var wordNote: WordNote
     @Binding var noteLists: [Word]
     
@@ -69,8 +70,8 @@ struct AddWordView: View {
                                                            action: {
                                 // TODO: - 저장을 할 때 Store에 패치를 하게 되는데..
                                 // TODO: - 상위뷰인 MyMemoryNote에서도 동일하게 중복적으로 패치를 진행하게 되는 문제 해결 필요
-                                userStore.myWordsWillFetchDB(wordNote: wordNote) {
-                                    self.noteLists = userStore.myWords
+                                authStore.myWordsWillFetchDB(wordNote: wordNote) {
+                                    self.noteLists = authStore.myWords
                                 }
                                 dismiss()
                             }))
@@ -232,11 +233,11 @@ struct AddWordView: View {
                                 }
                         }
                         .sheet(isPresented: $displayLists) {
-                            AddListView(wordNote: wordNote, word: $userStore.myWords)
+                            AddListView(wordNote: wordNote, word: authStore.myWords)
                         }
                         // MARK: - 빈 TextField에 데이터를 입력할 때, 버튼(암기목록 추가하기)을 누르면 Store에 저장됨
                         Button {
-                            userStore.myWordsDidSaveDB(wordNote: wordNote,
+                            authStore.myWordsDidSaveDB(wordNote: wordNote,
                                                 word: Word(
                                                     id: UUID().uuidString,
                                                     wordString: wordString,

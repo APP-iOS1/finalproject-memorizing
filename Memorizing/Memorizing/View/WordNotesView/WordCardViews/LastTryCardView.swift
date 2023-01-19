@@ -136,13 +136,13 @@ struct LevelCheckForLast: View {
     var wordNote: WordNote
     var word: Word
     
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     var body: some View {
         HStack(spacing: 15) {
             // sfsymbols에 얼굴이 다양하지 않아 하나로 통일함
             Button {
                 // TODO: 모르겠어요 액션
-                userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
+                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false
@@ -164,7 +164,7 @@ struct LevelCheckForLast: View {
             
             Button {
                 // TODO: 애매해요 액션
-                userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 1)
+                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 1)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false
@@ -186,7 +186,7 @@ struct LevelCheckForLast: View {
             
             Button {
                 // TODO: 외웠어요 액션
-                userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
+                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false

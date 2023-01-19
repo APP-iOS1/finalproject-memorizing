@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TryAgainView: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     var wordNote: WordNote
     @Binding var isDismiss: Bool
     var body: some View {
@@ -40,7 +40,7 @@ struct TryAgainView: View {
             
             Button {
                 // 복습하기 리스트 뷰로 이동 --> 해당 리스트 리셋시키기
-                userStore.repeatCountDidReset(wordNote: wordNote)
+                authStore.repeatCountDidReset(wordNote: wordNote)
                 isDismiss = true
             } label: {
                 RoundedRectangle(cornerRadius: 10)

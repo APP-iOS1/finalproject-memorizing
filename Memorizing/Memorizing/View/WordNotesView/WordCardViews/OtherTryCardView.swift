@@ -223,7 +223,7 @@ struct WordCardWordView2: View {
 // MARK: 이전 다음 버튼
 struct NextPreviousButton: View {
     @Binding var isFlipped: Bool
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @Binding var isDismiss: Bool
     @Binding var num: Int
     @State var isShowingAlert: Bool = false
@@ -282,7 +282,7 @@ struct NextPreviousButton: View {
         ) {
             Button("Ok") {
                 Task {
-                    await userStore.repeatCountDidPlusOne(wordNote: wordNote)
+                    await authStore.repeatCountDidPlusOne(wordNote: wordNote)
                     
                     // 알림 설정 권한 확인
                     if !notiManager.isGranted {

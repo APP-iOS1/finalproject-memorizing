@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: 암기장, 마켓, 마이페이지를 Tab으로 보여주는 View
 struct MainView: View {
     @State private var tabSelection = 1
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     var body: some View {
         TabView(selection: $tabSelection) {
@@ -42,8 +42,8 @@ struct MainView: View {
             }.tag(3)
         }
         .onAppear {
-            if userStore.user != nil {
-                userStore.myNotesWillFetchDB()
+            if authStore.user != nil {
+                authStore.myNotesWillFetchDB()
                 marketStore.marketNotesWillFetchDB()
             }
         }

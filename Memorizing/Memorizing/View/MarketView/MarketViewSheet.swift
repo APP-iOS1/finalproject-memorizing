@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: 암기장 구매하기 뷰
 struct MarketViewSheet: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     @Environment(\.dismiss) private var dismiss
     
@@ -79,7 +79,7 @@ struct MarketViewSheet: View {
                     }
                 }
                 .padding(.horizontal, 30)
-                
+
                 // MARK: - 암기장 구매하기 버튼
                 if userStore.myWordNoteIdArray.contains(wordNote.id) {
                     RoundedRectangle(cornerRadius: 20)
@@ -254,10 +254,10 @@ struct MarketViewSheet: View {
         } // NavigationStack
         .onAppear {
             marketStore.wordsWillFetchDB(wordNoteId: wordNote.id)
-            userStore.notesArrayWillFetchDB()
+            authStore.notesArrayWillFetchDB()
         }
         .onDisappear {
-            userStore.myNotesWillFetchDB()
+            authStore.myNotesWillFetchDB()
         }
     }
 }

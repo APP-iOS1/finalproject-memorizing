@@ -23,7 +23,7 @@ class NumbersOnly: ObservableObject {
 // MARK: 마켓에 등록하기 버튼 눌렀을때 이동할 뷰
 struct MarketViewAddButton: View {
     @ObservedObject var inputNum = NumbersOnly()
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     
     @Environment(\.dismiss) private var dismiss
@@ -46,7 +46,7 @@ struct MarketViewAddButton: View {
             .padding(.bottom, 20)
             
             ScrollView {
-                ForEach(userStore.filterWordNotes) { myWordNote in
+                ForEach(authStore.filterWordNotes) { myWordNote in
                     let id = myWordNote.id
                     
                     RoundedRectangle(cornerRadius: 6)
@@ -147,7 +147,7 @@ struct MarketViewAddButton: View {
             Button {
                 if selectedNote.isEmpty {
                     marketStore.maketNotesDidSaveDB(noteId: selectedNote,
-                                                  userId: userStore.user?.id ?? "",
+                                                  userId: authStore.user?.id ?? "",
                                                   notePrice: Int(inputNum.value) ?? 0)
                     dismiss()
                 }
@@ -175,14 +175,14 @@ struct MarketViewAddButton: View {
                     .stroke(Color.mainBlue)
                     .frame(width: 60, height: 30)
                     .overlay {
-                        Text("\(userStore.user?.coin ?? 0) P")
+                        Text("\(authStore.user?.coin ?? 0) P")
                             .foregroundColor(.mainBlue)
                             .font(.subheadline)
                     }
             }
         }
         .onAppear {
-            userStore.notesWillFetchDB()
+            authStore.notesWillFetchDB()
         }
         .onDisappear {
             marketStore.marketNotesWillFetchDB()
@@ -194,7 +194,7 @@ struct MarketViewAddButton_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             MarketViewAddButton()
-                .environmentObject(UserStore())
+                .environmentObject(AuthStore())
                 .environmentObject(MarketStore())
         }
     }

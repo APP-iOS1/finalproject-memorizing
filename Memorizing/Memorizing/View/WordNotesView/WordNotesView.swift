@@ -28,22 +28,22 @@ struct WordNotesView: View {
     @State private var reviewStepToggle: Bool = false
     @State private var menuXAxis: Double = -132
     @State private var isShowingNewMemorySheet: Bool = false
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     var body: some View {
         ZStack {
             VStack {
                 Header(memoryStepToggle: $memoryStepToggle, reviewStepToggle: $reviewStepToggle, menuXAxis: $menuXAxis)
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
-                    ScrollView(showsIndicators: false) {
-                        ForEach(userStore.myWordNotes) { myWordNote in
+                    ScrollView {
+                        ForEach(authStore.myWordNotes) { myWordNote in
                             WordRegistrationView(myWordNote: myWordNote)
                         }
                     }
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
-                    ScrollView(showsIndicators: false) {
-                        ForEach(userStore.myWordNotes) { myWordNote in
+                    ScrollView {
+                        ForEach(authStore.myWordNotes) { myWordNote in
                             StudyAgainView(myWordNote: myWordNote)
                         }
                     }
@@ -67,6 +67,7 @@ struct WordNotesView: View {
                     }
                 }
             }
+            
             VStack {
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
