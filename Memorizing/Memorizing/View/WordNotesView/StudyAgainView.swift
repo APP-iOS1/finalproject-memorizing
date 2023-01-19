@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StudyAgainView: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     var myWordNote: WordNote
     @State private var noteLists: [Word] = []
     
@@ -157,10 +157,10 @@ struct StudyAgainView: View {
             }
         }
         .onAppear {
-            if userStore.user != nil {
-                userStore.myWordsWillFetchDB(wordNote: myWordNote) {
-                    dump(userStore.myWords)
-                    noteLists = userStore.myWords
+            if authStore.user != nil {
+                authStore.myWordsWillFetchDB(wordNote: myWordNote) {
+                    dump(authStore.myWords)
+                    noteLists = authStore.myWords
                     
                 }
             }

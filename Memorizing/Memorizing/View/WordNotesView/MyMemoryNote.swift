@@ -7,13 +7,13 @@
 import SwiftUI
 
 struct MyMemoryNote: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     var myWordNote: WordNote
     var body: some View {
         
         VStack(spacing: 30) {
             
-            //            if userStore.myWords.count == 0 {
+            //            if authStore.myWords.count == 0 {
             WordRegistrationView(myWordNote: myWordNote)
             //            } else {
             //                WordRegistrationView(myWordNote: myWordNote, isButton : false)
@@ -21,7 +21,7 @@ struct MyMemoryNote: View {
             
         }
         //        .onAppear {
-        //            userStore.fetchMyWords(wordNote: myWordNote)
+        //            authStore.fetchMyWords(wordNote: myWordNote)
         //        }
         
     }
@@ -55,7 +55,7 @@ struct MyMemoryNote: View {
 
 // MARK: - 단어 등록 완료된 뷰
 struct WordRegistrationView: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     var myWordNote: WordNote
     @State private var noteLists: [Word] = []
     @State private var isShowingSheet: Bool = false
@@ -154,9 +154,9 @@ struct WordRegistrationView: View {
                 }
         }
         .onAppear {
-            if userStore.user != nil {
-                userStore.myWordsWillFetchDB(wordNote: myWordNote) {
-                    noteLists = userStore.myWords
+            if authStore.user != nil {
+                authStore.myWordsWillFetchDB(wordNote: myWordNote) {
+                    noteLists = authStore.myWords
                     
                 }
             }

@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - 마지막 복습 페이지
 struct GoodJobStampView: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     var wordNote: WordNote
     @Binding var isDismiss: Bool
     var body: some View {
@@ -30,7 +30,7 @@ struct GoodJobStampView: View {
                 Button {
                     // FIXME: - 현기 수정
                     Task.init {
-                        await userStore.repeatCountDidPlusOne(wordNote: wordNote)
+                        await authStore.repeatCountDidPlusOne(wordNote: wordNote)
                         isDismiss = true
                     }
                     // 복습하기 리스트 뷰로 이동
@@ -48,7 +48,7 @@ struct GoodJobStampView: View {
                 
                 Button {
                     // 복습하기 리스트 뷰로 이동 --> 해당 리스트 리셋시키기
-                    userStore.repeatCountDidReset(wordNote: wordNote)
+                    authStore.repeatCountDidReset(wordNote: wordNote)
                     isDismiss = true
                     
                 } label: {

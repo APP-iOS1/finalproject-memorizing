@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddListRow: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     
     var word: Word

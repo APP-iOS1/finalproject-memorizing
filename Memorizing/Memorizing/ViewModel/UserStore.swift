@@ -5,6 +5,7 @@
 //  Created by 진준호 on 2023/01/05.
 //
 
+/*
 import Foundation
 import Firebase
 import FirebaseAuth
@@ -14,23 +15,10 @@ import FirebaseFirestore
 
 @MainActor
 class UserStore: ObservableObject {
-    // 종현님
-    @Published var myWordNotes: [WordNote] = []
-    @Published var myWords: [Word] = []
-    // 태영
-    @Published var state: SignInState = .check
-    @Published var user: User?
-    @Published var errorMessage: String = "" // Firestore 관련 에러 메세지
-    // 준호
-    @Published var filterWordNotes: [WordNote] = []
-    @Published var myWordNoteIdArray: [String] = []
-    enum SignInState {
-        case signedIn
-        case signedOut
-        case firstIn    // 현기 추가
-        case check    // 현기 추가
-    }
-    let database = Firestore.firestore()
+   
+    
+    // MARK: - Firebase Auth
+    
     // MARK: - FirebaseAuth SignIn Function / Auth에 signIn을 진행함
     func signInDidAuth(email: String, password: String) async {
         print("start signInDidAuth function")
@@ -72,7 +60,7 @@ class UserStore: ObservableObject {
         
     } // emailAuthSignIn
     
-    // MARK: - FirebaseAuth SignUp Function / 
+    // MARK: - FirebaseAuth SignUp Function /
     func signUpDidAuth(email: String, password: String, nickName: String) {
         self.errorMessage = ""
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
@@ -94,6 +82,7 @@ class UserStore: ObservableObject {
             }
         }
     } // emailAuthSignUp
+    
     // MARK: - Firestore SignUp Function / FireStore-DB에 UserInfo를 저장함
     func userInfoDidSaveDB(user: User) {
         database.collection("users").document(user.id)
@@ -104,6 +93,7 @@ class UserStore: ObservableObject {
                 "coin": user.coin
             ])
     } // FireStore-DB에 UserInfo를 저장함
+    
     // MARK: - FirebaseAuth SignOut Function / Auth에 signOut을 진행함
     func signOutDidAuth() {
         print("start emailAuthSignOut")
@@ -121,6 +111,7 @@ class UserStore: ObservableObject {
             print("SignOut Fail: ", errorMessage)
         }
     } // emailAuthSignOut
+    
     // MARK: - FetchUser Function / FireStore-DB에서 UserInfo를 불러옴
     func userInfoWillFetchDB() async {
         print("Start FetchUser")
@@ -148,6 +139,7 @@ class UserStore: ObservableObject {
         }
         print("finish fetchUser function")
     } // fetchUser
+    
     // MARK: - myWordNotes를 페치하는 함수 / 내가 작성한 Notes를 Fetch함
     func myNotesWillFetchDB() {
         print("start fetchMyWordNotes")
@@ -180,6 +172,7 @@ class UserStore: ObservableObject {
             }
         }
     }
+    
     // MARK: - myWordNotes를 추가하는 함수 / 내가 작성한 Notes를 DB에 저장함
     func myNotesDidSaveDB(wordNote: WordNote) {
         database.collection("users").document(user?.id ?? "").collection("myWordNotes").document(wordNote.id)
@@ -193,6 +186,7 @@ class UserStore: ObservableObject {
             ])
         myNotesWillFetchDB()
     }
+    
     // MARK: - words를 패치하는 함수 / 내가 작성한 Words를 Fetch함
     func myWordsWillFetchDB(wordNote: WordNote, completion: @escaping () -> Void) {
         database.collection("users").document(user?.id ?? "")
@@ -250,6 +244,7 @@ class UserStore: ObservableObject {
             fatalError("fail plusRepeat Count")
         }
     }
+    
     // MARK: - 복습 다시하기 repeatcount를 0으로 초기화 / 반복학습이 완료될 경우, Count를 Reset
     func repeatCountDidReset(wordNote: WordNote) {
         database.collection("users").document(user?.id ?? "")
@@ -282,6 +277,7 @@ class UserStore: ObservableObject {
             
         }
     }
+    
     // MARK: - 마켓에서 단어장 가져오는 기능 (단어장 구매) / Market에서 Note를 구매할 경우, 해당 note를 DB에 저장 및 불러오기
     func notesWillBringDB(marketWordNote: WordNote, words: [Word]) {
         let id = UUID().uuidString
@@ -387,6 +383,7 @@ class UserStore: ObservableObject {
         
     }
 }
+
 // MARK: - UserDefaults extention: 기기에 로그인 정보를 담당하는 구조 추가
 extension UserDefaults {
     
@@ -394,10 +391,10 @@ extension UserDefaults {
         
         case email
         case password
-        
     }
     
     func reset() {
         Keys.allCases.forEach { removeObject(forKey: $0.rawValue) }
     }
 }
+*/

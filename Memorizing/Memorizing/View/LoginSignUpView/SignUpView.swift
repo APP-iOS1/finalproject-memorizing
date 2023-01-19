@@ -37,7 +37,7 @@ import Combine
 
 struct SignUpView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @State private var nickName: String = ""
 //    @State private var nickNameOldValue: String = ""
     @State private var signUpEmail: String = ""
@@ -203,10 +203,12 @@ struct SignUpView: View {
                     ) {
                         Button {
                             if termsAgreed {
-                                userStore.signUpDidAuth(email: signUpEmail,
-                                                          password: signUpPassWord,
-                                                          nickName: nickName)
-                                dismiss()
+                                Task {
+                                    await authStore.signUpDidAuth(email: signUpEmail,
+                                                                  password: signUpPassWord,
+                                                                  nickName: nickName)
+                                    dismiss()
+                                }
                             }
                             signUpProcessing.toggle()
                         } label: {
@@ -243,7 +245,7 @@ struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             SignUpView()
-                .environmentObject(UserStore())
+                .environmentObject(AuthStore())
         }
     }
 }

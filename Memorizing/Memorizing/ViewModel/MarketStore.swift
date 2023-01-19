@@ -212,7 +212,6 @@ class MarketStore: ObservableObject {
                 
                 print("WordNote Complete")
             }
-        
         marketWordsWillBringMyWordsDB(marketWords: words, noteId: id)
     }
     

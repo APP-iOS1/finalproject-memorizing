@@ -24,7 +24,7 @@ struct NewMakeMemoryNote: View {
     // MARK: - 재혁 추가 (취소, 등록 시 창을 나가는 dismiss())
     @Environment(\.dismiss) private var dismiss
     
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     
     @Binding var isShowingNewMemorySheet: Bool
     @State private var noteName: String = ""
@@ -145,12 +145,12 @@ struct NewMakeMemoryNote: View {
             .frame(width: 350, height: 40)
             .overlay {
                 Button {
-                    userStore.myNotesDidSaveDB(
+                    authStore.myNotesDidSaveDB(
                         wordNote: WordNote(
                             id: UUID().uuidString,
                             noteName: noteName,
                             noteCategory: noteCategory,
-                            enrollmentUser: userStore.user?.id ?? "",
+                            enrollmentUser: authStore.user?.id ?? "",
                             repeatCount: 0,
                             notePrice: 0
                         )
