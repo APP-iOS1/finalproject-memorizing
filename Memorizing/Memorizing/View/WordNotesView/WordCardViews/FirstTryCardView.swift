@@ -261,7 +261,7 @@ struct LevelCheck: View {
     var wordNote: WordNote
     var word: Word
     
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var notiManager: NotificationManager
     
     var body: some View {
@@ -269,7 +269,7 @@ struct LevelCheck: View {
             // sfsymbols에 얼굴이 다양하지 않아 하나로 통일함
             Button {
                 // TODO: 모르겠어요 액션
-                userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
+                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 0)
                 if lastWordIndex != num {
                     isFlipped = false
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
@@ -294,7 +294,7 @@ struct LevelCheck: View {
             
             Button {
                 // TODO: 애매해요 액션
-                userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 1)
+                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 1)
                 if lastWordIndex != num {
                     isFlipped = false
                     totalScore += 0.25
@@ -318,7 +318,7 @@ struct LevelCheck: View {
             
             Button {
                 // TODO: 외웠어요 액션
-                userStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
+                authStore.wordsLevelDidChangeDB(wordNote: wordNote, word: word, level: 2)
                 if lastWordIndex != num {
                     isFlipped = false
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
@@ -348,7 +348,7 @@ struct LevelCheck: View {
         ) {
             Button("Ok") {
                 Task {
-                    await userStore.repeatCountDidPlusOne(wordNote: wordNote)
+                    await authStore.repeatCountDidPlusOne(wordNote: wordNote)
                     if !notiManager.isGranted {
                         notiManager.openSetting()
                     } else {

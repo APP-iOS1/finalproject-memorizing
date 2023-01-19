@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 마켓 탭에서 가장 메인으로 보여주는 View
 struct MarketView: View {
     @EnvironmentObject var marketStore: MarketStore
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     /// 검색창 입력 텍스트
     @State private var searchText: String = ""
     @State private var isSheetOpen: Bool = false
@@ -86,7 +86,7 @@ struct MarketView: View {
                         .stroke(Color.mainBlue)
                         .frame(width: 60, height: 30)
                         .overlay {
-                            Text("\(userStore.user?.coin ?? 0)P")
+                            Text("\(authStore.user?.coin ?? 0)P")
                                 .foregroundColor(.mainBlue)
                                 .font(.subheadline)
                         }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PointChargeView: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -116,6 +116,6 @@ struct PointChargeButton: View {
 struct PointChargeView_Previews: PreviewProvider {
     static var previews: some View {
         PointChargeView()
-            .environmentObject(UserStore())
+            .environmentObject(AuthStore())
     }
 }

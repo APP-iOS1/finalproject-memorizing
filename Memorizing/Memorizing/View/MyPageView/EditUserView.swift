@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct EditUserView: View {
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     @Environment(\.presentationMode) var presentationMode
     @Binding var isShownNickNameToggle: Bool
     @State private var nickName: String = ""
@@ -53,7 +53,7 @@ struct EditUserView: View {
                             HStack {
                                 Button {
                                     Task {
-                                        try await userStore.userInfoDidChangeDB(nickName: nickName)
+                                        try await authStore.userInfoDidChangeDB(nickName: nickName)
                                             isShownNickNameToggle.toggle()
                                                         }
                                                     }label: {
@@ -78,7 +78,7 @@ struct EditUserView: View {
                     VStack(alignment: .leading) {
                         
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("현재 닉네임: \(userStore.user?.nickName ?? "홍길동")")
+                            Text("현재 닉네임: \(authStore.user?.nickName ?? "홍길동")")
                                 .font(.headline)
                                 .fontWeight(.semibold)
                         }
@@ -122,6 +122,6 @@ struct EditUserView: View {
 struct EditUserView_Previews: PreviewProvider {
     static var previews: some View {
         EditUserView(isShownNickNameToggle: .constant(false))
-            .environmentObject(UserStore())
+            .environmentObject(AuthStore())
     }
 }
