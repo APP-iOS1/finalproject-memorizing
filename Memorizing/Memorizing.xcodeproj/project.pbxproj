@@ -14,6 +14,7 @@
 		2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958929672E87007114B7 /* StudyAgainView.swift */; };
 		2645958C29673FB0007114B7 /* GoodJobStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958B29673FB0007114B7 /* GoodJobStampView.swift */; };
 		2645958E2967431B007114B7 /* TryAgainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958D2967431B007114B7 /* TryAgainView.swift */; };
+		26CC90A429778DA70039981B /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC90A329778DA70039981B /* Review.swift */; };
 		3F20026E29672F2900FCFC3A /* AddListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026D29672F2900FCFC3A /* AddListView.swift */; };
 		3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026F29672F3100FCFC3A /* AddListRow.swift */; };
 		3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F200271296754EB00FCFC3A /* LocalNotification.swift */; };
@@ -39,6 +40,9 @@
 		52BCE8DD2966936A00A85A1F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8DC2966936A00A85A1F /* FirebaseAuth */; };
 		52BCE8DF2966936A00A85A1F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8DE2966936A00A85A1F /* FirebaseFirestore */; };
 		52BCE8E12966936A00A85A1F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8E02966936A00A85A1F /* FirebaseFirestoreSwift */; };
+		52C222A92977827500181367 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222A82977827500181367 /* AuthStore.swift */; };
+		52C222AB2977828A00181367 /* MyNoteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222AA2977828A00181367 /* MyNoteStore.swift */; };
+		52C222AE297782EE00181367 /* ReviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222AD297782EE00181367 /* ReviewStore.swift */; };
 		52D8F23E2965F2C600755E5A /* MemorizingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F23D2965F2C600755E5A /* MemorizingApp.swift */; };
 		52D8F2402965F2C600755E5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F23F2965F2C600755E5A /* ContentView.swift */; };
 		52D8F2422965F2C800755E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2412965F2C800755E5A /* Assets.xcassets */; };
@@ -75,6 +79,7 @@
 		2645958929672E87007114B7 /* StudyAgainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAgainView.swift; sourceTree = "<group>"; };
 		2645958B29673FB0007114B7 /* GoodJobStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodJobStampView.swift; sourceTree = "<group>"; };
 		2645958D2967431B007114B7 /* TryAgainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryAgainView.swift; sourceTree = "<group>"; };
+		26CC90A329778DA70039981B /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		3F20026D29672F2900FCFC3A /* AddListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListView.swift; sourceTree = "<group>"; };
 		3F20026F29672F3100FCFC3A /* AddListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListRow.swift; sourceTree = "<group>"; };
 		3F200271296754EB00FCFC3A /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
@@ -96,6 +101,9 @@
 		52BCE8D52966915700A85A1F /* View+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		52BCE8D72966918100A85A1F /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		52BCE8D92966931100A85A1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		52C222A82977827500181367 /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
+		52C222AA2977828A00181367 /* MyNoteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteStore.swift; sourceTree = "<group>"; };
+		52C222AD297782EE00181367 /* ReviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStore.swift; sourceTree = "<group>"; };
 		52D8F23A2965F2C600755E5A /* Memorizing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorizing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D8F23D2965F2C600755E5A /* MemorizingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizingApp.swift; sourceTree = "<group>"; };
 		52D8F23F2965F2C600755E5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -245,7 +253,7 @@
 				3F2002732967551400FCFC3A /* NotificationManager.swift */,
 				66982A0B297787A30052269D /* AuthStore.swift */,
 				66982A0D297787AF0052269D /* MyNoteStore.swift */,
-				66982A0F297787C10052269D /* ReviewStore.swift */,
+				52C222AD297782EE00181367 /* ReviewStore.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -255,6 +263,7 @@
 			children = (
 				52D8F2512965F37E00755E5A /* Model.swift */,
 				3F200271296754EB00FCFC3A /* LocalNotification.swift */,
+				26CC90A329778DA70039981B /* Review.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -441,7 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */,
-				66982A10297787C20052269D /* ReviewStore.swift in Sources */,
+				52C222AE297782EE00181367 /* ReviewStore.swift in Sources */,
 				484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */,
 				F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */,
 				52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */,
@@ -450,7 +459,7 @@
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
-				66982A0E297787AF0052269D /* MyNoteStore.swift in Sources */,
+				52C222AB2977828A00181367 /* MyNoteStore.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
 				52D8F2522965F37E00755E5A /* Model.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
@@ -483,6 +492,7 @@
 				52D8F2622965F72600755E5A /* MainView.swift in Sources */,
 				52D8F2642965F75300755E5A /* LoginView.swift in Sources */,
 				2645958E2967431B007114B7 /* TryAgainView.swift in Sources */,
+				26CC90A429778DA70039981B /* Review.swift in Sources */,
 				484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */,
 				52D8F25C2965F65B00755E5A /* MarketView.swift in Sources */,
 			);
