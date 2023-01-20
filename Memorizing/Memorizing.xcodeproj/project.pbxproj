@@ -167,8 +167,8 @@
 		3FF9B3E22966625900A47C5A /* WordNoteAddView */ = {
 			isa = PBXGroup;
 			children = (
-				3FF9B3E32966628C00A47C5A /* AddWordView.swift */,
 				3F20026D29672F2900FCFC3A /* AddListView.swift */,
+				3FF9B3E32966628C00A47C5A /* AddWordView.swift */,
 				3FDC1496297A5EC700AE186F /* EditListView.swift */,
 				3F20026F29672F3100FCFC3A /* AddListRow.swift */,
 			);

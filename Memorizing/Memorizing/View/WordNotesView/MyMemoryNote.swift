@@ -6,52 +6,8 @@
 
 import SwiftUI
 
-struct MyMemoryNote: View {
-    var myWordNote: MyWordNote
-    var body: some View {
-        VStack(spacing: 30) {
-            
-            //            if authStore.myWords.count == 0 {
-            WordRegistrationView(myWordNote: myWordNote)
-            //            } else {
-            //                WordRegistrationView(myWordNote: myWordNote, isButton : false)
-            //            }
-            
-        }
-        //        .onAppear {
-        //            authStore.fetchMyWords(wordNote: myWordNote)
-        //        }
-    }
-    
-    // MARK: - 진행중인 암기만 보기
-    var processingWordCheck: some View {
-        HStack {
-            Spacer()
-            HStack {
-                // 진행중인 암기 체크하기
-                Button {
-                    print("진행 중인 암기만 보기")
-                } label: {
-                    Image(systemName: "checkmark.circle")
-                    // 버튼 체크하면 색상 파란색으로 바뀜
-                }
-                Text("진행 중인 암기만 보기")
-                    .font(.subheadline)
-            }
-            .foregroundColor(.gray3)
-        }
-        .padding(.trailing, 20)
-    }
-}
-
-// struct MyMemoryNote_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MyMemoryNote(myWordNote: <#WordNote#>)
-//    }
-// }
-
 // MARK: - 단어 등록 완료된 뷰
-struct WordRegistrationView: View {
+struct MyMemoryNote: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     
@@ -66,11 +22,6 @@ struct WordRegistrationView: View {
     @State var progressStep: Int = 0
     
     var body: some View {
-        //            if list.isEmpty {
-        //                AddWordView(wordNote: myWordNote, list: $list)
-        //            } else {
-        //                AddListView(wordNote: myWordNote, word: list)
-        //            }
         VStack(spacing: 25) {
             RoundedRectangle(cornerRadius: 15)
                 .stroke(Color.gray4)
@@ -145,16 +96,17 @@ struct WordRegistrationView: View {
                 .onTapGesture(perform: {
                     isShowingSheet.toggle()
                 })
-                .fullScreenCover(isPresented: $isShowingSheet) {
-                    
-                    if noteLists.isEmpty {
-                        AddListView(wordNote: myWordNote, myWords: $noteLists)
-                    } else {
-                        EditListView(wordNote: myWordNote, myWords: $noteLists)
-                    }
-                    
-                }
             
+        }
+        .fullScreenCover(isPresented: $isShowingSheet) {
+            NavigationStack {
+                AddListView(wordNote: myWordNote, myWords: $noteLists)
+//                if noteLists.isEmpty {
+//                    AddListView(wordNote: myWordNote, myWords: $noteLists)
+//                } else {
+//                    EditListView(wordNote: myWordNote, word: $noteLists)
+//                }
+            }
         }
         .onAppear {
             if authStore.user != nil {
@@ -162,7 +114,7 @@ struct WordRegistrationView: View {
                     noteLists = myNoteStore.myWords
                 }
             }
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 opacityValue = 1
             }
@@ -170,47 +122,20 @@ struct WordRegistrationView: View {
     }
 }
 
-// MARK: - 단어 등록하러가기 버튼 있는 뷰
-struct WordRegistrationCompletionView: View {
-    var body: some View {
-        VStack {
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(.black, lineWidth: 1)
-                .frame(width: 350, height: 120)
-                .overlay {
-                    HStack {
-                        Rectangle()
-                            .cornerRadius(10, corners: [.topLeft, .bottomLeft])
-                            .frame(width: 16)
-                            .foregroundColor(.blue)
-                        Spacer()
-                        
-                        VStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 10)
-                            // 암기 해야할것에서 컬러 가져오기
-                                .stroke(.yellow, lineWidth: 1)
-                                .frame(width: 50, height: 30)
-                                .overlay {
-                                    Text("영어")
-                                        .font(.subheadline)
-                                    
-                                }
-                            
-                            // 암기할 것 등록하기에서 받아오기
-                            VStack(spacing: 12) {
-                                NavigationLink {
-                                    EmptyView()
-                                } label: {
-                                    Text("혜지의 감자 목록 100가지 단어장 ")
-                                        .font(.title3)
-                                }
-                                // progressView 들어올 예정
-                                
-                            }
-                        }
-                        Spacer()
-                    }
-                }
-        }
-    }
-}
+// MARK: - onAppear 수정자가 있을 경우, 데이터에 따라 화면이 바뀌므로 Preview Crashed가 날 수 밖에 없음
+// 따라서, 프리뷰를 보기 위해 .onAppear 수정자 내용을 싹 지워주고 나서 확인할 것
+//struct MyMemoryNote_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+//            MyMemoryNote(myWordNote: MyWordNote(id: "03578E93-5DF4-489C-AF66-1671DD8CCE79",
+//                                                noteName: "우리속담 알아보기",
+//                                                noteCategory: "기타",
+//                                                enrollmentUser: "hKWRjBcFi0NTuR5IjGHSsGMZUaV2",
+//                                                repeatCount: 1,
+//                                                firstTestResult: 0,
+//                                                lastTestResult: 0,
+//                                                updateDate: Date()))
+//
+//        }
+//    }
+//}
