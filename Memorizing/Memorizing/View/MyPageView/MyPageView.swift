@@ -64,8 +64,9 @@ struct MyPageView: View {
                         
                         Spacer()
                         
-                        Button {
-                            
+                        NavigationLink {
+                            // TODO: 내가 작성한 리뷰 페이지로 이동
+                            EditUserView()
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 100)
@@ -81,55 +82,6 @@ struct MyPageView: View {
                     } // 내 암기장개수 . 받은 도장 개수
                     .font(.footnote)
                     .padding(.vertical, 2)
-                    
-//                    HStack {
-//                        Button {
-//
-//                            // 포인트 충전하기
-//
-//                        } label: {
-//
-//                            ZStack {
-//                                RoundedRectangle(cornerRadius: 100)
-//                                    .foregroundColor(.mainBlue)
-//                                    .frame(width: 158, height: 45)
-//                                Text("포인트 충전하기")
-//                                    .foregroundColor(.white)
-//                                    .padding(15)
-//                                    .padding(.horizontal, 20)
-//                                    .font(.footnote)
-//                                    .fontWeight(.medium)
-//
-//                            }
-//
-//                        } // 포인트 충전하기 버튼
-//
-//                        Spacer()
-//
-//                        Button {
-//
-//                            // 포인트 선물하기
-//
-//                        } label: {
-//
-//                            ZStack {
-//                                RoundedRectangle(cornerRadius: 100)
-//                                    .stroke(Color("MainBlue"), lineWidth: 1)
-//                                    .frame(width: 158, height: 45)
-//                                Text("포인트 선물하기")
-//                                    .foregroundColor(.gray2)
-//                                    .padding(15)
-//                                    .padding(.horizontal, 10)
-//                                    .font(.footnote)
-//                                    .fontWeight(.medium)
-//
-//                            }
-//
-//                        } // 포인트 선물하기 버튼
-   
-//                    } // 충전하기 버튼
-//                    .padding(.vertical, 15)
-                    
                 } // 유저정보
                 .padding(.bottom, 10)
                 
@@ -160,10 +112,10 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            // TODO: 암기장 구매 내역 페이지로 이동
+                            // TODO: 내가 작성한 리뷰 페이지로 이동
                         } label: {
                             HStack {
-                                Text("내 정보 수정")
+                                Text("내가 작성한 리뷰")
                                     .font(.body)
                                     .fontWeight(.medium)
                                 Spacer()
@@ -181,7 +133,7 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            // TODO: 암기장 구매 내역 페이지로 이동
+                            // TODO: 메모라이징 소개 페이지로 이동
                         } label: {
                             HStack {
                                 Text("메모라이징 소개")
@@ -202,7 +154,7 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            // TODO: 암기장 구매 내역 페이지로 이동
+                            // TODO: 1:1 문의하기 페이지로 이동
                         } label: {
                             HStack {
                                 Text("1:1 문의하기")
@@ -223,7 +175,7 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            // TODO: 암기장 구매 내역 페이지로 이동
+                            // TODO: 서비스 이용 약관 페이지로 이동
                         } label: {
                             HStack {
                                 Text("서비스 이용 약관")
@@ -244,7 +196,7 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            // TODO: 암기장 구매 내역 페이지로 이동
+                            // TODO: 개인정보 처리 방침 페이지로 이동
                         } label: {
                             HStack {
                                 Text("개인정보 처리 방침")
