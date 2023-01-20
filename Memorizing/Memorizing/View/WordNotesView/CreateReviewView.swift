@@ -10,9 +10,10 @@ import SwiftUI
 // MARK: - 리뷰 작성 페이지
 struct CreateReviewView: View {
     @State private var review: String = ""
+    @State private var reviewStarCount: Int = 5
     
     let reviewPlaceholder: String
-    = "리뷰를 작성해주세요. 다른 사용자분들께 도움이 된답니다! 험한말은 싫어요. 이쁜말로 부탁해요:) 아 리뷰는 선택이에요! 별점만 남겨주셔도 괜찮습니다."
+    = "리뷰를 작성해주세요. 다른 사용자분들께 도움이 된답니다!"
     
     var body: some View {
         // MARK: - 단어장 정보
@@ -68,11 +69,24 @@ struct CreateReviewView: View {
                 .padding(.bottom, 10)
             
             HStack(spacing: 3) {
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
+                
+                ForEach(1 ... reviewStarCount, id: \.self) { count in
+                    Button {
+                        reviewStarCount = count
+                    } label: {
+                        Image(systemName: "star.fill")
+                    }
+                }
+                
+                if reviewStarCount < 5 {
+                    ForEach(1 ... (5 - reviewStarCount), id: \.self) { count in
+                        Button {
+                            reviewStarCount += count
+                        } label: {
+                            Image(systemName: "star")
+                        }
+                    }
+                }
             }
             .font(.title)
             .foregroundColor(Color.iTColor)
@@ -86,6 +100,23 @@ struct CreateReviewView: View {
                         .lineLimit(3)
                         .font(.caption2)
                 }
+                .padding(.bottom, 30)
+            
+            Button {
+                
+                // TODO: 후기 등록
+                
+            } label: {
+                RoundedRectangle(cornerRadius: 30)
+                    .fill(Color.mainBlue)
+                    .frame(width: 350, height: 50, alignment: .top)
+                    .overlay {
+                        Text("등록하기")
+                            .font(.footnote)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+            }
         }
         .padding(.horizontal, 30)
     }
