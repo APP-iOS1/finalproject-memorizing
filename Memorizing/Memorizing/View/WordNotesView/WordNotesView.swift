@@ -37,7 +37,7 @@ struct WordNotesView: View {
                 if memoryStepToggle == true && reviewStepToggle == false {
                     ScrollView(showsIndicators: false) {
                         ForEach(myNoteStore.myWordNotes) { myWordNote in
-                            WordRegistrationView(myWordNote: myWordNote)
+                            MyMemoryNote(myWordNote: myWordNote)
                         }
                     }
                     
