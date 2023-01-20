@@ -25,12 +25,13 @@ class ReviewStore: ObservableObject {
 
     ///  내가 작성한 review를 fetch함
     /// - Returns: reviews배열에 review를 담고 쉽게 말해 추가 되는게 있으면 새로고침을 한다.
-    func reviewsWillFetchDB() async {
+    func reviewsWillFetchDB(marketID: String) async {
+        let marketID = marketID
         do {
             print("start fetchReviews")
             let documents = try await  database
                 .collection("marketWordNotes")
-                .document(currentUser?.id ?? "")
+                .document(marketID)
                 .collection("reviews")
                 .order(by: "createDate", descending: true)
                 .getDocuments()
@@ -65,23 +66,22 @@ class ReviewStore: ObservableObject {
     /// marketWordNotes DB의 Id의 컬렉션에 review를 컬렉션을 추가한다.
     /// - Parameter marketWord: marketWordnote의 id의 컬레션에 reviews를 추가한다.
     ///  reviews안에 현재 user의 id로 구조체로된 review가 생성된다.
-    func reviewDidSaveDB(marketWord: MarketWordNote) {
-        
-        let createDate: Date = Date.now
+    func reviewDidSaveDB(wordNoteID: String, reviewText: String, reviewStarScore: Int, currentUser: User) {
+     
         database
             .collection("marketWordNotes")
-            .document(marketWord.id)
+            .document(wordNoteID)
             .collection("reviews")
-            .document(currentUser?.id ?? "")
+            .document(currentUser.id)
             .setData([
-                "id": currentUser?.id as? String ?? "",
-                "writer": reviewWriter,
+                "id": currentUser.id,
+                "writer": currentUser.nickName,
                 "reviewText": reviewText,
-                "createDate": createDate,
+                "createDate": Timestamp(),
                 "starScore": reviewStarScore
             ])
-        starScoreDidPlusMarketWordNote(marketWordNote: marketWord)
-        reviewCountDidPlusOne(marketWordNote: marketWord)
+//        starScoreDidPlusMarketWordNote(marketWordNote: marketWord)
+//        reviewCountDidPlusOne(marketWordNote: marketWord)
     }
     // MARK: - MarketWordnote에 starScore를 추가함
     
@@ -161,5 +161,38 @@ class ReviewStore: ObservableObject {
                     print("reviewDidUpdateDB 해당 리뷰 업데이트 성공")
                 }
             }
+    }
+    
+    func reviewPreviewsWillFetchDB(marketNoteID: String) async {
+        do {
+            print("start fetchReviews")
+            let documents = try await  database
+                .collection("marketWordNotes")
+                .document(marketNoteID)
+                .collection("reviews")
+                .order(by: "createDate", descending: true)
+                .limit(to: 2)
+                .getDocuments()
+            
+            for document in documents.documents {
+                let docData = document.data()
+                let id: String = docData["id"] as? String ?? ""
+                let writer: String = docData["writer"] as? String ?? ""
+                let reviewText: String = docData["reviewText"] as? String ?? ""
+                let createdAtTimeStamp: Timestamp = docData["createDate"] as? Timestamp ?? Timestamp()
+                let createDate: Date = createdAtTimeStamp.dateValue()
+                let starScore: Double = docData["starScore"] as? Double ?? 0.0
+                
+                let myReview = Review(id: id,
+                                      writer: writer,
+                                      reviewText: reviewText,
+                                      createDate: createDate,
+                                      starScore: starScore)
+                self.reviews.append(myReview)
+                print("finished fetchMyWordNotes")
+            }
+        } catch {
+            print("reviewsWillFetchDB: \(error)")
+        }
     }
 }

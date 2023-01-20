@@ -30,5 +30,6 @@ struct CustomTextField: TextFieldStyle {
             .frame(width: 300, height: 30)
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
+            .foregroundColor(Color("Black"))
     }
 }
