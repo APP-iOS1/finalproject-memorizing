@@ -13,14 +13,17 @@ import GoogleSignIn
 import GoogleSignInSwift
 import KakaoSDKAuth
 import KakaoSDKUser
+import AuthenticationServices
+import CryptoKit
 
 @MainActor
-class AuthStore: ObservableObject {
+class AuthStore: UIViewController, ObservableObject {
     
     // 태영
     @Published var state: SignInState = .signedOut
     @Published var user: User?
     @Published var errorMessage: String = "" // Firestore 관련 에러 메세지
+    var currentNonce: String?
     
     enum SignInState {
         case signedIn
@@ -212,6 +215,40 @@ class AuthStore: ObservableObject {
         } // 웹 로그인
     }
     
+    // MARK: - AppleAuth SignIn Function
+    @available(iOS 13, *)
+    func signInDidAppleAuth() {
+        let request = createAppleIDRequest()
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    func createAppleIDRequest() -> ASAuthorizationAppleIDRequest {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let nonce = randomNonceString()
+        request.nonce = sha256(nonce)
+        currentNonce = nonce
+        
+        return request
+     }
+    
+    @available(iOS 13, *)
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            return String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
+    }
+    
     // MARK: - FirebaseAuth SignUp Function /
     func signUpDidAuth(email: String, password: String, nickName: String) async {
         self.errorMessage = ""
@@ -341,21 +378,5 @@ class AuthStore: ObservableObject {
         } catch {
             fatalError("fail update User")
         }
-    }
-}
-
-// MARK: - UserDefaults extention: 기기에 로그인 정보를 담당하는 구조 추가
-extension UserDefaults {
-    
-    enum Keys: String, CaseIterable {
-        
-        case isExistingAuth
-        case email
-        case password
-        
-    }
-    
-    func reset() {
-        Keys.allCases.forEach { removeObject(forKey: $0.rawValue) }
     }
 }

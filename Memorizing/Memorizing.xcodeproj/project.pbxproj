@@ -70,6 +70,8 @@
 		66982A192977B9BD0052269D /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A182977B9BD0052269D /* KakaoSDKAuth */; };
 		66982A1B2977B9BD0052269D /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A1A2977B9BD0052269D /* KakaoSDKCommon */; };
 		66982A1D2977B9BD0052269D /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A1C2977B9BD0052269D /* KakaoSDKUser */; };
+		66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A22297A22E20052269D /* AuthStoreExtension.swift */; };
+		66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A24297A24BF0052269D /* SignInWithAppleButton.swift */; };
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
@@ -132,6 +134,9 @@
 		66982A0B297787A30052269D /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		66982A0D297787AF0052269D /* MyNoteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteStore.swift; sourceTree = "<group>"; };
 		66982A162977B6820052269D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		66982A21297A22A00052269D /* Memorizing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Memorizing.entitlements; sourceTree = "<group>"; };
+		66982A22297A22E20052269D /* AuthStoreExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStoreExtension.swift; sourceTree = "<group>"; };
+		66982A24297A24BF0052269D /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
@@ -195,6 +200,7 @@
 				52BCE8D52966915700A85A1F /* View+CornerRadius.swift */,
 				52BCE8D72966918100A85A1F /* ColorExtension.swift */,
 				18C4485D2977C48000FEB345 /* hideKeyboradExtension.swift */,
+				66982A22297A22E20052269D /* AuthStoreExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -218,6 +224,7 @@
 		52D8F23C2965F2C600755E5A /* Memorizing */ = {
 			isa = PBXGroup;
 			children = (
+				66982A21297A22A00052269D /* Memorizing.entitlements */,
 				66982A162977B6820052269D /* Info.plist */,
 				52BCE8D92966931100A85A1F /* GoogleService-Info.plist */,
 				52D8F23D2965F2C600755E5A /* MemorizingApp.swift */,
@@ -330,6 +337,7 @@
 				180D8A57296673D8005BDBF0 /* SignUpTermsView.swift */,
 				180D8A5929668857005BDBF0 /* FindIdPwView.swift */,
 				5239182D2967CBA800D76C57 /* PointChargeView.swift */,
+				66982A24297A24BF0052269D /* SignInWithAppleButton.swift */,
 			);
 			path = LoginSignUpView;
 			sourceTree = "<group>";
@@ -491,8 +499,10 @@
 				3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */,
 				484D657829669CDE00C56E87 /* MarketViewSheet.swift in Sources */,
 				52C222B029778CB800181367 /* MarketWordNoteModel.swift in Sources */,
+				66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */,
 				180D8A5A29668857005BDBF0 /* FindIdPwView.swift in Sources */,
 				5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */,
+				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
 				52D8F2552965F54A00755E5A /* UserStore.swift in Sources */,
 				52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */,
@@ -642,6 +652,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Memorizing/Memorizing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";
@@ -673,6 +684,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Memorizing/Memorizing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";

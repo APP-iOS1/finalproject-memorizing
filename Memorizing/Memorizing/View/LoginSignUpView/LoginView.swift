@@ -96,22 +96,31 @@ struct LoginView: View {
                     }
                     .padding(.horizontal, 50)
                     
-                    HStack {
-                        Button {
-                            Task {
-                                await authStore.signInDidKakaoAuth()
+                    VStack {
+                        HStack {
+                            Button {
+                                Task {
+                                    await authStore.signInDidKakaoAuth()
+                                }
+                            } label: {
+                                Text("Kakao SignIn")
                             }
-                        } label: {
-                            Text("Kakao SignIn")
+                            
+                            Button {
+                                authStore.signOutDidKakao()
+                            } label: {
+                                Text("Logout")
+                            }
                         }
-                        
-                        Button {
-                            authStore.signOutDidKakao()
-                        } label: {
-                            Text("Logout")
+                        HStack {
+                            SignInWithAppleButton()
+                                .frame(width: 280, height: 45)
+                                .onTapGesture {
+                                    authStore.signInDidAppleAuth()
+                                }
                         }
                     }
-                    
+
                 } // vstack
             } // scroll view
         } // navigationstack
