@@ -162,4 +162,37 @@ class ReviewStore: ObservableObject {
                 }
             }
     }
+    
+    func reviewPreviewsWillFetchDB(marketNoteID: String) async {
+        do {
+            print("start fetchReviews")
+            let documents = try await  database
+                .collection("marketWordNotes")
+                .document(marketNoteID)
+                .collection("reviews")
+                .order(by: "createDate", descending: true)
+                .limit(to: 2)
+                .getDocuments()
+            
+            for document in documents.documents {
+                let docData = document.data()
+                let id: String = docData["id"] as? String ?? ""
+                let writer: String = docData["writer"] as? String ?? ""
+                let reviewText: String = docData["reviewText"] as? String ?? ""
+                let createdAtTimeStamp: Timestamp = docData["createDate"] as? Timestamp ?? Timestamp()
+                let createDate: Date = createdAtTimeStamp.dateValue()
+                let starScore: Double = docData["starScore"] as? Double ?? 0.0
+                
+                let myReview = Review(id: id,
+                                      writer: writer,
+                                      reviewText: reviewText,
+                                      createDate: createDate,
+                                      starScore: starScore)
+                self.reviews.append(myReview)
+                print("finished fetchMyWordNotes")
+            }
+        } catch {
+            print("reviewsWillFetchDB: \(error)")
+        }
+    }
 }
