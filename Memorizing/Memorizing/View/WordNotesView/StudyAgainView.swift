@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct StudyAgainView: View {
-    @EnvironmentObject var userStore: UserStore
-    var myWordNote: WordNote
+    @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    
+    var myWordNote: MyWordNote
     @State private var noteLists: [Word] = []
-    
     // 한 번도 안 하면 -1, 한 번씩 할 때마다 1씩 증가
-    
     @State var progressStep: Int = 0
     
     var body: some View {
@@ -35,7 +35,7 @@ struct StudyAgainView: View {
                                 HStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 20)
                                         .stroke(myWordNote.noteColor, lineWidth: 1)
-                                        .frame(width: 50, height: 25)
+                                        .frame(width: 50, height: 20)
                                         .overlay {
                                             Text(myWordNote.noteCategory)
                                                 .font(.caption)
@@ -134,6 +134,7 @@ struct StudyAgainView: View {
                                                         .font(.caption2)
                                                     
                                                 }
+                                                .foregroundColor(.white)
                                             }
                                     }
                                 } else {
@@ -157,11 +158,9 @@ struct StudyAgainView: View {
             }
         }
         .onAppear {
-            if userStore.user != nil {
-                userStore.myWordsWillFetchDB(wordNote: myWordNote) {
-                    dump(userStore.myWords)
-                    noteLists = userStore.myWords
-                    
+            if authStore.user != nil {
+                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
+                    noteLists = myNoteStore.myWords
                 }
             }
         }

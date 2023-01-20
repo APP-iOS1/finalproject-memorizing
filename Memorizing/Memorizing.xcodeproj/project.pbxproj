@@ -9,15 +9,18 @@
 /* Begin PBXBuildFile section */
 		180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D8A57296673D8005BDBF0 /* SignUpTermsView.swift */; };
 		180D8A5A29668857005BDBF0 /* FindIdPwView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D8A5929668857005BDBF0 /* FindIdPwView.swift */; };
+		18C4485E2977C48000FEB345 /* hideKeyboradExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C4485D2977C48000FEB345 /* hideKeyboradExtension.swift */; };
 		18FC714429672FEB00E3CED5 /* OtherTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FC714329672FEB00E3CED5 /* OtherTryCardView.swift */; };
 		2645958829669FC6007114B7 /* NewMakeMemoryNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958729669FC6007114B7 /* NewMakeMemoryNote.swift */; };
 		2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958929672E87007114B7 /* StudyAgainView.swift */; };
 		2645958C29673FB0007114B7 /* GoodJobStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958B29673FB0007114B7 /* GoodJobStampView.swift */; };
 		2645958E2967431B007114B7 /* TryAgainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958D2967431B007114B7 /* TryAgainView.swift */; };
+		26CC90A429778DA70039981B /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC90A329778DA70039981B /* ReviewModel.swift */; };
 		3F20026E29672F2900FCFC3A /* AddListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026D29672F2900FCFC3A /* AddListView.swift */; };
 		3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026F29672F3100FCFC3A /* AddListRow.swift */; };
 		3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F200271296754EB00FCFC3A /* LocalNotification.swift */; };
 		3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2002732967551400FCFC3A /* NotificationManager.swift */; };
+		3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC1496297A5EC700AE186F /* EditListView.swift */; };
 		3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E32966628C00A47C5A /* AddWordView.swift */; };
 		3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */; };
 		484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D65702966987900C56E87 /* MarketViewNoteButton.swift */; };
@@ -30,7 +33,13 @@
 		488F0AA62967E8A1007EAAC1 /* OnBoardingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */; };
 		488F0AA82967E8AB007EAAC1 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */; };
 		488F0AAA2967E8BC007EAAC1 /* OnBoardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */; };
+		48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */; };
+		48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */; };
+		48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */; };
 		5239182E2967CBA800D76C57 /* PointChargeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5239182D2967CBA800D76C57 /* PointChargeView.swift */; };
+		523C30DA29790ECF00FAE229 /* MyWordNoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */; };
+		523C30DB297918D600FAE229 /* MyNoteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A0D297787AF0052269D /* MyNoteStore.swift */; };
+		523C30DD2979195E00FAE229 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C30DC2979195E00FAE229 /* UserModel.swift */; };
 		5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5280DDF72967248E00C959CA /* FirstTryCardView.swift */; };
 		52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCE8D0296690E700A85A1F /* MyMemoryNote.swift */; };
 		52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCE8D52966915700A85A1F /* View+CornerRadius.swift */; };
@@ -39,12 +48,13 @@
 		52BCE8DD2966936A00A85A1F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8DC2966936A00A85A1F /* FirebaseAuth */; };
 		52BCE8DF2966936A00A85A1F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8DE2966936A00A85A1F /* FirebaseFirestore */; };
 		52BCE8E12966936A00A85A1F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 52BCE8E02966936A00A85A1F /* FirebaseFirestoreSwift */; };
+		52C222AE297782EE00181367 /* ReviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222AD297782EE00181367 /* ReviewStore.swift */; };
+		52C222B029778CB800181367 /* MarketWordNoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C222AF29778CB800181367 /* MarketWordNoteModel.swift */; };
 		52D8F23E2965F2C600755E5A /* MemorizingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F23D2965F2C600755E5A /* MemorizingApp.swift */; };
 		52D8F2402965F2C600755E5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F23F2965F2C600755E5A /* ContentView.swift */; };
 		52D8F2422965F2C800755E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2412965F2C800755E5A /* Assets.xcassets */; };
 		52D8F2452965F2C800755E5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2442965F2C800755E5A /* Preview Assets.xcassets */; };
-		52D8F2522965F37E00755E5A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2512965F37E00755E5A /* Model.swift */; };
-		52D8F2552965F54A00755E5A /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2542965F54A00755E5A /* UserStore.swift */; };
+		52D8F2522965F37E00755E5A /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2512965F37E00755E5A /* WordModel.swift */; };
 		52D8F2572965F56300755E5A /* MarketStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2562965F56300755E5A /* MarketStore.swift */; };
 		52D8F25A2965F63700755E5A /* WordNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2592965F63700755E5A /* WordNotesView.swift */; };
 		52D8F25C2965F65B00755E5A /* MarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F25B2965F65B00755E5A /* MarketView.swift */; };
@@ -54,7 +64,16 @@
 		52D8F2662965F75F00755E5A /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2652965F75F00755E5A /* SignUpView.swift */; };
 		52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE9D852966FAFB0037F64A /* ButtonModifier.swift */; };
 		52DE9D882966FAFB0037F64A /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE9D862966FAFB0037F64A /* TextFieldModifier.swift */; };
+		66982A0C297787A30052269D /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A0B297787A30052269D /* AuthStore.swift */; };
+		66982A132977A7660052269D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A122977A7660052269D /* GoogleSignIn */; };
+		66982A152977A7660052269D /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A142977A7660052269D /* GoogleSignInSwift */; };
+		66982A192977B9BD0052269D /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A182977B9BD0052269D /* KakaoSDKAuth */; };
+		66982A1B2977B9BD0052269D /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A1A2977B9BD0052269D /* KakaoSDKCommon */; };
+		66982A1D2977B9BD0052269D /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A1C2977B9BD0052269D /* KakaoSDKUser */; };
+		66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A22297A22E20052269D /* AuthStoreExtension.swift */; };
+		66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A24297A24BF0052269D /* SignInWithAppleButton.swift */; };
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
+		95595284297A290600C2B064 /* StudyingStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95595283297A290600C2B064 /* StudyingStampView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
 /* End PBXBuildFile section */
@@ -62,15 +81,18 @@
 /* Begin PBXFileReference section */
 		180D8A57296673D8005BDBF0 /* SignUpTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTermsView.swift; sourceTree = "<group>"; };
 		180D8A5929668857005BDBF0 /* FindIdPwView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIdPwView.swift; sourceTree = "<group>"; };
+		18C4485D2977C48000FEB345 /* hideKeyboradExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hideKeyboradExtension.swift; sourceTree = "<group>"; };
 		18FC714329672FEB00E3CED5 /* OtherTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTryCardView.swift; sourceTree = "<group>"; };
 		2645958729669FC6007114B7 /* NewMakeMemoryNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMakeMemoryNote.swift; sourceTree = "<group>"; };
 		2645958929672E87007114B7 /* StudyAgainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAgainView.swift; sourceTree = "<group>"; };
 		2645958B29673FB0007114B7 /* GoodJobStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodJobStampView.swift; sourceTree = "<group>"; };
 		2645958D2967431B007114B7 /* TryAgainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryAgainView.swift; sourceTree = "<group>"; };
+		26CC90A329778DA70039981B /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
 		3F20026D29672F2900FCFC3A /* AddListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListView.swift; sourceTree = "<group>"; };
 		3F20026F29672F3100FCFC3A /* AddListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListRow.swift; sourceTree = "<group>"; };
 		3F200271296754EB00FCFC3A /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		3F2002732967551400FCFC3A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		3FDC1496297A5EC700AE186F /* EditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListView.swift; sourceTree = "<group>"; };
 		3FF9B3E32966628C00A47C5A /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
 		484D65702966987900C56E87 /* MarketViewNoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewNoteButton.swift; sourceTree = "<group>"; };
 		484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewCategoryButton.swift; sourceTree = "<group>"; };
@@ -82,19 +104,25 @@
 		488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingTabView.swift; sourceTree = "<group>"; };
 		488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingData.swift; sourceTree = "<group>"; };
+		48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviews.swift; sourceTree = "<group>"; };
+		48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviewsMore.swift; sourceTree = "<group>"; };
+		48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
 		5239182D2967CBA800D76C57 /* PointChargeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChargeView.swift; sourceTree = "<group>"; };
+		523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWordNoteModel.swift; sourceTree = "<group>"; };
+		523C30DC2979195E00FAE229 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		5280DDF72967248E00C959CA /* FirstTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTryCardView.swift; sourceTree = "<group>"; };
 		52BCE8D0296690E700A85A1F /* MyMemoryNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyMemoryNote.swift; sourceTree = "<group>"; };
 		52BCE8D52966915700A85A1F /* View+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		52BCE8D72966918100A85A1F /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		52BCE8D92966931100A85A1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		52C222AD297782EE00181367 /* ReviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStore.swift; sourceTree = "<group>"; };
+		52C222AF29778CB800181367 /* MarketWordNoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWordNoteModel.swift; sourceTree = "<group>"; };
 		52D8F23A2965F2C600755E5A /* Memorizing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorizing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D8F23D2965F2C600755E5A /* MemorizingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizingApp.swift; sourceTree = "<group>"; };
 		52D8F23F2965F2C600755E5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		52D8F2412965F2C800755E5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52D8F2442965F2C800755E5A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		52D8F2512965F37E00755E5A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		52D8F2542965F54A00755E5A /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
+		52D8F2512965F37E00755E5A /* WordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordModel.swift; sourceTree = "<group>"; };
 		52D8F2562965F56300755E5A /* MarketStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketStore.swift; sourceTree = "<group>"; };
 		52D8F2592965F63700755E5A /* WordNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordNotesView.swift; sourceTree = "<group>"; };
 		52D8F25B2965F65B00755E5A /* MarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketView.swift; sourceTree = "<group>"; };
@@ -104,7 +132,14 @@
 		52D8F2652965F75F00755E5A /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		52DE9D852966FAFB0037F64A /* ButtonModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
 		52DE9D862966FAFB0037F64A /* TextFieldModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
+		66982A0B297787A30052269D /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
+		66982A0D297787AF0052269D /* MyNoteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteStore.swift; sourceTree = "<group>"; };
+		66982A162977B6820052269D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		66982A21297A22A00052269D /* Memorizing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Memorizing.entitlements; sourceTree = "<group>"; };
+		66982A22297A22E20052269D /* AuthStoreExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStoreExtension.swift; sourceTree = "<group>"; };
+		66982A24297A24BF0052269D /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
+		95595283297A290600C2B064 /* StudyingStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingStampView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,10 +149,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66982A1B2977B9BD0052269D /* KakaoSDKCommon in Frameworks */,
+				66982A192977B9BD0052269D /* KakaoSDKAuth in Frameworks */,
+				66982A132977A7660052269D /* GoogleSignIn in Frameworks */,
 				52BCE8DD2966936A00A85A1F /* FirebaseAuth in Frameworks */,
 				52BCE8DF2966936A00A85A1F /* FirebaseFirestore in Frameworks */,
+				66982A152977A7660052269D /* GoogleSignInSwift in Frameworks */,
 				3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */,
 				52BCE8E12966936A00A85A1F /* FirebaseFirestoreSwift in Frameworks */,
+				66982A1D2977B9BD0052269D /* KakaoSDKUser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,8 +167,9 @@
 		3FF9B3E22966625900A47C5A /* WordNoteAddView */ = {
 			isa = PBXGroup;
 			children = (
-				3FF9B3E32966628C00A47C5A /* AddWordView.swift */,
 				3F20026D29672F2900FCFC3A /* AddListView.swift */,
+				3FF9B3E32966628C00A47C5A /* AddWordView.swift */,
+				3FDC1496297A5EC700AE186F /* EditListView.swift */,
 				3F20026F29672F3100FCFC3A /* AddListRow.swift */,
 			);
 			path = WordNoteAddView;
@@ -161,6 +202,8 @@
 				52DE9D862966FAFB0037F64A /* TextFieldModifier.swift */,
 				52BCE8D52966915700A85A1F /* View+CornerRadius.swift */,
 				52BCE8D72966918100A85A1F /* ColorExtension.swift */,
+				18C4485D2977C48000FEB345 /* hideKeyboradExtension.swift */,
+				66982A22297A22E20052269D /* AuthStoreExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -184,6 +227,8 @@
 		52D8F23C2965F2C600755E5A /* Memorizing */ = {
 			isa = PBXGroup;
 			children = (
+				66982A21297A22A00052269D /* Memorizing.entitlements */,
+				66982A162977B6820052269D /* Info.plist */,
 				52BCE8D92966931100A85A1F /* GoogleService-Info.plist */,
 				52D8F23D2965F2C600755E5A /* MemorizingApp.swift */,
 				52BCE8D42966912C00A85A1F /* Extension */,
@@ -222,9 +267,11 @@
 		52D8F24C2965F2DA00755E5A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				52D8F2542965F54A00755E5A /* UserStore.swift */,
 				52D8F2562965F56300755E5A /* MarketStore.swift */,
 				3F2002732967551400FCFC3A /* NotificationManager.swift */,
+				66982A0B297787A30052269D /* AuthStore.swift */,
+				66982A0D297787AF0052269D /* MyNoteStore.swift */,
+				52C222AD297782EE00181367 /* ReviewStore.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -232,8 +279,12 @@
 		52D8F24D2965F2E500755E5A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				52D8F2512965F37E00755E5A /* Model.swift */,
+				52D8F2512965F37E00755E5A /* WordModel.swift */,
 				3F200271296754EB00FCFC3A /* LocalNotification.swift */,
+				52C222AF29778CB800181367 /* MarketWordNoteModel.swift */,
+				26CC90A329778DA70039981B /* ReviewModel.swift */,
+				523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */,
+				523C30DC2979195E00FAE229 /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +300,8 @@
 				484D657E296733F900C56E87 /* FaceProgressView.swift */,
 				2645958B29673FB0007114B7 /* GoodJobStampView.swift */,
 				2645958D2967431B007114B7 /* TryAgainView.swift */,
+				95595283297A290600C2B064 /* StudyingStampView.swift */,
+				48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */,
 				3FF9B3E22966625900A47C5A /* WordNoteAddView */,
 			);
 			path = WordNotesView;
@@ -262,6 +315,8 @@
 				484D65702966987900C56E87 /* MarketViewNoteButton.swift */,
 				484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */,
 				484D657729669CDE00C56E87 /* MarketViewSheet.swift */,
+				48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */,
+				48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */,
 				484D657929669E6600C56E87 /* MarketViewAddButton.swift */,
 			);
 			path = MarketView;
@@ -285,6 +340,7 @@
 				180D8A57296673D8005BDBF0 /* SignUpTermsView.swift */,
 				180D8A5929668857005BDBF0 /* FindIdPwView.swift */,
 				5239182D2967CBA800D76C57 /* PointChargeView.swift */,
+				66982A24297A24BF0052269D /* SignInWithAppleButton.swift */,
 			);
 			path = LoginSignUpView;
 			sourceTree = "<group>";
@@ -312,6 +368,11 @@
 				52BCE8DE2966936A00A85A1F /* FirebaseFirestore */,
 				52BCE8E02966936A00A85A1F /* FirebaseFirestoreSwift */,
 				3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */,
+				66982A122977A7660052269D /* GoogleSignIn */,
+				66982A142977A7660052269D /* GoogleSignInSwift */,
+				66982A182977B9BD0052269D /* KakaoSDKAuth */,
+				66982A1A2977B9BD0052269D /* KakaoSDKCommon */,
+				66982A1C2977B9BD0052269D /* KakaoSDKUser */,
 			);
 			productName = Memorizing;
 			productReference = 52D8F23A2965F2C600755E5A /* Memorizing.app */;
@@ -344,6 +405,8 @@
 			packageReferences = (
 				52BCE8DB2966936A00A85A1F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3FF9B3E92966ECA400A47C5A /* XCRemoteSwiftPackageReference "SwiftUIProgressiveOnboard" */,
+				66982A112977A7660052269D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				66982A172977B9BD0052269D /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 52D8F23B2965F2C600755E5A /* Products */;
 			projectDirPath = "";
@@ -388,7 +451,6 @@
 		};
 		F203AD1A2975334E0047A212 /* SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -413,29 +475,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */,
+				523C30DB297918D600FAE229 /* MyNoteStore.swift in Sources */,
+				52C222AE297782EE00181367 /* ReviewStore.swift in Sources */,
 				484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */,
 				F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */,
 				52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */,
+				48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */,
 				2645958829669FC6007114B7 /* NewMakeMemoryNote.swift in Sources */,
 				2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */,
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
+				3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */,
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
-				52D8F2522965F37E00755E5A /* Model.swift in Sources */,
+				52D8F2522965F37E00755E5A /* WordModel.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
+				523C30DD2979195E00FAE229 /* UserModel.swift in Sources */,
 				52D8F25E2965F67C00755E5A /* MyPageView.swift in Sources */,
 				52D8F2572965F56300755E5A /* MarketStore.swift in Sources */,
+				48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */,
 				5239182E2967CBA800D76C57 /* PointChargeView.swift in Sources */,
 				2645958C29673FB0007114B7 /* GoodJobStampView.swift in Sources */,
+				66982A0C297787A30052269D /* AuthStore.swift in Sources */,
 				52D8F2402965F2C600755E5A /* ContentView.swift in Sources */,
 				18FC714429672FEB00E3CED5 /* OtherTryCardView.swift in Sources */,
 				3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */,
+				95595284297A290600C2B064 /* StudyingStampView.swift in Sources */,
 				484D657829669CDE00C56E87 /* MarketViewSheet.swift in Sources */,
+				52C222B029778CB800181367 /* MarketWordNoteModel.swift in Sources */,
+				66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */,
 				180D8A5A29668857005BDBF0 /* FindIdPwView.swift in Sources */,
 				5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */,
+				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
-				52D8F2552965F54A00755E5A /* UserStore.swift in Sources */,
 				52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */,
 				484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */,
 				951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */,
@@ -443,15 +515,19 @@
 				52D8F25A2965F63700755E5A /* WordNotesView.swift in Sources */,
 				488F0AA82967E8AB007EAAC1 /* OnBoardingView.swift in Sources */,
 				488F0AAA2967E8BC007EAAC1 /* OnBoardingData.swift in Sources */,
+				523C30DA29790ECF00FAE229 /* MyWordNoteModel.swift in Sources */,
 				484D657A29669E6600C56E87 /* MarketViewAddButton.swift in Sources */,
+				18C4485E2977C48000FEB345 /* hideKeyboradExtension.swift in Sources */,
 				3F20026E29672F2900FCFC3A /* AddListView.swift in Sources */,
 				488F0AA62967E8A1007EAAC1 /* OnBoardingTabView.swift in Sources */,
 				484D657329669B5F00C56E87 /* MarketViewCategoryButton.swift in Sources */,
+				48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */,
 				52DE9D882966FAFB0037F64A /* TextFieldModifier.swift in Sources */,
 				52D8F23E2965F2C600755E5A /* MemorizingApp.swift in Sources */,
 				52D8F2622965F72600755E5A /* MainView.swift in Sources */,
 				52D8F2642965F75300755E5A /* LoginView.swift in Sources */,
 				2645958E2967431B007114B7 /* TryAgainView.swift in Sources */,
+				26CC90A429778DA70039981B /* ReviewModel.swift in Sources */,
 				484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */,
 				52D8F25C2965F65B00755E5A /* MarketView.swift in Sources */,
 			);
@@ -579,12 +655,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Memorizing/Memorizing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";
 				DEVELOPMENT_TEAM = 2D266U5CF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Memorizing/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -609,12 +687,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Memorizing/Memorizing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";
 				DEVELOPMENT_TEAM = 2D266U5CF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Memorizing/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -674,6 +754,22 @@
 				kind = branch;
 			};
 		};
+		66982A112977A7660052269D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		66982A172977B9BD0052269D /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -696,6 +792,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 52BCE8DB2966936A00A85A1F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		66982A122977A7660052269D /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66982A112977A7660052269D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		66982A142977A7660052269D /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66982A112977A7660052269D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		66982A182977B9BD0052269D /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66982A172977B9BD0052269D /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		66982A1A2977B9BD0052269D /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66982A172977B9BD0052269D /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		66982A1C2977B9BD0052269D /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66982A172977B9BD0052269D /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

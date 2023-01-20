@@ -1,28 +1,23 @@
 //
-//  Model.swift
+//  MyWordNote.swift
 //  Memorizing
 //
-//  Created by 진준호 on 2023/01/05.
+//  Created by 이종현 on 2023/01/18.
 //
 
+import Foundation
 import SwiftUI
 
-// MARK: User
-struct User: Identifiable {
-    var id: String
-    var email: String
-    var nickName: String
-    var coin: Int
-}
-
 // MARK: WordNote - 암기장
-struct WordNote: Identifiable {
+struct MyWordNote: Identifiable {
     var id: String
     var noteName: String
     var noteCategory: String
     var enrollmentUser: String
     var repeatCount: Int
-    var notePrice: Int
+    var firstTestResult: Double
+    var lastTestResult: Double
+    var updateDate: Date
     
     // 카테고리와 색상 매칭
     var noteColor: Color {
@@ -57,12 +52,4 @@ struct WordNote: Identifiable {
             return 260.0
         }
     }
-}
-
-// MARK: Word - 단어, 용어 등
-struct Word: Identifiable {
-    var id: String
-    var wordString: String
-    var wordMeaning: String
-    var wordLevel: Int
 }

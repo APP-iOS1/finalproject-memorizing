@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 마켓 탭에서 가장 메인으로 보여주는 View
 struct MarketView: View {
     @EnvironmentObject var marketStore: MarketStore
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var authStore: AuthStore
     /// 검색창 입력 텍스트
     @State private var searchText: String = ""
     @State private var isSheetOpen: Bool = false
@@ -34,15 +34,17 @@ struct MarketView: View {
         
         // MARK: - 검색창 하단 구분선
         Divider()
-            .padding(.horizontal, 25)
-            .padding(.vertical, 10)
+            .frame(width: 340, height: 3)
+            .overlay(Color("Gray5"))
         
         // MARK: - 카테고리 버튼들
-        MarketViewCategoryButton(selectedCategory: $selectedCategory,
-                                 categoryArray: MarketView.categoryArray)
+        ScrollView(.horizontal, showsIndicators: false) {
+            MarketViewCategoryButton(selectedCategory: $selectedCategory,
+                                     categoryArray: MarketView.categoryArray)
+        }
         
         ZStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 // MARK: - Grid View
                 
                 let columns = [
@@ -64,8 +66,8 @@ struct MarketView: View {
                         }
                     })
                 .padding(.horizontal)
-                
             }   // ScrollView end
+            .padding(.bottom, 1)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -86,13 +88,13 @@ struct MarketView: View {
                         .stroke(Color.mainBlue)
                         .frame(width: 60, height: 30)
                         .overlay {
-                            Text("\(userStore.user?.coin ?? 0)P")
+                            Text("\(authStore.user?.coin ?? 0)P")
                                 .foregroundColor(.mainBlue)
                                 .font(.subheadline)
                         }
                 }
             }
-            .sheet(isPresented: $isSheetOpen) {
+            .fullScreenCover(isPresented: $isSheetOpen) {
                 // TODO: 단어장 클릭시 단어 목록 리스트 보여주기
                 MarketViewSheet(wordNote: marketStore.sendWordNote)
             }

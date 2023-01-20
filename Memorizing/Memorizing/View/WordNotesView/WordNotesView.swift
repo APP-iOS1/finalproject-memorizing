@@ -28,22 +28,22 @@ struct WordNotesView: View {
     @State private var reviewStepToggle: Bool = false
     @State private var menuXAxis: Double = -132
     @State private var isShowingNewMemorySheet: Bool = false
-    @EnvironmentObject var userStore: UserStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
     var body: some View {
         ZStack {
             VStack {
                 Header(memoryStepToggle: $memoryStepToggle, reviewStepToggle: $reviewStepToggle, menuXAxis: $menuXAxis)
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
-                    ScrollView {
-                        ForEach(userStore.myWordNotes) { myWordNote in
-                            WordRegistrationView(myWordNote: myWordNote)
+                    ScrollView(showsIndicators: false) {
+                        ForEach(myNoteStore.myWordNotes) { myWordNote in
+                            MyMemoryNote(myWordNote: myWordNote)
                         }
                     }
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
-                    ScrollView {
-                        ForEach(userStore.myWordNotes) { myWordNote in
+                    ScrollView(showsIndicators: false) {
+                        ForEach(myNoteStore.myWordNotes) { myWordNote in
                             StudyAgainView(myWordNote: myWordNote)
                         }
                     }
@@ -63,32 +63,34 @@ struct WordNotesView: View {
                         print("알림확인 버튼이 눌렸습니다.")
                     } label: {
                         Image(systemName: "bell")
-                            .foregroundColor(.mainBlue)
+                            .foregroundColor(.mainDarkBlue)
                     }
                 }
             }
+            
             VStack {
                 
-                Button {
-                    print("새로운 일기장 만들기 버튼이 눌렸습니다.")
-                    isShowingNewMemorySheet.toggle()
-                } label: {
-                    Circle()
-                        .foregroundColor(.mainBlue)
-                        .frame(width: 65, height: 65)
-                        .overlay {
-                            Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .font(.title3)
-                                .bold()
-                        }
-                        .shadow(radius: 1, x: 1, y: 1)
+                if memoryStepToggle == true && reviewStepToggle == false {
+                    Button {
+                        print("새로운 일기장 만들기 버튼이 눌렸습니다.")
+                        isShowingNewMemorySheet.toggle()
+                    } label: {
+                        Circle()
+                            .foregroundColor(.mainBlue)
+                            .frame(width: 65, height: 65)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .foregroundColor(.white)
+                                    .font(.title3)
+                                    .bold()
+                            }
+                            .shadow(radius: 1, x: 1, y: 1)
+                    }
+                    .offset(x: 140, y: 250)
+                    .sheet(isPresented: $isShowingNewMemorySheet) {
+                        NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
+                    }
                 }
-                .offset(x: 140, y: 250)
-                .sheet(isPresented: $isShowingNewMemorySheet) {
-                    NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
-                }
-                
             }
             
             //            if(onboard.showOnboardScreen) {

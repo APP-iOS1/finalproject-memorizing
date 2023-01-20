@@ -22,7 +22,7 @@ struct OtherTryCardView: View {
     //    @State private var currentWordDef: String = "현기"
     
     @Environment(\.dismiss) private var dismiss
-    var myWordNote: WordNote
+    var myWordNote: MyWordNote
     var word: [Word]
     @State var isDismiss: Bool = false
     @State var num = 0
@@ -30,12 +30,7 @@ struct OtherTryCardView: View {
         word.count - 1
     }
     // MARK: 카드 뒤집는데 쓰일 것들
-    @State var backDegree = 0.0
-    @State var frontDegree = -90.0
     @State var isFlipped = false
-    let width: CGFloat = 200
-    let height: CGFloat = 250
-    let durationAndDelay: CGFloat = 0.3
     
     var body: some View {
         VStack {
@@ -50,18 +45,19 @@ struct OtherTryCardView: View {
             
             // MARK: 카드뷰
             ZStack {
-                WordCardFrontView2(
-                    listLength: wordCount,
-                    currentListLength: $num,
-                    currentWord: word[num].wordString,
-                    degree: $frontDegree
-                )
-                WordCardBackView2(
-                    listLength: wordCount,
-                    currentListLength: $num,
-                    currentWordDef: word[num].wordMeaning,
-                    degree: $backDegree
-                )
+                if isFlipped {
+                    WordCardMeaningView2(
+                        listLength: wordCount,
+                        currentListLength: $num,
+                        currentWordDef: word[num].wordMeaning
+                    )
+                } else {
+                    WordCardWordView2(
+                        listLength: wordCount,
+                        currentListLength: $num,
+                        currentWord: word[num].wordString
+                    )
+                }
             }
             .onTapGesture {
                 flipCard()
@@ -119,26 +115,11 @@ struct OtherTryCardView: View {
         print("flipcard 실행")
         print(isFlipped)
         isFlipped.toggle()
-        if isFlipped {
-            withAnimation(.linear(duration: durationAndDelay)) {
-                backDegree = 90
-            }
-            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-                frontDegree = 0
-            }
-        } else {
-            withAnimation(.linear(duration: durationAndDelay)) {
-                frontDegree = -90
-            }
-            withAnimation(.linear(duration: durationAndDelay).delay(durationAndDelay)) {
-                backDegree = 0
-            }
-        }
     }
 }
 
-// MARK: 카드 뒷 뷰
-struct WordCardBackView2: View {
+// MARK: 카드 단어 뜻 뷰
+struct WordCardMeaningView2: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -146,8 +127,6 @@ struct WordCardBackView2: View {
     @Binding var currentListLength: Int
     // MARK: 현재 단어 뜻
     var currentWordDef: String
-    // MARK: 카드 뒤집기 각도
-    @Binding var degree: Double
     
     var body: some View {
         ZStack {
@@ -178,6 +157,7 @@ struct WordCardBackView2: View {
                 
                 // MARK: 현재 단어
                 Text("\(currentWordDef)")
+                    .foregroundColor(Color("MainBlue"))
                     .padding(.bottom, 70)
                     .font(.largeTitle).bold()
                 
@@ -186,12 +166,11 @@ struct WordCardBackView2: View {
             }
         }
         .frame(width: 330, height: 330)
-        .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
     }
 }
 
-// MARK: 카드 앞 뷰
-struct WordCardFrontView2: View {
+// MARK: 카드 단어 뷰
+struct WordCardWordView2: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -199,8 +178,6 @@ struct WordCardFrontView2: View {
     @Binding var currentListLength: Int
     // MARK: 현재 단어
     var currentWord: String
-    // MARK: 카드 뒤집기 각도
-    @Binding var degree: Double
     
     var body: some View {
         ZStack {
@@ -231,7 +208,7 @@ struct WordCardFrontView2: View {
                 
                 // MARK: 현재 단어 뜻
                 Text("\(currentWord)")
-                    .foregroundColor(Color("MainBlue"))
+                    .foregroundColor(Color("MainBlack"))
                     .padding(.bottom, 70)
                     .font(.largeTitle).bold()
                 
@@ -240,20 +217,21 @@ struct WordCardFrontView2: View {
             }
         }
         .frame(width: 330, height: 330)
-        .rotation3DEffect(Angle(degrees: degree), axis: (x: 0, y: 1, z: 0))
     }
 }
 
 // MARK: 이전 다음 버튼
 struct NextPreviousButton: View {
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var notiManager: NotificationManager
+    
     @Binding var isFlipped: Bool
-    @EnvironmentObject var userStore: UserStore
     @Binding var isDismiss: Bool
     @Binding var num: Int
-    @State var isShowingAlert: Bool = false
-    var wordNote: WordNote
+    @State private var isShowingStampView: Bool = false
+    
+    var wordNote: MyWordNote
     var lastWordIndex: Int
-    @EnvironmentObject var notiManager: NotificationManager
     
     var body: some View {
         HStack {
@@ -281,13 +259,11 @@ struct NextPreviousButton: View {
             // TODO: 다음 버튼
             Button {
                 if lastWordIndex != num {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        num += 1
-                    }
+                    num += 1
                     isFlipped = false
                     
                 } else {
-                    isShowingAlert = true
+                    isShowingStampView = true
                 }
             } label: {
                 HStack {
@@ -302,37 +278,40 @@ struct NextPreviousButton: View {
             
         }
         .frame(width: 330)
-        .alert(
-            "Alert Title",
-            isPresented: $isShowingAlert
-        ) {
-            Button("Ok") {
-                Task {
-                    await userStore.repeatCountDidPlusOne(wordNote: wordNote)
-                    
-                    // 알림 설정 권한 확인
-                    if !notiManager.isGranted {
-                        notiManager.openSetting()  // 알림 설정 창
-                    } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
-                        print("set localNotification")
-                        var localNotification = LocalNotification(
-                            identifier: UUID().uuidString,
-                            title: "MEMOrizing 암기 시간",
-                            body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
-                            timeInterval: Double(wordNote.repeatCount * 1),
-                            repeats: false
-                        )
-                        localNotification.subtitle = "\(wordNote.noteName)"
-                        print("localNotification: ", localNotification)
-                        
-                        await notiManager.schedule(localNotification: localNotification)
-                        await notiManager.getPendingRequests()
-                    }
-                    isDismiss.toggle()
-                }
-            }
-        } message: {
-            Text("모든 단어를 공부했습니다 :)")
+//        .alert(
+//            "Alert Title",
+//            isPresented: $isShowingStampView
+//        ) {
+//            Button("Ok") {
+//                Task {
+//                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
+//
+//                    // 알림 설정 권한 확인
+//                    if !notiManager.isGranted {
+//                        notiManager.openSetting()  // 알림 설정 창
+//                    } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
+//                        print("set localNotification")
+//                        var localNotification = LocalNotification(
+//                            identifier: UUID().uuidString,
+//                            title: "MEMOrizing 암기 시간",
+//                            body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
+//                            timeInterval: Double(wordNote.repeatCount * 1),
+//                            repeats: false
+//                        )
+//                        localNotification.subtitle = "\(wordNote.noteName)"
+//                        print("localNotification: ", localNotification)
+//
+//                        await notiManager.schedule(localNotification: localNotification)
+//                        await notiManager.getPendingRequests()
+//                    }
+//                    isDismiss.toggle()
+//                }
+//            }
+//        } message: {
+//            Text("모든 단어를 공부했습니다 :)")
+//        }
+        .sheet(isPresented: $isShowingStampView) {
+            StudyingStampView(wordNote: wordNote, isDismiss: $isDismiss)
         }
     }
     

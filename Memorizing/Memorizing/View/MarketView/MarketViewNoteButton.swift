@@ -15,7 +15,7 @@ struct MarketViewNoteButton: View {
     @Binding var selectedCategory: String
     private let categoryArray: [String] = ["전체", "영어", "한국사", "IT", "경제", "시사", "기타"]
     
-    var selectedWordNote: WordNote
+    var selectedWordNote: MarketWordNote
     
     var body: some View {
         
@@ -47,23 +47,27 @@ struct MarketViewNoteButton: View {
                                         .overlay {
                                             Text(selectedWordNote.noteCategory)
                                                 .font(.caption2)
+                                                .fontWeight(.bold)
                                                 .foregroundColor(selectedWordNote.noteColor)
                                         }
                                     
                                     Spacer()
                                 }
+                                .frame(height: 20)
                                 
                                 // 암기장 제목
-                                HStack {
+                                HStack(alignment: .top) {
                                     Text(selectedWordNote.noteName)
                                         .foregroundColor(.mainBlack)
-                                        .font(.caption)
+                                        .font(.footnote)
+                                        .fontWeight(.heavy)
                                         .bold()
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(2)
                                     
                                     Spacer()
                                 }
+                                .frame(width: 140, height: 40)
                                 .padding(.bottom, 3)
                                 
                                 // 암기장 판매 가격
@@ -75,6 +79,7 @@ struct MarketViewNoteButton: View {
                                         .foregroundColor(.mainDarkBlue)
                                         .padding(.trailing, 5)
                                 }
+                                .frame(height: 20)
                             }
                             .padding(.horizontal, 3)
                             .padding(.vertical, 10)
@@ -85,8 +90,19 @@ struct MarketViewNoteButton: View {
     }
 }
 
-// struct MarketViewNoteButton_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MarketViewNoteButton(isSheetOpen: .constant(false), index: 0)
-//    }
-// }
+ struct MarketViewNoteButton_Previews: PreviewProvider {
+    static var previews: some View {
+        MarketViewNoteButton(isSheetOpen: .constant(true),
+                             selectedCategory: .constant("IT"),
+                             selectedWordNote: MarketWordNote(id: "",
+                                                              noteName: "",
+                                                              noteCategory: "",
+                                                              enrollmentUser: "",
+                                                              notePrice: 0,
+                                                              updateDate: Date.now,
+                                                              salesCount: 0,
+                                                              starScoreTotal: 0,
+                                                              reviewCount: 0)
+                             )
+    }
+ }
