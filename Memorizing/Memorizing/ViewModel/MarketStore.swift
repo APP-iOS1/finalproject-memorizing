@@ -14,7 +14,7 @@ import FirebaseFirestore
 class MarketStore: ObservableObject {
     @Published var marketWordNotes: [MarketWordNote] = []
     @Published var words: [Word] = []
-    @Published var filterWordNotes: [MarketWordNote] = []
+    @Published var filterMyWordNotes: [MyWordNote] = []
     @Published var myWordNoteIdArray: [String] = []
     
     @Published var sendWordNote = MarketWordNote(id: "",
@@ -34,6 +34,10 @@ class MarketStore: ObservableObject {
     // MARK: - 마켓의 전체 단어장들을 fetch 하는 함수 / Market View에서 전체 Notes를 Fetch 함
     func marketNotesWillFetchDB() async {
         do {
+            await MainActor.run(body: {
+                marketWordNotes.removeAll()
+            })
+                                
             let documents = try await database.collection("marketWordNotes").getDocuments()
             
             for document in documents.documents {
@@ -72,6 +76,10 @@ class MarketStore: ObservableObject {
     // MARK: - 단어장을 들어가면 해당 단어장의 단어들을 fetch 하는 함수 / 마켓에 위치한 Notes의 단어를 Fetch
     func wordsWillFetchDB(wordNoteID: String) async {
         do {
+            await MainActor.run(body: {
+                words.removeAll()
+            })
+            
             let documents = try await database.collection("marketWordNotes").document(wordNoteID)
                 .collection("words").getDocuments()
             
@@ -89,7 +97,9 @@ class MarketStore: ObservableObject {
                     wordLevel: wordLevel
                 )
                 
-                self.words.append(word)
+                await MainActor.run(body: {
+                    self.words.append(word)
+                })
             }
         } catch {
             print("wordsWillFetchDB Function Error: \(error)")
@@ -167,10 +177,7 @@ class MarketStore: ObservableObject {
     }
     
     // MARK: - 현재 유저의 coin 상태를 확인하고 살 수 있으면 coin이 깍이면서 다음 함수로 넘어감 / 현재 User의 Coin 갯수를 Check
-    func userCoinWillCheckDB(marketWordNote: MarketWordNote, words: [Word]) {
-        // TODO: - 현재 유저의 코인값을 받아와야됨 태영님 작업 끝나면 거기서 접근해서 들고와볼것...
-        let userCoin: Int = 0
-        
+    func userCoinWillCheckDB(marketWordNote: MarketWordNote, words: [Word], userCoin: Int) {
         if userCoin >= marketWordNote.notePrice {
             // 사는 함수 실행
             let calculatedCoin = (userCoin) - marketWordNote.notePrice
@@ -193,7 +200,7 @@ class MarketStore: ObservableObject {
     
     // MARK: - 마켓에서 단어장 가져오는 기능 (단어장 구매) / Market에서 Note를 구매할 경우, 해당 note를 DB에 저장 및 불러오기
     func marketNotesWillBringMyNotesDB(marketWordNote: MarketWordNote, words: [Word]) {
-        let id = UUID().uuidString
+        let id = marketWordNote.id
         
         let wordNote = ["id": id,
                         "noteName": marketWordNote.noteName,
@@ -251,30 +258,67 @@ class MarketStore: ObservableObject {
         database.collection("marketWordNotes").document(marketWordNote.id).delete()
     }
     
-    // TODO: - 마켓에서 구매하고 나면 다시 중복구매를 방지하기위해 filterWordNotes와 myWordNoteIDArray를 넣어줬는데
-    // TODO: - 기존에 만들어져 있는 함수 및 다른 방법을 사용해서 구할 수 있도록 변경해볼것(View에서 변경)
     // MARK: - Market에서 Note를 구매할 경우, 해당 Notes를 My Notes DB에 저장
-//    func notesWillFetchDB() {
-//        self.filterWordNotes.removeAll()
-//
-//        let myWordNotes = MyNoteStore().myWordNotes
-//        var marketNoteId: [String] = []
-//
-//        for marketWordNote in marketWordNotes {
-//            marketNoteId.append(marketWordNote.id)
-//        }
-//
-//        for myWordNote in myWordNotes where myWordNote.enrollmentUser == currentUser?.uid {
-//                self.filterWordNotes.append(myWordNote)
-//        }
-//    }
-//
-//    // MARK: - Market에서 Note를 구매할 경우, My Notes Array DB에서 불러옴
-//    func notesArrayWillFetchDB() {
-//        myWordNoteIdArray.removeAll()
-//
-//        for myWordNote in myWordNotes {
-//            myWordNoteIdArray.append(myWordNote.id)
-//        }
-//    }
+    func filterMyNoteWillFetchDB() async {
+        do {
+            await MainActor.run(body: {
+                filterMyWordNotes.removeAll()
+            })
+            
+            let currentUserUID = currentUser?.uid ?? ""
+            let documents = try await database.collection("users").document(currentUserUID)
+                .collection("myWordNotes").whereField("enrollmentUser", isEqualTo: currentUserUID).getDocuments()
+            
+            for document in documents.documents {
+                let docData = document.data()
+                
+                let id: String = docData["id"] as? String ?? ""
+                let noteName: String = docData["noteName"] as? String ?? ""
+                let noteCategory: String = docData["noteCategory"] as? String ?? ""
+                let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+                let repeatCount: Int = docData["noteName"] as? Int ?? 0
+                let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0
+                let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
+                let updateDate: Date = docData["updateDate"] as? Date ?? Date()
+                
+                let myWordNote = MyWordNote(id: id,
+                                            noteName: noteName,
+                                            noteCategory: noteCategory,
+                                            enrollmentUser: enrollmentUser,
+                                            repeatCount: repeatCount,
+                                            firstTestResult: firstTestResult,
+                                            lastTestResult: lastTestResult,
+                                            updateDate: updateDate)
+                
+                await MainActor.run(body: {
+                    self.filterMyWordNotes.append(myWordNote)
+                })
+            }
+        } catch {
+            print("filterMyNoteWillFetchDB Function Error: \(error)")
+        }
+    }
+
+    // MARK: - Market에서 Note를 구매할 경우, My Notes Array DB에서 불러옴
+    func myNotesArrayWillFetchDB() async {
+        do {
+            await MainActor.run(body: {
+                myWordNoteIdArray.removeAll()
+            })
+            
+            let currentUserUID = currentUser?.uid ?? ""
+            let documents = try await database.collection("users").document(currentUserUID)
+                .collection("myWordNotes").getDocuments()
+            
+            for document in documents.documents {
+                let id: String = document.data()["id"] as? String ?? ""
+                
+                await MainActor.run(body: {
+                    myWordNoteIdArray.append(id)
+                })
+            }
+        } catch {
+            print("myNotesArrayWillFetchDB Function Error: \(error)")
+        }
+    }
 }

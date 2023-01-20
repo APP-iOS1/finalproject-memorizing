@@ -25,6 +25,7 @@ struct NewMakeMemoryNote: View {
     @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var authStore: AuthStore
     
     @Binding var isShowingNewMemorySheet: Bool
@@ -160,6 +161,11 @@ struct NewMakeMemoryNote: View {
                                              updateDate: Date.now
                         )
                     )
+                    
+                    Task {
+                        await marketStore.filterMyNoteWillFetchDB()
+                    }
+                    
                     isShowingNewMemorySheet = false
                     print("새로운 암기장 만들기")
                 } label: {

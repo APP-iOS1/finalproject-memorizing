@@ -128,11 +128,15 @@ struct MarketViewSheet: View {
                                          primaryButton: .destructive(Text("구매하기"),
                                                                      action: {
                                 marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
-                                                              words: marketStore.words)
+                                                                words: marketStore.words,
+                                                                userCoin: authStore.user?.coin ?? 0)
+                                
                                 dismiss()
                                 
                                 Task {
                                     await authStore.userInfoWillFetchDB()
+                                    await marketStore.myNotesArrayWillFetchDB()
+                                    await marketStore.filterMyNoteWillFetchDB()
                                 }
                             }),
                                          secondaryButton: .cancel(Text("취소")))
@@ -260,18 +264,15 @@ struct MarketViewSheet: View {
                     .padding(.bottom)
             } // ScrollView
         } // NavigationStack
+        .onAppear {
+            Task {
+                await marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
+                await reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
+            }
+        }
         .onDisappear {
             myNoteStore.myNotesWillBeFetchedFromDB()
         }
-//        .onAppear {
-//
-//            Task {
-//                reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
-//            }
-//            marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
-//            authStore.notesArrayWillFetchDB()
-        }
-        
     }
 }
 
