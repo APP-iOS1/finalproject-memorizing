@@ -145,16 +145,17 @@ struct WordRegistrationView: View {
                 .onTapGesture(perform: {
                     isShowingSheet.toggle()
                 })
-                .fullScreenCover(isPresented: $isShowingSheet) {
-                    
-                    if noteLists.isEmpty {
-                        AddListView(wordNote: myWordNote, myWords: $noteLists)
-                    } else {
-                        EditListView(wordNote: myWordNote, myWords: $noteLists)
-                    }
-                    
-                }
             
+        }
+        .fullScreenCover(isPresented: $isShowingSheet) {
+            NavigationStack {
+                AddListView(wordNote: myWordNote, myWords: $noteLists)
+//                if noteLists.isEmpty {
+//                    AddListView(wordNote: myWordNote, myWords: $noteLists)
+//                } else {
+//                    EditListView(wordNote: myWordNote, word: $noteLists)
+//                }
+            }
         }
         .onAppear {
             if authStore.user != nil {

@@ -78,14 +78,17 @@ struct AddListView: View {
                 Spacer()
                 
                 if myWords.isEmpty {
-                    Text("")
+                    Text("추가된 단어가 없습니다!")
+                        .font(.callout)
+                        .fontWeight(.medium)
+                        .foregroundColor(.mainDarkBlue)
                 } else {
                     Text("총 ")
                     Text("\(myWords.count)개")
                         .foregroundColor(.mainDarkBlue)
                     Text("의 단어")
                 }
-
+                
             }
             .bold()
             .padding(.trailing, 9)
@@ -93,22 +96,16 @@ struct AddListView: View {
             
             // MARK: 등록된 단어 밀어서 삭제 리스트 구현
             VStack {
-                if myWords.isEmpty {
-                    Text("추가된 단어가 없습니다!")
-                        .font(.callout)
-                        .fontWeight(.medium)
-                        .foregroundColor(.mainDarkBlue)
-                } else {
-                    List {
-                        ForEach(myWords) { list in
-                            AddListRow(word: list)
-                        }
-                        .onDelete(perform: removeList)
-                        
+                List {
+                    ForEach(myWords) { list in
+                        AddListRow(word: list)
                     }
-                    .listRowSeparator(.hidden)
-                    .listStyle(.inset)
+                    .onDelete(perform: removeList)
+                    
                 }
+                .listRowSeparator(.hidden)
+                .listStyle(.inset)
+                
             }
             
         }
@@ -120,7 +117,7 @@ struct AddListView: View {
             } label: {
                 Text("단어 추가하기")
             }
-            .fullScreenCover(isPresented: $isShowingAddView, content: {
+            .sheet(isPresented: $isShowingAddView, content: {
                 AddWordView(wordNote: wordNote, noteLists: $myWords)
             })
             
