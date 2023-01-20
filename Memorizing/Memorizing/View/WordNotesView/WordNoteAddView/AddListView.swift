@@ -8,46 +8,66 @@
 import SwiftUI
 
 struct AddListView: View {
+    @EnvironmentObject var myNoteStore: MyNoteStore
     var wordNote: MyWordNote
-    @Binding var word: [Word]
+    @Binding var myWords: [Word]
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
     
+    @State private var isShowingAddView = false
+    @State private var showingAlert = false
     var body: some View {
         VStack {
-            VStack(spacing: 15) {
-                
-                // MARK: 단어장 카테고리
+            HStack(spacing: 30) {
                 HStack {
-                    Text("\(wordNote.noteCategory)")
-                        .foregroundColor(.white)
-                        .bold()
-                        .padding(.horizontal, 25)
-                        .padding(.vertical, 7)
-                        .background(wordNote.noteColor)
-                        .cornerRadius(20)
-                    
-                    Spacer()
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("뒤로가기")
+                            .font(.subheadline)
+                            .fontWeight(.regular)
+                            .foregroundColor(.mainBlack)
+                    }
                 }
-                
-                // MARK: 단어장 제목
+                .frame(width: 70)
                 HStack {
-                    Text("\(wordNote.noteName)")
-                        .bold()
-                        .foregroundColor(Color("MainBlack"))
-                        .font(.title2)
-                    
-                    Spacer()
+                    VStack {
+                        Text("메모 암기장 만들기")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                        
+                        Text("\(wordNote.noteName)")
+                            .bold()
+                            .foregroundColor(Color.mainBlue)
+                            .font(.caption)
+                    }
                 }
-                
-                // MARK: 단어장 날짜
+                .frame(width: 180)
                 HStack {
-                    Text("2023.01.18")
-                        .foregroundColor(.gray2)
+                    Button {
+                        showingAlert.toggle()
+                    } label: {
+                        Text("저장하기")
+                            .font(.subheadline)
+                            .fontWeight(.regular)
+                            .foregroundColor(.mainBlack)
+                    }
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text("암기장을 저장하시겠습니까?"),
+                              message: Text(""),
+                              primaryButton: .destructive(Text("취소하기"),
+                                                          action: {}),
+                              secondaryButton: .cancel(Text("저장하기"),
+                                                       action: {
+                            myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+                                self.myWords = myNoteStore.myWords
+                            }
+                            dismiss()
+                        }))
+                    }
                     
-                    Spacer()
                 }
-                
+                .frame(width: 70)
             }
             
             Divider()
@@ -57,14 +77,11 @@ struct AddListView: View {
             HStack(spacing: 0) {
                 Spacer()
                 
-                if word.isEmpty {
-                    Text("추가된 단어가 없습니다!")
-                        .font(.callout)
-                        .fontWeight(.medium)
-                        .foregroundColor(.mainDarkBlue)
+                if myWords.isEmpty {
+                    Text("")
                 } else {
                     Text("총 ")
-                    Text("\(word.count)개")
+                    Text("\(myWords.count)개")
                         .foregroundColor(.mainDarkBlue)
                     Text("의 단어")
                 }
@@ -76,38 +93,44 @@ struct AddListView: View {
             
             // MARK: 등록된 단어 밀어서 삭제 리스트 구현
             VStack {
-                List {
-                    ForEach(word) { list in
-                        AddListRow(word: list)
+                if myWords.isEmpty {
+                    Text("추가된 단어가 없습니다!")
+                        .font(.callout)
+                        .fontWeight(.medium)
+                        .foregroundColor(.mainDarkBlue)
+                } else {
+                    List {
+                        ForEach(myWords) { list in
+                            AddListRow(word: list)
+                        }
+                        .onDelete(perform: removeList)
+                        
                     }
-                    .onDelete(perform: removeList)
-//                    .onMove(perform: moveList)
+                    .listRowSeparator(.hidden)
+                    .listStyle(.inset)
                 }
-                .listStyle(.inset)
-//                .toolbar {
-//                    EditButton()
-//                }
             }
             
         }
         .padding()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("취소")
-                        .foregroundColor(Color("MainBlack"))
-                        .font(.title3)
-                }
 
+        VStack {
+            Button {
+                isShowingAddView.toggle()
+            } label: {
+                Text("단어 추가하기")
             }
+            .fullScreenCover(isPresented: $isShowingAddView, content: {
+                AddWordView(wordNote: wordNote, noteLists: $myWords)
+            })
+            
         }
+        
     }
     
     // MARK: 리스트 밀어서 삭제 함수 (일단 리스트 상에서만 삭제됨, 서버에서 삭제 x)
     func removeList(at offsets: IndexSet) {
-        word.remove(atOffsets: offsets)
+        myWords.remove(atOffsets: offsets)
     }
     
     // MARK: 리스트 순서 수정 함수
@@ -116,24 +139,21 @@ struct AddListView: View {
 //    }
 }
 
-// struct AddListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            AddListView(wordNote: WordNote(id: "1",
-//                                           noteName: "퀴즈를 통해 알아보는 시사/경제",
-//                                           noteCategory: "경제",
-//                                           enrollmentUser: "혜동이",
-//                                           repeatCount: 2,
-//                                           notePrice: 40),
-//                        word: [Word(id: "1",
-//                                    wordString: "선거의 4원칙은?",
-//                                    wordMeaning: "보통, 평등, 직접, 비밀",
-//                                    wordLevel: 2),
-//                               Word(id: "2",
-//                                    wordString: "3권 분립이란?",
-//                                    wordMeaning: "입법, 사법, 행정",
-//                                    wordLevel: 3)])
-//            .environmentObject(UserStore())
-//        }
-//    }
-// }
+ struct AddListView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            AddListView(wordNote: MyWordNote(id: "",
+                                             noteName: "이상한 나라의 노트",
+                                             noteCategory: "IT",
+                                             enrollmentUser: "",
+                                             repeatCount: 0,
+                                             firstTestResult: 0,
+                                             lastTestResult: 0,
+                                             updateDate: Date()),
+                        myWords: .constant([Word(id: "",
+                                   wordString: "앨리스는 누구인가?",
+                                   wordMeaning: "이상한 나라에 사는 공주",
+                                   wordLevel: 1)]))
+        }
+    }
+ }
