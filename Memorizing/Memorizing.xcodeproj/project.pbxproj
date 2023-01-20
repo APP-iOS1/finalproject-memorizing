@@ -73,6 +73,7 @@
 		66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A22297A22E20052269D /* AuthStoreExtension.swift */; };
 		66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A24297A24BF0052269D /* SignInWithAppleButton.swift */; };
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
+		95595284297A290600C2B064 /* StudyingStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95595283297A290600C2B064 /* StudyingStampView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
 /* End PBXBuildFile section */
@@ -138,6 +139,7 @@
 		66982A22297A22E20052269D /* AuthStoreExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStoreExtension.swift; sourceTree = "<group>"; };
 		66982A24297A24BF0052269D /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
+		95595283297A290600C2B064 /* StudyingStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingStampView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -298,6 +300,7 @@
 				484D657E296733F900C56E87 /* FaceProgressView.swift */,
 				2645958B29673FB0007114B7 /* GoodJobStampView.swift */,
 				2645958D2967431B007114B7 /* TryAgainView.swift */,
+				95595283297A290600C2B064 /* StudyingStampView.swift */,
 				48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */,
 				3FF9B3E22966625900A47C5A /* WordNoteAddView */,
 			);
@@ -497,6 +500,7 @@
 				52D8F2402965F2C600755E5A /* ContentView.swift in Sources */,
 				18FC714429672FEB00E3CED5 /* OtherTryCardView.swift in Sources */,
 				3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */,
+				95595284297A290600C2B064 /* StudyingStampView.swift in Sources */,
 				484D657829669CDE00C56E87 /* MarketViewSheet.swift in Sources */,
 				52C222B029778CB800181367 /* MarketWordNoteModel.swift in Sources */,
 				66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */,
