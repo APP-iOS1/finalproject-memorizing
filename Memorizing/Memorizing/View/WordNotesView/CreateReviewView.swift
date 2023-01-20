@@ -9,10 +9,14 @@ import SwiftUI
 
 // MARK: - 리뷰 작성 페이지
 struct CreateReviewView: View {
-    @State private var review: String = ""
+    @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var reviewStore: ReviewStore
+    @State private var reviewText: String = ""
+    @State private var reviewStarCount: Int = 5
     
+    var wordNote: MyWordNote
     let reviewPlaceholder: String
-    = "리뷰를 작성해주세요. 다른 사용자분들께 도움이 된답니다! 험한말은 싫어요. 이쁜말로 부탁해요:) 아 리뷰는 선택이에요! 별점만 남겨주셔도 괜찮습니다."
+    = "리뷰를 작성해주세요. 다른 사용자분들께 도움이 된답니다!"
     
     var body: some View {
         // MARK: - 단어장 정보
@@ -20,10 +24,10 @@ struct CreateReviewView: View {
             // 암기장 카테고리
             HStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.englishColor)
+                    .fill(wordNote.noteColor)
                     .frame(width: 40, height: 20)
                     .overlay {
-                        Text("영어")
+                        Text(wordNote.noteCategory)
                             .font(.caption2)
                             .foregroundColor(.white)
                     }
@@ -33,7 +37,7 @@ struct CreateReviewView: View {
             
             // 암기장 제목
             HStack {
-                Text("암기장 제목")
+                Text(wordNote.noteName)
                     .foregroundColor(.mainBlack)
                     .font(.title3)
                     .bold()
@@ -47,7 +51,7 @@ struct CreateReviewView: View {
             // 암기장 마켓등록일, 판매 금액
             HStack {
                 // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
-                Text("\("2023.01.18")")
+                Text("\(wordNote.updateDate)")
                     .font(.footnote)
                     .foregroundColor(.gray2)
                     .multilineTextAlignment(.leading)
@@ -68,11 +72,24 @@ struct CreateReviewView: View {
                 .padding(.bottom, 10)
             
             HStack(spacing: 3) {
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
+                
+                ForEach(1 ... reviewStarCount, id: \.self) { count in
+                    Button {
+                        reviewStarCount = count
+                    } label: {
+                        Image(systemName: "star.fill")
+                    }
+                }
+                
+                if reviewStarCount < 5 {
+                    ForEach(1 ... (5 - reviewStarCount), id: \.self) { count in
+                        Button {
+                            reviewStarCount += count
+                        } label: {
+                            Image(systemName: "star")
+                        }
+                    }
+                }
             }
             .font(.title)
             .foregroundColor(Color.iTColor)
@@ -82,17 +99,53 @@ struct CreateReviewView: View {
                 .fill(Color.gray6)
                 .frame(width: 350, height: 160)
                 .overlay {
-                    TextField(reviewPlaceholder, text: $review)
+                    TextField(reviewPlaceholder, text: $reviewText)
                         .lineLimit(3)
-                        .font(.caption2)
+                        .font(.caption)
                 }
+                .padding(.bottom, 30)
+            
+            Button {
+                
+                // review에 setdata로 등록
+                reviewStore.reviewDidSaveDB(wordNoteID: wordNote.id,
+                                            reviewText: reviewText,
+                                            reviewStarScore: reviewStarCount,
+                                            currentUser: authStore.user ?? User(id: "",
+                                                                                email: "",
+                                                                                nickName: "",
+                                                                                coin: 0))
+                
+            } label: {
+                RoundedRectangle(cornerRadius: 30)
+                    .fill(Color.mainBlue)
+                    .frame(width: 350, height: 50, alignment: .top)
+                    .overlay {
+                        Text("등록하기")
+                            .font(.footnote)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+            }
         }
+        .onDisappear(perform: {
+           
+        })
         .padding(.horizontal, 30)
     }
 }
 
-struct CreateReviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateReviewView()
-    }
-}
+//struct CreateReviewView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateReviewView(wordNote: MarketWordNote(id: "",
+//                                                  noteName: "",
+//                                                  noteCategory: "",
+//                                                  enrollmentUser: "",
+//                                                  notePrice: 0,
+//                                                  updateDate: Date.now,
+//                                                  salesCount: 0,
+//                                                  starScoreTotal: 0,
+//                                                  reviewCount: 0))
+//        .environmentObject(ReviewStore())
+//    }
+//}
