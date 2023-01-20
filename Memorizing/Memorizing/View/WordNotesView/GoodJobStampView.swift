@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - 마지막 복습 페이지
 struct GoodJobStampView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
+
     var wordNote: MyWordNote
     @Binding var isDismiss: Bool
     var body: some View {
@@ -83,8 +84,8 @@ struct GoodJobStampView: View {
                 }.font(.caption) .foregroundColor(.gray2)
                 Spacer()
                 
-                Button {
-                    // 후기작성
+                NavigationLink {
+                    CreateReviewView(wordNote: wordNote)
                 } label: {
                     HStack {
                         Text("후기 작성 하기")
