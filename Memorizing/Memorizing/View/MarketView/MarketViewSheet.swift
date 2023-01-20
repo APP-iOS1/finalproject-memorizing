@@ -150,7 +150,7 @@ struct MarketViewSheet: View {
                 }
                 
                 // MARK: - 암기장 리뷰
-                MarketViewSheetReviews()
+                MarketViewSheetReviews(reviews: reviewStore.reviews)
                 
                 // MARK: - 구분선
                 Divider()

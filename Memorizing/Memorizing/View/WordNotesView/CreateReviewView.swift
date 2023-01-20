@@ -135,7 +135,7 @@ struct CreateReviewView: View {
     }
 }
 
-//struct CreateReviewView_Previews: PreviewProvider {
+// struct CreateReviewView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        CreateReviewView(wordNote: MarketWordNote(id: "",
 //                                                  noteName: "",
@@ -148,4 +148,4 @@ struct CreateReviewView: View {
 //                                                  reviewCount: 0))
 //        .environmentObject(ReviewStore())
 //    }
-//}
+// }

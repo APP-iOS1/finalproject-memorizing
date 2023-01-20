@@ -82,7 +82,6 @@ struct MyPageView: View {
                     .font(.footnote)
                     .padding(.vertical, 2)
                     
-                    
 //                    HStack {
 //                        Button {
 //

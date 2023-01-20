@@ -55,7 +55,6 @@
 		52D8F2422965F2C800755E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2412965F2C800755E5A /* Assets.xcassets */; };
 		52D8F2452965F2C800755E5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2442965F2C800755E5A /* Preview Assets.xcassets */; };
 		52D8F2522965F37E00755E5A /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2512965F37E00755E5A /* WordModel.swift */; };
-		52D8F2552965F54A00755E5A /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2542965F54A00755E5A /* UserStore.swift */; };
 		52D8F2572965F56300755E5A /* MarketStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2562965F56300755E5A /* MarketStore.swift */; };
 		52D8F25A2965F63700755E5A /* WordNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2592965F63700755E5A /* WordNotesView.swift */; };
 		52D8F25C2965F65B00755E5A /* MarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F25B2965F65B00755E5A /* MarketView.swift */; };
@@ -124,7 +123,6 @@
 		52D8F2412965F2C800755E5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52D8F2442965F2C800755E5A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		52D8F2512965F37E00755E5A /* WordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordModel.swift; sourceTree = "<group>"; };
-		52D8F2542965F54A00755E5A /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		52D8F2562965F56300755E5A /* MarketStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketStore.swift; sourceTree = "<group>"; };
 		52D8F2592965F63700755E5A /* WordNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordNotesView.swift; sourceTree = "<group>"; };
 		52D8F25B2965F65B00755E5A /* MarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketView.swift; sourceTree = "<group>"; };
@@ -269,7 +267,6 @@
 		52D8F24C2965F2DA00755E5A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				52D8F2542965F54A00755E5A /* UserStore.swift */,
 				52D8F2562965F56300755E5A /* MarketStore.swift */,
 				3F2002732967551400FCFC3A /* NotificationManager.swift */,
 				66982A0B297787A30052269D /* AuthStore.swift */,
@@ -454,7 +451,6 @@
 		};
 		F203AD1A2975334E0047A212 /* SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -512,7 +508,6 @@
 				5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */,
 				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
-				52D8F2552965F54A00755E5A /* UserStore.swift in Sources */,
 				52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */,
 				484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */,
 				951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */,

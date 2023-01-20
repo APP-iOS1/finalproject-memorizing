@@ -28,6 +28,10 @@ class ReviewStore: ObservableObject {
     func reviewsWillFetchDB(marketID: String) async {
         let marketID = marketID
         do {
+            await MainActor.run(body: {
+                reviews.removeAll()
+            })
+            
             print("start fetchReviews")
             let documents = try await  database
                 .collection("marketWordNotes")
@@ -52,7 +56,11 @@ class ReviewStore: ObservableObject {
                                       reviewText: reviewText,
                                       createDate: createDate,
                                       starScore: starScore)
-                self.reviews.append(myReview)
+                
+                await MainActor.run(body: {
+                    self.reviews.append(myReview)
+                })
+                
                 print("finished fetchMyWordNotes")
             }
         } catch {
@@ -165,6 +173,10 @@ class ReviewStore: ObservableObject {
     
     func reviewPreviewsWillFetchDB(marketNoteID: String) async {
         do {
+            await MainActor.run(body: {
+                reviews.removeAll()
+            })
+            
             print("start fetchReviews")
             let documents = try await  database
                 .collection("marketWordNotes")
@@ -188,7 +200,9 @@ class ReviewStore: ObservableObject {
                                       reviewText: reviewText,
                                       createDate: createDate,
                                       starScore: starScore)
-                self.reviews.append(myReview)
+                await MainActor.run(body: {
+                    self.reviews.append(myReview)
+                })
                 print("finished fetchMyWordNotes")
             }
         } catch {

@@ -9,14 +9,14 @@ import SwiftUI
 
 struct MarketViewSheetReviews: View {
     
-    var reviews: [Review]
+    var reviews: [Review] = []
 
     let score: Double = 4.5
     
     var body: some View {
             VStack {
                 HStack {
-                    ForEach(Array(zip(reviews.indeces, reviews)), id: \.0) { index, review in
+                    ForEach(Array(zip(reviews.indices, reviews)), id: \.0) { index, review in
                         if index < 2 {
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.gray5)
@@ -87,8 +87,8 @@ struct MarketViewSheetReviews: View {
     }
 }
 
-struct MarketViewSheetReviews_Previews: PreviewProvider {
-    static var previews: some View {
-        MarketViewSheetReviews()
-    }
-}
+// struct MarketViewSheetReviews_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MarketViewSheetReviews()
+//    }
+// }

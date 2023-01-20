@@ -255,6 +255,7 @@ class MarketStore: ObservableObject {
     
     // MARK: - 등록해제하면 해당 암기장 데이터들은 마켓컬렉션에서 삭제되도록 하는 함수
     func marketNotesWillDeleteDB(marketWordNote: MarketWordNote, words: [Word]) {
+        // TODO: - 하위 컬렉션도 문서에 하나하나 접근해서 다 지워줘야됨
         database.collection("marketWordNotes").document(marketWordNote.id).delete()
     }
     
