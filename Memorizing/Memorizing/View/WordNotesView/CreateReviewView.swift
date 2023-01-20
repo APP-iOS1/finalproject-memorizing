@@ -135,17 +135,17 @@ struct CreateReviewView: View {
     }
 }
 
-struct CreateReviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateReviewView(wordNote: MarketWordNote(id: "",
-                                                  noteName: "",
-                                                  noteCategory: "",
-                                                  enrollmentUser: "",
-                                                  notePrice: 0,
-                                                  updateDate: Date.now,
-                                                  salesCount: 0,
-                                                  starScoreTotal: 0,
-                                                  reviewCount: 0))
-        .environmentObject(ReviewStore())
-    }
-}
+//struct CreateReviewView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateReviewView(wordNote: MarketWordNote(id: "",
+//                                                  noteName: "",
+//                                                  noteCategory: "",
+//                                                  enrollmentUser: "",
+//                                                  notePrice: 0,
+//                                                  updateDate: Date.now,
+//                                                  salesCount: 0,
+//                                                  starScoreTotal: 0,
+//                                                  reviewCount: 0))
+//        .environmentObject(ReviewStore())
+//    }
+//}

@@ -67,21 +67,7 @@ class ReviewStore: ObservableObject {
     /// - Parameter marketWord: marketWordnote의 id의 컬레션에 reviews를 추가한다.
     ///  reviews안에 현재 user의 id로 구조체로된 review가 생성된다.
     func reviewDidSaveDB(wordNoteID: String, reviewText: String, reviewStarScore: Int, currentUser: User) {
-        let myDocument = database.collection("marketWordNotes").document(wordNoteID).getDocument()
-        
-        let docData = myDocument.data()
-        let id: String = docData?["id"] as? String ?? ""
-        let noteName: String = docData?["noteName"] as? String ?? ""
-        let noteCategory: String = docData?["noteCategory"] as? String ?? ""
-        let enrollmentUser: String = docData?["enrollmentUser"] as? String ?? ""
-        
-        // type의 혼동을 막기위해 정의를 해서 아래 마켓에 넣어줌
-        let updateDate: Date = Date.now
-        let salesCount: Int = 0
-        let starScoreTotal: Double = 0
-        let reviewCount: Int = 0
-        let createDate: Timestamp = Timestamp()
-        
+     
         database
             .collection("marketWordNotes")
             .document(wordNoteID)
@@ -91,7 +77,7 @@ class ReviewStore: ObservableObject {
                 "id": currentUser.id,
                 "writer": currentUser.nickName,
                 "reviewText": reviewText,
-                "createDate": createDate,
+                "createDate": Timestamp(),
                 "starScore": reviewStarScore
             ])
 //        starScoreDidPlusMarketWordNote(marketWordNote: marketWord)

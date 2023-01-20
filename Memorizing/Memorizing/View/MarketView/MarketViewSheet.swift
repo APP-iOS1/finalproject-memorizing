@@ -12,6 +12,7 @@ struct MarketViewSheet: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var reviewStore: ReviewStore
     @Environment(\.dismiss) private var dismiss
     
     var wordNote: MarketWordNote
@@ -256,9 +257,14 @@ struct MarketViewSheet: View {
             myNoteStore.myNotesWillBeFetchedFromDB()
         }
 //        .onAppear {
+//
+//            Task {
+//                reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
+//            }
 //            marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
 //            authStore.notesArrayWillFetchDB()
-//        }
+        }
+        
     }
 }
 
