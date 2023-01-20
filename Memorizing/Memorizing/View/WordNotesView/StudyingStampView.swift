@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct StudyingStampView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var notiManager: NotificationManager
+    var wordNote: MyWordNote
+    @Binding var isDismiss: Bool
+    
     var body: some View {
         VStack {
             
@@ -36,8 +43,29 @@ struct StudyingStampView: View {
             .padding(.bottom)
             
             Button {
-                
-                
+                Task {
+                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
+                    
+                    // 알림 설정 권한 확인
+                    if !notiManager.isGranted {
+                        notiManager.openSetting()  // 알림 설정 창
+                    } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
+                        print("set localNotification")
+                        var localNotification = LocalNotification(
+                            identifier: UUID().uuidString,
+                            title: "MEMOrizing 암기 시간",
+                            body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
+                            timeInterval: Double(wordNote.repeatCount * 1),
+                            repeats: false
+                        )
+                        localNotification.subtitle = "\(wordNote.noteName)"
+                        print("localNotification: ", localNotification)
+                        
+                        await notiManager.schedule(localNotification: localNotification)
+                        await notiManager.getPendingRequests()
+                    }
+                    isDismiss.toggle()
+                }
             } label: {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color("MainDarkBlue"))
@@ -73,8 +101,16 @@ struct StudyingStampView: View {
     }
 }
 
-struct StudyingStampView_Previews: PreviewProvider {
-    static var previews: some View {
-        StudyingStampView()
-    }
-}
+// struct StudyingStampView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StudyingStampView(wordNote: MyWordNote(id: "1",
+//                                               noteName: "hi",
+//                                               noteCategory: "경제",
+//                                               enrollmentUser: "",
+//                                               repeatCount: 1,
+//                                               firstTestResult: 1.0,
+//                                               lastTestResult: 0,
+//                                               updateDate: Date()),
+//                          isDismiss: .constant(false))
+//    }
+// }
