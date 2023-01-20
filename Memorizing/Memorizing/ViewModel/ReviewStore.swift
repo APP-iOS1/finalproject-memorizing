@@ -88,22 +88,22 @@ class ReviewStore: ObservableObject {
                 "createDate": Timestamp(),
                 "starScore": reviewStarScore
             ])
-//        starScoreDidPlusMarketWordNote(marketWordNote: marketWord)
-//        reviewCountDidPlusOne(marketWordNote: marketWord)
+        starScoreDidPlusMarketWordNote(marketWordNoteID: wordNoteID, reviewStarScore: reviewStarScore)
+        reviewCountDidPlusOne(marketWordNoteID: wordNoteID)
     }
     // MARK: - MarketWordnote에 starScore를 추가함
     
     // Todo - WordNote --> MarketWordNotes로 변경
     /// marketWordNote.id에 StarScore를 추가한다.
     /// - Parameter marketWordNote: review에서 평가한 starScore를 marketWordNote.id의 starScore에 추가한다.
-    func starScoreDidPlusMarketWordNote(marketWordNote: MarketWordNote) {
+    func starScoreDidPlusMarketWordNote(marketWordNoteID: String, reviewStarScore: Int) {
         print("스코어를 추가합니다.")
         // marketWord.id로 간다음 starScore에 reviewDidSaveDB에서 추가한 starScore를 더해준다.
         database
             .collection("marketWordNotes")
-            .document(marketWordNote.id)
+            .document(marketWordNoteID)
             .updateData([
-                "starScore": FieldValue.increment(reviewStarScore)
+                "starScoreTotal": FieldValue.increment(Int64(reviewStarScore))
             ])
         print("marketWord.id에 스코어를 추가했습니다.")
         
@@ -114,12 +114,12 @@ class ReviewStore: ObservableObject {
     /// marketWordNote.id에 있는 reviewCount를 +1씩 한다.
     /// - Parameter marketWordNote: reviewDidSaveDB를 통해 생성이 되면 review가 작성되고,
     /// marketWordNote.id안에 있는 reviewCount를 +1를 한다.
-    func reviewCountDidPlusOne(marketWordNote: MarketWordNote) {
+    func reviewCountDidPlusOne(marketWordNoteID: String) {
         print("리뷰 카운트를 1증가 시킵니다.")
         // marketWord.id로 접근해서 reviewCount에 +1를 해준다.
         database
             .collection("marketWordNotes")
-            .document(marketWordNote.id)
+            .document(marketWordNoteID)
             .updateData([
                 "reviewCount": FieldValue.increment(Int64(1))
             ])

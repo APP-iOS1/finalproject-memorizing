@@ -71,8 +71,9 @@ struct MarketViewSheet: View {
                         
                         HStack {
                             // FIXME: 별점 총점 및 후기 총 갯수
-                            let score: String = String(format: "%.1f", wordNote.starScoreTotal) // "5.1"
                             let reviewCount: Int = wordNote.reviewCount
+                            let reviewScore: Double = wordNote.starScoreTotal / Double(reviewCount)
+                            let score: String = String(format: "%.1f", reviewScore) // "5.1"
 
                             Text("\(score) (\(reviewCount))")
                         
