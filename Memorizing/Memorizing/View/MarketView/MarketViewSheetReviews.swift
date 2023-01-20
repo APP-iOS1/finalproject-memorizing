@@ -11,8 +11,6 @@ struct MarketViewSheetReviews: View {
     
     var reviews: [Review] = []
 
-    let score: Double = 4.5
-    
     var body: some View {
             VStack {
                 HStack {
@@ -32,9 +30,11 @@ struct MarketViewSheetReviews: View {
                                                     .foregroundColor(Color.iTColor)
                                             }
                                             
-                                            ForEach(0 ... (4 - scoreInt), id: \.self) { _ in
-                                                Image(systemName: "star")
-                                                    .foregroundColor(Color.iTColor)
+                                            if scoreInt < 5 {
+                                                ForEach(0 ... (4 - scoreInt), id: \.self) { _ in
+                                                    Image(systemName: "star")
+                                                        .foregroundColor(Color.iTColor)
+                                                }
                                             }
                                             Spacer()
                                         }

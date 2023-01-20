@@ -64,16 +64,21 @@ struct MarketViewSheet: View {
                     .padding(.vertical, 5)
                     
                     // 암기장 마켓등록일, 판매 금액
-                    HStack {
+                    HStack(spacing: 3) {
                         Image(systemName: "star.fill")
+                            .foregroundColor(Color("ITColor"))
                             .font(.footnote)
                         
                         HStack {
                             // FIXME: 별점 총점 및 후기 총 갯수
-                            Text("\(wordNote.starScoreTotal) (\(wordNote.reviewCount))")
+                            let reviewCount: Int = wordNote.reviewCount
+                            let reviewScore: Double = wordNote.starScoreTotal / Double(reviewCount)
+                            let score: String = String(format: "%.1f", reviewScore) // "5.1"
+
+                            Text("\(score) (\(reviewCount))")
                         
                             // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
-                            Text("\(wordNote.updateDate)")
+                            Text("\(wordNote.updateDateFormatter)")
                         }
                         .font(.footnote)
                         .foregroundColor(.gray2)

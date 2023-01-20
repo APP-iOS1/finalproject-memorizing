@@ -46,4 +46,14 @@ struct MarketWordNote: Identifiable {
             return Color.mainDarkBlue
         }
     }
+    
+    // 날짜 형식 변경
+    var updateDateFormatter: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        
+        return dateFormatter.string(from: updateDate)
+    }
 }
