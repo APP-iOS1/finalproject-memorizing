@@ -38,7 +38,7 @@ struct MyPageView: View {
                             .foregroundColor(.gray2)
                         
                     } // 그리팅메세지
-                    .padding(.leading, 10)
+                    
                     .padding(.top, -30)
                     
                     HStack(spacing: 15) {
@@ -81,7 +81,7 @@ struct MyPageView: View {
                     } // 내 암기장개수 . 받은 도장 개수
                     .font(.footnote)
                     .padding(.vertical, 2)
-                    .padding(.leading, 10)
+                    
                     
 //                    HStack {
 //                        Button {
