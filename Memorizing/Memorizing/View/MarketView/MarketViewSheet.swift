@@ -64,13 +64,20 @@ struct MarketViewSheet: View {
                     
                     // 암기장 마켓등록일, 판매 금액
                     HStack {
-                        // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
-                        Text("\("2023.01.18")")
+                        Image(systemName: "star.fill")
                             .font(.footnote)
-                            .foregroundColor(.gray2)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(1)
                         
+                        HStack {
+                            // FIXME: 별점 총점 및 후기 총 갯수
+                            Text("\(wordNote.starScoreTotal) (\(wordNote.reviewCount))")
+                        
+                            // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
+                            Text("\(wordNote.updateDate)")
+                        }
+                        .font(.footnote)
+                        .foregroundColor(.gray2)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
                         Spacer()
                         
                         Text("\(wordNote.notePrice) P")
