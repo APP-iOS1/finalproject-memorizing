@@ -20,6 +20,7 @@
 		3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026F29672F3100FCFC3A /* AddListRow.swift */; };
 		3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F200271296754EB00FCFC3A /* LocalNotification.swift */; };
 		3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2002732967551400FCFC3A /* NotificationManager.swift */; };
+		3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC1496297A5EC700AE186F /* EditListView.swift */; };
 		3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E32966628C00A47C5A /* AddWordView.swift */; };
 		3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */; };
 		484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D65702966987900C56E87 /* MarketViewNoteButton.swift */; };
@@ -54,7 +55,6 @@
 		52D8F2422965F2C800755E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2412965F2C800755E5A /* Assets.xcassets */; };
 		52D8F2452965F2C800755E5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D8F2442965F2C800755E5A /* Preview Assets.xcassets */; };
 		52D8F2522965F37E00755E5A /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2512965F37E00755E5A /* WordModel.swift */; };
-		52D8F2552965F54A00755E5A /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2542965F54A00755E5A /* UserStore.swift */; };
 		52D8F2572965F56300755E5A /* MarketStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2562965F56300755E5A /* MarketStore.swift */; };
 		52D8F25A2965F63700755E5A /* WordNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F2592965F63700755E5A /* WordNotesView.swift */; };
 		52D8F25C2965F65B00755E5A /* MarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8F25B2965F65B00755E5A /* MarketView.swift */; };
@@ -73,6 +73,7 @@
 		66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A22297A22E20052269D /* AuthStoreExtension.swift */; };
 		66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A24297A24BF0052269D /* SignInWithAppleButton.swift */; };
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
+		95595284297A290600C2B064 /* StudyingStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95595283297A290600C2B064 /* StudyingStampView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
 /* End PBXBuildFile section */
@@ -91,6 +92,7 @@
 		3F20026F29672F3100FCFC3A /* AddListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListRow.swift; sourceTree = "<group>"; };
 		3F200271296754EB00FCFC3A /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		3F2002732967551400FCFC3A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		3FDC1496297A5EC700AE186F /* EditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListView.swift; sourceTree = "<group>"; };
 		3FF9B3E32966628C00A47C5A /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
 		484D65702966987900C56E87 /* MarketViewNoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewNoteButton.swift; sourceTree = "<group>"; };
 		484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewCategoryButton.swift; sourceTree = "<group>"; };
@@ -121,7 +123,6 @@
 		52D8F2412965F2C800755E5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52D8F2442965F2C800755E5A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		52D8F2512965F37E00755E5A /* WordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordModel.swift; sourceTree = "<group>"; };
-		52D8F2542965F54A00755E5A /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		52D8F2562965F56300755E5A /* MarketStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketStore.swift; sourceTree = "<group>"; };
 		52D8F2592965F63700755E5A /* WordNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordNotesView.swift; sourceTree = "<group>"; };
 		52D8F25B2965F65B00755E5A /* MarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketView.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		66982A22297A22E20052269D /* AuthStoreExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStoreExtension.swift; sourceTree = "<group>"; };
 		66982A24297A24BF0052269D /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
+		95595283297A290600C2B064 /* StudyingStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingStampView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,8 +167,9 @@
 		3FF9B3E22966625900A47C5A /* WordNoteAddView */ = {
 			isa = PBXGroup;
 			children = (
-				3FF9B3E32966628C00A47C5A /* AddWordView.swift */,
 				3F20026D29672F2900FCFC3A /* AddListView.swift */,
+				3FF9B3E32966628C00A47C5A /* AddWordView.swift */,
+				3FDC1496297A5EC700AE186F /* EditListView.swift */,
 				3F20026F29672F3100FCFC3A /* AddListRow.swift */,
 			);
 			path = WordNoteAddView;
@@ -264,7 +267,6 @@
 		52D8F24C2965F2DA00755E5A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				52D8F2542965F54A00755E5A /* UserStore.swift */,
 				52D8F2562965F56300755E5A /* MarketStore.swift */,
 				3F2002732967551400FCFC3A /* NotificationManager.swift */,
 				66982A0B297787A30052269D /* AuthStore.swift */,
@@ -298,6 +300,7 @@
 				484D657E296733F900C56E87 /* FaceProgressView.swift */,
 				2645958B29673FB0007114B7 /* GoodJobStampView.swift */,
 				2645958D2967431B007114B7 /* TryAgainView.swift */,
+				95595283297A290600C2B064 /* StudyingStampView.swift */,
 				48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */,
 				3FF9B3E22966625900A47C5A /* WordNoteAddView */,
 			);
@@ -448,7 +451,6 @@
 		};
 		F203AD1A2975334E0047A212 /* SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -482,6 +484,7 @@
 				2645958829669FC6007114B7 /* NewMakeMemoryNote.swift in Sources */,
 				2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */,
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
+				3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */,
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
@@ -497,6 +500,7 @@
 				52D8F2402965F2C600755E5A /* ContentView.swift in Sources */,
 				18FC714429672FEB00E3CED5 /* OtherTryCardView.swift in Sources */,
 				3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */,
+				95595284297A290600C2B064 /* StudyingStampView.swift in Sources */,
 				484D657829669CDE00C56E87 /* MarketViewSheet.swift in Sources */,
 				52C222B029778CB800181367 /* MarketWordNoteModel.swift in Sources */,
 				66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */,
@@ -504,7 +508,6 @@
 				5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */,
 				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
-				52D8F2552965F54A00755E5A /* UserStore.swift in Sources */,
 				52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */,
 				484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */,
 				951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */,

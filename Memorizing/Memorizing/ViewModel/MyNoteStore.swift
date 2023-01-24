@@ -22,31 +22,33 @@ class MyNoteStore: ObservableObject {
         database.collection("users").document(currentUser.uid).collection("myWordNotes")
             .order(by: "repeatCount")
             .getDocuments { snapshot, error in
-            self.myWordNotes.removeAll()
-            if let snapshot {
-                for document in snapshot.documents {
-                    let docData = document.data()
-                    let id: String = docData["id"] as? String ?? ""
-                    let noteName: String = docData["noteName"] as? String ?? ""
-                    let noteCategory: String = docData["noteCategory"] as? String ?? ""
-                    let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
-                    let repeatCount: Int = docData["repeatCount"] as? Int ?? 0
-                    let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0
-                    let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
-                    let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
-                    let updateDate: Date = createdAtTimeStamp.dateValue()
-                    let myWordNote = MyWordNote(id: id,
-                                                noteName: noteName,
-                                                noteCategory: noteCategory,
-                                                enrollmentUser: enrollmentUser,
-                                                repeatCount: repeatCount,
-                                                firstTestResult: firstTestResult,
-                                                lastTestResult: lastTestResult,
-                                                updateDate: updateDate)
-                    self.myWordNotes.append(myWordNote)
+                self.myWordNotes.removeAll()
+                if let error {
+                    print("myNotesWillBeFetchedFromDB error occured : \(error.localizedDescription)")
+                } else if let snapshot {
+                    for document in snapshot.documents {
+                        let docData = document.data()
+                        let id: String = docData["id"] as? String ?? ""
+                        let noteName: String = docData["noteName"] as? String ?? ""
+                        let noteCategory: String = docData["noteCategory"] as? String ?? ""
+                        let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+                        let repeatCount: Int = docData["repeatCount"] as? Int ?? 0
+                        let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0
+                        let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
+                        let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
+                        let updateDate: Date = createdAtTimeStamp.dateValue()
+                        let myWordNote = MyWordNote(id: id,
+                                                    noteName: noteName,
+                                                    noteCategory: noteCategory,
+                                                    enrollmentUser: enrollmentUser,
+                                                    repeatCount: repeatCount,
+                                                    firstTestResult: firstTestResult,
+                                                    lastTestResult: lastTestResult,
+                                                    updateDate: updateDate)
+                        self.myWordNotes.append(myWordNote)
+                    }
                 }
             }
-        }
     }
     
     // MARK: - myWordNotes를 추가하는 함수 / 내가 작성한 Notes를 DB에 저장함
@@ -61,7 +63,9 @@ class MyNoteStore: ObservableObject {
                 "repeatCount": wordNote.repeatCount,
                 "updateDate": wordNote.updateDate
             ]) { err in
-                
+                if let err {
+                    print("myNotesWillBeSavedOnDB error occured : \(err.localizedDescription)")
+                }
             }
         myNotesWillBeFetchedFromDB()
     }
@@ -75,7 +79,9 @@ class MyNoteStore: ObservableObject {
             .order(by: "wordLevel")
             .getDocuments { snapshot, error in
                 self.myWords.removeAll()
-                if let snapshot {
+                if let error {
+                    print("myWordsWillBeFetchedFromDB error occured: \(error.localizedDescription)")
+                } else if let snapshot {
                     for document in snapshot.documents {
                         let docData = document.data()
                         let id: String = docData["id"] as? String ?? ""
@@ -103,7 +109,11 @@ class MyNoteStore: ObservableObject {
                 "wordString": word.wordString,
                 "wordMeaning": word.wordMeaning,
                 "wordLevel": word.wordLevel
-            ])
+            ]) { err in
+                if let err {
+                    print("myWordsWillBeSavedOnDB error occured : \(err.localizedDescription)")
+                }
+            }
 
     }
     
@@ -131,7 +141,11 @@ class MyNoteStore: ObservableObject {
             .collection("myWordNotes").document(wordNote.id)
             .updateData([
                 "repeatCount": 0
-            ])
+            ]) { err in
+                if let err {
+                    print("repeatCountWillBeResetted error occured : \(err.localizedDescription)")
+                }
+            }
         myNotesWillBeFetchedFromDB()
     }
     
@@ -144,7 +158,12 @@ class MyNoteStore: ObservableObject {
             .collection("words").document(word.id)
             .updateData([
                 "wordLevel": level
-            ])
+            ]) { err in
+                if let err {
+                    print("wordsLevelWillBeChangedOnDB error occured : \(err.localizedDescription)")
+                }
+            }
+        
         print("updateWordLevel success")
         
     }

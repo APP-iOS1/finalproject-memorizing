@@ -12,6 +12,7 @@ struct MarketViewSheet: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var reviewStore: ReviewStore
     @Environment(\.dismiss) private var dismiss
     
     var wordNote: MarketWordNote
@@ -63,14 +64,26 @@ struct MarketViewSheet: View {
                     .padding(.vertical, 5)
                     
                     // 암기장 마켓등록일, 판매 금액
-                    HStack {
-                        // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
-                        Text("\("2023.01.18")")
+                    HStack(spacing: 3) {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(Color("ITColor"))
                             .font(.footnote)
-                            .foregroundColor(.gray2)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(1)
                         
+                        HStack {
+                            // FIXME: 별점 총점 및 후기 총 갯수
+                            let reviewCount: Int = wordNote.reviewCount
+                            let reviewScore: Double = wordNote.starScoreTotal / Double(reviewCount)
+                            let score: String = String(format: "%.1f", reviewScore) // "5.1"
+
+                            Text("\(score) (\(reviewCount))")
+                        
+                            // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
+                            Text("\(wordNote.updateDateFormatter)")
+                        }
+                        .font(.footnote)
+                        .foregroundColor(.gray2)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
                         Spacer()
                         
                         Text("\(wordNote.notePrice) P")
@@ -120,11 +133,15 @@ struct MarketViewSheet: View {
                                          primaryButton: .destructive(Text("구매하기"),
                                                                      action: {
                                 marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
-                                                              words: marketStore.words)
+                                                                words: marketStore.words,
+                                                                userCoin: authStore.user?.coin ?? 0)
+                                
                                 dismiss()
                                 
                                 Task {
                                     await authStore.userInfoWillFetchDB()
+                                    await marketStore.myNotesArrayWillFetchDB()
+                                    await marketStore.filterMyNoteWillFetchDB()
                                 }
                             }),
                                          secondaryButton: .cancel(Text("취소")))
@@ -138,7 +155,7 @@ struct MarketViewSheet: View {
                 }
                 
                 // MARK: - 암기장 리뷰
-                MarketViewSheetReviews()
+                MarketViewSheetReviews(reviews: reviewStore.reviews)
                 
                 // MARK: - 구분선
                 Divider()
@@ -252,13 +269,15 @@ struct MarketViewSheet: View {
                     .padding(.bottom)
             } // ScrollView
         } // NavigationStack
+        .onAppear {
+            Task {
+                await marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
+                await reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
+            }
+        }
         .onDisappear {
             myNoteStore.myNotesWillBeFetchedFromDB()
         }
-//        .onAppear {
-//            marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
-//            authStore.notesArrayWillFetchDB()
-//        }
     }
 }
 

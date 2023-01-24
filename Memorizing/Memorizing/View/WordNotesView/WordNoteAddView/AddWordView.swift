@@ -17,7 +17,7 @@ struct AddWordView: View {
     
     // MARK: - 단어, 문장, 질문과 답 피커 만들기 -> 아래 Enum으로 유형 선언되어 있음
     @State private var segmnetationSelection: AddWordCategory = .word
-
+    
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
     
@@ -25,61 +25,12 @@ struct AddWordView: View {
     @State private var wordString: String = ""
     @State private var wordMeaning: String = ""
     @State private var wordLevel: Int = 0
-    @State private var showingAlert = false
+    //    @State private var showingAlert = false
     @State private var displayLists: Bool = false
-
+    
     // MARK: - Navigation Stack 사용 안함
     var body: some View {
         VStack(alignment: .center) {
-            // MARK: - Section1 - 타이틀 및 취소/저장 버튼
-            Section {
-                HStack(spacing: 30) {
-                    HStack {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Text("취소")
-                                .font(.subheadline)
-                                .fontWeight(.regular)
-                                .foregroundColor(.mainBlack)
-                        }
-                    }
-                    .frame(width: 70)
-                    HStack {
-                        Text("메모 암기장 만들기")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                    }
-                    .frame(width: 180)
-                    HStack {
-                        Button {
-                            showingAlert.toggle()
-                        } label: {
-                            Text("저장하기")
-                                .font(.subheadline)
-                                .fontWeight(.regular)
-                                .foregroundColor(.mainBlack)
-                        }
-                        .alert(isPresented: $showingAlert) {
-                            Alert(title: Text("암기장을 저장하시겠습니까?"),
-                                  message: Text(""),
-                                  primaryButton: .destructive(Text("취소하기"),
-                                                              action: {}),
-                                  secondaryButton: .cancel(Text("저장하기"),
-                                                           action: {
-                                // TODO: - 저장을 할 때 Store에 패치를 하게 되는데..
-                                // TODO: - 상위뷰인 MyMemoryNote에서도 동일하게 중복적으로 패치를 진행하게 되는 문제 해결 필요
-                                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-                                    self.noteLists = myNoteStore.myWords
-                                }
-                                dismiss()
-                            }))
-                        }
-                    }
-                    .frame(width: 70)
-                }
-            }
-            Divider()
             // MARK: - Section2 - 카테고리 세그먼트 피커
             Section {
                 HStack {
@@ -97,7 +48,6 @@ struct AddWordView: View {
                 }
                 .padding()
             }
-            .frame(height: 50)
             Divider()
             // MARK: - Section3 - 단어 / 문장 / 질문과 답 입력하는 창
             Section {
@@ -211,58 +161,68 @@ struct AddWordView: View {
                 }
                 .padding()
             }
-            // MARK: - Section4 - Button1: 계속해서 등록하기(추가) /  Button2: 현재까지 등록한 리스트 보이기
+            
+            // MARK: - 추가 등록 버튼
             Section {
                 VStack {
-                    HStack {
-                        // MARK: - 작성된 Word의 리스트를 보여주는 버튼
-                        Button {
-                            // TODO: - List 확인하기
-                            displayLists.toggle()
-                        } label: {
-                            Circle()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(Color.mainDarkBlue)
-                                .overlay {
-                                    Image(systemName: "list.number")
-                                        .foregroundColor(.white)
-                                        .fontWeight(.regular)
-                                        .font(.title2)
-                                }
+                    Button {
+                        // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
+                        myNoteStore.myWordsWillBeSavedOnDB(wordNote: wordNote,
+                                                           word: Word(
+                                                            id: UUID().uuidString,
+                                                            wordString: wordString,
+                                                            wordMeaning: wordMeaning,
+                                                            wordLevel: wordLevel)
+                        )
+                        print("단어추가 : \(noteLists)")
+                        myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+                            self.noteLists = myNoteStore.myWords
                         }
                         
-                        // MARK: - 빈 TextField에 데이터를 입력할 때, 버튼(암기목록 추가하기)을 누르면 Store에 저장됨
-                        Button {
-                            myNoteStore.myWordsWillBeSavedOnDB(wordNote: wordNote,
-                                                word: Word(
-                                                    id: UUID().uuidString,
-                                                    wordString: wordString,
-                                                    wordMeaning: wordMeaning,
-                                                    wordLevel: wordLevel)
-                            )
-                            wordString = ""
-                            wordMeaning = ""
-                            wordLevel = 0
-                        } label: {
-                            Rectangle()
-                                .foregroundColor(.mainBlue)
-                                .frame(width: 272, height: 50)
-                                .cornerRadius(20, corners: .allCorners)
-                                .overlay {
-                                    Text("암기목록 추가하기")
-                                        .foregroundColor(.white)
-                                        .font(.caption)
-                                        .fontWeight(.bold)
-                                }
-                        }
+                        // MARK: - 텍스트 필드를 비워주고..
+                        wordString = ""
+                        wordMeaning = ""
+                        wordLevel = 0
+                        print("텍스트 필드 Reset")
+                    } label: {
+                        Text("등록하기")
                     }
+                    
                 }
             }
-        }// ------- 전체 VStack
-        .sheet(isPresented: $displayLists) {
-            AddListView(wordNote: wordNote, word: $myNoteStore.myWords)
         }
         .padding()
+        // MARK: - Section1 - 타이틀 및 취소/저장 버튼
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("뒤로가기")
+                        .font(.subheadline)
+                        .fontWeight(.regular)
+                        .foregroundColor(.mainBlack)
+                    
+                }
+                
+            }
+//
+//            ToolbarItem(placement: .navigationBarTrailing) {
+//                Button {
+//                    myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+//                        self.noteLists = myNoteStore.myWords
+//                    }
+//                    dismiss()
+//                } label: {
+//                    Text("저장하기")
+//                        .font(.subheadline)
+//                        .fontWeight(.regular)
+//                        .foregroundColor(.mainBlack)
+//
+//                }
+//
+//            }
+        }
     }
 }
 
@@ -275,17 +235,19 @@ enum AddWordCategory: String, CaseIterable {
 
 struct AddWordView_Previews: PreviewProvider {
     static var previews: some View {
-        AddWordView(wordNote: MyWordNote(id: "",
-                                         noteName: "",
-                                         noteCategory: "",
-                                         enrollmentUser: "",
-                                         repeatCount: 0,
-                                         firstTestResult: 0,
-                                         lastTestResult: 0,
-                                         updateDate: Date.now),
-                    noteLists: .constant([Word(id: "",
-                                          wordString: "Hello",
-                                          wordMeaning: "안녕",
-                                          wordLevel: 0)]))
+        NavigationStack {
+            AddWordView(wordNote: MyWordNote(id: "",
+                                             noteName: "",
+                                             noteCategory: "",
+                                             enrollmentUser: "",
+                                             repeatCount: 0,
+                                             firstTestResult: 0,
+                                             lastTestResult: 0,
+                                             updateDate: Date.now),
+                        noteLists: .constant([Word(id: "",
+                                                   wordString: "Hello",
+                                                   wordMeaning: "안녕",
+                                                   wordLevel: 0)]))
+        }
     }
 }

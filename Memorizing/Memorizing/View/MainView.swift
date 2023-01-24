@@ -48,6 +48,8 @@ struct MainView: View {
                 myNoteStore.myNotesWillBeFetchedFromDB()
                 Task {
                     await marketStore.marketNotesWillFetchDB()
+                    await marketStore.filterMyNoteWillFetchDB()
+                    await marketStore.myNotesArrayWillFetchDB()
                 }
             }
         }

@@ -14,7 +14,7 @@ struct MyPageView: View {
     @EnvironmentObject var notiManager: NotificationManager
     
     @State private var signOutAlertToggle: Bool = false
-    @State private var isShownNickNameToggle: Bool = false
+//    @State private var isShownNickNameToggle: Bool = false
     
     var body: some View {
         
@@ -25,167 +25,215 @@ struct MyPageView: View {
     // MARK: - 유저 정보
                 VStack(alignment: .leading) {
                     
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("안녕하세요")
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                            Text("\(authStore.user?.nickName ?? "")님!")
-                                .font(.title)
-                                .fontWeight(.semibold)
-                            Text("\(authStore.user?.email ?? "")")
-                                .font(.footnote)
-                                .fontWeight(.light)
-                                .foregroundColor(.gray2)
-                                
-                        } // 그리팅메세지
-                        .padding(.leading, 10)
-                        .padding(.top, -30)
-                      
-                    HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("안녕하세요")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                        Text("\(authStore.user?.nickName ?? "")님!")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                        Text("\(authStore.user?.email ?? "")")
+                            .font(.footnote)
+                            .fontWeight(.light)
+                            .foregroundColor(.gray2)
                         
-                        Text("내 암기장 개수 \(myNoteStore.myWordNotes.count)")
-                        Text("|")
-                        Text("받은 도장 개수 \(myNoteStore.calculateStamp(myWordNotes: myNoteStore.myWordNotes))")
-                        
-                    } // 내 암기장개수 . 받은 도장 개수
-                    .font(.footnote)
-                    .padding(.vertical, 2)
-                    .padding(.leading, 10)
+                    } // 그리팅메세지
                     
-                    HStack {
+                    .padding(.top, -30)
+                    
+                    HStack(spacing: 15) {
                         
-                        Button {
+                        VStack(spacing: 5) {
+                            Text("내 암기장")
+                                .foregroundColor(.gray2)
                             
-                            // 포인트 충전하기
+                            Text("\(myNoteStore.myWordNotes.count)")
+                                .bold()
+                        }
+                        
+                        Divider()
+                            .frame(height: 30)
+                        
+                        VStack(spacing: 5) {
+                            Text("내 도장")
+                                .foregroundColor(.gray2)
                             
-                        } label: {
-                            
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 100)
-                                    .foregroundColor(.mainBlue)
-                                    .frame(width: 158, height: 45)
-                                Text("포인트 충전하기")
-                                    .foregroundColor(.white)
-                                    .padding(15)
-                                    .padding(.horizontal, 20)
-                                    .font(.footnote)
-                                    .fontWeight(.medium)
-                                
-                            }
-
-                        } // 포인트 충전하기 버튼
+                            Text("\(myNoteStore.calculateStamp(myWordNotes: myNoteStore.myWordNotes))")
+                                .bold()
+                        }
                         
                         Spacer()
                         
-                        Button {
-                            
-                            // 포인트 선물하기
-                            
+                        NavigationLink {
+                            // TODO: 내가 작성한 리뷰 페이지로 이동
+                            EditUserView()
                         } label: {
-                            
                             ZStack {
                                 RoundedRectangle(cornerRadius: 100)
                                     .stroke(Color("MainBlue"), lineWidth: 1)
-                                    .frame(width: 158, height: 45)
-                                Text("포인트 선물하기")
-                                    .foregroundColor(.gray2)
-                                    .padding(15)
-                                    .padding(.horizontal, 10)
+                                    .frame(width: 120, height: 45)
+                                Text("내 정보 수정하기")
+                                    .foregroundColor(.mainBlack)
                                     .font(.footnote)
                                     .fontWeight(.medium)
-                                
                             }
+                        }
 
-                        } // 포인트 선물하기 버튼
-   
-                    } // 충전하기 버튼
-                    .padding(.vertical, 15)
-                    
+                    } // 내 암기장개수 . 받은 도장 개수
+                    .font(.footnote)
+                    .padding(.vertical, 2)
                 } // 유저정보
+                .padding(.bottom, 10)
                 
     // MARK: - 유저 버튼
                 VStack {
-                    
-                    Divider()
-                    
-                    Button {
-                        isShownNickNameToggle.toggle()
-                    } label: {
-                        HStack {
-                            Text("닉네임 변경하기")
-                                .font(.body)
-                                .fontWeight(.medium)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.title3)
-                                .fontWeight(.light)
-                        } // 문의하기
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.mainBlack)
-                    }
-                    .sheet(isPresented: $isShownNickNameToggle) {
-                        EditUserView(isShownNickNameToggle: $isShownNickNameToggle)
-                            .presentationDetents([.medium, .large])
-                    }
-
-                    Divider()
-                    
-                    Button {
-                        // 문의하기
-                    } label: {
-                        HStack {
-                            Text("문의하기")
-                                .font(.body)
-                                .fontWeight(.medium)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.title3)
-                                .fontWeight(.light)
-                        } // 문의하기
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.mainBlack)
-                    }
-
-                    Divider()
-                    
-                    Button {
-                        // 문의하기
-                    } label: {
-                        HStack {
-                            Text("개인정보처리방침")
-                                .font(.body)
-                                .fontWeight(.medium)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.title3)
-                                .fontWeight(.light)
-                        } // 문의하기
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.mainBlack)
-                    }
-
-                    Divider()
-                    
-                    Button {
-                        signOutAlertToggle.toggle()
-                        notiManager.removeAllRequest()
-                    } label: {
-                        HStack {
-                            Text("로그아웃하기")
-                                .font(.body)
-                                .fontWeight(.medium)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.title3)
-                                .fontWeight(.light)
-                        } // 문의하기
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.mainBlack)
+                    VStack {
+                        Divider()
                         
+                        NavigationLink {
+                            // TODO: 암기장 구매 내역 페이지로 이동
+                        } label: {
+                            HStack {
+                                Text("암기장 구매 내역")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                        }
+                    }
+
+                    VStack {
+                        Divider()
+                        
+                        NavigationLink {
+                            // TODO: 내가 작성한 리뷰 페이지로 이동
+                        } label: {
+                            HStack {
+                                Text("내가 작성한 리뷰")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                        }
+                    }
+                    
+                    VStack {
+                        Divider()
+                        
+                        NavigationLink {
+                            // TODO: 메모라이징 소개 페이지로 이동
+                        } label: {
+                            HStack {
+                                Text("메모라이징 소개")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                        }
+                    }
+
+                    VStack {
+                        Divider()
+                        
+                        NavigationLink {
+                            // TODO: 1:1 문의하기 페이지로 이동
+                        } label: {
+                            HStack {
+                                Text("1:1 문의하기")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                        }
+                    }
+                    
+                    VStack {
+                        Divider()
+                        
+                        NavigationLink {
+                            // TODO: 서비스 이용 약관 페이지로 이동
+                        } label: {
+                            HStack {
+                                Text("서비스 이용 약관")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                        }
+                    }
+                    
+                    VStack {
+                        Divider()
+                        
+                        NavigationLink {
+                            // TODO: 개인정보 처리 방침 페이지로 이동
+                        } label: {
+                            HStack {
+                                Text("개인정보 처리 방침")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                        }
+                    }
+                    
+                    VStack {
+                        Divider()
+                        
+                        Button {
+                            signOutAlertToggle.toggle()
+                            notiManager.removeAllRequest()
+                        } label: {
+                            HStack {
+                                Text("로그아웃하기")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                            
+                        }
                     }
                     .alert(
                         "로그아웃",
@@ -237,7 +285,10 @@ struct MyPageView: View {
 
 struct MyPageView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageView()
-            .environmentObject(AuthStore())
+        NavigationStack {
+            MyPageView()
+                .environmentObject(AuthStore())
+            .environmentObject(MyNoteStore())
+        }
     }
 }

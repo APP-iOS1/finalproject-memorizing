@@ -1,13 +1,13 @@
 //
-//  AddListView.swift
+//  EditListView.swift
 //  Memorizing
 //
-//  Created by Jae hyuk Yim on 2023/01/06.
+//  Created by Jae hyuk Yim on 2023/01/20.
 //
 
 import SwiftUI
 
-struct AddListView: View {
+struct EditListView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     var wordNote: MyWordNote
     @Binding var myWords: [Word]
@@ -18,56 +18,38 @@ struct AddListView: View {
     @State private var showingAlert = false
     var body: some View {
         VStack {
-            HStack(spacing: 30) {
+            VStack(spacing: 15) {
+                // MARK: 단어장 카테고리
                 HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("뒤로가기")
-                            .font(.subheadline)
-                            .fontWeight(.regular)
-                            .foregroundColor(.mainBlack)
-                    }
-                }
-                .frame(width: 70)
-                HStack {
-                    VStack {
-                        Text("메모 암기장 만들기")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                        
-                        Text("\(wordNote.noteName)")
-                            .bold()
-                            .foregroundColor(Color.mainBlue)
-                            .font(.caption)
-                    }
-                }
-                .frame(width: 180)
-                HStack {
-                    Button {
-                        showingAlert.toggle()
-                    } label: {
-                        Text("저장하기")
-                            .font(.subheadline)
-                            .fontWeight(.regular)
-                            .foregroundColor(.mainBlack)
-                    }
-                    .alert(isPresented: $showingAlert) {
-                        Alert(title: Text("암기장을 저장하시겠습니까?"),
-                              message: Text(""),
-                              primaryButton: .destructive(Text("취소하기"),
-                                                          action: {}),
-                              secondaryButton: .cancel(Text("저장하기"),
-                                                       action: {
-                            myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-                                self.myWords = myNoteStore.myWords
-                            }
-                            dismiss()
-                        }))
-                    }
+                    Text("\(wordNote.noteCategory)")
+                        .foregroundColor(.white)
+                        .bold()
+                        .padding(.horizontal, 25)
+                        .padding(.vertical, 7)
+                        .background(wordNote.noteColor)
+                        .cornerRadius(20)
                     
+                    Spacer()
                 }
-                .frame(width: 70)
+                
+                // MARK: 단어장 제목
+                HStack {
+                    Text("\(wordNote.noteName)")
+                        .bold()
+                        .foregroundColor(Color("MainBlack"))
+                        .font(.title2)
+                    
+                    Spacer()
+                }
+                
+                // MARK: 단어장 날짜
+                HStack {
+                    Text("2023.01.18")
+                        .foregroundColor(.gray2)
+                    
+                    Spacer()
+                }
+                
             }
             
             Divider()
@@ -88,7 +70,7 @@ struct AddListView: View {
                         .foregroundColor(.mainDarkBlue)
                     Text("의 단어")
                 }
-                
+
             }
             .bold()
             .padding(.trailing, 9)
@@ -101,28 +83,16 @@ struct AddListView: View {
                         AddListRow(word: list)
                     }
                     .onDelete(perform: removeList)
-                    
+//                    .onMove(perform: moveList)
                 }
-                .listRowSeparator(.hidden)
                 .listStyle(.inset)
-                
+//                .toolbar {
+//                    EditButton()
+//                }
             }
             
         }
         .padding()
-
-        VStack {
-            Button {
-                isShowingAddView.toggle()
-            } label: {
-                Text("단어 추가하기")
-            }
-            .sheet(isPresented: $isShowingAddView, content: {
-                AddWordView(wordNote: wordNote, noteLists: $myWords)
-            })
-            
-        }
-        
     }
     
     // MARK: 리스트 밀어서 삭제 함수 (일단 리스트 상에서만 삭제됨, 서버에서 삭제 x)
@@ -136,10 +106,10 @@ struct AddListView: View {
 //    }
 }
 
- struct AddListView_Previews: PreviewProvider {
+ struct EditListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            AddListView(wordNote: MyWordNote(id: "",
+            EditListView(wordNote: MyWordNote(id: "",
                                              noteName: "이상한 나라의 노트",
                                              noteCategory: "IT",
                                              enrollmentUser: "",

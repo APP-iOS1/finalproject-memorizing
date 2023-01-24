@@ -35,7 +35,7 @@ struct StudyAgainView: View {
                                 HStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 20)
                                         .stroke(myWordNote.noteColor, lineWidth: 1)
-                                        .frame(width: 50, height: 25)
+                                        .frame(width: 50, height: 20)
                                         .overlay {
                                             Text(myWordNote.noteCategory)
                                                 .font(.caption)

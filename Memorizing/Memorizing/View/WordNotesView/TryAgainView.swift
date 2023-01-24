@@ -61,8 +61,8 @@ struct TryAgainView: View {
                 }.font(.caption) .foregroundColor(.gray2)
                 Spacer()
                 
-                Button {
-                    // 후기작성
+                NavigationLink {
+                    CreateReviewView(wordNote: wordNote)
                 } label: {
                     HStack {
                         Text("후기 작성 하기")
