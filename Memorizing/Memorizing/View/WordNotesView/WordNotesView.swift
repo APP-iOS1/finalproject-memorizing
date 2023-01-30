@@ -28,7 +28,9 @@ struct WordNotesView: View {
     @State private var reviewStepToggle: Bool = false
     @State private var menuXAxis: Double = -132
     @State private var isShowingNewMemorySheet: Bool = false
+    @State private var isShownNotification: Bool = false
     @EnvironmentObject var myNoteStore: MyNoteStore
+    
     var body: some View {
         ZStack {
             VStack {
@@ -60,11 +62,15 @@ struct WordNotesView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        isShownNotification.toggle()
                         print("알림확인 버튼이 눌렸습니다.")
                     } label: {
                         Image(systemName: "bell")
                             .foregroundColor(.mainDarkBlue)
                     }
+                    .sheet(isPresented: $isShownNotification) {
+                         NotificationView(isShownNotification: $isShownNotification)
+                     }
                 }
             }
             
@@ -155,5 +161,6 @@ struct Header: View {
 struct WordNotesView_Previews: PreviewProvider {
     static var previews: some View {
         WordNotesView()
+            .environmentObject(MyNoteStore())
     }
 }

@@ -9,12 +9,14 @@ import SwiftUI
 
 // MARK: - 리뷰 더보기 화면
 struct MarketViewSheetReviewsMore: View {
-    let score: Double = 4.5
+    
+    @EnvironmentObject var reviewStore: ReviewStore
+    var reviews: [Review]
     
     var body: some View {
         VStack {
             HStack {
-                Text("후기 \(80)개")
+                Text("후기 \(reviews.count)개")
                     .padding(.leading)
                     .font(.title3)
                     .bold()
@@ -23,26 +25,26 @@ struct MarketViewSheetReviewsMore: View {
             .padding(.vertical, 20)
             
             ScrollView {
-                ForEach(0...10, id: \.self) { _ in
+                ForEach(Array(zip(reviews.indices, reviews)), id: \.0) { _, review in
                     VStack(spacing: 7) {
                         HStack(spacing: 0) {
-                            let scoreInt: Int = Int(score)
+                            let scoreInt: Int = Int(review.starScore)
                             ForEach(0 ... (scoreInt - 1), id: \.self) { _ in
                                 Image(systemName: "star.fill")
                                     .foregroundColor(Color.iTColor)
                             }
-                            
-                            ForEach(0 ... (4 - scoreInt), id: \.self) { _ in
-                                Image(systemName: "star")
-                                    .foregroundColor(Color.iTColor)
+                            if scoreInt < 5 {
+                                ForEach(0 ... (4 - scoreInt), id: \.self) { _ in
+                                    Image(systemName: "star")
+                                        .foregroundColor(Color.iTColor)
+                                }
                             }
-                            
                             Spacer()
                         }
                         .font(.subheadline)
                         
                         HStack {
-                            Text("시사 경제 상식을 알 수 있어서 참 좋았어요^^")
+                            Text("\(review.reviewText)")
                                 .font(.caption)
                                 .padding(.leading, 3)
                             Spacer()
@@ -50,7 +52,7 @@ struct MarketViewSheetReviewsMore: View {
                         .padding(.bottom, 5)
                         
                         HStack {
-                            Text("혜동이")
+                            Text("\(review.writer)")
                                 .bold()
                                 .foregroundColor(.gray2)
                             Text("2023.01.18")
@@ -79,6 +81,10 @@ struct MarketViewSheetReviewsMore: View {
 
 struct MarketViewSheetReviewsMore_Previews: PreviewProvider {
     static var previews: some View {
-        MarketViewSheetReviewsMore()
+        MarketViewSheetReviewsMore(reviews: [Review(id: "",
+                                                    writer: "",
+                                                    reviewText: "",
+                                                    createDate: Date.now,
+                                                    starScore: 0)])
     }
 }

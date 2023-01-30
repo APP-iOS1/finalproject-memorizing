@@ -46,23 +46,25 @@ struct StudyingStampView: View {
                 Task {
                     await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
                     
-                    // 알림 설정 권한 확인
-                    if !notiManager.isGranted {
-                        notiManager.openSetting()  // 알림 설정 창
-                    } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
-                        print("set localNotification")
-                        var localNotification = LocalNotification(
-                            identifier: UUID().uuidString,
-                            title: "MEMOrizing 암기 시간",
-                            body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
-                            timeInterval: Double(wordNote.repeatCount * 1),
-                            repeats: false
-                        )
-                        localNotification.subtitle = "\(wordNote.noteName)"
-                        print("localNotification: ", localNotification)
-                        
-                        await notiManager.schedule(localNotification: localNotification)
-                        await notiManager.getPendingRequests()
+                    if notiManager.isNotiAllow {
+                        // 알림 설정 권한 확인
+                        if !notiManager.isGranted {
+                            notiManager.openSetting()  // 알림 설정 창
+                        } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
+                            print("set localNotification")
+                            var localNotification = LocalNotification(
+                                identifier: wordNote.id,
+                                title: "MEMOrizing 암기 시간",
+                                body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
+                                timeInterval: Double(wordNote.repeatCount * 10),
+                                repeats: false
+                            )
+                            localNotification.subtitle = "\(wordNote.noteName)"
+                            print("localNotification: ", localNotification)
+                            
+                            await notiManager.schedule(localNotification: localNotification)
+                            await notiManager.getPendingRequests()
+                        }
                     }
                     isDismiss.toggle()
                 }

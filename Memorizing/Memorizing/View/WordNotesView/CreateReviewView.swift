@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - 리뷰 작성 페이지
 struct CreateReviewView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var reviewStore: ReviewStore
     @State private var reviewText: String = ""
@@ -115,7 +116,7 @@ struct CreateReviewView: View {
                                                                                 email: "",
                                                                                 nickName: "",
                                                                                 coin: 0))
-                
+                dismiss()
             } label: {
                 RoundedRectangle(cornerRadius: 30)
                     .fill(Color.mainBlue)

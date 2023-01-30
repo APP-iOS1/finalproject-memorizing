@@ -322,21 +322,26 @@ struct LevelCheck: View {
             Button("Ok") {
                 Task {
                     await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
-                    if !notiManager.isGranted {
-                        notiManager.openSetting()
-                    } else {
-                        print("set localNotification")
-                        var localNotification = LocalNotification(
-                            identifier: UUID().uuidString,
-                            title: "MEMOrizing 암기 시간",
-                            body: "1번째 복습할 시간이에요~!",
-                            timeInterval: 1,
-                            repeats: false
-                        )
-                        localNotification.subtitle = "\(wordNote.noteName)"
-                        print("localNotification: ", localNotification)
-                        await notiManager.schedule(localNotification: localNotification)
-                        await notiManager.getPendingRequests()
+                    if notiManager.isNotiAllow {
+                        if !notiManager.isGranted {
+                            notiManager.openSetting()
+                        } else {
+                            print("set localNotification")
+                            var localNotification = LocalNotification(
+                                identifier: wordNote.id,
+                                title: "MEMOrizing 암기 시간",
+                                body: "\(wordNote.noteName)" + " 1번째 복습할 시간이에요~!",
+                                timeInterval: 10,
+                                repeats: false
+                            )
+                            localNotification.subtitle = "\(wordNote.noteName)"
+                            print("localNotification: ", localNotification)
+                            await notiManager.schedule(localNotification: localNotification)
+                            await notiManager.getPendingRequests()
+                            for request in notiManager.pendingRequests {
+                                print("request: ", request as Any)
+                            }
+                        }
                     }
                     isDismiss.toggle()
                 }
