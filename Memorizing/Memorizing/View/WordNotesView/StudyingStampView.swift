@@ -15,6 +15,9 @@ struct StudyingStampView: View {
     var wordNote: MyWordNote
     @Binding var isDismiss: Bool
     
+    // MARK: - RepeatCount 값을 Flag로 두어, TimeInterval 값에 대한 조건문을 만들어 주자
+    @State private var repeatCountFlag: RepeatCount = .repeat1
+    
     var body: some View {
         VStack {
             
@@ -45,7 +48,9 @@ struct StudyingStampView: View {
             Button {
                 Task {
                     await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
-                    
+                    // MARK: - Notification -> 버튼을 눌렀을 시, identifier, title, body, timeInterval등을 설정한 후, 알림을 뿌려줌
+                    // 여기서, 망각곡선 방식 혹은 값에 따라 알람 주기 (TimeInterval)를 설정함
+                    // 첫 번째, repeatCount / 두 번째, 난이도? (Level)?
                     if notiManager.isNotiAllow {
                         // 알림 설정 권한 확인
                         if !notiManager.isGranted {
@@ -102,6 +107,15 @@ struct StudyingStampView: View {
         }
     }
 }
+
+// MARK: -
+enum RepeatCount: Int {
+    case repeat1 = 1
+    case repeat2 = 2
+    case repeat3 = 3
+}
+
+
 
 // struct StudyingStampView_Previews: PreviewProvider {
 //    static var previews: some View {
