@@ -45,10 +45,15 @@ struct MainView: View {
         }
         .onAppear {
             if authStore.user != nil {
+                print("fetch MainView")
+                print("fetch myNotes")
                 myNoteStore.myNotesWillBeFetchedFromDB()
                 Task {
+                    print("fetch marketnotes")
                     await marketStore.marketNotesWillFetchDB()
+                    print("fetch filtermyNoteWillFetchDB")
                     await marketStore.filterMyNoteWillFetchDB()
+                    print("fetch myNotesArrayWillfetchDB")
                     await marketStore.myNotesArrayWillFetchDB()
                 }
             }
