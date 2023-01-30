@@ -37,20 +37,21 @@ struct ScheduleCell: View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .foregroundColor(.mainBlue)
-                    .padding(.leading, 10)
-                Spacer()
+                   // .padding(.leading, 10)
                 
                 VStack(alignment: .leading) {
                     Text("\(wordNote?.noteName ?? "NoteName")")
                         .foregroundColor(.black)
                         .font(.headline)
                     
-                    HStack {
-                        Text("\(wordNote?.repeatCount ?? 99)" + "번째 복습 예정 시간: \(dateFormatter.string(from: Date()))")
+                    VStack(alignment: .leading) {
+                        Text("\(wordNote?.repeatCount ?? 99)" + "번째 복습 예정 시간: ")
+                        Text("\(dateFormatter.string(from: Date()))")
                     } // HStack
                     .font(.footnote)
                     .fontWeight(.light)
                 } // VStack
+                .padding(.horizontal, 10)
                 Spacer()
                 
                 Toggle("", isOn: $testToggle)

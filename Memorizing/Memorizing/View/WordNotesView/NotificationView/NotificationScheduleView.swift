@@ -14,14 +14,16 @@ struct NotificationScheduleView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("예정된알림")
-                .font(.headline)
-                .padding()
+            Text("💡노트별 알림을 설정해보세요!")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .padding(.leading, 20)
+                .padding(.horizontal, 5)
             List {
                 ForEach(1..<9) { _ in
                     ScheduleCell(notiId: "")
                         .listRowSeparator(.hidden)
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal, 5)
                 }
                 
                 // TODO: - 서버 노티 구현되면 for문 수정
