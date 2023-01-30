@@ -22,6 +22,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     let notificationCenter = UNUserNotificationCenter.current()
     
     @Published var isGranted: Bool = false
+    @Published var isNotiAllow: Bool = true
     
     // MARK: - [UNNotificationRequest]라는 사용자의 Request를 담아내는 빈 배열을 만들어 줌
     @Published var pendingRequests: [UNNotificationRequest] = []

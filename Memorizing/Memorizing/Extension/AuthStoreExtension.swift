@@ -62,10 +62,11 @@ func randomNonceString(length: Int = 32) -> String {
 
 // MARK: - AppleAuth와 FirebaseAuth 연동
 extension AuthStore: ASAuthorizationControllerDelegate {
-    private func authorizationController(
+    internal func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
-    ) async {
+    ) {
+        print("Start apple authorization Controller")
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent")
@@ -84,21 +85,41 @@ extension AuthStore: ASAuthorizationControllerDelegate {
                 idToken: idTokenString,
                 rawNonce: nonce
             )
-            
-            do {
-                let result = try await Auth.auth().signIn(with: credential)
-                print("")
-                self.user = User(
-                    id: result.user.uid,
-                    email: "Apple_" + "\(result.user.email ?? "No Email")",
-                    nickName: result.user.displayName ?? "No Name",
-                    coin: 1000
-                )
-                print("Apple email: ", result.user.email as Any)
-                 await self.userInfoWillFetchDB()
-            } catch let error as NSError {
-                self.errorMessage = error.localizedDescription
-                print("Apple SignIn Error: ", self.errorMessage)
+            Auth.auth().signIn(with: credential) {result, error in
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    print("Apple SignIn Error: ", self.errorMessage)
+                }
+                if let user = result?.user {
+                    let changeRequest = user.createProfileChangeRequest()
+                    if let givenname = appleIDCredential.fullName?.givenName,
+                       let familyName = appleIDCredential.fullName?.familyName {
+                        changeRequest.displayName = "\(familyName)\(givenname)"
+                    }
+                    Task {
+                    try await changeRequest.commitChanges()
+//                    changeRequest.commitChanges { error in
+//                        if let error = error {
+//                            self.errorMessage = error.localizedDescription
+//                            print("Apple SignIn, changeRequest displayName Fail: ", self.errorMessage)
+//                        } else {
+//                            print("Updated displayName: \(Auth.auth().currentUser!.displayName!)")
+//                        }
+//                    }
+                    self.user = User(
+                        id: user.uid,
+                        email: "Apple_" + "\(user.email ?? "NO Email")",
+                        nickName: changeRequest.displayName ?? "No Name",
+                        coin: 1000
+                    )
+                    self.state = .signedIn
+                    UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
+                    print("Apple id: ", user.uid)
+                    print("Apple email: ", user.email as Any)
+                        print("Apple nickName: ", changeRequest.displayName as Any)
+                        await self.userInfoWillFetchDB()
+                    }
+                }
             }
         }
     }
