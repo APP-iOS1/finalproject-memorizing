@@ -13,7 +13,10 @@ import Firebase
 import FirebaseMessaging
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
          
          // Use Firebase library to configure APIs
          // 파이어베이스 설정
@@ -40,7 +43,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
          // 메세징 델리겟
          Messaging.messaging().delegate = self
          
-         
          // 푸시 포그라운드 설정
          UNUserNotificationCenter.current().delegate = self
          
@@ -48,7 +50,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
      }
      
      // fcm 토큰이 등록 되었을 때
-     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+     func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+     ) {
          Messaging.messaging().apnsToken = deviceToken
      }
 }
@@ -62,12 +67,13 @@ extension AppDelegate : MessagingDelegate {
     }
 }
 
-extension AppDelegate : UNUserNotificationCenterDelegate {
+extension AppDelegate: UNUserNotificationCenterDelegate {
     
     // 푸시메세지가 앱이 켜져 있을때 나올때
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions
+                                ) -> Void) {
         
         let userInfo = notification.request.content.userInfo
         
@@ -86,7 +92,6 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
     
 }
-
 
 @main
 struct MemorizingApp: App {

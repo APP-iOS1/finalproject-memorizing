@@ -44,6 +44,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         
         // 사용자가 입력하는 알림을 여기서 위임을 받아서 처리함 -> 알람 내용도 보여줘야 하니..
         await getPendingRequests()
+        
         return [.sound, .banner, .badge]
     }
     
@@ -51,6 +52,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
                                         didReceive response: UNNotificationResponse) {
         let identifier = response.notification.request.identifier
         let userNotiCenter = UNUserNotificationCenter.current()
+        print("response notification", response.notification.request.content as Any)
         userNotiCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         print("Check Notification")
         
@@ -93,19 +95,22 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
      */
     func schedule(localNotification: LocalNotification) async {
         print("start notification schedule")
-        
         // 1. UNMutableNotificationContent에 내장되어 있는 기능활용 -> [Content]
         let content = UNMutableNotificationContent()
         content.title = localNotification.title
         content.body = localNotification.body
         content.sound = .default
+        content.badge = UserDefaults
+            .standard.value(forKey: UserDefaults.Keys.notificationBadgeCount.rawValue) as? NSNumber
         
         if let badgeNumber = content.badge {
-            content.badge = ((badgeNumber as? Decimal ?? 0) + 1) as NSNumber
+            content.badge = NSNumber(value: Int(truncating: badgeNumber) + 1)
         }
         if content.badge == nil {
             content.badge = 1
         }
+        
+        UserDefaults.standard.set(content.badge, forKey: UserDefaults.Keys.notificationBadgeCount.rawValue)
         
         if let subtitle = localNotification.subtitle {
             content.subtitle = subtitle
