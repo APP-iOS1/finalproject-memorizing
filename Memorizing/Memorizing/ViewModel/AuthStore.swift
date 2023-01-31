@@ -286,7 +286,7 @@ class AuthStore: UIViewController, ObservableObject {
         do {
             try Auth.auth().signOut()
             GIDSignIn.sharedInstance.signOut()
-            self.signOutDidGoogleAuth()
+//            self.signOutDidGoogleAuth()
             self.signOutDidKakao()
             UserDefaults.standard.reset()
             state = .signedOut

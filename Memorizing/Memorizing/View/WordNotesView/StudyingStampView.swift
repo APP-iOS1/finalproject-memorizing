@@ -107,16 +107,6 @@ struct StudyingStampView: View {
         }
     }
 }
-
-// MARK: -
-enum RepeatCount: Int {
-    case repeat1 = 1
-    case repeat2 = 2
-    case repeat3 = 3
-}
-
-
-
 // struct StudyingStampView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        StudyingStampView(wordNote: MyWordNote(id: "1",

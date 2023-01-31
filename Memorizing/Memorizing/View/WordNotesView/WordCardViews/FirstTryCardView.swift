@@ -326,6 +326,7 @@ struct LevelCheck: View {
                         if !notiManager.isGranted {
                             notiManager.openSetting()
                         } else {
+                            // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
                             print("set localNotification")
                             var localNotification = LocalNotification(
                                 identifier: wordNote.id,
