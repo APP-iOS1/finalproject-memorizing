@@ -12,7 +12,7 @@ struct AddWordView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var authStore: AuthStore
     // 상위뷰랑 꼬일 수 있으므로, 그냥 var 선언하기 (Binding X)
-    var wordNote: MyWordNote
+    var wordNote: NoteEntity
     @Binding var noteLists: [Word]
     
     // MARK: - 단어, 문장, 질문과 답 피커 만들기 -> 아래 Enum으로 유형 선언되어 있음
@@ -167,17 +167,18 @@ struct AddWordView: View {
                 VStack {
                     Button {
                         // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
-                        myNoteStore.myWordsWillBeSavedOnDB(wordNote: wordNote,
-                                                           word: Word(
-                                                            id: UUID().uuidString,
-                                                            wordString: wordString,
-                                                            wordMeaning: wordMeaning,
-                                                            wordLevel: wordLevel)
-                        )
-                        print("단어추가 : \(noteLists)")
-                        myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-                            self.noteLists = myNoteStore.myWords
-                        }
+                        // TODO: - 주석 풀기
+//                        myNoteStore.myWordsWillBeSavedOnDB(wordNote: wordNote,
+//                                                           word: Word(
+//                                                            id: UUID().uuidString,
+//                                                            wordString: wordString,
+//                                                            wordMeaning: wordMeaning,
+//                                                            wordLevel: wordLevel)
+//                        )
+//                        print("단어추가 : \(noteLists)")
+//                        myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+//                            self.noteLists = myNoteStore.myWords
+//                        }
                         
                         // MARK: - 텍스트 필드를 비워주고..
                         wordString = ""
@@ -236,14 +237,7 @@ enum AddWordCategory: String, CaseIterable {
 struct AddWordView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            AddWordView(wordNote: MyWordNote(id: "",
-                                             noteName: "",
-                                             noteCategory: "",
-                                             enrollmentUser: "",
-                                             repeatCount: 0,
-                                             firstTestResult: 0,
-                                             lastTestResult: 0,
-                                             updateDate: Date.now),
+            AddWordView(wordNote: NoteEntity(),
                         noteLists: .constant([Word(id: "",
                                                    wordString: "Hello",
                                                    wordMeaning: "안녕",

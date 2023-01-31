@@ -29,7 +29,8 @@ struct WordNotesView: View {
     @State private var menuXAxis: Double = -132
     @State private var isShowingNewMemorySheet: Bool = false
     @State private var isShownNotification: Bool = false
-    @EnvironmentObject var myNoteStore: MyNoteStore
+//    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     
     var body: some View {
         ZStack {
@@ -38,14 +39,14 @@ struct WordNotesView: View {
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
                     ScrollView(showsIndicators: false) {
-                        ForEach(myNoteStore.myWordNotes) { myWordNote in
+                        ForEach(coreDataStore.notes) { myWordNote in
                             MyMemoryNote(myWordNote: myWordNote)
                         }
                     }
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
                     ScrollView(showsIndicators: false) {
-                        ForEach(myNoteStore.myWordNotes) { myWordNote in
+                        ForEach(coreDataStore.notes) { myWordNote in
                             StudyAgainView(myWordNote: myWordNote)
                         }
                     }

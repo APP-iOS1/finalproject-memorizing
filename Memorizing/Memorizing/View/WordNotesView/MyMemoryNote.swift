@@ -10,8 +10,8 @@ import SwiftUI
 struct MyMemoryNote: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var myNoteStore: MyNoteStore
-    
-    var myWordNote: MyWordNote
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    var myWordNote: NoteEntity
     
     @State private var noteLists: [Word] = []
     @State private var isShowingSheet: Bool = false
@@ -32,15 +32,15 @@ struct MyMemoryNote: View {
                         Rectangle()
                             .cornerRadius(10, corners: [.topLeft, .bottomLeft])
                             .frame(width: 16)
-                            .foregroundColor(myWordNote.noteColor)
+                            .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                         
                         VStack(spacing: 5) {
                             HStack(alignment: .top) {
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(myWordNote.noteColor, lineWidth: 1)
+                                    .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""), lineWidth: 1)
                                     .frame(width: 50, height: 20)
                                     .overlay {
-                                        Text(myWordNote.noteCategory)
+                                        Text(myWordNote.noteCategory ?? "No Category")
                                             .foregroundColor(.black)
                                             .font(.caption)
                                         
@@ -51,7 +51,7 @@ struct MyMemoryNote: View {
                             
                             // 암기할 것 등록하기에서 받아오기
                             HStack {
-                                Text(myWordNote.noteName)
+                                Text(myWordNote.noteName ?? "No Name")
                                     .foregroundColor(.mainBlack)
                                     .font(.headline)
                                     .padding(.top, 7)
@@ -66,13 +66,14 @@ struct MyMemoryNote: View {
                                     .font(.footnote)
                                     .frame(width: 290, height: 25)
                                     .foregroundColor(.white)
-                                    .background { myWordNote.noteColor }
+                                    .background { coreDataStore.returnColor(category: myWordNote.noteCategory ?? "") }
                                     .cornerRadius(30)
                                     .opacity(opacityValue)
                             } else {
                                 // MARK: 얼굴 진행도
-                                FaceProgressView(myWordNote: myWordNote)
-                                    .opacity(opacityValue)
+                                // TODO: 주석 풀기(오류남)
+//                                FaceProgressView(myWordNote: myWordNote)
+//                                    .opacity(opacityValue)
                             }
                         }
                         .padding(.trailing, 15)
@@ -110,9 +111,11 @@ struct MyMemoryNote: View {
         }
         .onAppear {
             if authStore.user != nil {
-                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
-                    noteLists = myNoteStore.myWords
-                }
+
+                // TODO: - 해당 주석 coredataStore에 메서드 만들어서 변경해주어야함
+//                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
+//                    noteLists = myNoteStore.myWords
+//                }
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

@@ -27,7 +27,7 @@ struct NewMakeMemoryNote: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var authStore: AuthStore
-    
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @Binding var isShowingNewMemorySheet: Bool
     @State private var noteName: String = ""
     // 카테고리를 눌렀을때 담기는 변수
@@ -198,6 +198,15 @@ struct NewMakeMemoryNote: View {
                                              updateDate: Date.now
                         )
                     )
+                    
+                    // coreData에 저장
+                    coreDataStore.addNote(id: UUID().uuidString,
+                                          noteName: noteName,
+                                          enrollmentUser: authStore.user?.id ?? "No Enrollment User",
+                                          noteCategory: noteCategory,
+                                          firstTestResult: 0,
+                                          lastTestResult: 0,
+                                          updateDate: Date())
                     
                     Task {
                         await marketStore.filterMyNoteWillFetchDB()

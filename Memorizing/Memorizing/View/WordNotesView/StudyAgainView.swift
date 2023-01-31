@@ -11,7 +11,7 @@ struct StudyAgainView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     
-    var myWordNote: MyWordNote
+    var myWordNote: NoteEntity
     @State private var noteLists: [Word] = []
     // 한 번도 안 하면 -1, 한 번씩 할 때마다 1씩 증가
     @State var progressStep: Int = 0

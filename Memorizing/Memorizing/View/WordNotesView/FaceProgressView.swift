@@ -10,8 +10,8 @@ import SwiftUI
 // MARK: 단어장 진행도 view
 struct FaceProgressView: View {
     
-    var myWordNote: MyWordNote
-    
+    var myWordNote: NoteEntity
+    @EnvironmentObject var coreDataStore: CoreDataStore
     var body: some View {
         ZStack {
             
@@ -23,12 +23,12 @@ struct FaceProgressView: View {
             // MARK: 진행도에 따라 Progressbar 길이 조절
             HStack {
                 Rectangle()
-                    .frame(width: myWordNote.progressbarWitdh,
+                    .frame(width: coreDataStore.returnWidth(width: myWordNote.repeatCount),
                            height: 8)
-                    .foregroundColor(myWordNote.noteColor)
+                    .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                     .padding(.leading, 25)
                     .animation(.linear(duration: 1),
-                               value: myWordNote.progressbarWitdh)
+                               value: coreDataStore.returnWidth(width: myWordNote.repeatCount))
                 
                 Spacer()
             }
@@ -40,7 +40,7 @@ struct FaceProgressView: View {
                     .frame(width: 30, height: 30)
                     .foregroundColor(myWordNote.repeatCount <= 0
                                      ? .gray5
-                                     : myWordNote.noteColor)
+                                     : coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                     .overlay {
                         Text("1")
                             .font(.headline)
@@ -68,7 +68,7 @@ struct FaceProgressView: View {
                     .frame(width: 30, height: 30)
                     .foregroundColor(myWordNote.repeatCount <= 1
                                      ? .gray5
-                                     : myWordNote.noteColor)
+                                     : coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                     .overlay {
                         Text("2")
                             .font(.headline)
@@ -95,7 +95,7 @@ struct FaceProgressView: View {
                     .frame(width: 30, height: 30)
                     .foregroundColor(myWordNote.repeatCount <= 2
                                      ? .gray5
-                                     : myWordNote.noteColor)
+                                     : coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                     .overlay {
                         Text("3")
                             .font(.headline)
@@ -122,7 +122,7 @@ struct FaceProgressView: View {
                     .frame(width: 30, height: 30)
                     .foregroundColor(myWordNote.repeatCount <= 3
                                      ? .gray5
-                                     : myWordNote.noteColor)
+                                     : coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                     .overlay {
                         Text("4")
                             .font(.headline)
@@ -151,14 +151,7 @@ struct FaceProgressView: View {
 
 struct FaceProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        FaceProgressView(myWordNote: MyWordNote(id: "",
-                                                noteName: "",
-                                                noteCategory: "",
-                                                enrollmentUser: "",
-                                                repeatCount: 0,
-                                                firstTestResult: 0,
-                                                lastTestResult: 0,
-                                                updateDate: Date.now)
+        FaceProgressView(myWordNote: NoteEntity()
         )
     }
 }

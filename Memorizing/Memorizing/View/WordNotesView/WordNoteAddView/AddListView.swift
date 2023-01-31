@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddListView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
-    var wordNote: MyWordNote
+    var wordNote: NoteEntity
     @Binding var myWords: [Word]
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
@@ -36,7 +36,7 @@ struct AddListView: View {
                             .font(.title3)
                             .fontWeight(.bold)
                         
-                        Text("\(wordNote.noteName)")
+                        Text(wordNote.noteName ?? "No name")
                             .bold()
                             .foregroundColor(Color.mainBlue)
                             .font(.caption)
@@ -59,9 +59,10 @@ struct AddListView: View {
                                                           action: {}),
                               secondaryButton: .cancel(Text("저장하기"),
                                                        action: {
-                            myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-                                self.myWords = myNoteStore.myWords
-                            }
+                            // TODO: 주석풀기
+//                            myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+//                                self.myWords = myNoteStore.myWords
+//                            }
                             dismiss()
                         }))
                     }
@@ -136,21 +137,21 @@ struct AddListView: View {
 //    }
 }
 
- struct AddListView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            AddListView(wordNote: MyWordNote(id: "",
-                                             noteName: "이상한 나라의 노트",
-                                             noteCategory: "IT",
-                                             enrollmentUser: "",
-                                             repeatCount: 0,
-                                             firstTestResult: 0,
-                                             lastTestResult: 0,
-                                             updateDate: Date()),
-                        myWords: .constant([Word(id: "",
-                                   wordString: "앨리스는 누구인가?",
-                                   wordMeaning: "이상한 나라에 사는 공주",
-                                   wordLevel: 1)]))
-        }
-    }
- }
+// struct AddListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+//            AddListView(wordNote: MyWordNote(id: "",
+//                                             noteName: "이상한 나라의 노트",
+//                                             noteCategory: "IT",
+//                                             enrollmentUser: "",
+//                                             repeatCount: 0,
+//                                             firstTestResult: 0,
+//                                             lastTestResult: 0,
+//                                             updateDate: Date()),
+//                        myWords: .constant([Word(id: "",
+//                                   wordString: "앨리스는 누구인가?",
+//                                   wordMeaning: "이상한 나라에 사는 공주",
+//                                   wordLevel: 1)]))
+//        }
+//    }
+// }
