@@ -77,6 +77,8 @@
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
 		95595284297A290600C2B064 /* StudyingStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95595283297A290600C2B064 /* StudyingStampView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
+		F28462962988A53000384255 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28462952988A53000384255 /* CoreDataStore.swift */; };
+		F28462992988A6FE00384255 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F28462972988A6FE00384255 /* CoreDataModel.xcdatamodeld */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +147,8 @@
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		95595283297A290600C2B064 /* StudyingStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingStampView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		F28462952988A53000384255 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		F28462982988A6FE00384255 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -276,6 +280,7 @@
 				66982A0B297787A30052269D /* AuthStore.swift */,
 				66982A0D297787AF0052269D /* MyNoteStore.swift */,
 				52C222AD297782EE00181367 /* ReviewStore.swift */,
+				F28462952988A53000384255 /* CoreDataStore.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 		52D8F24D2965F2E500755E5A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F28462972988A6FE00384255 /* CoreDataModel.xcdatamodeld */,
 				52D8F2512965F37E00755E5A /* WordModel.swift */,
 				3F200271296754EB00FCFC3A /* LocalNotification.swift */,
 				52C222AF29778CB800181367 /* MarketWordNoteModel.swift */,
@@ -502,6 +508,7 @@
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
+				F28462992988A6FE00384255 /* CoreDataModel.xcdatamodeld in Sources */,
 				52D8F2522965F37E00755E5A /* WordModel.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
 				523C30DD2979195E00FAE229 /* UserModel.swift in Sources */,
@@ -523,6 +530,7 @@
 				5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */,
 				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
+				F28462962988A53000384255 /* CoreDataStore.swift in Sources */,
 				52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */,
 				484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */,
 				951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */,
@@ -675,7 +683,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";
-				DEVELOPMENT_TEAM = 2D266U5CF7;
+				DEVELOPMENT_TEAM = 699L8LQSR7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Memorizing/Info.plist;
@@ -707,7 +715,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";
-				DEVELOPMENT_TEAM = 2D266U5CF7;
+				DEVELOPMENT_TEAM = 699L8LQSR7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Memorizing/Info.plist;
@@ -835,6 +843,19 @@
 			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		F28462972988A6FE00384255 /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F28462982988A6FE00384255 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = F28462982988A6FE00384255 /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 52D8F2322965F2C600755E5A /* Project object */;
 }
