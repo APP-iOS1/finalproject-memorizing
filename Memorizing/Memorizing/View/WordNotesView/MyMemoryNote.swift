@@ -13,7 +13,7 @@ struct MyMemoryNote: View {
     @EnvironmentObject var coreDataStore: CoreDataStore
     var myWordNote: NoteEntity
     
-    @State private var noteLists: [Word] = []
+//    @State private var noteLists: [Word] = []
     @State private var isShowingSheet: Bool = false
     @State private var opacityValue: Double = 0
     //    @State var isAddShowing: Bool = false
@@ -62,7 +62,7 @@ struct MyMemoryNote: View {
                             .padding(.horizontal, 15)
                             .padding(.bottom, 10)
                             
-                            if noteLists.isEmpty {
+                            if (myWordNote.words?.allObjects as? [WordEntity] ?? []).isEmpty {
                                 Text("단어 등록하러 가기")
                                     .font(.footnote)
                                     .frame(width: 290, height: 25)
@@ -102,7 +102,7 @@ struct MyMemoryNote: View {
         }
         .fullScreenCover(isPresented: $isShowingSheet) {
             NavigationStack {
-                AddListView(wordNote: myWordNote, myWords: $noteLists)
+                AddListView(wordNote: myWordNote)
 //                if noteLists.isEmpty {
 //                    AddListView(wordNote: myWordNote, myWords: $noteLists)
 //                } else {

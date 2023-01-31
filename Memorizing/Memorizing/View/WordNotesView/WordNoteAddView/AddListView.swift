@@ -10,7 +10,7 @@ import SwiftUI
 struct AddListView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     var wordNote: NoteEntity
-    @Binding var myWords: [Word]
+//    var myWords: [WordEntity]
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
     
@@ -78,14 +78,14 @@ struct AddListView: View {
             HStack(spacing: 0) {
                 Spacer()
                 
-                if myWords.isEmpty {
+                if (wordNote.words?.allObjects as? [WordEntity] ?? []).isEmpty {
                     Text("추가된 단어가 없습니다!")
                         .font(.callout)
                         .fontWeight(.medium)
                         .foregroundColor(.mainDarkBlue)
                 } else {
                     Text("총 ")
-                    Text("\(myWords.count)개")
+                    Text("\((wordNote.words?.allObjects as? [WordEntity] ?? []).count)개")
                         .foregroundColor(.mainDarkBlue)
                     Text("의 단어")
                 }
@@ -98,10 +98,10 @@ struct AddListView: View {
             // MARK: 등록된 단어 밀어서 삭제 리스트 구현
             VStack {
                 List {
-                    ForEach(myWords) { list in
+                    ForEach(wordNote.words?.allObjects as? [WordEntity] ?? []) { list in
                         AddListRow(word: list)
                     }
-                    .onDelete(perform: removeList)
+//                    .onDelete(perform: removeList)
                     
                 }
                 .listRowSeparator(.hidden)
@@ -119,7 +119,7 @@ struct AddListView: View {
                 Text("단어 추가하기")
             }
             .sheet(isPresented: $isShowingAddView, content: {
-                AddWordView(wordNote: wordNote, noteLists: $myWords)
+                AddWordView(wordNote: wordNote)
             })
             
         }
@@ -127,9 +127,10 @@ struct AddListView: View {
     }
     
     // MARK: 리스트 밀어서 삭제 함수 (일단 리스트 상에서만 삭제됨, 서버에서 삭제 x)
-    func removeList(at offsets: IndexSet) {
-        myWords.remove(atOffsets: offsets)
-    }
+    // TODO: remove 메서드 만들고 넣어줘야함. 기존 메서드도 작동 안됐을 듯(서버에는 삭제 안 됐을 것임)
+//    func removeList(at offsets: IndexSet) {
+//        myWords.remove(atOffsets: offsets)
+//    }
     
     // MARK: 리스트 순서 수정 함수
 //    func moveList(from source: IndexSet, to destination: Int) {

@@ -49,7 +49,7 @@ class MyNoteStore: ObservableObject {
                     }
                 }
             }
-    }
+    } 
     
     // MARK: - myWordNotes를 추가하는 함수 / 내가 작성한 Notes를 DB에 저장함
     func myNotesWillBeSavedOnDB(wordNote: MyWordNote) {

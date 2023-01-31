@@ -136,14 +136,10 @@ struct MarketViewSheet: View {
                                 marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
                                                                 words: marketStore.words,
                                                                 userCoin: authStore.user?.coin ?? 0)
-                                // 코데로 구매한 노트가 추가됨.
-                                coreDataStore.addNote(id: UUID().uuidString,
-                                                      noteName: wordNote.noteName,
-                                                      enrollmentUser: wordNote.enrollmentUser,
-                                                      noteCategory: wordNote.noteCategory,
-                                                      firstTestResult: 0,
-                                                      lastTestResult: 0,
-                                                      updateDate: Date())
+                                
+                                // 코데로 구매한 노트와 워드들이 추가됨.
+                                coreDataStore.addNoteAndWordInMarket(note: wordNote, words: marketStore.words)
+                                
                                 dismiss()
                                 
                                 Task {

@@ -27,7 +27,7 @@ class MarketStore: ObservableObject {
                                                  starScoreTotal: 0,
                                                  reviewCount: 0)
     
-    @Published var currentUser: Firebase.User? = Auth.auth().currentUser
+//    @Published var currentUser: Firebase.User? = Auth.auth().currentUser
     
     let database = Firestore.firestore()
     
@@ -110,7 +110,7 @@ class MarketStore: ObservableObject {
     func marketNotesDidSaveDB(noteID: String, notePrice: Int) async {
         do {
             // 유저 암기장에 접근해서 암기장 들고오는 과정
-            let myDocument = try await database.collection("users").document(currentUser?.uid ?? "")
+            let myDocument = try await database.collection("users").document(Auth.auth().currentUser?.uid ?? "")
                 .collection("myWordNotes").document(noteID).getDocument()
             
             let docData = myDocument.data()
@@ -151,7 +151,7 @@ class MarketStore: ObservableObject {
     // MARK: - 내 단어장을 마켓에 올리면 안에 단어들이 함께 마켓에 올라가도록 하는 함수
     func marketNoteWordsDidSaveDB(noteID: String) async {
         do {
-            let myDocuments = try await database.collection("users").document(currentUser?.uid ?? "")
+            let myDocuments = try await database.collection("users").document(Auth.auth().currentUser?.uid ?? "")
                 .collection("myWordNotes").document(noteID)
                 .collection("words").getDocuments()
             
@@ -183,7 +183,7 @@ class MarketStore: ObservableObject {
             let calculatedCoin = (userCoin) - marketWordNote.notePrice
             
             database.collection("users")
-                .document(currentUser?.uid ?? "")
+                .document(Auth.auth().currentUser?.uid ?? "")
                 .updateData([
                     "coin": calculatedCoin
                 ])
@@ -212,7 +212,7 @@ class MarketStore: ObservableObject {
                         "updateData": Date.now] as [String: Any]
         
         database.collection("users")
-            .document(currentUser?.uid ?? "")
+            .document(Auth.auth().currentUser?.uid ?? "")
             .collection("myWordNotes")
             .document(id)
             .setData(wordNote) { error in
@@ -237,7 +237,7 @@ class MarketStore: ObservableObject {
                 "wordLevel": 0] as [String: Any]
             
             database.collection("users")
-                .document(currentUser?.uid ?? "")
+                .document(Auth.auth().currentUser?.uid ?? "")
                 .collection("myWordNotes")
                 .document(noteId)
                 .collection("words")
@@ -266,7 +266,7 @@ class MarketStore: ObservableObject {
                 filterMyWordNotes.removeAll()
             })
             
-            let currentUserUID = currentUser?.uid ?? ""
+            let currentUserUID = Auth.auth().currentUser?.uid ?? ""
             let documents = try await database.collection("users").document(currentUserUID)
                 .collection("myWordNotes").whereField("enrollmentUser", isEqualTo: currentUserUID).getDocuments()
             
@@ -307,7 +307,7 @@ class MarketStore: ObservableObject {
                 myWordNoteIdArray.removeAll()
             })
             
-            let currentUserUID = currentUser?.uid ?? ""
+            let currentUserUID = Auth.auth().currentUser?.uid ?? ""
             let documents = try await database.collection("users").document(currentUserUID)
                 .collection("myWordNotes").getDocuments()
             

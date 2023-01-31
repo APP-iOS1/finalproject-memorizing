@@ -187,8 +187,9 @@ struct NewMakeMemoryNote: View {
             .frame(width: 350, height: 40)
             .overlay {
                 Button {
+                    let id = UUID().uuidString
                     myNoteStore.myNotesWillBeSavedOnDB(
-                        wordNote: MyWordNote(id: UUID().uuidString,
+                        wordNote: MyWordNote(id: id,
                                              noteName: noteName,
                                              noteCategory: noteCategory,
                                              enrollmentUser: authStore.user?.id ?? "",
@@ -200,7 +201,7 @@ struct NewMakeMemoryNote: View {
                     )
                     
                     // coreData에 저장
-                    coreDataStore.addNote(id: UUID().uuidString,
+                    coreDataStore.addNote(id: id,
                                           noteName: noteName,
                                           enrollmentUser: authStore.user?.id ?? "No Enrollment User",
                                           noteCategory: noteCategory,

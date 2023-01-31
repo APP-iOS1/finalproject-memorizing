@@ -70,13 +70,53 @@ class CoreDataStore: ObservableObject {
         newWord.wordLevel = wordLevel
         newWord.wordMeaning = wordMeaning
         newWord.wordString = wordString
-        newWord.addToNote(note)
+        
+        note.addToWords(newWord)
         
         save()
         getNotes()
     }
     
+    func addNoteAndWordInMarket(note: MarketWordNote, words: [Word]) {
+        let returnedNote = returnNote(
+                   id: note.id,
+                   noteName: note.noteName,
+                   enrollmentUser: note.enrollmentUser,
+                   noteCategory: note.noteCategory,
+                   firstTestResult: 0,
+                   lastTestResult: 0,
+                   updateDate: note.updateDate
+        )
+        for word in words {
+            let newWord = WordEntity(context: manager.context)
+            newWord.id = word.id
+            newWord.wordLevel = Int64(word.wordLevel)
+            newWord.wordMeaning = word.wordMeaning
+            newWord.wordString = word.wordString
+            
+            returnedNote.addToWords(newWord)
+        }
+        
+        save()
+        getNotes()
+    }
+    
+    func returnNote(id: String, noteName: String, enrollmentUser: String, noteCategory: String, firstTestResult: Double, lastTestResult: Double, updateDate: Date) -> NoteEntity {
+        let newNote = NoteEntity(context: manager.context)
+        newNote.id = id
+        newNote.noteName = noteName
+        newNote.enrollmentUser = enrollmentUser
+        newNote.noteCategory = noteCategory
+        newNote.repeatCount = 0
+        newNote.firstTestResult = firstTestResult
+        newNote.lastTestResult = lastTestResult
+        newNote.updateDate = updateDate
+        
+        return newNote
+    }
+    
     func getNotes() {
+        
         let request = NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
         
         do {
@@ -84,15 +124,14 @@ class CoreDataStore: ObservableObject {
         } catch {
             print("Error fetching. \(error.localizedDescription)")
         }
-        
-    }
-    
-    func getWords() {
-        
     }
     
     func save() {
         manager.save()
+    }
+    
+    func deleteAll() {
+        // deleteAll() 구현 플리즈
     }
     
     func returnColor(category: String) -> Color {

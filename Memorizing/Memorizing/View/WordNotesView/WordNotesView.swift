@@ -104,6 +104,12 @@ struct WordNotesView: View {
             //                ProgressiveOnboardView.init(withProgressiveOnboard: self.onboard)
             //            }
         }
+        .onAppear {
+            for note in coreDataStore.notes {
+                print("note id :  \(note.id ?? "no id")")
+            }
+            
+        }
         //        .frame(maxWidth: .infinity, maxHeight: .infinity)
         //        .coordinateSpace(name: "OnboardSpace")
         //        .onAppear() {
