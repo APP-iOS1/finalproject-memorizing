@@ -44,7 +44,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         
         // 사용자가 입력하는 알림을 여기서 위임을 받아서 처리함 -> 알람 내용도 보여줘야 하니..
         await getPendingRequests()
-        return [.sound, .banner]
+        return [.sound, .banner, .badge]
     }
     
     private func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -104,7 +104,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
             content.badge = ((badgeNumber as? Decimal ?? 0) + 1) as NSNumber
         }
         if content.badge == nil {
-            content.badge = 0
+            content.badge = 1
         }
         
         if let subtitle = localNotification.subtitle {
