@@ -15,7 +15,7 @@ import FirebaseMessaging
 // MARK: - LocalPush, ServerPush를 위한 AppDelegate 선언
 class AppDelegate: NSObject, UIApplicationDelegate {
     
-    //MARK: - Firebase의 원격알림(messsaging)을 활용하기 위한 코드 선언 -> 종현님이 직접 firebase에서 알림을 설정하면, Token이 등록된 사용자들에게 임의로 알림/메세지를 보낼 수 있음
+    // MARK: - Firebase의 원격알림(messsaging)을 활용하기 위한 코드 선언 -> 종현님이 직접 firebase에서 알림을 설정하면, Token이 등록된 사용자들에게 임의로 알림/메세지를 보낼 수 있음
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
