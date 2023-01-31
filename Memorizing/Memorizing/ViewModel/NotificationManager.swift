@@ -20,7 +20,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     
     // MARK: - MyWordNote에서 아래의 데이터를 가져옴
     // 그리고 Time Interval을 위해
-    @Published var myWordNotes: [MyWordNote] = []
+  //  @Published var myWordNotes: [MyWordNote] = []
     
     // MARK: - 알림의 모든 기능을 담는 인스턴스 [notificationCenter]
     let notificationCenter = UNUserNotificationCenter.current()

@@ -47,7 +47,6 @@ struct StudyingStampView: View {
             
             Button {
                 Task {
-                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
                     // MARK: - Notification -> 버튼을 눌렀을 시, identifier, title, body, timeInterval등을 설정한 후, 알림을 뿌려줌
                     // 여기서, 망각곡선 방식 혹은 값에 따라 알람 주기 (TimeInterval)를 설정함
                     // 첫 번째, repeatCount / 두 번째, 난이도? (Level)?
@@ -68,6 +67,10 @@ struct StudyingStampView: View {
                             print("localNotification: ", localNotification)
                             
                             await notiManager.schedule(localNotification: localNotification)
+                            await myNoteStore.repeatCountWillBePlusOne(
+                                wordNote: wordNote,
+                                reviewDate: Date() + Double(wordNote.repeatCount * 1000)
+                            )
                             await notiManager.getPendingRequests()
                         }
                     }
@@ -114,8 +117,6 @@ enum RepeatCount: Int {
     case repeat2 = 2
     case repeat3 = 3
 }
-
-
 
 // struct StudyingStampView_Previews: PreviewProvider {
 //    static var previews: some View {

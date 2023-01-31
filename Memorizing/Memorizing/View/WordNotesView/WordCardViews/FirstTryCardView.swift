@@ -321,7 +321,6 @@ struct LevelCheck: View {
         ) {
             Button("Ok") {
                 Task {
-                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
                     if notiManager.isNotiAllow {
                         if !notiManager.isGranted {
                             notiManager.openSetting()
@@ -337,6 +336,10 @@ struct LevelCheck: View {
                             localNotification.subtitle = "\(wordNote.noteName)"
                             print("localNotification: ", localNotification)
                             await notiManager.schedule(localNotification: localNotification)
+                            await myNoteStore.repeatCountWillBePlusOne(
+                                wordNote: wordNote,
+                                reviewDate: Date() + Double(wordNote.repeatCount * 1000)
+                            )
                             await notiManager.getPendingRequests()
                             for request in notiManager.pendingRequests {
                                 print("request: ", request as Any)

@@ -12,7 +12,10 @@ import KakaoSDKCommon
 import Firebase
 import FirebaseMessaging
 
+// MARK: - LocalPush, ServerPush를 위한 AppDelegate 선언
 class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    //MARK: - Firebase의 원격알림(messsaging)을 활용하기 위한 코드 선언 -> 종현님이 직접 firebase에서 알림을 설정하면, Token이 등록된 사용자들에게 임의로 알림/메세지를 보낼 수 있음
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
@@ -97,6 +100,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 struct MemorizingApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    // MARK: - ScenePhase 선언
+    @Environment(\.scenePhase) var scenePhase
     @StateObject var authStore: AuthStore = AuthStore()
     @StateObject var myNoteStore: MyNoteStore = MyNoteStore()
     @StateObject var marketStore: MarketStore = MarketStore()
@@ -119,6 +125,12 @@ struct MemorizingApp: App {
                     // 카카오 로그인을 위해 웹 혹은 카카오톡 앱으로 이동 후 다시 앱으로 돌아오는 과정을 거쳐야하므로, Handler를 추가로 등록해줌
                     if AuthApi.isKakaoTalkLoginUrl(url) {
                         _ = AuthController.handleOpenUrl(url: url)
+                    }
+                }
+                .onChange(of: scenePhase) { newValue in
+                    if newValue == .active {
+                        UIApplication.shared.applicationIconBadgeNumber = 0
+                        UserDefaults.standard.set(0, forKey: UserDefaults.Keys.notificationBadgeCount.rawValue)
                     }
                 }
         }
