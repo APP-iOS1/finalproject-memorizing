@@ -67,7 +67,7 @@ struct MarketViewNoteButton: View {
                                     
                                     Spacer()
                                 }
-                                .frame(width: 140, height: 40)
+                                .frame(width: 140, height: 30)
                                 .padding(.bottom, 3)
                                 
                                 // 암기장 판매 가격

@@ -32,16 +32,18 @@ struct MarketView: View {
         MarketViewSearchBar(searchText: $searchText)
             .padding(.top, 15)
         
-        // MARK: - 검색창 하단 구분선
-        Divider()
-            .frame(width: 340, height: 3)
-            .overlay(Color("Gray5"))
-        
         // MARK: - 카테고리 버튼들
         ScrollView(.horizontal, showsIndicators: false) {
             MarketViewCategoryButton(selectedCategory: $selectedCategory,
                                      categoryArray: MarketView.categoryArray)
         }
+        .padding(.leading, 13)
+        
+        // MARK: - 검색창 하단 구분선
+        Divider()
+            .frame(height: 5)
+            .overlay(Color("Gray5"))
+            .padding(.top, -3)
         
         ZStack {
             ScrollView(showsIndicators: false) {
@@ -66,6 +68,8 @@ struct MarketView: View {
                         }
                     })
                 .padding(.horizontal)
+                .padding(.top, 15)
+                .padding(.bottom, 120)
             }   // ScrollView end
             .padding(.bottom, 1)
             .navigationBarTitleDisplayMode(.inline)
