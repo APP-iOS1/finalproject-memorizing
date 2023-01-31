@@ -79,6 +79,7 @@
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
 		F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */; };
 		F28462962988A53000384255 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28462952988A53000384255 /* CoreDataStore.swift */; };
+		F29235F32989761F00F15E64 /* WordNoteProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29235F22989761F00F15E64 /* WordNoteProtocol.swift */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +150,7 @@
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F23231DB2988E96B005399E5 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F28462952988A53000384255 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		F29235F22989761F00F15E64 /* WordNoteProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordNoteProtocol.swift; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -295,6 +297,7 @@
 				523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */,
 				523C30DC2979195E00FAE229 /* UserModel.swift */,
 				F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */,
+				F29235F22989761F00F15E64 /* WordNoteProtocol.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
 				F28462962988A53000384255 /* CoreDataStore.swift in Sources */,
+				F29235F32989761F00F15E64 /* WordNoteProtocol.swift in Sources */,
 				52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */,
 				484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */,
 				951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */,

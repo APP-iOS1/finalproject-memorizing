@@ -46,7 +46,7 @@ struct ContentView: View {
                 coreDataStore.deleteAll()
             } else {
                 print("onChange uid")
-                dump(coreDataStore.notes)
+                coreDataStore.syncronizeWithDB()
                 // CoreData 서버에서 페치해오기
             }
             

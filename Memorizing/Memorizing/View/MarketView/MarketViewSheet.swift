@@ -138,7 +138,7 @@ struct MarketViewSheet: View {
                                                                 userCoin: authStore.user?.coin ?? 0)
                                 
                                 // 코데로 구매한 노트와 워드들이 추가됨.
-                                coreDataStore.addNoteAndWordInMarket(note: wordNote, words: marketStore.words)
+                                coreDataStore.addNoteAndWord(note: wordNote, words: marketStore.words)
                                 
                                 dismiss()
                                 
@@ -278,12 +278,6 @@ struct MarketViewSheet: View {
                 await marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
                 await reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
             }
-        }
-
-        .onDisappear {
-            coreDataStore.getNotes()
-            // MARK: 이제 서버로부터 fetch필요 없이 coreData만 페치해주면 됨 (coreData 정상 작동 시 코드 삭제)
-//            myNoteStore.myNotesWillBeFetchedFromDB()
         }
     }
 }
