@@ -37,7 +37,8 @@ struct MyMemoryNote: View {
                         VStack(spacing: 5) {
                             HStack(alignment: .top) {
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""), lineWidth: 1)
+                                    .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""),
+                                            lineWidth: 1)
                                     .frame(width: 50, height: 20)
                                     .overlay {
                                         Text(myWordNote.noteCategory ?? "No Category")
@@ -127,7 +128,7 @@ struct MyMemoryNote: View {
 
 // MARK: - onAppear 수정자가 있을 경우, 데이터에 따라 화면이 바뀌므로 Preview Crashed가 날 수 밖에 없음
 // 따라서, 프리뷰를 보기 위해 .onAppear 수정자 내용을 싹 지워주고 나서 확인할 것
-//struct MyMemoryNote_Previews: PreviewProvider {
+// struct MyMemoryNote_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationStack {
 //            MyMemoryNote(myWordNote: MyWordNote(id: "03578E93-5DF4-489C-AF66-1671DD8CCE79",
@@ -141,4 +142,4 @@ struct MyMemoryNote: View {
 //
 //        }
 //    }
-//}
+// }

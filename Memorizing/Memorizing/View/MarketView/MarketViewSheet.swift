@@ -13,6 +13,7 @@ struct MarketViewSheet: View {
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var reviewStore: ReviewStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @Environment(\.dismiss) private var dismiss
     
     var wordNote: MarketWordNote
@@ -135,7 +136,14 @@ struct MarketViewSheet: View {
                                 marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
                                                                 words: marketStore.words,
                                                                 userCoin: authStore.user?.coin ?? 0)
-                                
+                                // 코데로 구매한 노트가 추가됨.
+                                coreDataStore.addNote(id: UUID().uuidString,
+                                                      noteName: wordNote.noteName,
+                                                      enrollmentUser: wordNote.enrollmentUser,
+                                                      noteCategory: wordNote.noteCategory,
+                                                      firstTestResult: 0,
+                                                      lastTestResult: 0,
+                                                      updateDate: Date())
                                 dismiss()
                                 
                                 Task {
@@ -275,8 +283,11 @@ struct MarketViewSheet: View {
                 await reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
             }
         }
+
         .onDisappear {
-            myNoteStore.myNotesWillBeFetchedFromDB()
+            coreDataStore.getNotes()
+            // MARK: 이제 서버로부터 fetch필요 없이 coreData만 페치해주면 됨 (coreData 정상 작동 시 코드 삭제)
+//            myNoteStore.myNotesWillBeFetchedFromDB()
         }
     }
 }

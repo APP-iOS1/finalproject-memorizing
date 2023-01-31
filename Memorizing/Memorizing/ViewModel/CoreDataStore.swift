@@ -40,10 +40,16 @@ class CoreDataStore: ObservableObject {
     @Published var notes: [NoteEntity] = []
     
     init() {
-        getNote()
+        getNotes()
     }
     
-    func addNote(id: String, noteName: String, enrollmentUser: String, noteCategory: String, firstTestResult: Double, lastTestResult: Double, updateDate: Date) {
+    func addNote(id: String,
+                 noteName: String,
+                 enrollmentUser: String,
+                 noteCategory: String,
+                 firstTestResult: Double,
+                 lastTestResult: Double,
+                 updateDate: Date) {
         let newNote = NoteEntity(context: manager.context)
         newNote.id = id
         newNote.noteName = noteName
@@ -55,9 +61,22 @@ class CoreDataStore: ObservableObject {
         newNote.updateDate = updateDate
         
         save()
+        getNotes()
     }
     
-    func getNote() {
+    func addWord(note: NoteEntity, id: String, wordLevel: Int64, wordMeaning: String, wordString: String) {
+        let newWord = WordEntity(context: manager.context)
+        newWord.id = id
+        newWord.wordLevel = wordLevel
+        newWord.wordMeaning = wordMeaning
+        newWord.wordString = wordString
+        newWord.addToNote(note)
+        
+        save()
+        getNotes()
+    }
+    
+    func getNotes() {
         let request = NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
         
         do {
@@ -65,6 +84,11 @@ class CoreDataStore: ObservableObject {
         } catch {
             print("Error fetching. \(error.localizedDescription)")
         }
+        
+    }
+    
+    func getWords() {
+        
     }
     
     func save() {

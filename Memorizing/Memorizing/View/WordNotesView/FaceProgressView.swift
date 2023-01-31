@@ -51,7 +51,7 @@ struct FaceProgressView: View {
                             ZStack {
                                 Circle()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(myWordNote.noteColor)
+                                    .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                                 // FIXME: DB수정 후 결과에 따라 표정 변하도록 수정
                                 Image("FaceNomal")
                                     .resizable()
@@ -79,7 +79,7 @@ struct FaceProgressView: View {
                             ZStack {
                                 Circle()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(myWordNote.noteColor)
+                                    .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                                 Image("CheckMark")
                                     .resizable()
                                     .frame(width: 24,
@@ -106,7 +106,7 @@ struct FaceProgressView: View {
                             ZStack {
                                 Circle()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(myWordNote.noteColor)
+                                    .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                                 Image("CheckMark")
                                     .resizable()
                                     .frame(width: 24,
@@ -133,7 +133,7 @@ struct FaceProgressView: View {
                             ZStack {
                                 Circle()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(myWordNote.noteColor)
+                                    .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                                 // FIXME: DB수정 후 결과에 따라 표정 변하도록 수정
                                 Image("FaceGood")
                                     .resizable()

@@ -45,7 +45,8 @@ struct MainView: View {
         }
         .onAppear {
             if authStore.user != nil {
-                myNoteStore.myNotesWillBeFetchedFromDB()
+                // MARK: coreData가 정상작동하면 이제 매번 페치 안해줘도됨 ( 정상 작동 시 코드 삭제)
+//                myNoteStore.myNotesWillBeFetchedFromDB()
                 Task {
                     await marketStore.marketNotesWillFetchDB()
                     await marketStore.filterMyNoteWillFetchDB()
