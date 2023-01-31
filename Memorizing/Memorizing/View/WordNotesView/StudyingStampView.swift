@@ -15,9 +15,6 @@ struct StudyingStampView: View {
     var wordNote: MyWordNote
     @Binding var isDismiss: Bool
     
-    // MARK: - RepeatCount 값을 Flag로 두어, TimeInterval 값에 대한 조건문을 만들어 주자
-    @State private var repeatCountFlag: RepeatCount = .repeat1
-    
     var body: some View {
         VStack {
             
@@ -110,14 +107,6 @@ struct StudyingStampView: View {
         }
     }
 }
-
-// MARK: -
-enum RepeatCount: Int {
-    case repeat1 = 1
-    case repeat2 = 2
-    case repeat3 = 3
-}
-
 // struct StudyingStampView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        StudyingStampView(wordNote: MyWordNote(id: "1",

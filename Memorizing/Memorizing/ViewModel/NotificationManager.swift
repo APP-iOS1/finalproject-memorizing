@@ -153,7 +153,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     // --------- 사용자가 작성하는 알림 정보를 처리하기 위한 함수
     func getPendingRequests() async {
         pendingRequests = await notificationCenter.pendingNotificationRequests()
-        
+
         // 알림을 예약한 갯수(count)를 확인하기 위한 print
         print("Pending: \(pendingRequests.count)")
     }
