@@ -240,18 +240,11 @@ struct MyPageView: View {
                         isPresented: $signOutAlertToggle
                     ) {
                         HStack {
-                            Button {
-                                authStore.signOutDidAuth()
-                            }label: {
-                                Text("로그아웃")
-                                    .foregroundColor(.accentColor)
+                            Button("닫기", role: .cancel) {
+                                // 그냥 닫기
                             }
-                            Spacer()
-                            Button {
-                                
-                            }label: {
-                                Text("닫기")
-                                    .foregroundColor(.black)
+                            Button("로그아웃", role: .destructive) {
+                                authStore.signOutDidAuth()
                             }
                         }
                     } message: {
@@ -288,7 +281,7 @@ struct MyPageView_Previews: PreviewProvider {
         NavigationStack {
             MyPageView()
                 .environmentObject(AuthStore())
-            .environmentObject(MyNoteStore())
+                .environmentObject(MyNoteStore())
         }
     }
 }

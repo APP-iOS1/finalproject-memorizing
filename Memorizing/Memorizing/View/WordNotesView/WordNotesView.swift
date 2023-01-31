@@ -41,6 +41,7 @@ struct WordNotesView: View {
                         ForEach(myNoteStore.myWordNotes) { myWordNote in
                             MyMemoryNote(myWordNote: myWordNote)
                         }
+                        .padding(.bottom, 80)
                     }
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
@@ -67,6 +68,7 @@ struct WordNotesView: View {
                     } label: {
                         Image(systemName: "bell")
                             .foregroundColor(.mainDarkBlue)
+                            .fontWeight(.medium)
                     }
                     .sheet(isPresented: $isShownNotification) {
                          NotificationView(isShownNotification: $isShownNotification)
@@ -92,7 +94,7 @@ struct WordNotesView: View {
                             }
                             .shadow(radius: 1, x: 1, y: 1)
                     }
-                    .offset(x: 140, y: 250)
+                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
                     .sheet(isPresented: $isShowingNewMemorySheet) {
                         NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
                     }

@@ -17,22 +17,25 @@ struct AddListView: View {
     @State private var isShowingAddView = false
     @State private var showingAlert = false
     var body: some View {
+        /*
         VStack {
             HStack(spacing: 30) {
                 HStack {
                     Button {
                         dismiss()
                     } label: {
-                        Text("뒤로가기")
-                            .font(.subheadline)
-                            .fontWeight(.regular)
+//                        Text("뒤로가기")
+//                            .font(.subheadline)
+//                            .fontWeight(.regular)
+//                            .foregroundColor(.mainBlack)
+                        Image(systemName: "chevron.left")
                             .foregroundColor(.mainBlack)
                     }
                 }
                 .frame(width: 70)
                 HStack {
                     VStack {
-                        Text("메모 암기장 만들기")
+                        Text("나의 암기장")
                             .font(.title3)
                             .fontWeight(.bold)
                         
@@ -44,27 +47,27 @@ struct AddListView: View {
                 }
                 .frame(width: 180)
                 HStack {
-                    Button {
-                        showingAlert.toggle()
-                    } label: {
-                        Text("저장하기")
-                            .font(.subheadline)
-                            .fontWeight(.regular)
-                            .foregroundColor(.mainBlack)
-                    }
-                    .alert(isPresented: $showingAlert) {
-                        Alert(title: Text("암기장을 저장하시겠습니까?"),
-                              message: Text(""),
-                              primaryButton: .destructive(Text("취소하기"),
-                                                          action: {}),
-                              secondaryButton: .cancel(Text("저장하기"),
-                                                       action: {
-                            myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-                                self.myWords = myNoteStore.myWords
-                            }
-                            dismiss()
-                        }))
-                    }
+//                    Button {
+//                        showingAlert.toggle()
+//                    } label: {
+//                        Text("저장하기")
+//                            .font(.subheadline)
+//                            .fontWeight(.regular)
+//                            .foregroundColor(.mainBlack)
+//                    }
+//                    .alert(isPresented: $showingAlert) {
+//                        Alert(title: Text("암기장을 저장하시겠습니까?"),
+//                              message: Text(""),
+//                              primaryButton: .destructive(Text("취소하기"),
+//                                                          action: {}),
+//                              secondaryButton: .cancel(Text("저장하기"),
+//                                                       action: {
+//                            myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+//                                self.myWords = myNoteStore.myWords
+//                            }
+//                            dismiss()
+//                        }))
+//                    }
                     
                 }
                 .frame(width: 70)
@@ -110,19 +113,89 @@ struct AddListView: View {
             
         }
         .padding()
-
-        VStack {
-            Button {
-                isShowingAddView.toggle()
-            } label: {
-                Text("단어 추가하기")
-            }
-            .sheet(isPresented: $isShowingAddView, content: {
-                AddWordView(wordNote: wordNote, noteLists: $myWords)
-            })
-            
-        }
+        */
         
+        NavigationStack {
+            ZStack {
+                VStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(wordNote.noteColor, lineWidth: 1)
+                        .frame(width: 50, height: 20)
+                        .overlay {
+                            Text(wordNote.noteCategory)
+                                .foregroundColor(.black)
+                                .font(.caption)
+                        }
+                        .padding(.top)
+                    
+                    Text(wordNote.noteName)
+                        .foregroundColor(.mainBlack)
+                        .font(.title3)
+                        .bold()
+                        .lineLimit(1)
+                    
+                    Divider()
+                    
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Text("총 ")
+                        Text("\(myWords.count)개")
+                            .foregroundColor(.mainDarkBlue)
+                        Text("의 단어")
+                    }
+                    .font(.headline)
+                    
+                    Divider()
+                    
+                    List {
+                        ForEach(myWords) { word in
+                            AddListRow(word: word)
+                        }
+                        .onDelete(perform: removeList)
+                    }
+                    .listStyle(.inset)
+                }
+                .navigationTitle("나의 암기장")
+                .navigationBarTitleDisplayMode(.inline)
+                
+                Spacer()
+                
+                VStack {
+                    Button {
+                        isShowingAddView.toggle()
+                    } label: {
+                        Circle()
+                            .foregroundColor(.mainBlue)
+                            .frame(width: 65, height: 65)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .foregroundColor(.white)
+                                    .font(.title3)
+                                    .bold()
+                            }
+                            .shadow(radius: 1, x: 1, y: 1)
+                    }
+                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+                    .sheet(isPresented: $isShowingAddView, content: {
+                        AddWordView(wordNote: wordNote, noteLists: $myWords)
+                    })
+                    
+                }
+            }
+            .padding(.horizontal)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.gray2)
+                            .fontWeight(.light)
+                    }
+
+                }
+            }
+        }
     }
     
     // MARK: 리스트 밀어서 삭제 함수 (일단 리스트 상에서만 삭제됨, 서버에서 삭제 x)
