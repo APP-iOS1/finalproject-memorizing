@@ -14,7 +14,7 @@ struct CustomTextFieldPlaceHolder: ViewModifier {
         content
             .foregroundColor(Color("Gray2"))
             .font(.subheadline)
-    }
+     }
 }
 
 // MARK: textfield 스타일 모디파이어
