@@ -98,8 +98,7 @@ class CoreDataStore: ObservableObject {
         }
         
         save()
-        getNotes()
-    }
+        }
     
     func returnNote(id: String, noteName: String, enrollmentUser: String, noteCategory: String, firstTestResult: Double, lastTestResult: Double, updateDate: Date) -> NoteEntity {
         let newNote = NoteEntity(context: manager.context)
@@ -132,6 +131,17 @@ class CoreDataStore: ObservableObject {
     
     func deleteAll() {
         // deleteAll() 구현 플리즈
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try manager.context.execute(batchDeleteRequest)
+        } catch let error as NSError {
+            print("Error: \(error)")
+        }
+        
+        save()
+        getNotes()
     }
     
     func returnColor(category: String) -> Color {
