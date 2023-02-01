@@ -3,7 +3,6 @@
 //  Memorizing
 //
 //  Created by 진태영 on 2023/01/30.
-//
 
 import SwiftUI
 
@@ -11,6 +10,8 @@ struct NotificationScheduleView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
     @Binding var isShownNotification: Bool
+    @State private var isShownDeleteAlert: Bool = false
+    @State private var toBeDeleted: IndexSet?
 
     var body: some View {
         VStack(alignment: .leading) {

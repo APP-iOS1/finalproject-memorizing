@@ -28,7 +28,6 @@ struct WordNotesView: View {
     @State private var reviewStepToggle: Bool = false
     @State private var menuXAxis: Double = -132
     @State private var isShowingNewMemorySheet: Bool = false
-    @State private var isShownNotification: Bool = false
     @EnvironmentObject var myNoteStore: MyNoteStore
     
     var body: some View {
@@ -62,17 +61,14 @@ struct WordNotesView: View {
                         .padding(.leading, 10)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShownNotification.toggle()
-                        print("알림확인 버튼이 눌렸습니다.")
+                    NavigationLink {
+                        NotificationScheduleView()
+                       let _ = print("알림확인 버튼이 눌렸습니다.")
                     } label: {
                         Image(systemName: "bell")
                             .foregroundColor(.mainDarkBlue)
                             .fontWeight(.medium)
                     }
-                    .sheet(isPresented: $isShownNotification) {
-                         NotificationView(isShownNotification: $isShownNotification)
-                     }
                 }
             }
             
