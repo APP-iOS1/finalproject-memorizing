@@ -18,6 +18,7 @@ import CryptoKit
 
 @MainActor
 class AuthStore: UIViewController, ObservableObject {
+    let coredataStore: CoreDataStore = CoreDataStore()
     
     // 태영
     @Published var state: SignInState = .signedOut

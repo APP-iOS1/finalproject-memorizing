@@ -10,8 +10,8 @@ import SwiftUI
 struct StudyAgainView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var myNoteStore: MyNoteStore
-    
-    var myWordNote: MyWordNote
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    var myWordNote: NoteEntity
     @State private var noteLists: [Word] = []
     // 한 번도 안 하면 -1, 한 번씩 할 때마다 1씩 증가
     @State var progressStep: Int = 0
@@ -29,15 +29,16 @@ struct StudyAgainView: View {
                             Rectangle()
                                 .cornerRadius(10, corners: [.topLeft, .bottomLeft])
                                 .frame(width: 16)
-                                .foregroundColor(myWordNote.noteColor)
+                                .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                             
                             VStack(spacing: 5) {
                                 HStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(myWordNote.noteColor, lineWidth: 1)
+                                        .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""),
+                                                lineWidth: 1)
                                         .frame(width: 50, height: 20)
                                         .overlay {
-                                            Text(myWordNote.noteCategory)
+                                            Text(myWordNote.noteCategory ?? "No Categoryname")
                                                 .font(.caption)
                                         }
                                     Spacer()
@@ -45,7 +46,7 @@ struct StudyAgainView: View {
                                 .padding(.horizontal, 15)
                                 
                                 HStack {
-                                    Text(myWordNote.noteName)
+                                    Text(myWordNote.noteName ?? "No Notename")
                                         .foregroundColor(.black)
                                         .font(.headline)
                                     Spacer()
@@ -72,7 +73,8 @@ struct StudyAgainView: View {
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
-                                            .foregroundColor(myWordNote.noteColor)
+                                            .foregroundColor(coreDataStore.returnColor(category:
+                                                                                        myWordNote.noteCategory ?? ""))
                                             .overlay {
                                                 VStack {
                                                     Image(systemName: "play.circle")
@@ -86,11 +88,12 @@ struct StudyAgainView: View {
                                 } else if myWordNote.repeatCount == 1 {
                                     // 복습시작
                                     NavigationLink {
-                                        OtherTryCardView(myWordNote: myWordNote, word: noteLists)
+//                                        OtherTryCardView(myWordNote: myWordNote, word: noteLists)
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
-                                            .foregroundColor(myWordNote.noteColor)
+                                            .foregroundColor(coreDataStore.returnColor(category:
+                                                                                        myWordNote.noteCategory ?? ""))
                                             .overlay {
                                                 VStack(spacing: 6) {
                                                     Image(systemName: "play.circle")
@@ -103,11 +106,12 @@ struct StudyAgainView: View {
                                     }
                                 } else if myWordNote.repeatCount == 2 {
                                     NavigationLink {
-                                        OtherTryCardView(myWordNote: myWordNote, word: filterLevel(list: noteLists))
+//                                        OtherTryCardView(myWordNote: myWordNote, word: filterLevel(list: noteLists))
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
-                                            .foregroundColor(myWordNote.noteColor)
+                                            .foregroundColor(coreDataStore.returnColor(category:
+                                                                                        myWordNote.noteCategory ?? ""))
                                             .overlay {
                                                 VStack(spacing: 6) {
                                                     Image(systemName: "play.circle")
@@ -121,11 +125,12 @@ struct StudyAgainView: View {
                                 } else if myWordNote.repeatCount == 3 {
                                     NavigationLink {
                                         // 첫번째 단어 뷰
-                                        LastTryCardView(myWordNote: myWordNote, word: noteLists)
+//                                        LastTryCardView(myWordNote: myWordNote, word: noteLists)
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
-                                            .foregroundColor(myWordNote.noteColor)
+                                            .foregroundColor(coreDataStore.returnColor(category:
+                                                                                        myWordNote.noteCategory ?? ""))
                                             .overlay {
                                                 VStack {
                                                     Image(systemName: "play.circle")
@@ -159,9 +164,10 @@ struct StudyAgainView: View {
         }
         .onAppear {
             if authStore.user != nil {
-                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
-                    noteLists = myNoteStore.myWords
-                }
+                // TODO: 주석풀기
+//                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
+//                    noteLists = myNoteStore.myWords
+//                }
             }
         }
     }

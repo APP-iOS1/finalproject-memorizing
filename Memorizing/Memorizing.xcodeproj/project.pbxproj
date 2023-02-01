@@ -81,6 +81,9 @@
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
 		95595284297A290600C2B064 /* StudyingStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95595283297A290600C2B064 /* StudyingStampView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
+		F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */; };
+		F28462962988A53000384255 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28462952988A53000384255 /* CoreDataStore.swift */; };
+		F29235F32989761F00F15E64 /* WordNoteProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29235F22989761F00F15E64 /* WordNoteProtocol.swift */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
 /* End PBXBuildFile section */
 
@@ -151,6 +154,9 @@
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		95595283297A290600C2B064 /* StudyingStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingStampView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		F23231DB2988E96B005399E5 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		F28462952988A53000384255 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		F29235F22989761F00F15E64 /* WordNoteProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordNoteProtocol.swift; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -284,6 +290,7 @@
 				66982A0B297787A30052269D /* AuthStore.swift */,
 				66982A0D297787AF0052269D /* MyNoteStore.swift */,
 				52C222AD297782EE00181367 /* ReviewStore.swift */,
+				F28462952988A53000384255 /* CoreDataStore.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -297,6 +304,8 @@
 				26CC90A329778DA70039981B /* ReviewModel.swift */,
 				523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */,
 				523C30DC2979195E00FAE229 /* UserModel.swift */,
+				F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */,
+				F29235F22989761F00F15E64 /* WordNoteProtocol.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
+				F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */,
 				52D8F2522965F37E00755E5A /* WordModel.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
 				523C30DD2979195E00FAE229 /* UserModel.swift in Sources */,
@@ -537,6 +547,8 @@
 				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				661BD9202987974E00F34317 /* ScheduleCell.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
+				F28462962988A53000384255 /* CoreDataStore.swift in Sources */,
+				F29235F32989761F00F15E64 /* WordNoteProtocol.swift in Sources */,
 				52DE9D872966FAFB0037F64A /* ButtonModifier.swift in Sources */,
 				484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */,
 				951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */,
@@ -691,7 +703,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";
-				DEVELOPMENT_TEAM = V7TH2GUA8U;
+				DEVELOPMENT_TEAM = 699L8LQSR7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Memorizing/Info.plist;
@@ -725,7 +737,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorizing/Preview Content\"";
-				DEVELOPMENT_TEAM = V7TH2GUA8U;
+				DEVELOPMENT_TEAM = 699L8LQSR7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Memorizing/Info.plist;
@@ -864,6 +876,19 @@
 			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F23231DB2988E96B005399E5 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = F23231DB2988E96B005399E5 /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 52D8F2322965F2C600755E5A /* Project object */;
 }

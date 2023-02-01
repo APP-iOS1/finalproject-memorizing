@@ -13,6 +13,7 @@ struct MarketViewSheet: View {
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var reviewStore: ReviewStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @Environment(\.dismiss) private var dismiss
     
     var wordNote: MarketWordNote
@@ -135,6 +136,9 @@ struct MarketViewSheet: View {
                                 marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
                                                                 words: marketStore.words,
                                                                 userCoin: authStore.user?.coin ?? 0)
+                                
+                                // 코데로 구매한 노트와 워드들이 추가됨.
+                                coreDataStore.addNoteAndWord(note: wordNote, words: marketStore.words)
                                 
                                 dismiss()
                                 
@@ -274,9 +278,6 @@ struct MarketViewSheet: View {
                 await marketStore.wordsWillFetchDB(wordNoteID: wordNote.id)
                 await reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
             }
-        }
-        .onDisappear {
-            myNoteStore.myNotesWillBeFetchedFromDB()
         }
     }
 }

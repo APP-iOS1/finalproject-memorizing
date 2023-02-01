@@ -28,7 +28,9 @@ struct WordNotesView: View {
     @State private var reviewStepToggle: Bool = false
     @State private var menuXAxis: Double = -132
     @State private var isShowingNewMemorySheet: Bool = false
-    @EnvironmentObject var myNoteStore: MyNoteStore
+    // @State private var isShownNotification: Bool = false
+//    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     
     var body: some View {
         ZStack {
@@ -37,7 +39,7 @@ struct WordNotesView: View {
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
                     ScrollView(showsIndicators: false) {
-                        ForEach(myNoteStore.myWordNotes) { myWordNote in
+                        ForEach(coreDataStore.notes) { myWordNote in
                             MyMemoryNote(myWordNote: myWordNote)
                         }
                         .padding(.bottom, 80)
@@ -45,7 +47,7 @@ struct WordNotesView: View {
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
                     ScrollView(showsIndicators: false) {
-                        ForEach(myNoteStore.myWordNotes) { myWordNote in
+                        ForEach(coreDataStore.notes) { myWordNote in
                             StudyAgainView(myWordNote: myWordNote)
                         }
                     }
@@ -100,6 +102,12 @@ struct WordNotesView: View {
             //            if(onboard.showOnboardScreen) {
             //                ProgressiveOnboardView.init(withProgressiveOnboard: self.onboard)
             //            }
+        }
+        .onAppear {
+            for note in coreDataStore.notes {
+                print("note id :  \(note.id ?? "no id")")
+            }
+            
         }
         //        .frame(maxWidth: .infinity, maxHeight: .infinity)
         //        .coordinateSpace(name: "OnboardSpace")

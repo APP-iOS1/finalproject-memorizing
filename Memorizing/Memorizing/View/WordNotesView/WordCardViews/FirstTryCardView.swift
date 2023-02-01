@@ -10,7 +10,7 @@ import AVFoundation
 
 struct FirstTryCardView: View {
     @Environment(\.dismiss) private var dismiss
-    var myWordNote: MyWordNote
+    var myWordNote: NoteEntity
     @State var word: [Word]
     @State var isDismiss: Bool = false
     @State var num = 0
@@ -67,23 +67,24 @@ struct FirstTryCardView: View {
                 flipCard()
             }
             
-            LevelCheck(
-                isShowingModal: .constant(false),
-                isFlipped: $isFlipped,
-                isDismiss: $isDismiss,
-                totalScore: $totalScore,
-                lastWordIndex: wordCount,
-                num: $num,
-                isShowingAlert: $isShowingAlert,
-                wordNote: myWordNote,
-                word: word[num]
-            )
+            // TODO: 주석 풀기
+//            LevelCheck(
+//                isShowingModal: .constant(false),
+//                isFlipped: $isFlipped,
+//                isDismiss: $isDismiss,
+//                totalScore: $totalScore,
+//                lastWordIndex: wordCount,
+//                num: $num,
+//                isShowingAlert: $isShowingAlert,
+//                wordNote: myWordNote,
+//                word: word[num]
+//            )
             .padding(.top)
             
             Spacer()
             
         }
-        .navigationTitle(myWordNote.noteName)
+        .navigationTitle(myWordNote.noteName ?? "No Name")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: isDismiss, perform: { _ in
             dismiss()

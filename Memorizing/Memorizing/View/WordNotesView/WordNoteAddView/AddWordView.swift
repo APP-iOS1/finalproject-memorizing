@@ -11,9 +11,10 @@ struct AddWordView: View {
     // MARK: - 바인딩
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     // 상위뷰랑 꼬일 수 있으므로, 그냥 var 선언하기 (Binding X)
-    var wordNote: MyWordNote
-    @Binding var noteLists: [Word]
+    var wordNote: NoteEntity
+//    var noteLists: [WordEntity]
     
     // MARK: - 단어, 문장, 질문과 답 피커 만들기 -> 아래 Enum으로 유형 선언되어 있음
     @State private var segmnetationSelection: AddWordCategory = .word
@@ -167,17 +168,38 @@ struct AddWordView: View {
                 VStack {
                     Button {
                         // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
-                        myNoteStore.myWordsWillBeSavedOnDB(wordNote: wordNote,
+                        // TODO: - 주석 풀기
+                        myNoteStore.myWordsWillBeSavedOnDB(wordNote: MyWordNote(id: wordNote.id ?? UUID().uuidString,
+                                                                                noteName: wordNote.noteName
+                                                                                ?? "no Name",
+                                                                                noteCategory: wordNote.noteCategory
+                                                                                ?? "no Category",
+                                                                                enrollmentUser: wordNote.enrollmentUser
+                                                                                ?? "no Enrollment User",
+                                                                                repeatCount: Int(wordNote.repeatCount),
+                                                                                firstTestResult:
+                                                                                    wordNote.firstTestResult,
+                                                                                lastTestResult:
+                                                                                    wordNote.lastTestResult,
+                                                                                updateDate:
+                                                                                    wordNote.updateDate ?? Date()),
                                                            word: Word(
                                                             id: UUID().uuidString,
                                                             wordString: wordString,
                                                             wordMeaning: wordMeaning,
                                                             wordLevel: wordLevel)
                         )
-                        print("단어추가 : \(noteLists)")
-                        myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-                            self.noteLists = myNoteStore.myWords
-                        }
+                        
+                        coreDataStore.addWord(note: wordNote,
+                                              id: UUID().uuidString,
+                                              wordLevel: Int64(wordLevel),
+                                              wordMeaning: wordMeaning,
+                                              wordString: wordString)
+                        
+                        // MARK: coreData 정상 작동 시 코드 삭제
+//                        myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
+//                            self.noteLists = myNoteStore.myWords
+//                        }
                         
                         // MARK: - 텍스트 필드를 비워주고..
                         wordString = ""
@@ -233,21 +255,14 @@ enum AddWordCategory: String, CaseIterable {
     case qustionAndAnswer = "질문과 답"
 }
 
-struct AddWordView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            AddWordView(wordNote: MyWordNote(id: "",
-                                             noteName: "",
-                                             noteCategory: "",
-                                             enrollmentUser: "",
-                                             repeatCount: 0,
-                                             firstTestResult: 0,
-                                             lastTestResult: 0,
-                                             updateDate: Date.now),
-                        noteLists: .constant([Word(id: "",
-                                                   wordString: "Hello",
-                                                   wordMeaning: "안녕",
-                                                   wordLevel: 0)]))
-        }
-    }
-}
+// struct AddWordView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+//            AddWordView(wordNote: NoteEntity(),
+//                        noteLists: .constant([Word(id: "",
+//                                                   wordString: "Hello",
+//                                                   wordMeaning: "안녕",
+//                                                   wordLevel: 0)]))
+//        }
+//    }
+// }

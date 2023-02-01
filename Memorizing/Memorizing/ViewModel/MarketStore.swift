@@ -27,8 +27,6 @@ class MarketStore: ObservableObject {
                                                  starScoreTotal: 0,
                                                  reviewCount: 0)
     
- //   @Published var currentUser: Firebase.User? = Auth.auth().currentUser
-    
     let database = Firestore.firestore()
     
     // MARK: - 마켓의 전체 단어장들을 fetch 하는 함수 / Market View에서 전체 Notes를 Fetch 함
