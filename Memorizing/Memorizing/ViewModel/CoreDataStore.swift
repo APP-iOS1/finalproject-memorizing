@@ -79,7 +79,7 @@ class CoreDataStore: ObservableObject {
         getNotes()
     }
     
-    func addNoteAndWord<T: Note>(note: T, words: [Word]) {
+    func addNoteAndWord<T: NoteProtocol>(note: T, words: [Word]) {
         let returnedNote = returnNote(
                    id: note.id,
                    noteName: note.noteName,
@@ -213,6 +213,35 @@ class CoreDataStore: ObservableObject {
                     }
                 
         }
+    }
+    
+    func updateWordLevel(word: WordEntity, level: Int64) {
+        word.wordLevel = level
+        
+        save()
+    }
+    
+    func plusRepeatCount(note: NoteEntity) {
+        note.repeatCount += 1
+        
+        save()
+        getNotes()
+    }
+    
+    func resetRepeatCount(note: NoteEntity) {
+        note.repeatCount = 0
+        
+        save()
+        getNotes()
+    }
+    
+    func deleteWord(note: NoteEntity, offsets: IndexSet) {
+        guard let index = offsets.first else { return }
+        let word = note.words?.allObjects as? [WordEntity] ?? []
+        
+        manager.context.delete(word[index])
+        
+        save()
     }
     
     func returnColor(category: String) -> Color {

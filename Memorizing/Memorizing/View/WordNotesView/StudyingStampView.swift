@@ -12,7 +12,8 @@ struct StudyingStampView: View {
     
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
-    var wordNote: MyWordNote
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    var wordNote: NoteEntity
     @Binding var isDismiss: Bool
     
     var body: some View {
@@ -54,13 +55,13 @@ struct StudyingStampView: View {
                         } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
                             print("set localNotification")
                             var localNotification = LocalNotification(
-                                identifier: wordNote.id,
+                                identifier: wordNote.id ?? "No Id",
                                 title: "MEMOrizing 암기 시간",
                                 body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
                                 timeInterval: Double(wordNote.repeatCount * 10),
                                 repeats: false
                             )
-                            localNotification.subtitle = "\(wordNote.noteName)"
+                            localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
                             print("localNotification: ", localNotification)
                             
                             await notiManager.schedule(localNotification: localNotification)
@@ -68,6 +69,7 @@ struct StudyingStampView: View {
                                 wordNote: wordNote,
                                 reviewDate: Date() + Double(wordNote.repeatCount * 1000)
                             )
+                            coreDataStore.plusRepeatCount(note: wordNote)
                             await notiManager.getPendingRequests()
                         }
                     }

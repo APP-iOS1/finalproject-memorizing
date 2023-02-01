@@ -168,7 +168,6 @@ struct AddWordView: View {
                 VStack {
                     Button {
                         // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
-                        // TODO: - 주석 풀기
                         myNoteStore.myWordsWillBeSavedOnDB(wordNote: MyWordNote(id: wordNote.id ?? UUID().uuidString,
                                                                                 noteName: wordNote.noteName
                                                                                 ?? "no Name",
