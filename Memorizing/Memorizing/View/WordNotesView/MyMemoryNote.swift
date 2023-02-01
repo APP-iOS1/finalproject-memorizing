@@ -103,7 +103,8 @@ struct MyMemoryNote: View {
         }
         .fullScreenCover(isPresented: $isShowingSheet) {
             NavigationStack {
-                AddListView(wordNote: myWordNote)
+                // TODO: - AddListView 수정 완료되면 다시 살리기
+                // AddListView(wordNote: myWordNote)
 //                if noteLists.isEmpty {
 //                    AddListView(wordNote: myWordNote, myWords: $noteLists)
 //                } else {

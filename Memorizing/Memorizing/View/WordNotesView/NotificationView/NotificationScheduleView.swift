@@ -9,7 +9,6 @@ import SwiftUI
 struct NotificationScheduleView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
-    @Binding var isShownNotification: Bool
     @State private var isShownDeleteAlert: Bool = false
     @State private var toBeDeleted: IndexSet?
 
@@ -46,7 +45,7 @@ struct NotificationScheduleView: View {
 
 struct NotificationScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationScheduleView(isShownNotification: .constant(false))
+        NotificationScheduleView()
             .environmentObject(MyNoteStore())
             .environmentObject(NotificationManager())
     }

@@ -65,7 +65,6 @@ struct WordNotesView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         NotificationScheduleView()
-                       let _ = print("알림확인 버튼이 눌렸습니다.")
                     } label: {
                         Image(systemName: "bell")
                             .foregroundColor(.mainDarkBlue)
