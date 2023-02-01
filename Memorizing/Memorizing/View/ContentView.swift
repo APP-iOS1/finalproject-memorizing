@@ -18,25 +18,25 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            switch authStore.state {
-            case .signedIn:
+            if Auth.auth().currentUser != nil {
                 MainView()
                     .environmentObject(marketStore)
+            } else {
+                if authStore.state == .signedOut {
+                    LoginView()
+                        .environmentObject(marketStore)
+                } else if authStore.state == .firstIn {
+                    var _ = print("OnBoardingTabView: \(self.email) / \(self.password)")
+                    OnBoardingTabView(currentTab: self.email.isEmpty
+                                      && self.password.isEmpty
+                                      ? 0
+                                      : 3,
+                                      email: $email,
+                                      password: $password)
+                } else if authStore.state == .check {
+                    FirstView()
+                }
                 
-            case .signedOut:
-                LoginView()
-                    .environmentObject(marketStore)
-                
-            case .firstIn:
-                var _ = print("OnBoardingTabView: \(self.email) / \(self.password)")
-                OnBoardingTabView(currentTab: self.email.isEmpty
-                                  && self.password.isEmpty
-                                  ? 0
-                                  : 3,
-                                  email: $email,
-                                  password: $password)
-            case .check:
-                FirstView()
             }
             
         }

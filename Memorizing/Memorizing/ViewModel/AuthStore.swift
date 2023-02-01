@@ -52,7 +52,12 @@ class AuthStore: UIViewController, ObservableObject {
             try await Auth.auth().signIn(withEmail: email, password: password)
             if let result = Auth.auth().currentUser {
                 print("userId: ", result.uid)
-                self.user = User(id: result.uid, email: result.email ?? "No Email", nickName: "", coin: 0)
+                self.user = User(
+                    id: result.uid,
+                    email: result.email ?? "No Email",
+                    nickName: result.displayName ?? "No Name",
+                    coin: 0
+                )
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                 self.state = .signedIn
