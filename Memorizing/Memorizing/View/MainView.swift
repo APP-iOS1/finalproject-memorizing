@@ -14,8 +14,16 @@ struct MainView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
+   // @State var isFirstLoginView: Bool = false
     
     var body: some View {
+        // TODO: - 로그인 처음 화면에서 이름 바꿔주는 창 띄우기
+//        if authStore.state == .firstIn {
+//            sheet(isPresented: $isFirstLogin) {
+//                FirstLoginView(isFirstLoginView: $isFirstLogin)
+//            }
+//        }
+
         TabView(selection: $tabSelection) {
             NavigationStack {
                 WordNotesView()
@@ -58,6 +66,7 @@ struct MainView: View {
                     await marketStore.myNotesArrayWillFetchDB()
                 }
             }
+            
         }
     }
 }

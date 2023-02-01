@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 // MARK: WordNote - 암기장
-struct MyWordNote: Identifiable, Note {
+struct MyWordNote: Identifiable, NoteProtocol {
     var id: String
     var noteName: String
     var noteCategory: String

@@ -13,7 +13,6 @@ struct MyMemoryNote: View {
     @EnvironmentObject var coreDataStore: CoreDataStore
     var myWordNote: NoteEntity
     
-//    @State private var noteLists: [Word] = []
     @State private var isShowingSheet: Bool = false
     @State private var opacityValue: Double = 0
     //    @State var isAddShowing: Bool = false
@@ -59,6 +58,7 @@ struct MyMemoryNote: View {
                                     .padding(.leading, 4)
                                     .padding(.bottom, 3)
                                     .lineLimit(1)
+                                
                                 Spacer()
                             }
                             .padding(.horizontal, 15)
@@ -74,7 +74,6 @@ struct MyMemoryNote: View {
                                     .opacity(opacityValue)
                             } else {
                                 // MARK: 얼굴 진행도
-                                // TODO: 주석 풀기(오류남)
                                 FaceProgressView(myWordNote: myWordNote)
                                     .opacity(opacityValue)
                             }
@@ -103,24 +102,15 @@ struct MyMemoryNote: View {
         }
         .fullScreenCover(isPresented: $isShowingSheet) {
             NavigationStack {
-                // TODO: - AddListView 수정 완료되면 다시 살리기
-                // AddListView(wordNote: myWordNote)
-//                if noteLists.isEmpty {
-//                    AddListView(wordNote: myWordNote, myWords: $noteLists)
-//                } else {
-//                    EditListView(wordNote: myWordNote, word: $noteLists)
-//                }
+                 AddListView(wordNote: myWordNote)
+                if (myWordNote.words?.allObjects as? [WordEntity] ?? []).isEmpty {
+                    AddListView(wordNote: myWordNote)
+                } else {
+                    EditListView(wordNote: myWordNote)
+                }
             }
         }
         .onAppear {
-            if authStore.user != nil {
-
-                // TODO: - 해당 주석 coredataStore에 메서드 만들어서 변경해주어야함
-//                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
-//                    noteLists = myNoteStore.myWords
-//                }
-            }
-
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 opacityValue = 1
             }
