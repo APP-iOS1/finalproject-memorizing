@@ -10,7 +10,6 @@ import SwiftUI
 struct NotificationView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
-    @Binding var isShownNotification: Bool
     
     var body: some View {
         NavigationStack {
@@ -41,7 +40,7 @@ struct NotificationView: View {
 
 struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationView(isShownNotification: .constant(false))
+        NotificationView()
             .environmentObject(MyNoteStore())
             .environmentObject(NotificationManager())
     }

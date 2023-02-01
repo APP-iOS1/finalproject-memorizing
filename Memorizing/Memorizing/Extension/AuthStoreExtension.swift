@@ -17,9 +17,7 @@ extension UserDefaults {
     enum Keys: String, CaseIterable {
         
         case isExistingAuth
-        case email
-        case password
-        
+        case notificationBadgeCount
     }
     
     func reset() {
