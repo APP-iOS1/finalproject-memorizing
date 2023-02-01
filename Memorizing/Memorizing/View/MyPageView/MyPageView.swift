@@ -92,9 +92,10 @@ struct MyPageView: View {
                         
                         NavigationLink {
                             // TODO: 암기장 구매 내역 페이지로 이동
+                            MarketTradeListView()
                         } label: {
                             HStack {
-                                Text("암기장 구매 내역")
+                                Text("마켓 거래내역")
                                     .font(.body)
                                     .fontWeight(.medium)
                                 Spacer()

@@ -28,6 +28,7 @@
 		3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC1496297A5EC700AE186F /* EditListView.swift */; };
 		3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E32966628C00A47C5A /* AddWordView.swift */; };
 		3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */; };
+		4847EEB2298A3DD800C34274 /* MarketTradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */; };
 		484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D65702966987900C56E87 /* MarketViewNoteButton.swift */; };
 		484D657329669B5F00C56E87 /* MarketViewCategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */; };
 		484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657429669C7A00C56E87 /* MarketViewSearchBar.swift */; };
@@ -103,6 +104,7 @@
 		3F2002732967551400FCFC3A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3FDC1496297A5EC700AE186F /* EditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListView.swift; sourceTree = "<group>"; };
 		3FF9B3E32966628C00A47C5A /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
+		4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTradeListView.swift; sourceTree = "<group>"; };
 		484D65702966987900C56E87 /* MarketViewNoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewNoteButton.swift; sourceTree = "<group>"; };
 		484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewCategoryButton.swift; sourceTree = "<group>"; };
 		484D657429669C7A00C56E87 /* MarketViewSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSearchBar.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 			children = (
 				52D8F25D2965F67C00755E5A /* MyPageView.swift */,
 				951F7A3D29669F2B00976337 /* EditUserView.swift */,
+				4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */,
 			);
 			path = MyPageView;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				26CC90A429778DA70039981B /* ReviewModel.swift in Sources */,
 				484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */,
 				52D8F25C2965F65B00755E5A /* MarketView.swift in Sources */,
+				4847EEB2298A3DD800C34274 /* MarketTradeListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
