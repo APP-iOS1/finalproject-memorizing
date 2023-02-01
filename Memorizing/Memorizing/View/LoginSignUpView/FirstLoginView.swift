@@ -57,7 +57,7 @@ struct FirstLoginView: View {
             Button {
                 Task {
                     authStore.user?.nickName = newName
-                    authStorㄷe.userInfoDidSaveDB(user: authStore.user!)
+                    authStore.userInfoDidSaveDB(user: authStore.user!)
                     dismiss()
                     authStore.state = .signedIn
                 }
