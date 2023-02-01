@@ -29,7 +29,6 @@
 		3F7DA3022987A8A3001EDFC8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3F7DA3012987A8A3001EDFC8 /* FirebaseStorage */; };
 		3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC1496297A5EC700AE186F /* EditListView.swift */; };
 		3FDCCA87298A5877005E7C4E /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCCA86298A5877005E7C4E /* MyReviewView.swift */; };
-		3FDCCA89298A5A75005E7C4E /* MyReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCCA88298A5A75005E7C4E /* MyReviewCell.swift */; };
 		3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E32966628C00A47C5A /* AddWordView.swift */; };
 		3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */; };
 		4847EEB2298A3DD800C34274 /* MarketTradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */; };
@@ -111,7 +110,6 @@
 		3F2002732967551400FCFC3A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3FDC1496297A5EC700AE186F /* EditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListView.swift; sourceTree = "<group>"; };
 		3FDCCA86298A5877005E7C4E /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
-		3FDCCA88298A5A75005E7C4E /* MyReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewCell.swift; sourceTree = "<group>"; };
 		3FF9B3E32966628C00A47C5A /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
 		4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTradeListView.swift; sourceTree = "<group>"; };
 		484D65702966987900C56E87 /* MarketViewNoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewNoteButton.swift; sourceTree = "<group>"; };
@@ -372,7 +370,6 @@
 				951F7A3D29669F2B00976337 /* EditUserView.swift */,
 				4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */,
 				3FDCCA86298A5877005E7C4E /* MyReviewView.swift */,
-				3FDCCA88298A5A75005E7C4E /* MyReviewCell.swift */,
 				26128807298A4B2E0011D663 /* SafariWebView */,
 			);
 			path = MyPageView;
@@ -598,7 +595,6 @@
 				661BD91E2987974000F34317 /* NotificationScheduleView.swift in Sources */,
 				52D8F23E2965F2C600755E5A /* MemorizingApp.swift in Sources */,
 				52D8F2622965F72600755E5A /* MainView.swift in Sources */,
-				3FDCCA89298A5A75005E7C4E /* MyReviewCell.swift in Sources */,
 				52D8F2642965F75300755E5A /* LoginView.swift in Sources */,
 				2645958E2967431B007114B7 /* TryAgainView.swift in Sources */,
 				26CC90A429778DA70039981B /* ReviewModel.swift in Sources */,

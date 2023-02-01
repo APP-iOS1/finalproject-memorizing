@@ -12,6 +12,7 @@ struct MyPageView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
+    @EnvironmentObject var marketStore: MarketStore
     
     @State private var signOutAlertToggle: Bool = false
 //    @State private var isShownNickNameToggle: Bool = false
@@ -114,7 +115,8 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            MyReviewView()
+                            // 파라미터 추가
+                            MyReviewView(wordNote: marketStore.sendWordNote)
                         } label: {
                             HStack {
                                 Text("내가 작성한 리뷰")
