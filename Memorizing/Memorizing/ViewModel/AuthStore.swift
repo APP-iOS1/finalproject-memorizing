@@ -286,6 +286,8 @@ class AuthStore: UIViewController, ObservableObject {
         self.errorMessage = ""
         do {
             try Auth.auth().signOut()
+            GIDSignIn.sharedInstance.signOut()
+            self.signOutDidKakao()
             UserDefaults.standard.reset()
             state = .signedOut
             self.user = nil
@@ -297,6 +299,7 @@ class AuthStore: UIViewController, ObservableObject {
     } // emailAuthSignOut
     
     // MARK: - GoogleAuth SignOut Function
+    /*
     func signOutDidGoogleAuth() {
         self.errorMessage = ""
         GIDSignIn.sharedInstance.signOut()
@@ -311,6 +314,7 @@ class AuthStore: UIViewController, ObservableObject {
             print("google Sign Out error: ", self.errorMessage)
         }
     }
+    */
     
     // MARK: - KakaoAuth SignOut Function
     func signOutDidKakao() {

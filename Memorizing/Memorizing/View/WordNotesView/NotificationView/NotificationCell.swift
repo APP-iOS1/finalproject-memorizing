@@ -21,6 +21,7 @@ struct NotificationCell: View {
         } // VStack
         .onAppear {
             wordNote = myNoteStore.myWordNotes.first { $0.id == notiId }
+            
         }
     } // body
 } // struct

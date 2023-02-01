@@ -23,15 +23,15 @@ struct MyMemoryNote: View {
     
     var body: some View {
         VStack(spacing: 25) {
-            RoundedRectangle(cornerRadius: 15)
-                .stroke(Color.gray4)
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.gray4, lineWidth: 1)
                 .foregroundColor(.white)
                 .frame(width: 350, height: 140)
                 .overlay {
                     HStack {
                         Rectangle()
                             .cornerRadius(10, corners: [.topLeft, .bottomLeft])
-                            .frame(width: 16)
+                            .frame(width: 20)
                             .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                         
                         VStack(spacing: 5) {
@@ -44,12 +44,12 @@ struct MyMemoryNote: View {
                                         Text(myWordNote.noteCategory ?? "No Category")
                                             .foregroundColor(.black)
                                             .font(.caption)
-                                        
+
                                     }
                                 Spacer()
                             }
                             .padding(.horizontal, 15)
-                            
+
                             // 암기할 것 등록하기에서 받아오기
                             HStack {
                                 Text(myWordNote.noteName ?? "No Name")
@@ -57,6 +57,8 @@ struct MyMemoryNote: View {
                                     .font(.headline)
                                     .padding(.top, 7)
                                     .padding(.leading, 4)
+                                    .padding(.bottom, 3)
+                                    .lineLimit(1)
                                 Spacer()
                             }
                             .padding(.horizontal, 15)
@@ -83,11 +85,11 @@ struct MyMemoryNote: View {
                 .overlay {
                     HStack {
                         Spacer()
-                        
+
                         VStack {
                             Image(systemName: "chevron.forward")
                                 .foregroundColor(.gray2)
-                                .bold()
+                                .fontWeight(.light)
                             Spacer()
                         }
                         .padding(.top, 25)
@@ -98,7 +100,6 @@ struct MyMemoryNote: View {
                 .onTapGesture(perform: {
                     isShowingSheet.toggle()
                 })
-            
         }
         .fullScreenCover(isPresented: $isShowingSheet) {
             NavigationStack {

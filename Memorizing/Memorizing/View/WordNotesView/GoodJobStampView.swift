@@ -44,7 +44,7 @@ struct GoodJobStampView: View {
                     Button {
                         // FIXME: - 현기 수정
                         Task.init {
-                            await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
+                            await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote, reviewDate: nil)
                             isDismiss = true
                         }
                         // 복습하기 리스트 뷰로 이동
@@ -97,6 +97,7 @@ struct GoodJobStampView: View {
                 }
                 .frame(width: 320, alignment: .leading)
                 .padding(.top, 20)
+                
             }
         }
     }

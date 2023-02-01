@@ -18,7 +18,7 @@ struct AddListRow: View {
     var body: some View {
         if selectedWord.contains(word.wordString ?? "no word name") {
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.gray5)
+                .stroke(Color.clear)
                 .backgroundStyle(Color.gray7)
                 .frame(width: 343, height: 100)
                 .overlay {
@@ -45,7 +45,7 @@ struct AddListRow: View {
                 .animation(.spring(), value: selectedWord)
         } else {
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.gray5)
+                .stroke(Color.clear)
                 .backgroundStyle(Color.gray7)
                 .frame(width: 343, height: 53)
                 .overlay {

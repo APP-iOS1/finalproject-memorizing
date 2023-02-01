@@ -152,13 +152,6 @@ struct WordCardMeaningView: View {
                     
                     Spacer()
                     
-                    // 소리 버튼
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "speaker.wave.2")
-                            .foregroundColor(Color("MainBlack"))
-                    }
                 }
                 .padding()
                 
@@ -203,13 +196,6 @@ struct WordCardWordView: View {
                     
                     Spacer()
                     
-                    // 소리 버튼
-                    Button {
-                        // FIXME: 진짜 다해봤는데 안됨
-                    } label: {
-                        Image(systemName: "speaker.wave.2")
-                            .foregroundColor(Color("MainBlack"))
-                    }
                 }
                 .padding()
                 
@@ -322,11 +308,11 @@ struct LevelCheck: View {
         ) {
             Button("Ok") {
                 Task {
-                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
                     if notiManager.isNotiAllow {
                         if !notiManager.isGranted {
                             notiManager.openSetting()
                         } else {
+                            // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
                             print("set localNotification")
                             var localNotification = LocalNotification(
                                 identifier: wordNote.id,
@@ -338,6 +324,10 @@ struct LevelCheck: View {
                             localNotification.subtitle = "\(wordNote.noteName)"
                             print("localNotification: ", localNotification)
                             await notiManager.schedule(localNotification: localNotification)
+                            await myNoteStore.repeatCountWillBePlusOne(
+                                wordNote: wordNote,
+                                reviewDate: Date() + Double(wordNote.repeatCount * 1000)
+                            )
                             await notiManager.getPendingRequests()
                             for request in notiManager.pendingRequests {
                                 print("request: ", request as Any)

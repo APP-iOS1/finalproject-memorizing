@@ -143,13 +143,6 @@ struct WordCardMeaningView2: View {
                     
                     Spacer()
                     
-                    // 소리 버튼
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "speaker.wave.2")
-                            .foregroundColor(Color("MainBlack"))
-                    }
                 }
                 .padding()
                 
@@ -194,13 +187,6 @@ struct WordCardWordView2: View {
                     
                     Spacer()
                     
-                    // 소리 버튼
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "speaker.wave.2")
-                            .foregroundColor(Color("MainBlack"))
-                    }
                 }
                 .padding()
                 
@@ -278,38 +264,6 @@ struct NextPreviousButton: View {
             
         }
         .frame(width: 330)
-//        .alert(
-//            "Alert Title",
-//            isPresented: $isShowingStampView
-//        ) {
-//            Button("Ok") {
-//                Task {
-//                    await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote)
-//
-//                    // 알림 설정 권한 확인
-//                    if !notiManager.isGranted {
-//                        notiManager.openSetting()  // 알림 설정 창
-//                    } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
-//                        print("set localNotification")
-//                        var localNotification = LocalNotification(
-//                            identifier: UUID().uuidString,
-//                            title: "MEMOrizing 암기 시간",
-//                            body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
-//                            timeInterval: Double(wordNote.repeatCount * 1),
-//                            repeats: false
-//                        )
-//                        localNotification.subtitle = "\(wordNote.noteName)"
-//                        print("localNotification: ", localNotification)
-//
-//                        await notiManager.schedule(localNotification: localNotification)
-//                        await notiManager.getPendingRequests()
-//                    }
-//                    isDismiss.toggle()
-//                }
-//            }
-//        } message: {
-//            Text("모든 단어를 공부했습니다 :)")
-//        }
         .sheet(isPresented: $isShowingStampView) {
             StudyingStampView(wordNote: wordNote, isDismiss: $isDismiss)
         }

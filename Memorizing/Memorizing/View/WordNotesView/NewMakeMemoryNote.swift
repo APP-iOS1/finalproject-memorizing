@@ -227,6 +227,8 @@ struct NewMakeMemoryNote: View {
 
 struct NewMakeMemoryNote_Previews: PreviewProvider {
     static var previews: some View {
-        NewMakeMemoryNote(isShowingNewMemorySheet: .constant(true))
+        NavigationStack {
+            NewMakeMemoryNote(isShowingNewMemorySheet: .constant(true))
+        }
     }
 }

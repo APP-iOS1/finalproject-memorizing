@@ -30,7 +30,7 @@ struct MarketViewSheet: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Button("취소") {
+                        Button("닫기") {
                             dismiss()
                         }
                         .font(.headline)

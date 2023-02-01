@@ -18,6 +18,7 @@ struct MyWordNote: Identifiable, Note {
     var firstTestResult: Double
     var lastTestResult: Double
     var updateDate: Date
+    var reviewDate: Date?
     
     // 카테고리와 색상 매칭
     var noteColor: Color {

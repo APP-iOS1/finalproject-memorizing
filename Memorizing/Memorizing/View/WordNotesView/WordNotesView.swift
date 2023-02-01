@@ -28,7 +28,7 @@ struct WordNotesView: View {
     @State private var reviewStepToggle: Bool = false
     @State private var menuXAxis: Double = -132
     @State private var isShowingNewMemorySheet: Bool = false
-    @State private var isShownNotification: Bool = false
+    // @State private var isShownNotification: Bool = false
 //    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     
@@ -42,6 +42,7 @@ struct WordNotesView: View {
                         ForEach(coreDataStore.notes) { myWordNote in
                             MyMemoryNote(myWordNote: myWordNote)
                         }
+                        .padding(.bottom, 80)
                     }
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
@@ -62,16 +63,14 @@ struct WordNotesView: View {
                         .padding(.leading, 10)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShownNotification.toggle()
-                        print("알림확인 버튼이 눌렸습니다.")
+                    NavigationLink {
+                        NotificationScheduleView()
+                       let _ = print("알림확인 버튼이 눌렸습니다.")
                     } label: {
                         Image(systemName: "bell")
                             .foregroundColor(.mainDarkBlue)
+                            .fontWeight(.medium)
                     }
-                    .sheet(isPresented: $isShownNotification) {
-                         NotificationView(isShownNotification: $isShownNotification)
-                     }
                 }
             }
             
@@ -93,7 +92,7 @@ struct WordNotesView: View {
                             }
                             .shadow(radius: 1, x: 1, y: 1)
                     }
-                    .offset(x: 140, y: 250)
+                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
                     .sheet(isPresented: $isShowingNewMemorySheet) {
                         NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
                     }

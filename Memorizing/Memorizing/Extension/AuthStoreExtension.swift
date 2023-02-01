@@ -17,9 +17,7 @@ extension UserDefaults {
     enum Keys: String, CaseIterable {
         
         case isExistingAuth
-        case email
-        case password
-        
+        case notificationBadgeCount
     }
     
     func reset() {
@@ -29,35 +27,35 @@ extension UserDefaults {
 
 // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
 func randomNonceString(length: Int = 32) -> String {
-  precondition(length > 0)
-  let charset: [Character] =
-      Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-  var result = ""
-  var remainingLength = length
-
-  while remainingLength > 0 {
-    let randoms: [UInt8] = (0 ..< 16).map { _ in
-      var random: UInt8 = 0
-      let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-      if errorCode != errSecSuccess {
-        fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
-      }
-      return random
+    precondition(length > 0)
+    let charset: [Character] =
+    Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+    var result = ""
+    var remainingLength = length
+    
+    while remainingLength > 0 {
+        let randoms: [UInt8] = (0 ..< 16).map { _ in
+            var random: UInt8 = 0
+            let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+            if errorCode != errSecSuccess {
+                fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+            }
+            return random
+        }
+        
+        randoms.forEach { random in
+            if remainingLength == 0 {
+                return
+            }
+            
+            if random < charset.count {
+                result.append(charset[Int(random)])
+                remainingLength -= 1
+            }
+        }
     }
-
-    randoms.forEach { random in
-      if remainingLength == 0 {
-        return
-      }
-
-      if random < charset.count {
-        result.append(charset[Int(random)])
-        remainingLength -= 1
-      }
-    }
-  }
-
-  return result
+    
+    return result
 }
 
 // MARK: - AppleAuth와 FirebaseAuth 연동
@@ -76,49 +74,39 @@ extension AuthStore: ASAuthorizationControllerDelegate {
                 return
             }
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                         print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-                         return
-                     }
-                     
+                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                return
+            }
+            
             let credential = OAuthProvider.credential(
                 withProviderID: "apple.com",
                 idToken: idTokenString,
                 rawNonce: nonce
             )
-            Auth.auth().signIn(with: credential) {result, error in
-                if let error = error {
-                    self.errorMessage = error.localizedDescription
-                    print("Apple SignIn Error: ", self.errorMessage)
-                }
-                if let user = result?.user {
-                    let changeRequest = user.createProfileChangeRequest()
-                    if let givenname = appleIDCredential.fullName?.givenName,
+            Task {
+                do {
+                    let result = try await Auth.auth().signIn(with: credential)
+                    let changeRequest = result.user.createProfileChangeRequest()
+                    if let givenName = appleIDCredential.fullName?.givenName,
                        let familyName = appleIDCredential.fullName?.familyName {
-                        changeRequest.displayName = "\(familyName)\(givenname)"
+                        changeRequest.displayName = "\(familyName)\(givenName)"
                     }
-                    Task {
                     try await changeRequest.commitChanges()
-//                    changeRequest.commitChanges { error in
-//                        if let error = error {
-//                            self.errorMessage = error.localizedDescription
-//                            print("Apple SignIn, changeRequest displayName Fail: ", self.errorMessage)
-//                        } else {
-//                            print("Updated displayName: \(Auth.auth().currentUser!.displayName!)")
-//                        }
-//                    }
                     self.user = User(
-                        id: user.uid,
-                        email: "Apple_" + "\(user.email ?? "NO Email")",
+                        id: result.user.uid,
+                        email: "Apple_" + "\(result.user.email ?? "NO Email")",
                         nickName: changeRequest.displayName ?? "No Name",
                         coin: 1000
                     )
-                    self.state = .signedIn
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-                    print("Apple id: ", user.uid)
-                    print("Apple email: ", user.email as Any)
-                        print("Apple nickName: ", changeRequest.displayName as Any)
-                        await self.userInfoWillFetchDB()
-                    }
+                    print("Apple id: ", result.user.uid)
+                    print("Apple email: ", result.user.email as Any)
+                    print("Apple nickName: ", changeRequest.displayName as Any)
+                    await self.userInfoWillFetchDB()
+                    self.state = .signedIn
+                } catch let error as NSError {
+                    self.errorMessage = error.localizedDescription
+                    print("Apple SignIn Error: ", self.errorMessage)
                 }
             }
         }
