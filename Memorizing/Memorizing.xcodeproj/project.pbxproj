@@ -80,6 +80,7 @@
 		66982A1D2977B9BD0052269D /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A1C2977B9BD0052269D /* KakaoSDKUser */; };
 		66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A22297A22E20052269D /* AuthStoreExtension.swift */; };
 		66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A24297A24BF0052269D /* SignInWithAppleButton.swift */; };
+		66BD007B298A3E3E0001BA9B /* FirstLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BD007A298A3E3E0001BA9B /* FirstLoginView.swift */; };
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
 		95595284297A290600C2B064 /* StudyingStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95595283297A290600C2B064 /* StudyingStampView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
@@ -155,6 +156,7 @@
 		66982A21297A22A00052269D /* Memorizing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Memorizing.entitlements; sourceTree = "<group>"; };
 		66982A22297A22E20052269D /* AuthStoreExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStoreExtension.swift; sourceTree = "<group>"; };
 		66982A24297A24BF0052269D /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
+		66BD007A298A3E3E0001BA9B /* FirstLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLoginView.swift; sourceTree = "<group>"; };
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		95595283297A290600C2B064 /* StudyingStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingStampView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				180D8A5929668857005BDBF0 /* FindIdPwView.swift */,
 				5239182D2967CBA800D76C57 /* PointChargeView.swift */,
 				66982A24297A24BF0052269D /* SignInWithAppleButton.swift */,
+				66BD007A298A3E3E0001BA9B /* FirstLoginView.swift */,
 			);
 			path = LoginSignUpView;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */,
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
 				3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */,
+				66BD007B298A3E3E0001BA9B /* FirstLoginView.swift in Sources */,
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
