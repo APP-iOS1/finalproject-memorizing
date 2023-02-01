@@ -20,15 +20,15 @@ struct StudyAgainView: View {
         VStack {
             // if list.isEmpty가 빠졌으니 앱 빌드해서 꺼지는지 확인해보기
             VStack(spacing: 25) {
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.gray4)
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.gray4, lineWidth: 1)
                     .foregroundColor(.white)
                     .frame(width: 350, height: 140)
                     .overlay {
                         HStack {
                             Rectangle()
                                 .cornerRadius(10, corners: [.topLeft, .bottomLeft])
-                                .frame(width: 16)
+                                .frame(width: 20)
                                 .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                             
                             VStack(spacing: 5) {
@@ -46,14 +46,23 @@ struct StudyAgainView: View {
                                 .padding(.horizontal, 15)
                                 
                                 HStack {
-                                    Text(myWordNote.noteName ?? "No Notename")
-                                        .foregroundColor(.black)
-                                        .font(.headline)
+                                    HStack {
+                                        Text(myWordNote.noteName ?? "No Notename")
+                                            .foregroundColor(.mainBlack)
+                                            .font(.headline)
+                                            .padding(.top, 7)
+                                            .padding(.leading, 4)
+                                            .padding(.bottom, 3)
+                                            .lineLimit(1)
+                                        
+                                        Spacer()
+                                    }
+                                    .frame(width: UIScreen.main.bounds.width * 0.62)
+                                    .padding(.horizontal, 15)
+                                    .padding(.bottom, 10)
+                                    
                                     Spacer()
                                 }
-                                .padding(.horizontal, 15)
-                                .padding(.bottom, 15)
-                                
                                 // MARK: 얼굴 진행도
                                 FaceProgressView(myWordNote: myWordNote)
                             }
