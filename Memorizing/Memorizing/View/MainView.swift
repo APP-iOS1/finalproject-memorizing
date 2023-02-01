@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: 암기장, 마켓, 마이페이지를 Tab으로 보여주는 View
 struct MainView: View {
@@ -43,9 +44,8 @@ struct MainView: View {
                 }
             }.tag(3)
         }
-
         .onAppear {
-            if authStore.user != nil {
+            if Auth.auth().currentUser != nil {
                 // MARK: coreData가 정상작동하면 이제 매번 페치 안해줘도됨 ( 정상 작동 시 코드 삭제)
 //                myNoteStore.myNotesWillBeFetchedFromDB()
 
