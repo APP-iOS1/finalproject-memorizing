@@ -9,8 +9,10 @@ import SwiftUI
 
 struct LastTryCardView: View {
     @Environment(\.dismiss) private var dismiss
-    var myWordNote: MyWordNote
-    var word: [Word]
+    var myWordNote: NoteEntity
+    var words: [WordEntity] {
+        myWordNote.words?.allObjects as? [WordEntity] ?? []
+    }
     @State var isDismiss: Bool = false
     @State var num = 0
     //    // FIXME: 단어장 이름 firebase에서 가져오기...?
@@ -24,7 +26,7 @@ struct LastTryCardView: View {
     //    // FIXME: 현재 단어 뜻
     //    @State private var currentWordDef: String
     var wordCount: Int {
-        word.count - 1
+        words.count - 1
     }
     @State var isShowingModal: Bool = false
     @State var totalScore: Double = 0
@@ -50,15 +52,15 @@ struct LastTryCardView: View {
             ZStack {
                 if isFlipped {
                     WordCardMeaningView(
-                        listLength: word.count,
+                        listLength: words.count,
                         currentListLength: $num,
-                        currentWordDef: word[num].wordString
+                        currentWordDef: words[num].wordString ?? "No String"
                     )
                 } else {
                     WordCardWordView(
-                        listLength: word.count,
+                        listLength: words.count,
                         currentListLength: $num,
-                        currentWord: word[num].wordMeaning
+                        currentWord: words[num].wordMeaning ?? "No Meaning"
                     )
                 }
             }
@@ -76,14 +78,14 @@ struct LastTryCardView: View {
                 lastWordIndex: wordCount,
                 num: $num,
                 wordNote: myWordNote,
-                word: word[num]
+                word: words[num]
             )
             .padding(.top)
             
             Spacer()
             
         }
-        .navigationTitle(myWordNote.noteName)
+        .navigationTitle(myWordNote.noteName ?? "No Name")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: isDismiss, perform: { _ in
             dismiss()
@@ -133,16 +135,17 @@ struct LevelCheckForLast: View {
     @Binding var totalScore: Double
     var lastWordIndex: Int
     @Binding var num: Int
-    var wordNote: MyWordNote
-    var word: Word
+    var wordNote: NoteEntity
+    var word: WordEntity
     
     @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    
     var body: some View {
         HStack(spacing: 15) {
             // sfsymbols에 얼굴이 다양하지 않아 하나로 통일함
             Button {
-                // TODO: 모르겠어요 액션
-                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 0)
+                coreDataStore.updateWordLevel(word: word, level: 0)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false
@@ -163,8 +166,7 @@ struct LevelCheckForLast: View {
             }
             
             Button {
-                // TODO: 애매해요 액션
-                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 1)
+                coreDataStore.updateWordLevel(word: word, level: 1)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false
@@ -185,8 +187,7 @@ struct LevelCheckForLast: View {
             }
             
             Button {
-                // TODO: 외웠어요 액션
-                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 2)
+                coreDataStore.updateWordLevel(word: word, level: 2)
                 if lastWordIndex != num {
                     num += 1
                     isFlipped = false

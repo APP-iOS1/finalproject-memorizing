@@ -26,7 +26,7 @@ struct WordNotesView: View {
     @State private var isShowingSheet: Bool = false
     @State private var memoryStepToggle: Bool = true
     @State private var reviewStepToggle: Bool = false
-    @State private var menuXAxis: Double = -132
+    @Namespace var namespace
     @State private var isShowingNewMemorySheet: Bool = false
     // @State private var isShownNotification: Bool = false
 //    @EnvironmentObject var myNoteStore: MyNoteStore
@@ -35,7 +35,9 @@ struct WordNotesView: View {
     var body: some View {
         ZStack {
             VStack {
-                Header(memoryStepToggle: $memoryStepToggle, reviewStepToggle: $reviewStepToggle, menuXAxis: $menuXAxis)
+                Header(memoryStepToggle: $memoryStepToggle,
+                       reviewStepToggle: $reviewStepToggle,
+                       namespace: namespace.self)
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
                     ScrollView(showsIndicators: false) {
@@ -122,42 +124,57 @@ struct WordNotesView: View {
 struct Header: View {
     @Binding var memoryStepToggle: Bool
     @Binding var reviewStepToggle: Bool
-    @Binding var menuXAxis: Double
+    let namespace: Namespace.ID
     
     var body: some View {
         
         VStack(spacing: 5) {
             HStack(spacing: 25) {
-                Button {
-                    memoryStepToggle = true
-                    reviewStepToggle = false
-                    menuXAxis = -132
-                } label: {
-                    Text("메모 암기장")
-                        .foregroundColor(memoryStepToggle ? .mainDarkBlue : .gray3)
-                        .fontWeight(.bold)
+                VStack(spacing: 5) {
+                    Button {
+                        memoryStepToggle = true
+                        reviewStepToggle = false
+                    } label: {
+                        Text("메모 암기장")
+                            .foregroundColor(memoryStepToggle ? .mainDarkBlue : .gray3)
+                            .fontWeight(.bold)
+                    }
+                    
+                    if memoryStepToggle {
+                        Rectangle()
+                            .fill(Color.mainDarkBlue)
+                            .frame(width: memoryStepToggle ? 85 : 70, height: 2)
+                            .matchedGeometryEffect(id: "underline",
+                                                   in: namespace,
+                                                   properties: .frame)
+                    }
                 }
                 
-                Button {
-                    reviewStepToggle = true
-                    memoryStepToggle = false
-                    menuXAxis = -40
-                } label: {
-                    Text("복습하기")
-                        .foregroundColor(reviewStepToggle ? .mainDarkBlue : .gray3)
-                        .fontWeight(.bold)
+                VStack(spacing: 5) {
+                    Button {
+                        reviewStepToggle = true
+                        memoryStepToggle = false
+                    } label: {
+                        Text("복습하기")
+                            .foregroundColor(reviewStepToggle ? .mainDarkBlue : .gray3)
+                            .fontWeight(.bold)
+                    }
+                    
+                    if !memoryStepToggle {
+                        Rectangle()
+                            .fill(Color.mainDarkBlue)
+                            .frame(width: memoryStepToggle ? 85 : 70, height: 2)
+                            .matchedGeometryEffect(id: "underline",
+                                                   in: namespace,
+                                                   properties: .frame)
+                    }
                 }
-                
                 Spacer()
             }
-            .padding(.top, 20)
+            .animation(.linear(duration: 0.2), value: memoryStepToggle)
+            .padding(.top, 10)
             .padding(.leading, 25)
             
-            Rectangle()
-                .fill(Color.mainDarkBlue)
-                .animation(.linear(duration: 0.2), value: menuXAxis)
-                .offset(x: menuXAxis)
-                .frame(width: memoryStepToggle ? 85 : 70, height: 2)
         }
         
     }
