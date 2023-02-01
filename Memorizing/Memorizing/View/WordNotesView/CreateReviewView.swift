@@ -12,10 +12,11 @@ struct CreateReviewView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var reviewStore: ReviewStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @State private var reviewText: String = ""
     @State private var reviewStarCount: Int = 5
     
-    var wordNote: MyWordNote
+    var wordNote: NoteEntity
     @State private var reviewPlaceholder: String = "리뷰를 작성해주세요. 다른 사용자분들께 도움이 된답니다!"
     
     var body: some View {
@@ -24,10 +25,10 @@ struct CreateReviewView: View {
             // 암기장 카테고리
             HStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(wordNote.noteColor)
+                    .fill(coreDataStore.returnColor(category: wordNote.noteCategory ?? ""))
                     .frame(width: 40, height: 20)
                     .overlay {
-                        Text(wordNote.noteCategory)
+                        Text(wordNote.noteCategory ?? "No Category")
                             .font(.footnote)
                             .foregroundColor(.white)
                     }
@@ -37,7 +38,7 @@ struct CreateReviewView: View {
             
             // 암기장 제목
             HStack {
-                Text(wordNote.noteName)
+                Text(wordNote.noteName ?? "No Name")
                     .foregroundColor(.mainBlack)
                     .font(.title3)
                     .bold()
@@ -51,7 +52,7 @@ struct CreateReviewView: View {
             // 암기장 마켓등록일, 판매 금액
             HStack {
                 // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
-                Text("\(wordNote.updateDate.formatted(.dateTime.day().month().year()))")
+                Text("\((wordNote.updateDate ?? Date()).formatted(.dateTime.day().month().year()))")
                     .font(.footnote)
                     .foregroundColor(.gray2)
                     .multilineTextAlignment(.leading)
@@ -129,7 +130,7 @@ struct CreateReviewView: View {
             Button {
                 
                 // review에 setdata로 등록
-                reviewStore.reviewDidSaveDB(wordNoteID: wordNote.id,
+                reviewStore.reviewDidSaveDB(wordNoteID: wordNote.id ?? "No Id",
                                             reviewText: reviewText,
                                             reviewStarScore: reviewStarCount,
                                             currentUser: authStore.user ?? User(id: "",
@@ -151,9 +152,6 @@ struct CreateReviewView: View {
             
             Spacer()
         }
-        .onDisappear(perform: {
-           
-        })
         .padding(.horizontal, 30)
     }
 }

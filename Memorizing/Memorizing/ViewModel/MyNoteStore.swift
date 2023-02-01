@@ -120,11 +120,11 @@ class MyNoteStore: ObservableObject {
     }
     
     // MARK: - 복습 완료시 파베에 repeatCount를 1씩 올림 / 반복학습에 따른 Count를 1씩 증가
-    func repeatCountWillBePlusOne(wordNote: MyWordNote, reviewDate: Date?) async {
+    func repeatCountWillBePlusOne(wordNote: NoteEntity, reviewDate: Date?) async {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         do {
             _ = try await database.collection("users").document(currentUser.uid)
-                .collection("myWordNotes").document(wordNote.id)
+                .collection("myWordNotes").document(wordNote.id ?? "")
                 .updateData([
                     "repeatCount": FieldValue.increment(Int64(1)),
                     "reviewDate": reviewDate as Any // 태영 수정
@@ -137,11 +137,11 @@ class MyNoteStore: ObservableObject {
     }
     
     // MARK: - 복습 다시하기 repeatcount를 0으로 초기화 / 반복학습이 완료될 경우, Count를 Reset
-    func repeatCountWillBeResetted(wordNote: MyWordNote) {
+    func repeatCountWillBeResetted(wordNote: NoteEntity) {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         
         database.collection("users").document(currentUser.uid)
-            .collection("myWordNotes").document(wordNote.id)
+            .collection("myWordNotes").document(wordNote.id ?? "")
             .updateData([
                 "repeatCount": 0,
                 "reviewDate": NSNull() // 태영 수정
@@ -154,12 +154,12 @@ class MyNoteStore: ObservableObject {
     }
     
     // MARK: - 학습 시 각각 Words의 Level(난이도)값을 DB에 저장
-    func wordsLevelWillBeChangedOnDB(wordNote: MyWordNote, word: Word, level: Int) {
+    func wordsLevelWillBeChangedOnDB(wordNote: NoteEntity, word: WordEntity, level: Int) {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         
         database.collection("users").document(currentUser.uid)
-            .collection("myWordNotes").document(wordNote.id)
-            .collection("words").document(word.id)
+            .collection("myWordNotes").document(wordNote.id ?? "")
+            .collection("words").document(word.id ?? "")
             .updateData([
                 "wordLevel": level
             ]) { err in

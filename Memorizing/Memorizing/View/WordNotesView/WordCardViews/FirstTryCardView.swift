@@ -11,7 +11,10 @@ import AVFoundation
 struct FirstTryCardView: View {
     @Environment(\.dismiss) private var dismiss
     var myWordNote: NoteEntity
-    @State var word: [Word]
+    var words: [WordEntity] {
+        myWordNote.words?.allObjects as? [WordEntity] ?? []
+    }
+    
     @State var isDismiss: Bool = false
     @State var num = 0
     @State var isShowingModal: Bool = false
@@ -28,7 +31,7 @@ struct FirstTryCardView: View {
     // FIXME: 현재 단어 뜻
     //    @State private var currentWordDef: String
     var wordCount: Int {
-        word.count - 1
+        words.count - 1
     }
     
     // MARK: 카드 뒤집는데 쓰일 것들
@@ -49,15 +52,15 @@ struct FirstTryCardView: View {
             ZStack {
                 if isFlipped {
                     WordCardMeaningView(
-                        listLength: word.count,
+                        listLength: words.count,
                         currentListLength: $num,
-                        currentWordDef: word[num].wordMeaning
+                        currentWordDef: words[num].wordMeaning ?? "No Meaning"
                     )
                 } else {
                     WordCardWordView(
-                        listLength: word.count,
+                        listLength: words.count,
                         currentListLength: $num,
-                        currentWord: word[num].wordString
+                        currentWord: words[num].wordString ?? "No String"
                     )
                 }
             }
@@ -67,18 +70,17 @@ struct FirstTryCardView: View {
                 flipCard()
             }
             
-            // TODO: 주석 풀기
-//            LevelCheck(
-//                isShowingModal: .constant(false),
-//                isFlipped: $isFlipped,
-//                isDismiss: $isDismiss,
-//                totalScore: $totalScore,
-//                lastWordIndex: wordCount,
-//                num: $num,
-//                isShowingAlert: $isShowingAlert,
-//                wordNote: myWordNote,
-//                word: word[num]
-//            )
+            LevelCheck(
+                isShowingModal: .constant(false),
+                isFlipped: $isFlipped,
+                isDismiss: $isDismiss,
+                totalScore: $totalScore,
+                lastWordIndex: wordCount,
+                num: $num,
+                isShowingAlert: $isShowingAlert,
+                wordNote: myWordNote,
+                word: words[num]
+            )
             .padding(.top)
             
             Spacer()
@@ -92,6 +94,9 @@ struct FirstTryCardView: View {
         .onChange(of: isFlipped, perform: { _ in
             flipCard()
         })
+        .onDisappear {
+            dump(words)
+        }
         
     }
     
@@ -224,18 +229,17 @@ struct LevelCheck: View {
     var lastWordIndex: Int
     @Binding var num: Int
     @Binding var isShowingAlert: Bool
-    var wordNote: MyWordNote
-    var word: Word
+    var wordNote: NoteEntity
+    var word: WordEntity
     
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
-    
+    @EnvironmentObject var coreDataStore: CoreDataStore
     var body: some View {
         HStack(spacing: 15) {
             // sfsymbols에 얼굴이 다양하지 않아 하나로 통일함
             Button {
-                // TODO: 모르겠어요 액션
-                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 0)
+                coreDataStore.updateWordLevel(word: word, level: 0)
                 if lastWordIndex != num {
                     isFlipped = false
                     num += 1
@@ -257,8 +261,7 @@ struct LevelCheck: View {
             }
             
             Button {
-                // TODO: 애매해요 액션
-                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 1)
+                coreDataStore.updateWordLevel(word: word, level: 1)
                 if lastWordIndex != num {
                     isFlipped = false
                     totalScore += 0.25
@@ -279,8 +282,7 @@ struct LevelCheck: View {
             }
             
             Button {
-                // TODO: 외웠어요 액션
-                myNoteStore.wordsLevelWillBeChangedOnDB(wordNote: wordNote, word: word, level: 2)
+                coreDataStore.updateWordLevel(word: word, level: 2)
                 if lastWordIndex != num {
                     isFlipped = false
                     num += 1
@@ -315,19 +317,20 @@ struct LevelCheck: View {
                             // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
                             print("set localNotification")
                             var localNotification = LocalNotification(
-                                identifier: wordNote.id,
+                                identifier: wordNote.id ?? "No Id",
                                 title: "MEMOrizing 암기 시간",
-                                body: "\(wordNote.noteName)" + " 1번째 복습할 시간이에요~!",
+                                body: "\(wordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
                                 timeInterval: 10,
                                 repeats: false
                             )
-                            localNotification.subtitle = "\(wordNote.noteName)"
+                            localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
                             print("localNotification: ", localNotification)
                             await notiManager.schedule(localNotification: localNotification)
                             await myNoteStore.repeatCountWillBePlusOne(
                                 wordNote: wordNote,
                                 reviewDate: Date() + Double(wordNote.repeatCount * 1000)
                             )
+                            coreDataStore.plusRepeatCount(note: wordNote)
                             await notiManager.getPendingRequests()
                             for request in notiManager.pendingRequests {
                                 print("request: ", request as Any)

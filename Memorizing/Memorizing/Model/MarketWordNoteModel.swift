@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct MarketWordNote: Identifiable, Note {
+struct MarketWordNote: Identifiable, NoteProtocol {
     var id: String
     // 암기장 이름
     var noteName: String

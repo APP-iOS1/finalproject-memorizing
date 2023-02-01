@@ -10,8 +10,8 @@ import SwiftUI
 // MARK: - 마지막 복습 페이지
 struct GoodJobStampView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
-
-    var wordNote: MyWordNote
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    var wordNote: NoteEntity
     @Binding var isDismiss: Bool
     var body: some View {
         NavigationStack {
@@ -45,6 +45,7 @@ struct GoodJobStampView: View {
                         // FIXME: - 현기 수정
                         Task.init {
                             await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote, reviewDate: nil)
+                            coreDataStore.plusRepeatCount(note: wordNote)
                             isDismiss = true
                         }
                         // 복습하기 리스트 뷰로 이동
@@ -63,6 +64,7 @@ struct GoodJobStampView: View {
                     Button {
                         // 복습하기 리스트 뷰로 이동 --> 해당 리스트 리셋시키기
                         myNoteStore.repeatCountWillBeResetted(wordNote: wordNote)
+                        coreDataStore.resetRepeatCount(note: wordNote)
                         isDismiss = true
                         
                     } label: {
