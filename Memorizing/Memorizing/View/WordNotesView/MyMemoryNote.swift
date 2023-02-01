@@ -59,6 +59,7 @@ struct MyMemoryNote: View {
                                     .padding(.leading, 4)
                                     .padding(.bottom, 3)
                                     .lineLimit(1)
+                                
                                 Spacer()
                             }
                             .padding(.horizontal, 15)
