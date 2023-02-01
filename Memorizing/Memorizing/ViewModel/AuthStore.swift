@@ -261,6 +261,7 @@ class AuthStore: UIViewController, ObservableObject {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             
+            // TODO: - 아래 지우기
             let id = result.user.uid
             let nickName = nickName
             let email = email
@@ -344,6 +345,9 @@ class AuthStore: UIViewController, ObservableObject {
                 self.user?.coin = docData?["coin"] as? Int ?? 0
                 print("complete fetchUser Function")
             } else {
+                // TODO: - 아래 활성화시키기
+                // self.state = .firstIn
+                // TODO: - 아래 지우기
                 self.userInfoDidSaveDB(user: self.user!)
                 self.user?.coin = 1000
             }
@@ -384,7 +388,7 @@ class AuthStore: UIViewController, ObservableObject {
                 "nickName": nickName
             ])
             
-            await userInfoWillFetchDB()
+            self.user?.nickName = nickName
         } catch {
             fatalError("fail update User")
         }

@@ -120,7 +120,6 @@ struct LoginView: View {
                                 }
                         }
                     }
-
                 } // vstack
             } // scroll view
         } // navigationstack
