@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Firebase
 import FirebaseFirestore
 
@@ -16,6 +17,8 @@ class MarketStore: ObservableObject {
     @Published var words: [Word] = []
     @Published var filterMyWordNotes: [MyWordNote] = []
     @Published var myWordNoteIdArray: [String] = []
+    
+    @State var lastDoc: QueryDocumentSnapshot!
     
     @Published var sendWordNote = MarketWordNote(id: "",
                                                  noteName: "",
@@ -30,13 +33,59 @@ class MarketStore: ObservableObject {
     let database = Firestore.firestore()
     
     // MARK: - 마켓의 전체 단어장들을 fetch 하는 함수 / Market View에서 전체 Notes를 Fetch 함
-    func marketNotesWillFetchDB() async {
+    func marketNotesWillFetchDB(sortingCategory: String = "noteName") async {
         do {
             await MainActor.run(body: {
                 marketWordNotes.removeAll()
             })
                                 
-            let documents = try await database.collection("marketWordNotes").getDocuments()
+            let documents = try await database.collection("marketWordNotes")
+                .order(by: sortingCategory).limit(to: 20).getDocuments()
+            
+            for document in documents.documents {
+                let docData = document.data()
+                
+                let id: String = docData["id"] as? String ?? ""
+                let noteName: String = docData["noteName"] as? String ?? ""
+                let noteCategory: String = docData["noteCategory"] as? String ?? ""
+                let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+                let notePrice: Int = docData["notePrice"] as? Int ?? 0
+                let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
+                let updateDate: Date = createdAtTimeStamp.dateValue()
+                let salesCount: Int = docData["salesCount"] as? Int ?? 0
+                let starScoreTotal: Double = docData["starScoreTotal"] as? Double ?? 0
+                let reviewCount: Int = docData["reviewCount"] as? Int ?? 0
+                
+                let marketWordNote = MarketWordNote(id: id,
+                                                    noteName: noteName,
+                                                    noteCategory: noteCategory,
+                                                    enrollmentUser: enrollmentUser,
+                                                    notePrice: notePrice,
+                                                    updateDate: updateDate,
+                                                    salesCount: salesCount,
+                                                    starScoreTotal: starScoreTotal,
+                                                    reviewCount: reviewCount)
+                
+                await MainActor.run(body: {
+                    self.marketWordNotes.append(marketWordNote)
+                })
+            }
+            
+            self.lastDoc = documents.documents.last
+            
+        } catch {
+            print("marketNotesWillFetchDB Function Error: \(error)")
+        }
+    }
+    
+    func marketNotesWillPagingUpdateFetchDB(sortingCategory: String = "noteName") async {
+        do {
+            await MainActor.run(body: {
+                marketWordNotes.removeAll()
+            })
+                                
+            let documents = try await database.collection("marketWordNotes")
+                .order(by: sortingCategory).start(afterDocument: self.lastDoc).limit(to: 20).getDocuments()
             
             for document in documents.documents {
                 let docData = document.data()
@@ -67,7 +116,7 @@ class MarketStore: ObservableObject {
                 })
             }
         } catch {
-            print("marketNotesWillFetchDB Function Error: \(error)")
+            print("marketNotesWillPagingUpdateFetchDB Function Error: \(error)")
         }
     }
     
