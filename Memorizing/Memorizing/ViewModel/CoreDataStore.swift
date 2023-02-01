@@ -103,7 +103,13 @@ class CoreDataStore: ObservableObject {
         getNotes()
         }
     
-    func returnNote(id: String, noteName: String, enrollmentUser: String, noteCategory: String, firstTestResult: Double, lastTestResult: Double, updateDate: Date) -> NoteEntity {
+    func returnNote(id: String,
+                    noteName: String,
+                    enrollmentUser: String,
+                    noteCategory: String,
+                    firstTestResult: Double,
+                    lastTestResult: Double,
+                    updateDate: Date) -> NoteEntity {
         let newNote = NoteEntity(context: manager.context)
         newNote.id = id
         newNote.noteName = noteName

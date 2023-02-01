@@ -5,9 +5,9 @@
 ////  Created by Jae hyuk Yim on 2023/01/06.
 ////
 //
-//import SwiftUI
+// import SwiftUI
 // TODO: - 종현님이 고쳐줘야됨 /* 부터 */ 까지는 없어져도 되는 코드랍니다~
-//struct AddListView: View {
+// struct AddListView: View {
 //    @EnvironmentObject var myNoteStore: MyNoteStore
 //    var wordNote: NoteEntity
 ////    var myWords: [WordEntity]
@@ -211,7 +211,7 @@
 ////    func moveList(from source: IndexSet, to destination: Int) {
 ////        word.move(fromOffsets: source, toOffset: destination)
 ////    }
-//}
+// }
 //
 //// struct AddListView_Previews: PreviewProvider {
 ////    static var previews: some View {

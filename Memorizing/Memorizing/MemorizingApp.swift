@@ -15,7 +15,8 @@ import FirebaseMessaging
 // MARK: - LocalPush, ServerPush를 위한 AppDelegate 선언
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
-                       didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil)
+    -> Bool {
          
          // Use Firebase library to configure APIs
          // 파이어베이스 설정
