@@ -22,12 +22,14 @@ struct OtherTryCardView: View {
     //    @State private var currentWordDef: String = "현기"
     
     @Environment(\.dismiss) private var dismiss
-    var myWordNote: MyWordNote
-    var word: [Word]
+    var myWordNote: NoteEntity
+    var words: [WordEntity] {
+        myWordNote.words?.allObjects as? [WordEntity] ?? []
+    }
     @State var isDismiss: Bool = false
     @State var num = 0
     var wordCount: Int {
-        word.count - 1
+        words.count - 1
     }
     // MARK: 카드 뒤집는데 쓰일 것들
     @State var isFlipped = false
@@ -49,13 +51,13 @@ struct OtherTryCardView: View {
                     WordCardMeaningView2(
                         listLength: wordCount,
                         currentListLength: $num,
-                        currentWordDef: word[num].wordMeaning
+                        currentWordDef: words[num].wordMeaning ?? "No Meaning"
                     )
                 } else {
                     WordCardWordView2(
                         listLength: wordCount,
                         currentListLength: $num,
-                        currentWord: word[num].wordString
+                        currentWord: words[num].wordString ?? "No String"
                     )
                 }
             }
@@ -75,7 +77,7 @@ struct OtherTryCardView: View {
             Spacer()
             
         }
-        .navigationTitle(myWordNote.noteName)
+        .navigationTitle(myWordNote.noteName ?? "No Name")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: isDismiss, perform: { _ in
             dismiss()
@@ -216,7 +218,7 @@ struct NextPreviousButton: View {
     @Binding var num: Int
     @State private var isShowingStampView: Bool = false
     
-    var wordNote: MyWordNote
+    var wordNote: NoteEntity
     var lastWordIndex: Int
     
     var body: some View {

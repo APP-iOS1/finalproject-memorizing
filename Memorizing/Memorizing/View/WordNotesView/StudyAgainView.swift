@@ -69,7 +69,7 @@ struct StudyAgainView: View {
                                 if myWordNote.repeatCount == 0 {
                                     NavigationLink {
                                         // 첫번째 단어 뷰
-                                        FirstTryCardView(myWordNote: myWordNote, word: noteLists)
+                                        FirstTryCardView(myWordNote: myWordNote)
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
@@ -88,7 +88,7 @@ struct StudyAgainView: View {
                                 } else if myWordNote.repeatCount == 1 {
                                     // 복습시작
                                     NavigationLink {
-//                                        OtherTryCardView(myWordNote: myWordNote, word: noteLists)
+                                        OtherTryCardView(myWordNote: myWordNote)
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
@@ -106,7 +106,7 @@ struct StudyAgainView: View {
                                     }
                                 } else if myWordNote.repeatCount == 2 {
                                     NavigationLink {
-//                                        OtherTryCardView(myWordNote: myWordNote, word: filterLevel(list: noteLists))
+                                        OtherTryCardView(myWordNote: myWordNote)
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
@@ -125,7 +125,7 @@ struct StudyAgainView: View {
                                 } else if myWordNote.repeatCount == 3 {
                                     NavigationLink {
                                         // 첫번째 단어 뷰
-//                                        LastTryCardView(myWordNote: myWordNote, word: noteLists)
+                                        LastTryCardView(myWordNote: myWordNote)
                                     } label: {
                                         RoundedRectangle(cornerRadius: 3)
                                             .frame(width: 50, height: 50)
@@ -162,23 +162,7 @@ struct StudyAgainView: View {
                     .padding(.vertical, 5)
             }
         }
-        .onAppear {
-            if authStore.user != nil {
-                // TODO: 주석풀기
-//                myNoteStore.myWordsWillBeFetchedFromDB(wordNote: myWordNote) {
-//                    noteLists = myNoteStore.myWords
-//                }
-            }
-        }
     }
-}
-
-func filterLevel(list: [Word]) -> [Word] {
-    var array: [Word] = []
-    for word in list where word.wordLevel != 2 {
-        array.append(word)
-    }
-    return array
 }
 
 //

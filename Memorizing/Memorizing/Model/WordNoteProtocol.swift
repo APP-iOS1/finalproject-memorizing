@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Note {
+protocol NoteProtocol {
     var id: String { get set}
     // 암기장 이름
     var noteName: String { get set}
