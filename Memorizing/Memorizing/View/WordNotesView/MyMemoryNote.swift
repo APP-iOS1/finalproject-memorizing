@@ -75,8 +75,8 @@ struct MyMemoryNote: View {
                             } else {
                                 // MARK: 얼굴 진행도
                                 // TODO: 주석 풀기(오류남)
-//                                FaceProgressView(myWordNote: myWordNote)
-//                                    .opacity(opacityValue)
+                                FaceProgressView(myWordNote: myWordNote)
+                                    .opacity(opacityValue)
                             }
                         }
                         .padding(.trailing, 15)

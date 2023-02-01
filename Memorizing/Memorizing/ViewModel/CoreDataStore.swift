@@ -101,7 +101,7 @@ class CoreDataStore: ObservableObject {
         
         save()
         getNotes()
-        }
+    }
     
     func returnNote(id: String,
                     noteName: String,
