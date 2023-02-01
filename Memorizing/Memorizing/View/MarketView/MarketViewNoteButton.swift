@@ -72,6 +72,27 @@ struct MarketViewNoteButton: View {
                                 
                                 // 암기장 판매 가격
                                 HStack {
+                                    HStack(spacing: 6) {
+                                        let reviewCount: Int = selectedWordNote.reviewCount
+                                        let reviewScore: Double = selectedWordNote.starScoreTotal / Double(reviewCount)
+                                        let score: String = String(format: "%.1f", reviewScore) // "5.1"
+
+                                        Image(systemName: "star.fill")
+                                            .font(.subheadline)
+                                            .foregroundColor(Color.iTColor)
+                                        
+                                        if reviewCount == 0 {
+                                            Text(" ")
+                                                .font(.caption)
+                                                .foregroundColor(Color.gray3)
+                                        } else {
+                                            Text("\(score) (\(reviewCount))")
+                                                .font(.caption)
+                                                .foregroundColor(Color.gray3)
+                                        }
+
+                                    }
+                                    
                                     Spacer()
                                     Text("\(selectedWordNote.notePrice) P")
                                         .font(.subheadline)

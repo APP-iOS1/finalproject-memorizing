@@ -15,6 +15,7 @@ struct MyPageView: View {
     
     @State private var signOutAlertToggle: Bool = false
 //    @State private var isShownNickNameToggle: Bool = false
+    @State private var isShowingWeb: Bool = false
     
     var body: some View {
         
@@ -113,6 +114,7 @@ struct MyPageView: View {
                         
                         NavigationLink {
                             // TODO: 내가 작성한 리뷰 페이지로 이동
+                           
                         } label: {
                             HStack {
                                 Text("내가 작성한 리뷰")
@@ -132,8 +134,8 @@ struct MyPageView: View {
                     VStack {
                         Divider()
                         
-                        NavigationLink {
-                            // TODO: 메모라이징 소개 페이지로 이동
+                        Button {
+                            isShowingWeb.toggle()
                         } label: {
                             HStack {
                                 Text("메모라이징 소개")
@@ -148,6 +150,10 @@ struct MyPageView: View {
                             .padding(.vertical, 10)
                             .foregroundColor(.mainBlack)
                         }
+                        .sheet(isPresented: $isShowingWeb) {
+                            WebView()
+                        }
+
                     }
 
                     VStack {
