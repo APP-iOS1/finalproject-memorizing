@@ -112,7 +112,7 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            // TODO: 내가 작성한 리뷰 페이지로 이동
+                            MyReviewView()
                         } label: {
                             HStack {
                                 Text("내가 작성한 리뷰")
