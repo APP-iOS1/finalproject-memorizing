@@ -111,7 +111,7 @@ struct MarketView: View {
                     }
                     .shadow(radius: 1, x: 1, y: 1)
             }
-            .offset(x: 140, y: 184)
+            .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.25)
         }
 //        .onAppear {
 //            marketStore.fetchMarketWordNotes()
@@ -124,6 +124,7 @@ struct MarketView_Previews: PreviewProvider {
         NavigationStack {
             MarketView()
                 .environmentObject(MarketStore())
+                .environmentObject(AuthStore())
         }
     }
 }

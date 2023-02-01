@@ -2,8 +2,7 @@
 //  ScheduleCell.swift
 //  Memorizing
 //
-//  Created by 진태영 on 2023/01/31.
-//
+//  Created by 진태영 on 2023/01/30.
 
 import SwiftUI
 
@@ -23,11 +22,14 @@ struct ScheduleCell: View {
         updateDate: Date(),
         reviewDate: Date()
     )
+    
     @State private var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
+        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
         return dateFormatter
     }()
+    
+    @State private var testToggle: Bool = false
     
     var body: some View {
         VStack {
@@ -51,8 +53,13 @@ struct ScheduleCell: View {
                     .fontWeight(.light)
                 } // VStack
                 .padding(.horizontal, 10)
-                Spacer()
                 
+                Spacer()
+
+                Toggle("", isOn: $testToggle)
+                    .toggleStyle(SwitchToggleStyle(tint: Color.mainBlue))
+                    .frame(width: 50)
+
                 Text("")
                     .frame(width: 50)
             } // HStack
@@ -61,7 +68,6 @@ struct ScheduleCell: View {
         .onAppear {
             wordNote = myNoteStore.myWordNotes.first { $0.id == notiId }
         }
-            
     } // body
 }
 

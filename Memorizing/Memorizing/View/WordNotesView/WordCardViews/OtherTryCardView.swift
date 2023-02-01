@@ -143,13 +143,6 @@ struct WordCardMeaningView2: View {
                     
                     Spacer()
                     
-                    // 소리 버튼
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "speaker.wave.2")
-                            .foregroundColor(Color("MainBlack"))
-                    }
                 }
                 .padding()
                 
@@ -194,13 +187,6 @@ struct WordCardWordView2: View {
                     
                     Spacer()
                     
-                    // 소리 버튼
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "speaker.wave.2")
-                            .foregroundColor(Color("MainBlack"))
-                    }
                 }
                 .padding()
                 

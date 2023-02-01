@@ -97,6 +97,7 @@ struct GoodJobStampView: View {
                 }
                 .frame(width: 320, alignment: .leading)
                 .padding(.top, 20)
+                
             }
         }
     }

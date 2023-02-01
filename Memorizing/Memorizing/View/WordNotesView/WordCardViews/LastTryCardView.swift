@@ -207,7 +207,7 @@ struct LevelCheckForLast: View {
             }
             
         }
-        .sheet(isPresented: $isShowingModal) {
+        .fullScreenCover(isPresented: $isShowingModal) {
             if totalScore / Double(lastWordIndex) >= 0.75 {
                 GoodJobStampView(wordNote: wordNote, isDismiss: $isDismiss)
             } else {
