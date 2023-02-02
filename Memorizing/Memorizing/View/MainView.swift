@@ -14,16 +14,10 @@ struct MainView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
-   // @State var isFirstLoginView: Bool = false
+    @State var isFirstLogin: Bool = false
     
     var body: some View {
         // TODO: - 로그인 처음 화면에서 이름 바꿔주는 창 띄우기
-//        if authStore.state == .firstIn {
-//            sheet(isPresented: $isFirstLogin) {
-//                FirstLoginView(isFirstLoginView: $isFirstLogin)
-//            }
-//        }
-
         TabView(selection: $tabSelection) {
             NavigationStack {
                 WordNotesView()
@@ -33,6 +27,9 @@ struct MainView: View {
                     Text("암기장")
                 }
             }.tag(1)
+                .fullScreenCover(isPresented: $isFirstLogin) {
+                    FirstLoginView(isFirstLogin: $isFirstLogin)
+                }
             
             NavigationStack {
                 MarketView()
@@ -52,6 +49,11 @@ struct MainView: View {
                 }
             }.tag(3)
         }
+        .onChange(of: authStore.state, perform: { newValue in
+            if newValue == .firstIn {
+                isFirstLogin.toggle()
+            }
+        })
         .onAppear {
             if Auth.auth().currentUser != nil {
                 // MARK: coreData가 정상작동하면 이제 매번 페치 안해줘도됨 ( 정상 작동 시 코드 삭제)

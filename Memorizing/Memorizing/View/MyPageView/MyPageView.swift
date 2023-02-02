@@ -12,6 +12,7 @@ struct MyPageView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
+    @EnvironmentObject var marketStore: MarketStore
     
     @State private var signOutAlertToggle: Bool = false
 //    @State private var isShownNickNameToggle: Bool = false
@@ -224,7 +225,6 @@ struct MyPageView: View {
                         
                         Button {
                             signOutAlertToggle.toggle()
-                            notiManager.removeAllRequest()
                         } label: {
                             HStack {
                                 Text("로그아웃하기")
@@ -251,6 +251,9 @@ struct MyPageView: View {
                             }
                             Button("로그아웃", role: .destructive) {
                                 authStore.signOutDidAuth()
+                                notiManager.removeAllRequest()
+                                myNoteStore.myWords = []
+                                myNoteStore.myWordNotes = []
                             }
                         }
                     } message: {
@@ -288,6 +291,7 @@ struct MyPageView_Previews: PreviewProvider {
             MyPageView()
                 .environmentObject(AuthStore())
                 .environmentObject(MyNoteStore())
+                .environmentObject(MarketStore())
         }
     }
 }

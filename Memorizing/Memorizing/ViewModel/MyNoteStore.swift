@@ -37,7 +37,7 @@ class MyNoteStore: ObservableObject {
                         let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
                         let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                         let updateDate: Date = createdAtTimeStamp.dateValue()
-                        let reviewDate: Date? = docData["reviewDate"] as? Date
+                        let nextStudyDate: Date? = docData["nextStudyDate"] as? Date
                         let myWordNote = MyWordNote(id: id,
                                                     noteName: noteName,
                                                     noteCategory: noteCategory,
@@ -46,7 +46,7 @@ class MyNoteStore: ObservableObject {
                                                     firstTestResult: firstTestResult,
                                                     lastTestResult: lastTestResult,
                                                     updateDate: updateDate,
-                                                    reviewDate: reviewDate)
+                                                    nextStudyDate: nextStudyDate)
                         self.myWordNotes.append(myWordNote)
                     }
                 }
@@ -120,14 +120,14 @@ class MyNoteStore: ObservableObject {
     }
     
     // MARK: - 복습 완료시 파베에 repeatCount를 1씩 올림 / 반복학습에 따른 Count를 1씩 증가
-    func repeatCountWillBePlusOne(wordNote: NoteEntity, reviewDate: Date?) async {
+    func repeatCountWillBePlusOne(wordNote: NoteEntity, nextStudyDate: Date?) async {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         do {
             _ = try await database.collection("users").document(currentUser.uid)
                 .collection("myWordNotes").document(wordNote.id ?? "")
                 .updateData([
                     "repeatCount": FieldValue.increment(Int64(1)),
-                    "reviewDate": reviewDate as Any // 태영 수정
+                    "nextStudyDate": nextStudyDate as Any // 태영 수정
                 ])
             myNotesWillBeFetchedFromDB()
             print("finish plusRepeatCount")
@@ -144,7 +144,7 @@ class MyNoteStore: ObservableObject {
             .collection("myWordNotes").document(wordNote.id ?? "")
             .updateData([
                 "repeatCount": 0,
-                "reviewDate": NSNull() // 태영 수정
+                "nextStudyDate": NSNull() // 태영 수정
             ]) { err in
                 if let err {
                     print("repeatCountWillBeResetted error occured : \(err.localizedDescription)")

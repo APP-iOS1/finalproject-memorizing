@@ -44,7 +44,7 @@ struct GoodJobStampView: View {
                     Button {
                         // FIXME: - 현기 수정
                         Task.init {
-                            await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote, reviewDate: nil)
+                            await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote, nextStudyDate: nil)
                             coreDataStore.plusRepeatCount(note: wordNote)
                             isDismiss = true
                         }

@@ -60,7 +60,7 @@ class AuthStore: UIViewController, ObservableObject {
                 )
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-                self.state = .signedIn
+             //   self.state = .signedIn
                 print("signed In complete")
                 
             }
@@ -89,7 +89,7 @@ class AuthStore: UIViewController, ObservableObject {
                     print("Google restore Login")
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                     await userInfoWillFetchDB()
-                    self.state = .signedIn
+                 //   self.state = .signedIn
                 }
             }
         } else {
@@ -118,7 +118,7 @@ class AuthStore: UIViewController, ObservableObject {
                     print("Google first Login")
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                     await userInfoWillFetchDB()
-                    self.state = .signedIn
+                //    self.state = .signedIn
                 }
             }
         }
@@ -138,7 +138,7 @@ class AuthStore: UIViewController, ObservableObject {
         do {
             try await Auth.auth().signIn(with: credential)
             print("google sign state signIn")
-            self.state = .signedIn
+        //    self.state = .signedIn
         } catch let error as NSError {
             errorMessage = error.localizedDescription
             print("Error sign In:", errorMessage)
@@ -259,16 +259,8 @@ class AuthStore: UIViewController, ObservableObject {
     func signUpDidAuth(email: String, password: String, nickName: String) async {
         self.errorMessage = ""
         do {
-            let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            
-            // TODO: - 아래 지우기
-            let id = result.user.uid
-            let nickName = nickName
-            let email = email
-            let coin = 1000
-            let user: User = User(id: id, email: email, nickName: nickName, coin: coin)
-            self.userInfoDidSaveDB(user: user)
-            
+            try await Auth.auth().createUser(withEmail: email, password: password)
+                        
         } catch let error as NSError {
             self.errorMessage = error.localizedDescription
             print("Email Sign up Error: ", self.errorMessage)
@@ -342,14 +334,13 @@ class AuthStore: UIViewController, ObservableObject {
             if document.exists {
                 let docData = document.data()
                 self.user?.nickName = docData?["nickName"] as? String ?? ""
+                self.user?.email = docData?["email"] as? String ?? "No DB"
                 self.user?.coin = docData?["coin"] as? Int ?? 0
+                self.state = .signedIn
                 print("complete fetchUser Function")
             } else {
-                // TODO: - 아래 활성화시키기
-                // self.state = .firstIn
-                // TODO: - 아래 지우기
-                self.userInfoDidSaveDB(user: self.user!)
-                self.user?.coin = 1000
+                 self.state = .firstIn
+                print("state: \(self.state)")
             }
         } catch {
             print("Fail: fetchUser")

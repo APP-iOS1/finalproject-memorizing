@@ -86,24 +86,18 @@ extension AuthStore: ASAuthorizationControllerDelegate {
             Task {
                 do {
                     let result = try await Auth.auth().signIn(with: credential)
-                    let changeRequest = result.user.createProfileChangeRequest()
-                    if let givenName = appleIDCredential.fullName?.givenName,
-                       let familyName = appleIDCredential.fullName?.familyName {
-                        changeRequest.displayName = "\(familyName)\(givenName)"
-                    }
-                    try await changeRequest.commitChanges()
+                    
                     self.user = User(
                         id: result.user.uid,
                         email: "Apple_" + "\(result.user.email ?? "NO Email")",
-                        nickName: changeRequest.displayName ?? "No Name",
+                        nickName: appleIDCredential.fullName?.nickname ?? "No Name",
                         coin: 1000
                     )
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                     print("Apple id: ", result.user.uid)
                     print("Apple email: ", result.user.email as Any)
-                    print("Apple nickName: ", changeRequest.displayName as Any)
                     await self.userInfoWillFetchDB()
-                    self.state = .signedIn
+              //      self.state = .signedIn
                 } catch let error as NSError {
                     self.errorMessage = error.localizedDescription
                     print("Apple SignIn Error: ", self.errorMessage)

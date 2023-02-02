@@ -328,7 +328,7 @@ struct LevelCheck: View {
                             await notiManager.schedule(localNotification: localNotification)
                             await myNoteStore.repeatCountWillBePlusOne(
                                 wordNote: wordNote,
-                                reviewDate: Date() + Double(wordNote.repeatCount * 1000)
+                                nextStudyDate: Date() + Double(wordNote.repeatCount * 1000)
                             )
                             coreDataStore.plusRepeatCount(note: wordNote)
                             await notiManager.getPendingRequests()

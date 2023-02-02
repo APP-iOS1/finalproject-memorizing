@@ -20,7 +20,7 @@ struct ScheduleCell: View {
         firstTestResult: 0,
         lastTestResult: 0,
         updateDate: Date(),
-        reviewDate: Date()
+        nextStudyDate: Date()
     )
     
     @State private var dateFormatter: DateFormatter = {
@@ -47,7 +47,7 @@ struct ScheduleCell: View {
                     
                     VStack(alignment: .leading) {
                         Text("\(wordNote?.repeatCount ?? 99)" + "번째 복습 예정 시간: ")
-                        Text("\(dateFormatter.string(from: wordNote?.reviewDate ?? Date()))")
+                        Text("\(dateFormatter.string(from: wordNote?.nextStudyDate ?? Date()))")
                     } // HStack
                     .font(.footnote)
                     .fontWeight(.light)
