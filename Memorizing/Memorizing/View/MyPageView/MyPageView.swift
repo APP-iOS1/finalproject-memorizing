@@ -183,28 +183,7 @@ struct MyPageView: View {
                         Divider()
                         
                         NavigationLink {
-                            // TODO: 서비스 이용 약관 페이지로 이동
-                        } label: {
-                            HStack {
-                                Text("서비스 이용 약관")
-                                    .font(.body)
-                                    .fontWeight(.medium)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .font(.title3)
-                                    .fontWeight(.light)
-                            } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
-                            .foregroundColor(.mainBlack)
-                        }
-                    }
-                    
-                    VStack {
-                        Divider()
-                        
-                        NavigationLink {
-                            // TODO: 개인정보 처리 방침 페이지로 이동
+                            InfoPolicy()
                         } label: {
                             HStack {
                                 Text("개인정보 처리 방침")

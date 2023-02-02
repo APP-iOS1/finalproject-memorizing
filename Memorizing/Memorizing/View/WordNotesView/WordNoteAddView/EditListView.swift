@@ -17,85 +17,106 @@ import SwiftUI
     @State private var isShowingAddView = false
     @State private var showingAlert = false
     var body: some View {
-        VStack {
-            VStack(spacing: 15) {
-                // MARK: 단어장 카테고리
-                HStack {
-                    Text("\(wordNote.noteCategory ?? "No Categoty")")
-                        .foregroundColor(.white)
-                        .bold()
-                        .padding(.horizontal, 25)
-                        .padding(.vertical, 7)
-                        .background(coreDataStore.returnColor(category: wordNote.noteCategory ?? ""))
-                        .cornerRadius(20)
-
-                    Spacer()
-                }
-
-                // MARK: 단어장 제목
-                HStack {
-                    Text("\(wordNote.noteName ?? "No name")")
-                        .bold()
-                        .foregroundColor(Color("MainBlack"))
-                        .font(.title2)
-
-                    Spacer()
-                }
-
-                // MARK: 단어장 날짜
-                HStack {
-                    Text("2023.01.18")
-                        .foregroundColor(.gray2)
-
-                    Spacer()
-                }
-
-            }
-
-            Divider()
-                .frame(width: 400, height: 5)
-                .overlay(Color("Gray5"))
-
-            HStack(spacing: 0) {
-                Spacer()
-
-                if (wordNote.words?.allObjects as? [WordEntity] ?? []).isEmpty {
-                    Text("추가된 단어가 없습니다!")
-                        .font(.callout)
-                        .fontWeight(.medium)
-                        .foregroundColor(.mainDarkBlue)
-                } else {
-                    Text("총 ")
-                    Text("\((wordNote.words?.allObjects as? [WordEntity] ?? []).count)개")
-                        .foregroundColor(.mainDarkBlue)
-                    Text("의 단어")
-                }
-
-            }
-            .bold()
-            .padding(.trailing, 9)
-            .padding(.vertical)
-
-            // MARK: 등록된 단어 밀어서 삭제 리스트 구현
+        ZStack {
             VStack {
-                List {
-                    ForEach((wordNote.words?.allObjects as? [WordEntity] ?? [])) { list in
-                        AddListRow(word: list)
+                VStack(spacing: 15) {
+                    // MARK: 단어장 카테고리
+                    HStack {
+                        Text("\(wordNote.noteCategory ?? "No Categoty")")
+                            .foregroundColor(.white)
+                            .bold()
+                            .padding(.horizontal, 25)
+                            .padding(.vertical, 7)
+                            .background(coreDataStore.returnColor(category: wordNote.noteCategory ?? ""))
+                            .cornerRadius(20)
+                        
+                        Spacer()
                     }
-                    .onDelete { indexSet in
-                        // TODO: 서버에서도 삭제되는 메서드 만들어야함 (현재 코데에서만 삭제 중)
-                        coreDataStore.deleteWord(note: wordNote, offsets: indexSet)
+                    
+                    // MARK: 단어장 제목
+                    HStack {
+                        Text("\(wordNote.noteName ?? "No name")")
+                            .bold()
+                            .foregroundColor(Color("MainBlack"))
+                            .font(.title2)
+                        
+                        Spacer()
                     }
-//                    .onMove(perform: moveList)
+                    
+                    // MARK: 단어장 날짜
+                    HStack {
+                        Text("2023.01.18")
+                            .foregroundColor(.gray2)
+                        
+                        Spacer()
+                    }
+                    
                 }
-                .listStyle(.inset)
-//                .toolbar {
-//                    EditButton()
-//                }
+                .padding()
+                
+                Divider()
+                    .frame(width: 400, height: 5)
+                    .overlay(Color("Gray5"))
+                
+                HStack(spacing: 0) {
+                    Spacer()
+                    
+                    if (wordNote.words?.allObjects as? [WordEntity] ?? []).isEmpty {
+                        Text("추가된 단어가 없습니다!")
+                            .font(.callout)
+                            .fontWeight(.medium)
+                            .foregroundColor(.mainDarkBlue)
+                    } else {
+                        Text("총 ")
+                        Text("\((wordNote.words?.allObjects as? [WordEntity] ?? []).count)개")
+                            .foregroundColor(.mainDarkBlue)
+                        Text("의 단어")
+                    }
+                    
+                }
+                .bold()
+                .padding(.trailing, 9)
+                .padding(.vertical)
+                
+                // MARK: 등록된 단어 밀어서 삭제 리스트 구현
+                VStack {
+                    List {
+                        ForEach((wordNote.words?.allObjects as? [WordEntity] ?? [])) { list in
+                            AddListRow(word: list)
+                        }
+                        .onDelete { indexSet in
+                            // TODO: 서버에서도 삭제되는 메서드 만들어야함 (현재 코데에서만 삭제 중)
+                            coreDataStore.deleteWord(note: wordNote, offsets: indexSet)
+                        }
+                        //                    .onMove(perform: moveList)
+                    }
+                    .listStyle(.inset)
+                    //                .toolbar {
+                    //                    EditButton()
+                    //                }
+                }
             }
-
+            .padding()
+            
+            Button {
+                isShowingAddView.toggle()
+            } label: {
+                Circle()
+                    .foregroundColor(.mainBlue)
+                    .frame(width: 65, height: 65)
+                    .overlay {
+                        Image(systemName: "plus")
+                            .foregroundColor(.white)
+                            .font(.title3)
+                            .bold()
+                    }
+                    .shadow(radius: 1, x: 1, y: 1)
+            }
+            .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+            .sheet(isPresented: $isShowingAddView, content: {
+                AddWordView(wordNote: wordNote)
+            })
         }
-        .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {

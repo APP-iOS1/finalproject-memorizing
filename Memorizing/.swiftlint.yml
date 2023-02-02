@@ -6,6 +6,7 @@ excluded:
   - Pods
   - Memorizing/AppDelegate.swift
   - Memorizing/SceneDelegate.swift
+  - /Memorizing/View/MyPageView/InfoPolicy.swift
 
 # 기본 규칙이 아닌 규칙들을 활성화
 opt_in_rules:
