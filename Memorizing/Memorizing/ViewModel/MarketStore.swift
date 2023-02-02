@@ -17,9 +17,11 @@ class MarketStore: ObservableObject {
     @Published var words: [Word] = []
     @Published var filterMyWordNotes: [MyWordNote] = []
     @Published var myWordNoteIdArray: [String] = []
-    @Published var snapshotCounter: Int = 19
     
-    private var lastDocumentSnapshot: DocumentSnapshot?
+    // MARK: - Pagination(InfiniteScroll) 구현 코드
+    // @Published var snapshotCounter: Int = 19
+    // private var lastDocumentSnapshot: DocumentSnapshot?
+    // MARK: - 여기까지
     
     @Published var sendWordNote = MarketWordNote(id: "",
                                                  noteName: "",
@@ -42,9 +44,13 @@ class MarketStore: ObservableObject {
                 marketWordNotes.removeAll()
             })
             
+            // MARK: - Pagination(InfiniteScroll) 구현 코드
             // 현재 데이터가 많지않아서 limit가 10인데 나중에 private 변수 하나 만들어서 20으로 고정해주고 20개씩 데이터 받아오면 좋을 듯
-            let documents = try await database.collection("marketWordNotes")
-                .order(by: sortingCategory).limit(to: 10).getDocuments()
+            // let documents = try await database.collection("marketWordNotes")
+            //     .order(by: sortingCategory).limit(to: 10).getDocuments()
+            // MARK: - 여기까지
+            
+            let documents = try await database.collection("marketWordNotes").getDocuments()
             
             for document in documents.documents {
                 let docData = document.data()
@@ -74,63 +80,65 @@ class MarketStore: ObservableObject {
                     self.marketWordNotes.append(marketWordNote)
                 })
             }
-            self.lastDocumentSnapshot = documents.documents.last
             
-            print("처음 마켓노트 갯수: \(marketWordNotes.count)")
+            // MARK: - Pagination(InfiniteScroll) 구현 코드
+            // self.lastDocumentSnapshot = documents.documents.last
         } catch {
             print("marketNotesWillFetchDB Function Error: \(error)")
         }
     }
     
-    func marketNotesWillPagingUpdateFetchDB(sortingCategory: String = "noteName") async {
-        do {
-            if let documentSnapshot = lastDocumentSnapshot {
-                await MainActor.run(body: {
-                    snapshotCounter = 0
-                })
-                
-                // 위 메서드와 동일하게 데이터가 많아지면 limit를 변수에서 받아와서 20으로 고정해줘도 괜찮을 듯
-                let documents = try await database.collection("marketWordNotes")
-                    .order(by: sortingCategory).start(afterDocument: documentSnapshot).limit(to: 5).getDocuments()
-                
-                if !documents.documents.isEmpty {
-                    for document in documents.documents {
-                        let docData = document.data()
-                        
-                        let id: String = docData["id"] as? String ?? ""
-                        let noteName: String = docData["noteName"] as? String ?? ""
-                        let noteCategory: String = docData["noteCategory"] as? String ?? ""
-                        let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
-                        let notePrice: Int = docData["notePrice"] as? Int ?? 0
-                        let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
-                        let updateDate: Date = createdAtTimeStamp.dateValue()
-                        let salesCount: Int = docData["salesCount"] as? Int ?? 0
-                        let starScoreTotal: Double = docData["starScoreTotal"] as? Double ?? 0
-                        let reviewCount: Int = docData["reviewCount"] as? Int ?? 0
-                        
-                        let marketWordNote = MarketWordNote(id: id,
-                                                            noteName: noteName,
-                                                            noteCategory: noteCategory,
-                                                            enrollmentUser: enrollmentUser,
-                                                            notePrice: notePrice,
-                                                            updateDate: updateDate,
-                                                            salesCount: salesCount,
-                                                            starScoreTotal: starScoreTotal,
-                                                            reviewCount: reviewCount)
-                        
-                        await MainActor.run(body: {
-                            self.marketWordNotes.append(marketWordNote)
-                            self.snapshotCounter += 1
-                        })
-                    }
-                }
-                print("패치된 마켓 노트 갯수: \(marketWordNotes.count)")
-                self.lastDocumentSnapshot = documents.documents.last
-            }
-        } catch {
-            print("marketNotesWillPagingUpdateFetchDB Function Error: \(error)")
-        }
-    }
+    // MARK: - Pagination(InfiniteScroll) 구현 코드
+//    func marketNotesWillPagingUpdateFetchDB(sortingCategory: String = "noteName") async {
+//        do {
+//            if let documentSnapshot = lastDocumentSnapshot {
+//                await MainActor.run(body: {
+//                    snapshotCounter = 0
+//                })
+//
+//                위 메서드와 동일하게 데이터가 많아지면 limit를 변수에서 받아와서 20으로 고정해줘도 괜찮을 듯
+//                let documents = try await database.collection("marketWordNotes")
+//                    .order(by: sortingCategory).start(afterDocument: documentSnapshot).limit(to: 5).getDocuments()
+//
+//                if !documents.documents.isEmpty {
+//                    for document in documents.documents {
+//                        let docData = document.data()
+//
+//                        let id: String = docData["id"] as? String ?? ""
+//                        let noteName: String = docData["noteName"] as? String ?? ""
+//                        let noteCategory: String = docData["noteCategory"] as? String ?? ""
+//                        let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+//                        let notePrice: Int = docData["notePrice"] as? Int ?? 0
+//                        let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
+//                        let updateDate: Date = createdAtTimeStamp.dateValue()
+//                        let salesCount: Int = docData["salesCount"] as? Int ?? 0
+//                        let starScoreTotal: Double = docData["starScoreTotal"] as? Double ?? 0
+//                        let reviewCount: Int = docData["reviewCount"] as? Int ?? 0
+//
+//                        let marketWordNote = MarketWordNote(id: id,
+//                                                            noteName: noteName,
+//                                                            noteCategory: noteCategory,
+//                                                            enrollmentUser: enrollmentUser,
+//                                                            notePrice: notePrice,
+//                                                            updateDate: updateDate,
+//                                                            salesCount: salesCount,
+//                                                            starScoreTotal: starScoreTotal,
+//                                                            reviewCount: reviewCount)
+//
+//                        await MainActor.run(body: {
+//                            self.marketWordNotes.append(marketWordNote)
+//                            self.snapshotCounter += 1
+//                        })
+//                    }
+//                }
+//                print("패치된 마켓 노트 갯수: \(marketWordNotes.count)")
+//                self.lastDocumentSnapshot = documents.documents.last
+//            }
+//        } catch {
+//            print("marketNotesWillPagingUpdateFetchDB Function Error: \(error)")
+//        }
+//    }
+    // MARK: - 여기까지
     
     // MARK: - 단어장을 들어가면 해당 단어장의 단어들을 fetch 하는 함수 / 마켓에 위치한 Notes의 단어를 Fetch
     func wordsWillFetchDB(wordNoteID: String) async {
