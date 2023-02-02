@@ -80,11 +80,11 @@ struct MyReviewView: View {
         .padding()
         // fetch가 되려면, 특정 마켓 Notes에 한번 들어갔다 나와야지만 정상적으로 작동함
         // 왜 그럴까..? 전체 review들을 한거번에 fetch할 수 없나..
-//        .onAppear {
-//            Task {
-//                await reviewStore.reviewsWillFetchDB(marketID: wordNote.id ?? "")
-//            }
-//        }
+        .onAppear {
+            Task {
+                await reviewStore.reviewsWillEqualToFetchDB(currentUserID: authStore.user?.id ?? "")
+            }
+        }
     }
 }
 

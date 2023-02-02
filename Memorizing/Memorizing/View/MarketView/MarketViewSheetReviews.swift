@@ -66,22 +66,25 @@ struct MarketViewSheetReviews: View {
                                 }
                                 .padding(5)
                             }
-                        
                     }
-                } // HStack
-                HStack(spacing: 2) {
-                    Spacer()
-                    // FIXME: 후기 더보기 페이지 이동
-                    NavigationLink(destination: MarketViewSheetReviewsMore(reviews: reviews)) {
-                        Text("후기 더보기")
-                    }
+                    
+               
                 }
-                .font(.caption2)
-                .foregroundColor(.gray2)
-                .padding(.trailing, 12)
-                .padding(.top, 10)
-                
-            } // VStack
+            }
+            // HStack
+            HStack(spacing: 2) {
+                Spacer()
+                // FIXME: 후기 더보기 페이지 이동
+                NavigationLink(destination: MarketViewSheetReviewsMore(reviews: reviews)) {
+                    Text("후기 더보기")
+                }
+            }
+            .font(.caption2)
+            .foregroundColor(.gray2)
+            .padding(.trailing, 12)
+            .padding(.top, 10)
+            
+            // VStack
             .padding(10)
         }
     }

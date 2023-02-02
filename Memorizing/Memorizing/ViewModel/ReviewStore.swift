@@ -69,6 +69,53 @@ class ReviewStore: ObservableObject {
         }
     }
     
+    
+    // MARK: - 리뷰 컬렉션 그룹
+    func reviewsWillEqualToFetchDB(currentUserID: String) async{
+       
+        do {
+            await MainActor.run(body: {
+                reviews.removeAll()
+            })
+            
+            print("start reviewsWillEqualToFetchDB")
+            print("currentUid: \(currentUserID)")
+            
+            let documents = try await  database
+                .collectionGroup("reviews")
+                .whereField("id", isEqualTo: currentUserID)
+                .order(by: "createDate", descending: true)
+                .getDocuments()
+            
+            for document in documents.documents {
+                let docData = document.data()
+                let id: String = docData["id"] as? String ?? ""
+                let writer: String = docData["writer"] as? String ?? ""
+                let reviewText: String = docData["reviewText"] as? String ?? ""
+                // 서버에서 createDate를 TimeStamp 타입으로 받아오는 변수
+                let createdAtTimeStamp: Timestamp = docData["createDate"] as? Timestamp ?? Timestamp()
+                // createdAtTimeStamp의 value를 이용해서 Date타입으로 바꿔주고 앱 내의 구조체 배열에 넣어주기 위한 변수
+                let createDate: Date = createdAtTimeStamp.dateValue()
+                let starScore: Double = docData["starScore"] as? Double ?? 0.0
+                
+                let myReview = Review(id: id,
+                                      writer: writer,
+                                      reviewText: reviewText,
+                                      createDate: createDate,
+                                      starScore: starScore)
+                
+                await MainActor.run(body: {
+                    self.reviews.append(myReview)
+                })
+                
+              
+               
+            }
+        } catch {
+            print("reviewsWillFetchDB: \(error)")
+        }
+    }
+    
     // Test용 패치
     func allReviewsWillFetchDB() async {
         do {
