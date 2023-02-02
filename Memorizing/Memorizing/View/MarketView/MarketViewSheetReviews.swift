@@ -12,7 +12,7 @@ struct MarketViewSheetReviews: View {
     var reviews: [Review] = []
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 ForEach(Array(zip(reviews.indices, reviews)), id: \.0) { index, review in
                     if index < 2 {
@@ -67,10 +67,10 @@ struct MarketViewSheetReviews: View {
                                 .padding(5)
                             }
                     }
-                    
-               
                 }
-            }
+                }
+            .padding(.horizontal)
+            
             // HStack
             HStack(spacing: 2) {
                 Spacer()
@@ -84,9 +84,8 @@ struct MarketViewSheetReviews: View {
             .padding(.trailing, 12)
             .padding(.top, 10)
             
-            // VStack
+        }// VStack
             .padding(10)
-        }
     }
 }
 
