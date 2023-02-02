@@ -384,4 +384,17 @@ class AuthStore: UIViewController, ObservableObject {
             fatalError("fail update User")
         }
     }
+    
+    // MARK: - 회원 탈퇴
+    func deleteAccount() {
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                print("delete Account Error: ", self.errorMessage)
+            } else {
+                self.signOutDidAuth()
+            }
+        }
+    }
 }

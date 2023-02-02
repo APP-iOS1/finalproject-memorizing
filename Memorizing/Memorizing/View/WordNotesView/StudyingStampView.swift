@@ -71,9 +71,11 @@ struct StudyingStampView: View {
                             )
                             coreDataStore.plusRepeatCount(note: wordNote)
                             await notiManager.getPendingRequests()
+                            isDismiss.toggle()
                         }
+                    } else {
+                        isDismiss.toggle()
                     }
-                    isDismiss.toggle()
                 }
             } label: {
                 RoundedRectangle(cornerRadius: 10)

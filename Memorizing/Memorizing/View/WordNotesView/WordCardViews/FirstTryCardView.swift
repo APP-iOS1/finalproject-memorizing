@@ -332,9 +332,11 @@ struct LevelCheck: View {
                             for request in notiManager.pendingRequests {
                                 print("request: ", request as Any)
                             }
+                            isDismiss.toggle()
                         }
+                    } else {
+                        isDismiss.toggle()
                     }
-                    isDismiss.toggle()
                 }
             }
         } message: {

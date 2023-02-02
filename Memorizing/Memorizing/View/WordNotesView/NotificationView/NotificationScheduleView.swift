@@ -7,46 +7,56 @@
 import SwiftUI
 
 struct NotificationScheduleView: View {
-    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
     @State private var isShownDeleteAlert: Bool = false
     @State private var toBeDeleted: IndexSet?
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("💡노트별 알림을 설정해보세요!")
+            Text("💡노트별 알림을 확인해보세요!")
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .padding(.leading, 20)
                 .padding(.horizontal, 5)
             List {
-                ForEach(1..<9) { _ in
-                    ScheduleCell(notiId: "")
+                ForEach(notiManager.pendingRequests, id: \.self) {request in
+                    ScheduleCell(notiId: request.identifier)
                         .listRowSeparator(.hidden)
                         .padding(.horizontal, 5)
+                        .alert(isPresented: $isShownDeleteAlert) {
+                            Alert(
+                                title: Text("복습 알림 끄기"),
+                                message: Text("이번 회차의 복습 알림을 지우시면 다시 설정할 수 없어요!"),
+                                primaryButton: .cancel(Text("안지울래요!")),
+                                secondaryButton: .destructive(Text("이번만 지울래요!"), action: {
+                                    if let indexSet = toBeDeleted {
+                                        for index in indexSet {
+                                            let removeItem: UNNotificationRequest = notiManager.pendingRequests[index]
+                                            notiManager.removeRequest(withIdentifier: removeItem.identifier)
+                                        }
+                                    }
+                                })
+                            )
+                        }
                 }
-                
-                // TODO: - 서버 노티 구현되면 for문 수정
-                /*
-               ForEach(notiManager.pendingRequests, id: \.self) {request in
-                   ScheduleCell(notiId: request.identifier)
-               }
-                 */
-           }
-           .listStyle(.plain)
-       } // VStack
-       .task {
-           // TODO: - 서버 노티 구현되면 노티 큐 입력
-           await notiManager.getPendingRequests()
-       }
-       .navigationTitle("예정 알림 설정")
+                .onDelete { indexSet in
+                    self.isShownDeleteAlert.toggle()
+                    self.toBeDeleted = indexSet
+                }
+            }
+            .listStyle(.plain)
+        } // VStack
+        .task {
+            await notiManager.getPendingRequests()
+        }
+        .navigationTitle("예정 알림")
     } // body
 }
 
 struct NotificationScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         NotificationScheduleView()
-            .environmentObject(MyNoteStore())
             .environmentObject(NotificationManager())
     }
+    
 }
