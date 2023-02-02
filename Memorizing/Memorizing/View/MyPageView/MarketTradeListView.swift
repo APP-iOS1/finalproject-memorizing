@@ -16,7 +16,6 @@ struct MarketTradeListView: View {
     
     var body: some View {
         ScrollView {
-            
             // MARK: - 판매내역 / 구매내역 토글
             VStack(spacing: 5) {
                 HStack(spacing: 20) {
@@ -70,13 +69,9 @@ struct MarketTradeListView: View {
                             .padding(.bottom, 10)
                             
                             HStack {
-                                VStack {
-                                    Text("\(note.reviewDate ?? Date())")
-                                    Text("\(Date())")
-                                }
                                 Spacer()
                                 
-                                if note.reviewDate == Date() {
+                                if note.reviewDate == nil {
                                     Text("후기 작성하고 ")
                                     + Text("10P ")
                                     + Text("받기!")
@@ -86,7 +81,7 @@ struct MarketTradeListView: View {
                                 }
                             }
                             .font(.caption)
-                            .foregroundColor(note.reviewDate == Date()
+                            .foregroundColor(note.reviewDate == nil
                                              ? .mainBlue
                                              : .gray3)
                             .fontWeight(.semibold)
@@ -105,7 +100,11 @@ struct MarketTradeListView: View {
                             HStack {
                                 Text(marketNote.updateDateFormatter)
                                 Spacer()
-                                Text("\(marketNote.salesCount)개 판매")
+                                if marketNote.salesCount > 0 {
+                                    Text("\(marketNote.salesCount)개 판매")
+                                } else {
+                                    Text("판매 이력이 존재하지 않습니다.")
+                                }
                             }
                             .foregroundColor(.gray1)
                             .font(.footnote)
@@ -118,10 +117,30 @@ struct MarketTradeListView: View {
                             }
                             .font(.headline)
                             .padding(.top, 2)
-                            .padding(.bottom, 10)
+                            
+                            HStack {
+                                Text("판매 가격 : \(marketNote.notePrice)P")
+                                Spacer()
+                                Button {
+                                    // TODO: alert 추가
+                                    Task {
+                                        await marketStore.marketNotesWillDeleteDB(marketWordNote: marketNote)
+                                    }
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "trash.fill")
+                                        Text("판매등록 취소")
+                                    }
+                                    .foregroundColor(.red)
+                                    .bold()
+                                }
+                            }
+                            .foregroundColor(.gray1)
+                            .font(.footnote)
+                            .padding(.vertical, 10)
                             
                             Divider()
-                                .padding(.vertical, 10)
+                                .padding(.bottom, 10)
                         }
                         .padding(.horizontal)
                     }
