@@ -88,6 +88,17 @@ class ReviewStore: ObservableObject {
                 "createDate": Timestamp(),
                 "starScore": reviewStarScore
             ])
+        
+        // MARK: 리뷰 작성시 리뷰 작성 시간 추가 - 현기
+        database
+            .collection("users")
+            .document(currentUser.id)
+            .collection("myWordNotes")
+            .document(wordNoteID)
+            .updateData([
+                "reviewDate": FieldValue.serverTimestamp()
+            ])
+        
         starScoreDidPlusMarketWordNote(marketWordNoteID: wordNoteID, reviewStarScore: reviewStarScore)
         reviewCountDidPlusOne(marketWordNoteID: wordNoteID)
     }

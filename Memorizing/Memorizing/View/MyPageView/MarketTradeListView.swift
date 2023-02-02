@@ -102,15 +102,16 @@ struct MarketTradeListView: View {
                         VStack {
                             HStack {
                                 Text(marketNote.updateDateFormatter)
-                                    .foregroundColor(.gray1)
-                                    .font(.footnote)
                                 Spacer()
+                                Text("\(marketNote.salesCount)개 판매")
                             }
+                            .foregroundColor(.gray1)
+                            .font(.footnote)
+                            
                             HStack {
                                 Text(marketNote.noteName)
                                 Spacer()
-                                // TODO: 판매 포인트 추후 수정
-                                Text("200P")
+                                Text("\(marketNote.totalSalesAmount)P")
                                     .foregroundColor(.mainDarkBlue)
                             }
                             .font(.headline)
