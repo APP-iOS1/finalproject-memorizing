@@ -14,7 +14,9 @@ struct AddWordView: View {
     @EnvironmentObject var coreDataStore: CoreDataStore
     // 상위뷰랑 꼬일 수 있으므로, 그냥 var 선언하기 (Binding X)
     var wordNote: NoteEntity
-//    var noteLists: [WordEntity]
+    var words: [WordEntity] {
+        wordNote.words?.allObjects as? [WordEntity] ?? []
+    }
     
     // MARK: - 단어, 문장, 질문과 답 피커 만들기 -> 아래 Enum으로 유형 선언되어 있음
     @State private var segmnetationSelection: AddWordCategory = .word
@@ -195,16 +197,15 @@ struct AddWordView: View {
                                               wordMeaning: wordMeaning,
                                               wordString: wordString)
                         
-                        // MARK: coreData 정상 작동 시 코드 삭제
-//                        myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-//                            self.noteLists = myNoteStore.myWords
-//                        }
-                        
-                        // MARK: - 텍스트 필드를 비워주고..
                         wordString = ""
                         wordMeaning = ""
                         wordLevel = 0
-                        print("텍스트 필드 Reset")
+                        
+                        // TODO: 단어 최대 100개로 제한하기
+                        if words.count >= 10 {
+                            print("words가 10개 추가됨.")
+                        }
+                        
                     } label: {
                         Text("등록하기")
                     }

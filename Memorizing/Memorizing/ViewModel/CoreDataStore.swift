@@ -127,7 +127,7 @@ class CoreDataStore: ObservableObject {
     func getNotes() {
         let repeatCountFilter = NSSortDescriptor(key: "repeatCount", ascending: true)
         // MARK: 두가지 정렬 해결해야함. (현재 방식으론 한개만 적용됨)
-        let categoryFilter = NSSortDescriptor(key: "updateDate", ascending: true)
+        let categoryFilter = NSSortDescriptor(key: "updateDate", ascending: false)
         
         let request = NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
         request.sortDescriptors = [repeatCountFilter, categoryFilter]
