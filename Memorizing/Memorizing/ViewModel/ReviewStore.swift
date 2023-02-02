@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 
 class ReviewStore: ObservableObject {
@@ -22,7 +23,7 @@ class ReviewStore: ObservableObject {
     let database = Firestore.firestore()
     
     // MARK: - reviews를 페치하는 함수 / 내가 작성한 review를 Fetch함
-
+    
     ///  내가 작성한 review를 fetch함
     /// - Returns: reviews배열에 review를 담고 쉽게 말해 추가 되는게 있으면 새로고침을 한다.
     func reviewsWillFetchDB(marketID: String) async {
@@ -68,6 +69,43 @@ class ReviewStore: ObservableObject {
         }
     }
     
+    // Test용 패치
+    func allReviewsWillFetchDB() async {
+        do {
+            await MainActor.run(body: {
+                reviews.removeAll()
+            })
+            
+            let documents = try await database.collection("marketWordNotes")
+                .order(by: "createDate", descending: true).getDocuments()
+            
+            for document in documents.documents {
+                let docData = document.data()
+                
+                let id: String = docData["id"] as? String ?? ""
+                let writer: String = docData["writer"] as? String ?? ""
+                let reviewText: String = docData["reviewText"] as? String ?? ""
+                let createdAtTimeStamp: Timestamp = docData["createDate"] as? Timestamp ?? Timestamp()
+                let createDate: Date = createdAtTimeStamp.dateValue()
+                let starScore: Double = docData["starScore"] as? Double ?? 0.0
+                
+                let myReview = Review(id: id,
+                                      writer: writer,
+                                      reviewText: reviewText,
+                                      createDate: createDate,
+                                      starScore: starScore)
+                
+                await MainActor.run(body: {
+                    self.reviews.append(myReview)
+                })
+                
+            }
+            
+        } catch {
+            print("error :\(error)")
+        }
+    }
+                          
     // MARK: - reviews를 추가하는 함수 / 내가 작성한 review를 DB에 저장함
     
     // Todo - WordNote --> MarketWordNotes로 변경
@@ -117,7 +155,6 @@ class ReviewStore: ObservableObject {
                 "starScoreTotal": FieldValue.increment(Int64(reviewStarScore))
             ])
         print("marketWord.id에 스코어를 추가했습니다.")
-        
     }
     
     // MARK: - 평점을 남기면 리뷰 카운트 + 1 올림
