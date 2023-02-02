@@ -10,7 +10,6 @@ struct ScheduleCell: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @State var notiId: String
     @State private var date: Date = Date()
-    // @State private var wordNote: MyWordNote?
     @State private var wordNote: MyWordNote? = MyWordNote(
         id: "id",
         noteName: "노트 이름",
@@ -22,14 +21,11 @@ struct ScheduleCell: View {
         updateDate: Date(),
         nextStudyDate: Date()
     )
-    
     @State private var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
         return dateFormatter
     }()
-    
-    @State private var testToggle: Bool = false
     
     var body: some View {
         VStack {
@@ -53,13 +49,8 @@ struct ScheduleCell: View {
                     .fontWeight(.light)
                 } // VStack
                 .padding(.horizontal, 10)
-                
                 Spacer()
-
-                Toggle("", isOn: $testToggle)
-                    .toggleStyle(SwitchToggleStyle(tint: Color.mainBlue))
-                    .frame(width: 50)
-
+                
                 Text("")
                     .frame(width: 50)
             } // HStack
@@ -68,6 +59,7 @@ struct ScheduleCell: View {
         .onAppear {
             wordNote = myNoteStore.myWordNotes.first { $0.id == notiId }
         }
+            
     } // body
 }
 

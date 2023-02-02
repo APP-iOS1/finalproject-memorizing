@@ -176,7 +176,7 @@ class AuthStore: UIViewController, ObservableObject {
                 Task {
                     print("Kakao Email: ", kakaoUser?.kakaoAccount?.email ?? "No Email")
                     await self.signUpDidAuth(
-                        email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
+                        email: "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
                         password: "\(String(describing: kakaoUser?.id))",
                         nickName: kakaoUser?.kakaoAccount?.profile?.nickname ?? "No NickName"
                     )
@@ -382,6 +382,19 @@ class AuthStore: UIViewController, ObservableObject {
             self.user?.nickName = nickName
         } catch {
             fatalError("fail update User")
+        }
+    }
+    
+    // MARK: - 회원 탈퇴
+    func deleteAccount() {
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                print("delete Account Error: ", self.errorMessage)
+            } else {
+                self.signOutDidAuth()
+            }
         }
     }
 }
