@@ -276,7 +276,10 @@ class MarketStore: ObservableObject {
                         "repeatCount": 0,
                         "testResultFirst": 0,
                         "testResultLast": 0,
-                        "updateData": Date.now] as [String: Any]
+                        "updateDate": Date.now,
+                        // MARK: 마켓 거래내역때문에 추가
+                        "marketPurchaseDate": Date.now,
+                        "notePrice": marketWordNote.notePrice] as [String: Any]
         
         database.collection("users")
             .document(Auth.auth().currentUser?.uid ?? "")

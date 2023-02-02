@@ -54,8 +54,7 @@ struct MarketTradeListView: View {
                     if note.enrollmentUser != authStore.user?.id {
                         VStack {
                             HStack {
-                                // TODO: 구매 날짜 추후 수정
-                                Text("2023.01.16")
+                                Text(note.updateDateFormatter)
                                     .foregroundColor(.gray1)
                                     .font(.footnote)
                                 Spacer()
@@ -63,8 +62,7 @@ struct MarketTradeListView: View {
                             HStack {
                                 Text(note.noteName)
                                 Spacer()
-                                // TODO: 구매 포인트 추후 수정
-                                Text("200P")
+                                Text("\(note.notePrice ?? 0)P")
                                     .foregroundColor(.mainDarkBlue)
                             }
                             .font(.headline)
@@ -72,9 +70,13 @@ struct MarketTradeListView: View {
                             .padding(.bottom, 10)
                             
                             HStack {
+                                VStack {
+                                    Text("\(note.reviewDate ?? Date())")
+                                    Text("\(Date())")
+                                }
                                 Spacer()
                                 
-                                if note.reviewDate == nil {
+                                if note.reviewDate == Date() {
                                     Text("후기 작성하고 ")
                                     + Text("10P ")
                                     + Text("받기!")
@@ -84,7 +86,7 @@ struct MarketTradeListView: View {
                                 }
                             }
                             .font(.caption)
-                            .foregroundColor(isReviewed
+                            .foregroundColor(note.reviewDate == Date()
                                              ? .mainBlue
                                              : .gray3)
                             .fontWeight(.semibold)

@@ -7,12 +7,6 @@ excluded:
   - Memorizing/AppDelegate.swift
   - Memorizing/SceneDelegate.swift
 
-# SwiftLint 검사에서 포함할 파일 경로
-included:
-  - Todorim
-  
-analyzer_rules:
-  
 # 기본 규칙이 아닌 규칙들을 활성화
 opt_in_rules:
  - empty_count       # .count==0 보다는 .isEmpty를 사용하는 것이 좋습니다.
