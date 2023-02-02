@@ -79,12 +79,13 @@ class CoreDataStore: ObservableObject {
         getNotes()
     }
     
-    func addNoteAndWord<T: NoteProtocol>(note: T, words: [Word]) {
+    func addNoteAndWord<T: NoteProtocol>(note: T, words: [Word], _ repeatCount: Int? = nil) {
         let returnedNote = returnNote(
                    id: note.id,
                    noteName: note.noteName,
                    enrollmentUser: note.enrollmentUser,
                    noteCategory: note.noteCategory,
+                   repeatCount: repeatCount ?? 0,
                    firstTestResult: 0,
                    lastTestResult: 0,
                    updateDate: note.updateDate
@@ -106,6 +107,7 @@ class CoreDataStore: ObservableObject {
                     noteName: String,
                     enrollmentUser: String,
                     noteCategory: String,
+                    repeatCount: Int,
                     firstTestResult: Double,
                     lastTestResult: Double,
                     updateDate: Date) -> NoteEntity {
@@ -114,7 +116,7 @@ class CoreDataStore: ObservableObject {
         newNote.noteName = noteName
         newNote.enrollmentUser = enrollmentUser
         newNote.noteCategory = noteCategory
-        newNote.repeatCount = 0
+        newNote.repeatCount = Int64(repeatCount)
         newNote.firstTestResult = firstTestResult
         newNote.lastTestResult = lastTestResult
         newNote.updateDate = updateDate
@@ -125,7 +127,7 @@ class CoreDataStore: ObservableObject {
     func getNotes() {
         let repeatCountFilter = NSSortDescriptor(key: "repeatCount", ascending: true)
         // MARK: 두가지 정렬 해결해야함. (현재 방식으론 한개만 적용됨)
-        let categoryFilter = NSSortDescriptor(key: "updateDate", ascending: true)
+        let categoryFilter = NSSortDescriptor(key: "updateDate", ascending: false)
         
         let request = NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
         request.sortDescriptors = [repeatCountFilter, categoryFilter]
@@ -204,7 +206,7 @@ class CoreDataStore: ObservableObject {
                         
                         words.append(word)
                     }
-                    self.addNoteAndWord(note: note, words: words)
+                    self.addNoteAndWord(note: note, words: words, note.repeatCount)
                 } catch {
                     print("fetch words in syncronizeWithDB error occured")
                 }

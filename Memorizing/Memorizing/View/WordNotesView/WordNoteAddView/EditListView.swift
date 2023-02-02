@@ -11,7 +11,6 @@ import SwiftUI
     @EnvironmentObject var myNoteStore: MyNoteStore
      @EnvironmentObject var coreDataStore: CoreDataStore
     var wordNote: NoteEntity
-
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
 
@@ -97,6 +96,18 @@ import SwiftUI
 
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.gray2)
+                        .fontWeight(.light)
+                }
+                
+            }
+        }
     }
 
     // MARK: 리스트 순서 수정 함수
