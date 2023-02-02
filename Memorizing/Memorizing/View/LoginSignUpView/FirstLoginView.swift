@@ -71,6 +71,7 @@ struct FirstLoginView: View {
             Spacer()
             
         } // vstack
+        .padding(.horizontal, 45)
     } // body
     
     // MARK: - 닉네임 글자수 제한 함수
