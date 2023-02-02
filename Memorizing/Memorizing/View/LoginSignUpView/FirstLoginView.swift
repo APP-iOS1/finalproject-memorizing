@@ -12,7 +12,7 @@ struct FirstLoginView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
     @State private var newName: String = ""
-    @Binding var isFirstLoginView: Bool
+    @Binding var isFirstLogin: Bool
     
     var body: some View {
         VStack(alignment: .center) {
@@ -58,8 +58,8 @@ struct FirstLoginView: View {
                 Task {
                     authStore.user?.nickName = newName
                     authStore.userInfoDidSaveDB(user: authStore.user!)
-                    dismiss()
                     authStore.state = .signedIn
+                    isFirstLogin.toggle()
                 }
             } label: {
                 Text("메모라이징 시작하기")
@@ -84,7 +84,7 @@ struct FirstLoginView: View {
 
 struct FirstLoginView_Previews: PreviewProvider {
     static var previews: some View {
-        FirstLoginView(isFirstLoginView: .constant(true))
+        FirstLoginView(isFirstLogin: .constant(true))
             .environmentObject(AuthStore())
     }
 }
