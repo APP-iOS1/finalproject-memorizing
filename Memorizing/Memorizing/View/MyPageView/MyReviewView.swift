@@ -29,7 +29,7 @@ struct MyReviewView: View {
                                         Image(systemName: "star.fill")
                                             .foregroundColor(Color.iTColor)
                                     }
-                                    
+
                                     if scoreInt < 5 {
                                         ForEach(0 ... (4 - scoreInt), id: \.self) { _ in
                                             Image(systemName: "star")
@@ -49,7 +49,7 @@ struct MyReviewView: View {
                                         .font(.subheadline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.gray2)
-                                    
+
                                     Text(wordNote.updateDateFormatter)
                                         .font(.subheadline)
                                         .fontWeight(.regular)
@@ -75,16 +75,14 @@ struct MyReviewView: View {
         }
         .navigationTitle("내가 작성한 리뷰")
         .navigationBarTitleDisplayMode(.inline)
-        
-        .padding(.horizontal)
+        .padding()
         // fetch가 되려면, 특정 마켓 Notes에 한번 들어갔다 나와야지만 정상적으로 작동함
         // 왜 그럴까..? 전체 review들을 한거번에 fetch할 수 없나..
         .onAppear {
             Task {
-                await reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
+                await reviewStore.reviewsWillFetchDB(marketID: wordNote.id ?? "")
             }
         }
-        
     }
 }
 
@@ -97,7 +95,8 @@ struct MyReviewView_Previews: PreviewProvider {
                                                notePrice: 200,
                                                updateDate: Date(),
                                                salesCount: 1,
-                                               starScoreTotal: 4.0,
+                                               starScoreTotal: 3.5,
                                                reviewCount: 1))
+        .environmentObject(ReviewStore())
     }
 }

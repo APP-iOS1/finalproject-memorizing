@@ -70,39 +70,41 @@ class ReviewStore: ObservableObject {
     }
     
     // Test용 패치
-//    func allReviewsWillFetchDB() {
-//        database.collection("marketWordNotes")
-//            .document(marketID ?? "")
-//            .collection("reviews")
-//            .order(by: "createDate", descending: true)
-//            .getDocuments { snapshot, error in
-//                self.reviews.removeAll()
-//                if let error {
-//                    print("error : \(error)")
-//
-//                } else if let snapshot {
-//                    for document in snapshot.documents {
-//                        let docData = document.data()
-//                        let id: String = docData["id"] as? String ?? ""
-//                        let writer: String = docData["writer"] as? String ?? ""
-//                        let reviewText: String = docData["reviewText"] as? String ?? ""
-//                        let createdAtTimeStamp: Timestamp = docData["createDate"] as? Timestamp ?? Timestamp()
-//                        let createDate: Date = createdAtTimeStamp.dateValue()
-//                        let starScore: Double = docData["starScore"] as? Double ?? 0.0
-//
-//                        let myReview = Review(id: id,
-//                                              writer: writer,
-//                                              reviewText: reviewText,
-//                                              createDate: createDate,
-//                                              starScore: starScore)
-//
-//                        self.reviews.append(myReview)
-//
-//                    }
-//                    print("All review fetch complete.")
-//                }
-//            }
-//    }
+    func allReviewsWillFetchDB() async {
+        do {
+            await MainActor.run(body: {
+                reviews.removeAll()
+            })
+            
+            let documents = try await database.collection("marketWordNotes")
+                .order(by: "createDate", descending: true).getDocuments()
+            
+            for document in documents.documents {
+                let docData = document.data()
+                
+                let id: String = docData["id"] as? String ?? ""
+                let writer: String = docData["writer"] as? String ?? ""
+                let reviewText: String = docData["reviewText"] as? String ?? ""
+                let createdAtTimeStamp: Timestamp = docData["createDate"] as? Timestamp ?? Timestamp()
+                let createDate: Date = createdAtTimeStamp.dateValue()
+                let starScore: Double = docData["starScore"] as? Double ?? 0.0
+                
+                let myReview = Review(id: id,
+                                      writer: writer,
+                                      reviewText: reviewText,
+                                      createDate: createDate,
+                                      starScore: starScore)
+                
+                await MainActor.run(body: {
+                    self.reviews.append(myReview)
+                })
+                
+            }
+            
+        } catch {
+            print("error :\(error)")
+        }
+    }
                           
     // MARK: - reviews를 추가하는 함수 / 내가 작성한 review를 DB에 저장함
     
@@ -142,7 +144,6 @@ class ReviewStore: ObservableObject {
                 "starScoreTotal": FieldValue.increment(Int64(reviewStarScore))
             ])
         print("marketWord.id에 스코어를 추가했습니다.")
-        
     }
     
     // MARK: - 평점을 남기면 리뷰 카운트 + 1 올림
