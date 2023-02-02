@@ -82,7 +82,7 @@ struct MarketViewNoteButton: View {
                                             .foregroundColor(Color.iTColor)
                                         
                                         if reviewCount == 0 {
-                                            Text(" ")
+                                            Text("0.0 (0)")
                                                 .font(.caption)
                                                 .foregroundColor(Color.gray3)
                                         } else {

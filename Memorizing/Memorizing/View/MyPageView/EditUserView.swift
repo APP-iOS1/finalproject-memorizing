@@ -13,7 +13,7 @@ struct EditUserView: View {
     //    @Environment(\.dismiss) private var dismiss
     //    @Binding var isShownNickNameToggle: Bool
     @State private var nickName: String = ""
-    @State private var isShownAlertToggle: Bool = false
+    @State private var isShownDeleteAccountAlert: Bool = false
     
     var body: some View {
         /*
@@ -149,6 +149,7 @@ struct EditUserView: View {
             }
             .padding(.top, 20)
             
+            /*
             // MARK: 비밀번호 변경 파트, securefield로 할지 그냥 textfield로 할지 고민 중
             VStack(alignment: .leading) {
                 Text("비밀번호 변경")
@@ -182,16 +183,28 @@ struct EditUserView: View {
                     }
                 }
             }
+             */
             
             Divider()
             
             HStack {
                 Button {
-                    
+                    isShownDeleteAccountAlert.toggle()
                 } label: {
                     Text("회원 탈퇴")
                         .foregroundColor(.gray4)
                 }
+                .alert(isPresented: $isShownDeleteAccountAlert) {
+                    Alert(
+                        title: Text("회원 탈퇴하기"),
+                        message: Text("정말 가실거에요? 삭제된 회원정보는 복구할 수 없어요!"),
+                        primaryButton: .cancel(Text("탈퇴 안할래요")),
+                        secondaryButton: .destructive(Text("탈퇴 할래요!"), action: {
+                            authStore.deleteAccount()
+                        })
+                    )
+                }
+
                 Spacer()
             }
             

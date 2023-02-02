@@ -29,7 +29,6 @@
 		3F7DA3022987A8A3001EDFC8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3F7DA3012987A8A3001EDFC8 /* FirebaseStorage */; };
 		3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC1496297A5EC700AE186F /* EditListView.swift */; };
 		3FDCCA87298A5877005E7C4E /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCCA86298A5877005E7C4E /* MyReviewView.swift */; };
-		3FDCCA89298A5A75005E7C4E /* MyReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCCA88298A5A75005E7C4E /* MyReviewCell.swift */; };
 		3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E32966628C00A47C5A /* AddWordView.swift */; };
 		3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */; };
 		4847EEB2298A3DD800C34274 /* MarketTradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */; };
@@ -46,6 +45,7 @@
 		48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */; };
 		48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */; };
 		48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */; };
+		5215A72A298BB1FE00A25EF0 /* InfoPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5215A729298BB1FE00A25EF0 /* InfoPolicy.swift */; };
 		5239182E2967CBA800D76C57 /* PointChargeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5239182D2967CBA800D76C57 /* PointChargeView.swift */; };
 		523C30DA29790ECF00FAE229 /* MyWordNoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */; };
 		523C30DB297918D600FAE229 /* MyNoteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A0D297787AF0052269D /* MyNoteStore.swift */; };
@@ -111,7 +111,6 @@
 		3F2002732967551400FCFC3A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3FDC1496297A5EC700AE186F /* EditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListView.swift; sourceTree = "<group>"; };
 		3FDCCA86298A5877005E7C4E /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
-		3FDCCA88298A5A75005E7C4E /* MyReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewCell.swift; sourceTree = "<group>"; };
 		3FF9B3E32966628C00A47C5A /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
 		4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTradeListView.swift; sourceTree = "<group>"; };
 		484D65702966987900C56E87 /* MarketViewNoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewNoteButton.swift; sourceTree = "<group>"; };
@@ -127,6 +126,7 @@
 		48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviews.swift; sourceTree = "<group>"; };
 		48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviewsMore.swift; sourceTree = "<group>"; };
 		48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
+		5215A729298BB1FE00A25EF0 /* InfoPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPolicy.swift; sourceTree = "<group>"; };
 		5239182D2967CBA800D76C57 /* PointChargeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChargeView.swift; sourceTree = "<group>"; };
 		523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWordNoteModel.swift; sourceTree = "<group>"; };
 		523C30DC2979195E00FAE229 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -250,6 +250,7 @@
 		52D8F2312965F2C600755E5A = {
 			isa = PBXGroup;
 			children = (
+				F203AD1B297533F30047A212 /* .swiftlint.yml */,
 				52D8F23C2965F2C600755E5A /* Memorizing */,
 				52D8F23B2965F2C600755E5A /* Products */,
 			);
@@ -276,7 +277,6 @@
 				52D8F24B2965F2D000755E5A /* View */,
 				52D8F2412965F2C800755E5A /* Assets.xcassets */,
 				52D8F2432965F2C800755E5A /* Preview Content */,
-				F203AD1B297533F30047A212 /* .swiftlint.yml */,
 			);
 			path = Memorizing;
 			sourceTree = "<group>";
@@ -372,7 +372,7 @@
 				951F7A3D29669F2B00976337 /* EditUserView.swift */,
 				4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */,
 				3FDCCA86298A5877005E7C4E /* MyReviewView.swift */,
-				3FDCCA88298A5A75005E7C4E /* MyReviewCell.swift */,
+				5215A729298BB1FE00A25EF0 /* InfoPolicy.swift */,
 				26128807298A4B2E0011D663 /* SafariWebView */,
 			);
 			path = MyPageView;
@@ -512,8 +512,7 @@
 		};
 		F203AD1A2975334E0047A212 /* SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -525,7 +524,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
@@ -548,6 +547,7 @@
 				2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */,
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
 				3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */,
+				5215A72A298BB1FE00A25EF0 /* InfoPolicy.swift in Sources */,
 				66BD007B298A3E3E0001BA9B /* FirstLoginView.swift in Sources */,
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
@@ -598,7 +598,6 @@
 				661BD91E2987974000F34317 /* NotificationScheduleView.swift in Sources */,
 				52D8F23E2965F2C600755E5A /* MemorizingApp.swift in Sources */,
 				52D8F2622965F72600755E5A /* MainView.swift in Sources */,
-				3FDCCA89298A5A75005E7C4E /* MyReviewCell.swift in Sources */,
 				52D8F2642965F75300755E5A /* LoginView.swift in Sources */,
 				2645958E2967431B007114B7 /* TryAgainView.swift in Sources */,
 				26CC90A429778DA70039981B /* ReviewModel.swift in Sources */,

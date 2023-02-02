@@ -18,6 +18,14 @@ struct MyWordNote: Identifiable, NoteProtocol {
     var firstTestResult: Double
     var lastTestResult: Double
     var updateDate: Date
+    var nextStudyDate: Date?
+    
+    // MARK: 마켓 거래내역 관련 추가 - 현기
+    /// 마켓에서 구매한 날짜
+    var marketPurchaseDate: Date?
+    /// 마켓에서 구매한 가격
+    var notePrice: Int?
+    /// 리뷰 작성 시간
     var reviewDate: Date?
     
     // 카테고리와 색상 매칭
@@ -52,5 +60,15 @@ struct MyWordNote: Identifiable, NoteProtocol {
         default:
             return 260.0
         }
+    }
+    
+    /// 날짜 형식 변경
+    var updateDateFormatter: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        
+        return dateFormatter.string(from: marketPurchaseDate ?? Date())
     }
 }

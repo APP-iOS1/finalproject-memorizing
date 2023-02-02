@@ -94,9 +94,6 @@ struct FirstTryCardView: View {
         .onChange(of: isFlipped, perform: { _ in
             flipCard()
         })
-        .onDisappear {
-            dump(words)
-        }
         
     }
     
@@ -328,16 +325,18 @@ struct LevelCheck: View {
                             await notiManager.schedule(localNotification: localNotification)
                             await myNoteStore.repeatCountWillBePlusOne(
                                 wordNote: wordNote,
-                                reviewDate: Date() + Double(wordNote.repeatCount * 1000)
+                                nextStudyDate: Date() + Double(wordNote.repeatCount * 1000)
                             )
                             coreDataStore.plusRepeatCount(note: wordNote)
                             await notiManager.getPendingRequests()
                             for request in notiManager.pendingRequests {
                                 print("request: ", request as Any)
                             }
+                            isDismiss.toggle()
                         }
+                    } else {
+                        isDismiss.toggle()
                     }
-                    isDismiss.toggle()
                 }
             }
         } message: {

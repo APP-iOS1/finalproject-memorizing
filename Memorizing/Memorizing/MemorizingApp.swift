@@ -133,10 +133,6 @@ struct MemorizingApp: App {
                         UserDefaults.standard.set(0, forKey: UserDefaults.Keys.notificationBadgeCount.rawValue)
                     }
                 }
-             /*
-            FirstLoginView(isFirstLoginView: .constant(true))
-                .environmentObject(authStore)
-              */
         }
     }
 }
