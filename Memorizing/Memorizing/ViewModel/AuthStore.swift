@@ -176,7 +176,7 @@ class AuthStore: UIViewController, ObservableObject {
                 Task {
                     print("Kakao Email: ", kakaoUser?.kakaoAccount?.email ?? "No Email")
                     await self.signUpDidAuth(
-                        email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
+                        email: "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
                         password: "\(String(describing: kakaoUser?.id))",
                         nickName: kakaoUser?.kakaoAccount?.profile?.nickname ?? "No NickName"
                     )

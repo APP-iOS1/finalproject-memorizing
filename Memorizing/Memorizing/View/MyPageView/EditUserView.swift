@@ -189,11 +189,22 @@ struct EditUserView: View {
             
             HStack {
                 Button {
-                    authStore.deleteAccount()
+                    isShownDeleteAccountAlert.toggle()
                 } label: {
                     Text("회원 탈퇴")
                         .foregroundColor(.gray4)
                 }
+                .alert(isPresented: $isShownDeleteAccountAlert) {
+                    Alert(
+                        title: Text("회원 탈퇴하기"),
+                        message: Text("정말 가실거에요? 삭제된 회원정보는 복구할 수 없어요!"),
+                        primaryButton: .cancel(Text("탈퇴 안할래요")),
+                        secondaryButton: .destructive(Text("탈퇴 할래요!"), action: {
+                            authStore.deleteAccount()
+                        })
+                    )
+                }
+
                 Spacer()
             }
             
