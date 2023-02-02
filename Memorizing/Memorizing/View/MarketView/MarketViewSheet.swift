@@ -139,6 +139,7 @@ struct MarketViewSheet: View {
                                 
                                 // 코데로 구매한 노트와 워드들이 추가됨.
                                 coreDataStore.addNoteAndWord(note: wordNote, words: marketStore.words)
+                                coreDataStore.getNotes()
                                 
                                 dismiss()
                                 

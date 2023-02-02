@@ -94,9 +94,6 @@ struct FirstTryCardView: View {
         .onChange(of: isFlipped, perform: { _ in
             flipCard()
         })
-        .onDisappear {
-            dump(words)
-        }
         
     }
     

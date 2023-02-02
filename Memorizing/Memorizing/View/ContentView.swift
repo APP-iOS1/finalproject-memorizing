@@ -42,12 +42,13 @@ struct ContentView: View {
         }
         .onChange(of: Auth.auth().currentUser, perform: { newValue in
             if newValue == nil {
-                print("onChange nil")
                 coreDataStore.deleteAll()
             } else {
-                print("onChange uid")
-                coreDataStore.syncronizeWithDB()
                 // CoreData 서버에서 페치해오기
+                Task {
+                    await coreDataStore.syncronizeWithDB()
+                    coreDataStore.getNotes()
+                }
             }
             
         })

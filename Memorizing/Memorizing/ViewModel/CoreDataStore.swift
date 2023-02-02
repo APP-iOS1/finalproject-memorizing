@@ -100,7 +100,6 @@ class CoreDataStore: ObservableObject {
         }
         
         save()
-        getNotes()
     }
     
     func returnNote(id: String,
@@ -124,13 +123,18 @@ class CoreDataStore: ObservableObject {
     }
     
     func getNotes() {
+        let repeatCountFilter = NSSortDescriptor(key: "repeatCount", ascending: true)
+        // MARK: 두가지 정렬 해결해야함. (현재 방식으론 한개만 적용됨)
+        let categoryFilter = NSSortDescriptor(key: "updateDate", ascending: true)
         
         let request = NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
-        
-        do {
-            notes = try manager.context.fetch(request)
-        } catch {
-            print("Error fetching. \(error.localizedDescription)")
+        request.sortDescriptors = [repeatCountFilter, categoryFilter]
+        DispatchQueue.main.async {
+            do {
+                self.notes = try self.manager.context.fetch(request)
+            } catch {
+                print("Error fetching. \(error.localizedDescription)")
+            }
         }
     }
     
@@ -139,7 +143,6 @@ class CoreDataStore: ObservableObject {
     }
     
     func deleteAll() {
-        // deleteAll() 구현 플리즈
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 
@@ -153,68 +156,65 @@ class CoreDataStore: ObservableObject {
         getNotes()
     }
     
-    func syncronizeWithDB() {
-        // TODO: 서버에 firstTestResult부터 몇 가지 필드 필요 없을 수 있음(리팩토링 참고)
-            guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
-        
-            // note fetch
-            database.collection("users").document(currentUser.uid).collection("myWordNotes")
-                .getDocuments { snapshot, error in
-                    if let error {
-                        print("myNotesWillBeFetchedFromDB error occured : \(error.localizedDescription)")
-                    } else if let snapshot {
-                        for document in snapshot.documents {
-                            let docData = document.data()
-                            let id: String = docData["id"] as? String ?? ""
-                            let noteName: String = docData["noteName"] as? String ?? ""
-                            let noteCategory: String = docData["noteCategory"] as? String ?? ""
-                            let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
-                            let repeatCount: Int = docData["repeatCount"] as? Int ?? 0
-                            let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
-                            let updateDate: Date = createdAtTimeStamp.dateValue()
-                            let note: MyWordNote = MyWordNote(id: id,
-                                                              noteName: noteName,
-                                                              noteCategory: noteCategory,
-                                                              enrollmentUser: enrollmentUser,
-                                                              repeatCount: repeatCount,
-                                                              firstTestResult: 0,
-                                                              lastTestResult: 0,
-                                                              updateDate: updateDate)
-                            
-                            // word Fetch
-                            self.database.collection("users").document(currentUser.uid)
-                                .collection("myWordNotes").document(id)
-                                .collection("words")
-                                .getDocuments { snapshot, error in
-                                    if let error {
-                                        print("myWordsWillBeFetchedFromDB error occured: \(error.localizedDescription)")
-                                    } else if let snapshot {
-                                        
-                                        var words: [Word] = []
-                                        
-                                        for document in snapshot.documents {
-                                            let docData = document.data()
-                                            let id: String = docData["id"] as? String ?? ""
-                                            let wordString: String = docData["wordString"] as? String ?? ""
-                                            let wordMeaning: String = docData["wordMeaning"] as? String ?? ""
-                                            let wordLevel: Int = docData["wordLevel"] as? Int ?? 0
-                                            
-                                            let word = Word(id: id,
-                                                            wordString: wordString,
-                                                            wordMeaning: wordMeaning,
-                                                            wordLevel: wordLevel)
-                                            
-                                            words.append(word)
-                                        }
-                                        self.addNoteAndWord(note: note, words: words)
-                                    }
-                                }
-                        }
+    func syncronizeWithDB() async {
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        // note fetch
+        do {
+            let snapshots = try await database.collection("users")
+                .document(currentUser.uid)
+                .collection("myWordNotes")
+                .getDocuments()
+            
+            for document in snapshots.documents {
+                let docData = document.data()
+                let id: String = docData["id"] as? String ?? ""
+                let noteName: String = docData["noteName"] as? String ?? ""
+                let noteCategory: String = docData["noteCategory"] as? String ?? ""
+                let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+                let repeatCount: Int = docData["repeatCount"] as? Int ?? 0
+                let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
+                let updateDate: Date = createdAtTimeStamp.dateValue()
+                let note: MyWordNote = MyWordNote(id: id,
+                                                  noteName: noteName,
+                                                  noteCategory: noteCategory,
+                                                  enrollmentUser: enrollmentUser,
+                                                  repeatCount: repeatCount,
+                                                  firstTestResult: 0,
+                                                  lastTestResult: 0,
+                                                  updateDate: updateDate)
+                do {
+                    let snapshot = try await self.database.collection("users").document(currentUser.uid)
+                        .collection("myWordNotes")
+                        .document(id)
+                        .collection("words")
+                        .getDocuments()
+                    var words: [Word] = []
+                    
+                    for document in snapshot.documents {
+                        let docData = document.data()
+                        let id: String = docData["id"] as? String ?? ""
+                        let wordString: String = docData["wordString"] as? String ?? ""
+                        let wordMeaning: String = docData["wordMeaning"] as? String ?? ""
+                        let wordLevel: Int = docData["wordLevel"] as? Int ?? 0
+                        
+                        let word = Word(id: id,
+                                        wordString: wordString,
+                                        wordMeaning: wordMeaning,
+                                        wordLevel: wordLevel)
+                        
+                        words.append(word)
                     }
-                
-        }
+                    self.addNoteAndWord(note: note, words: words)
+                } catch {
+                    print("fetch words in syncronizeWithDB error occured")
+                }
+            }
+            
+        } catch {
+                print("syncronizeWithDB error occured")
+            }
+        
     }
-    
     func updateWordLevel(word: WordEntity, level: Int64) {
         word.wordLevel = level
         
