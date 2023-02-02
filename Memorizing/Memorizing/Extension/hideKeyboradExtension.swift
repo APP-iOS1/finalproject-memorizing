@@ -10,7 +10,6 @@ import UIKit
 import SwiftUI
 
 // MARK: - 빈 공간을 눌렀을 때, 키보드가 자동으로 내려감
-// MARK: - 빈 공간을 눌렀을 때, 키보드가 자동으로 내려감
 extension UIApplication {
     func hideKeyboard() {
         let scenes = UIApplication.shared.connectedScenes
