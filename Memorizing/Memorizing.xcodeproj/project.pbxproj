@@ -248,6 +248,7 @@
 		52D8F2312965F2C600755E5A = {
 			isa = PBXGroup;
 			children = (
+				F203AD1B297533F30047A212 /* .swiftlint.yml */,
 				52D8F23C2965F2C600755E5A /* Memorizing */,
 				52D8F23B2965F2C600755E5A /* Products */,
 			);
@@ -274,7 +275,6 @@
 				52D8F24B2965F2D000755E5A /* View */,
 				52D8F2412965F2C800755E5A /* Assets.xcassets */,
 				52D8F2432965F2C800755E5A /* Preview Content */,
-				F203AD1B297533F30047A212 /* .swiftlint.yml */,
 			);
 			path = Memorizing;
 			sourceTree = "<group>";
