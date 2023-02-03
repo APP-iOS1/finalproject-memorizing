@@ -76,7 +76,15 @@ struct MarketViewSheet: View {
                             let reviewScore: Double = wordNote.starScoreTotal / Double(reviewCount)
                             let score: String = String(format: "%.1f", reviewScore) // "5.1"
 
-                            Text("\(score) (\(reviewCount))")
+                            if reviewCount == 0 {
+                                Text("0.0 (0)")
+                                    .font(.caption)
+                                    .foregroundColor(Color.gray3)
+                            } else {
+                                Text("\(score) (\(reviewCount))")
+                                    .font(.caption)
+                                    .foregroundColor(Color.gray3)
+                            }
                         
                             // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
                             Text("\(wordNote.updateDateFormatter)")
