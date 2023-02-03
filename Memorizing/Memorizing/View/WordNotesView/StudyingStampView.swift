@@ -96,15 +96,15 @@ struct StudyingStampView: View {
                 }.font(.caption) .foregroundColor(.gray2)
                 Spacer()
                 
-                Button {
-                    // 후기작성
-                } label: {
-                    HStack {
-                        Text("후기 작성 하기")
-                        Image(systemName: "chevron.right")
-                    }
-                    .font(.subheadline) .fontWeight(.semibold)
-                }
+//                Button {
+//                    // 후기작성
+//                } label: {
+//                    HStack {
+//                        Text("후기 작성 하기")
+//                        Image(systemName: "chevron.right")
+//                    }
+//                    .font(.subheadline) .fontWeight(.semibold)
+//                }
             }
             .frame(width: 320, alignment: .leading)
             .padding(.top, 20)
