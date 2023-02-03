@@ -39,7 +39,13 @@ class AuthStore: UIViewController, ObservableObject {
     func signInDidExistingAuth() async {
         if let user = Auth.auth().currentUser {
             self.state = .signedIn
-            self.user = User(id: user.uid, email: user.email ?? "email", nickName: "", coin: 0)
+            self.user = User(
+                id: user.uid,
+                email: user.email ?? "email",
+                nickName: "",
+                coin: 0,
+                signInPlatform: User.Platform.google.rawValue
+            )
             await self.userInfoWillFetchDB()
         }
     }
@@ -49,18 +55,19 @@ class AuthStore: UIViewController, ObservableObject {
         print("start signInDidAuth function")
         self.errorMessage = ""
         do {
-            try await Auth.auth().signIn(withEmail: email, password: password)
+            try await Auth.auth().signIn(withEmail: "Kakao_" + email, password: password)
             if let result = Auth.auth().currentUser {
                 print("userId: ", result.uid)
                 self.user = User(
                     id: result.uid,
                     email: result.email ?? "No Email",
                     nickName: result.displayName ?? "No Name",
-                    coin: 0
+                    coin: 0,
+                    signInPlatform: User.Platform.kakao.rawValue
                 )
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-             //   self.state = .signedIn
+                //   self.state = .signedIn
                 print("signed In complete")
                 
             }
@@ -84,12 +91,13 @@ class AuthStore: UIViewController, ObservableObject {
                         id: user?.userID ?? "No User Id",
                         email: user?.profile?.email ?? "No Email",
                         nickName: user?.profile?.name ?? "No name",
-                        coin: 0
+                        coin: 0,
+                        signInPlatform: User.Platform.google.rawValue
                     )
                     print("Google restore Login")
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                     await userInfoWillFetchDB()
-                 //   self.state = .signedIn
+                    //   self.state = .signedIn
                 }
             }
         } else {
@@ -113,12 +121,13 @@ class AuthStore: UIViewController, ObservableObject {
                         id: user.userID ?? "No ID",
                         email: user.profile?.email ?? "No Email",
                         nickName: user.profile?.name ?? "No name",
-                        coin: 0
+                        coin: 0,
+                        signInPlatform: User.Platform.google.rawValue
                     )
                     print("Google first Login")
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                     await userInfoWillFetchDB()
-                //    self.state = .signedIn
+                    //    self.state = .signedIn
                 }
             }
         }
@@ -138,7 +147,7 @@ class AuthStore: UIViewController, ObservableObject {
         do {
             try await Auth.auth().signIn(with: credential)
             print("google sign state signIn")
-        //    self.state = .signedIn
+            //    self.state = .signedIn
         } catch let error as NSError {
             errorMessage = error.localizedDescription
             print("Error sign In:", errorMessage)
@@ -181,7 +190,7 @@ class AuthStore: UIViewController, ObservableObject {
                         nickName: kakaoUser?.kakaoAccount?.profile?.nickname ?? "No NickName"
                     )
                     await self.signInDidAuth(
-                        email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
+                        email: "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
                         password: "\(String(describing: kakaoUser?.id))"
                     )
                 }
@@ -242,7 +251,7 @@ class AuthStore: UIViewController, ObservableObject {
         currentNonce = nonce
         
         return request
-     }
+    }
     
     @available(iOS 13, *)
     private func sha256(_ input: String) -> String {
@@ -259,8 +268,10 @@ class AuthStore: UIViewController, ObservableObject {
     func signUpDidAuth(email: String, password: String, nickName: String) async {
         self.errorMessage = ""
         do {
-            try await Auth.auth().createUser(withEmail: email, password: password)
-                        
+            // 카카오는 이메일 등록으로 진행된다.
+            // 이메일로 등록된 계정은 로그인할 때 다른 소셜 로그인 계정과 중복되면 로그인 불가 -> 다른 소셜 로그인 이메일은 직접 변경이 어려움으로 이메일 등록 계정을 변경해준다.
+            try await Auth.auth().createUser(withEmail: "Kakao_" + email, password: password)
+            
         } catch let error as NSError {
             self.errorMessage = error.localizedDescription
             print("Email Sign up Error: ", self.errorMessage)
@@ -274,7 +285,8 @@ class AuthStore: UIViewController, ObservableObject {
                 "id": user.id,
                 "email": user.email,
                 "nickName": user.nickName,
-                "coin": 1000
+                "coin": user.coin,
+                "signInPlatform": user.signInPlatform
             ])
     } // FireStore-DB에 UserInfo를 저장함
     
@@ -298,21 +310,21 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - GoogleAuth SignOut Function
     /*
-    func signOutDidGoogleAuth() {
-        self.errorMessage = ""
-        GIDSignIn.sharedInstance.signOut()
-        
-        do {
-            try Auth.auth().signOut()
-            state = .signedOut
-            UserDefaults.standard.reset()
-            self.user = nil
-        } catch {
-            self.errorMessage = error.localizedDescription
-            print("google Sign Out error: ", self.errorMessage)
-        }
-    }
-    */
+     func signOutDidGoogleAuth() {
+     self.errorMessage = ""
+     GIDSignIn.sharedInstance.signOut()
+     
+     do {
+     try Auth.auth().signOut()
+     state = .signedOut
+     UserDefaults.standard.reset()
+     self.user = nil
+     } catch {
+     self.errorMessage = error.localizedDescription
+     print("google Sign Out error: ", self.errorMessage)
+     }
+     }
+     */
     
     // MARK: - KakaoAuth SignOut Function
     func signOutDidKakao() {
@@ -336,10 +348,12 @@ class AuthStore: UIViewController, ObservableObject {
                 self.user?.nickName = docData?["nickName"] as? String ?? ""
                 self.user?.email = docData?["email"] as? String ?? "No DB"
                 self.user?.coin = docData?["coin"] as? Int ?? 0
+                self.user?.signInPlatform = docData?["signInPlatform"] as? String ?? User.Platform.google.rawValue
                 self.state = .signedIn
                 print("complete fetchUser Function")
             } else {
-                 self.state = .firstIn
+                self.state = .firstIn
+                self.user?.coin = 1000
                 print("state: \(self.state)")
             }
         } catch {
@@ -350,27 +364,27 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - 현재 유저의 coin 상태를 확인하고 살 수 있으면 coin이 깍이면서 다음 함수로 넘어감 / 현재 User의 Coin 갯수를 Check
     // TODO: - 나중에 태영님쪽에서 유저정보를 받아오게되면 그 부분에서 사용해줘야할 수도 있음
-//    func userCoinWillCheckDB(marketWordNote: WordNote, words: [Word]) {
-//        if user?.coin ?? 0 >= marketWordNote.notePrice {
-//            // 사는 함수 실행
-//            let calculatedCoin = (user?.coin ?? 0) - marketWordNote.notePrice
-//
-//            database.collection("users")
-//                .document(user?.id ?? "")
-//                .updateData([
-//                    "coin": calculatedCoin
-//                ])
-//
-//            database.collection("users")
-//                .document(marketWordNote.enrollmentUser)
-//                .updateData([
-//                    "coin": FieldValue.increment(Int64(marketWordNote.notePrice))
-//                ])
-//
-//            notesWillBringDB(marketWordNote: marketWordNote, words: words)
-//
-//        }
-//    }
+    //    func userCoinWillCheckDB(marketWordNote: WordNote, words: [Word]) {
+    //        if user?.coin ?? 0 >= marketWordNote.notePrice {
+    //            // 사는 함수 실행
+    //            let calculatedCoin = (user?.coin ?? 0) - marketWordNote.notePrice
+    //
+    //            database.collection("users")
+    //                .document(user?.id ?? "")
+    //                .updateData([
+    //                    "coin": calculatedCoin
+    //                ])
+    //
+    //            database.collection("users")
+    //                .document(marketWordNote.enrollmentUser)
+    //                .updateData([
+    //                    "coin": FieldValue.increment(Int64(marketWordNote.notePrice))
+    //                ])
+    //
+    //            notesWillBringDB(marketWordNote: marketWordNote, words: words)
+    //
+    //        }
+    //    }
     
     // MARK: - User의 닉네임을 변경
     func userInfoDidChangeDB(nickName: String) async throws {
@@ -386,15 +400,37 @@ class AuthStore: UIViewController, ObservableObject {
     }
     
     // MARK: - 회원 탈퇴
-    func deleteAccount() {
+    func deleteAccount() async {
+        self.errorMessage = ""
         let user = Auth.auth().currentUser
-        user?.delete { error in
-            if let error = error {
-                self.errorMessage = error.localizedDescription
-                print("delete Account Error: ", self.errorMessage)
+        
+        // 회원 탈퇴 전 다시한번 로그인 후 인증받아 삭제 진행
+        //
+        if self.user?.signInPlatform == User.Platform.apple.rawValue {
+            let request = createAppleIDRequest()
+        //    self.authorizationController(controller: ASAuthorizationController(authorizationRequests: [request]), didCompleteWithAuthorization: <#T##ASAuthorization#>)
+        }
+        do {
+            try await user?.delete()
+            if self.user?.signInPlatform == User.Platform.kakao.rawValue {
+                UserApi.shared.unlink { error in
+                    if let error = error {
+                        print("카카오톡 연결 끊기 실패: \(error.localizedDescription)")
+                    } else {
+                        print("카카오톡 연결 끊기")
+                    }
+                }
             } else {
-                self.signOutDidAuth()
+                try await user?.unlink(fromProvider: "\(String(describing: self.user?.signInPlatform)).com")
             }
+            try await self.database.collection("users").document(self.user!.id)
+                .updateData([
+                    "userState": 3
+                ])
+            self.signOutDidAuth()
+        } catch let error as NSError {
+            self.errorMessage = error.localizedDescription
+            print("delete Account Error: ", self.errorMessage)
         }
     }
 }

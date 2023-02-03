@@ -14,6 +14,7 @@ struct EditUserView: View {
     //    @Binding var isShownNickNameToggle: Bool
     @State private var nickName: String = ""
     @State private var isShownDeleteAccountAlert: Bool = false
+    @State private var isShownSignOutAlert: Bool = false
     
     var body: some View {
         /*
@@ -200,11 +201,13 @@ struct EditUserView: View {
                         message: Text("정말 가실거에요? 삭제된 회원정보는 복구할 수 없어요!"),
                         primaryButton: .cancel(Text("탈퇴 안할래요")),
                         secondaryButton: .destructive(Text("탈퇴 할래요!"), action: {
-                            authStore.deleteAccount()
+                            Task {
+                               await authStore.deleteAccount()
+                            }
                         })
                     )
+                    
                 }
-
                 Spacer()
             }
             

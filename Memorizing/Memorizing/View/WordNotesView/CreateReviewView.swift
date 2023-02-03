@@ -107,36 +107,40 @@ struct CreateReviewView: View {
                 }
                 .padding(.bottom, 30)
             
-//            ZStack {
-//                if reviewText.isEmpty {
-//                    TextEditor(text: $reviewPlaceholder)
-//                        .font(.body)
-//                        .foregroundColor(.red)
-//                        .disabled(true)
-//                        .padding()
-//                        .scrollContentBackground(.hidden) // <- Hide it
-//                        .background(Color.gray6) // To see this
-//                }
-//                TextEditor(text: $reviewText)
-//                    .font(.body)
-//                    .opacity(self.reviewText.isEmpty ? 0.25 : 1)
-//                    .padding()
-//                    .foregroundColor(Color.mainBlack)
-//                    .scrollContentBackground(.hidden) // <- Hide it
-//                    .background(Color.gray6) // To see this
-//            }
-//            .frame(width: 350, height: 160)
-            
+            //            ZStack {
+            //                if reviewText.isEmpty {
+            //                    TextEditor(text: $reviewPlaceholder)
+            //                        .font(.body)
+            //                        .foregroundColor(.red)
+            //                        .disabled(true)
+            //                        .padding()
+            //                        .scrollContentBackground(.hidden) // <- Hide it
+            //                        .background(Color.gray6) // To see this
+            //                }
+            //                TextEditor(text: $reviewText)
+            //                    .font(.body)
+            //                    .opacity(self.reviewText.isEmpty ? 0.25 : 1)
+            //                    .padding()
+            //                    .foregroundColor(Color.mainBlack)
+            //                    .scrollContentBackground(.hidden) // <- Hide it
+            //                    .background(Color.gray6) // To see this
+            //            }
+            //            .frame(width: 350, height: 160)
+            // MARK: - 버튼 아래 추가 -태영
             Button {
                 
                 // review에 setdata로 등록
-                reviewStore.reviewDidSaveDB(wordNoteID: wordNote.id ?? "No Id",
-                                            reviewText: reviewText,
-                                            reviewStarScore: reviewStarCount,
-                                            currentUser: authStore.user ?? User(id: "",
-                                                                                email: "",
-                                                                                nickName: "",
-                                                                                coin: 0))
+                reviewStore.reviewDidSaveDB(
+                    wordNoteID: wordNote.id ?? "No Id",
+                    reviewText: reviewText,
+                    reviewStarScore: reviewStarCount,
+                    currentUser: authStore.user ?? User(
+                        id: "",
+                        email: "",
+                        nickName: "",
+                        coin: 0,
+                        signInPlatform: User.Platform.google.rawValue)
+                )
                 dismiss()
             } label: {
                 RoundedRectangle(cornerRadius: 30)
