@@ -49,7 +49,7 @@ struct WordNotesView: View {
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
                     ScrollView(showsIndicators: false) {
-                        ForEach(coreDataStore.notes) { myWordNote in
+                        ForEach(coreDataStore.notes.filter({$0.words?.count != 0})) { myWordNote in
                             StudyAgainView(myWordNote: myWordNote)
                         }
                     }
@@ -177,6 +177,6 @@ struct Header: View {
 struct WordNotesView_Previews: PreviewProvider {
     static var previews: some View {
         WordNotesView()
-            .environmentObject(MyNoteStore())
+            .environmentObject(CoreDataStore())
     }
 }
