@@ -12,6 +12,7 @@ struct CreateReviewView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var reviewStore: ReviewStore
+    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     @State private var reviewText: String = ""
     @State private var reviewStarCount: Int = 5
@@ -158,6 +159,9 @@ struct CreateReviewView: View {
             Spacer()
         }
         .padding(.horizontal, 30)
+        .onDisappear {
+            myNoteStore.myNotesWillBeFetchedFromDB()
+        }
     }
 }
 
