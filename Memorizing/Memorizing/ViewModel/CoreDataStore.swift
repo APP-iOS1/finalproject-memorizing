@@ -237,11 +237,9 @@ class CoreDataStore: ObservableObject {
         getNotes()
     }
     
-    func deleteWord(note: NoteEntity, offsets: IndexSet) {
-        guard let index = offsets.first else { return }
-        let word = note.words?.allObjects as? [WordEntity] ?? []
+    func deleteWord(word: WordEntity) {
         
-        manager.context.delete(word[index])
+        manager.context.delete(word)
         
         save()
     }

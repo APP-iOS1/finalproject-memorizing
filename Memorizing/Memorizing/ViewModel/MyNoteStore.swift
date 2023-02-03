@@ -200,4 +200,24 @@ class MyNoteStore: ObservableObject {
         }
         return count
     }
+    
+    func deleteWord(note: NoteEntity, offset: IndexSet) async -> WordEntity? {
+
+        guard let currentUser = Auth.auth().currentUser else { return nil }
+        guard let index = offset.first else { return nil }
+        
+        let words = note.words?.allObjects as? [WordEntity] ?? []
+        
+        print("test: \(words[index])")
+        do {
+            try await database.collection("users").document(currentUser.uid)
+                .collection("myWordNotes").document(note.id ?? "")
+                .collection("words").document(words[index].id ?? "")
+                .delete()
+        } catch {
+            print("delete word error occured: \(error.localizedDescription)")
+        }
+        
+        return words[index]
+    }
 }

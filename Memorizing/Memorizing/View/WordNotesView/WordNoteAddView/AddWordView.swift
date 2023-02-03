@@ -169,6 +169,7 @@ struct AddWordView: View {
             Section {
                 VStack {
                     Button {
+                        let id = UUID().uuidString
                         // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
                         myNoteStore.myWordsWillBeSavedOnDB(wordNote: MyWordNote(id: wordNote.id ?? UUID().uuidString,
                                                                                 noteName: wordNote.noteName
@@ -185,14 +186,14 @@ struct AddWordView: View {
                                                                                 updateDate:
                                                                                     wordNote.updateDate ?? Date()),
                                                            word: Word(
-                                                            id: UUID().uuidString,
+                                                            id: id,
                                                             wordString: wordString,
                                                             wordMeaning: wordMeaning,
                                                             wordLevel: wordLevel)
                         )
                         
                         coreDataStore.addWord(note: wordNote,
-                                              id: UUID().uuidString,
+                                              id: id,
                                               wordLevel: Int64(wordLevel),
                                               wordMeaning: wordMeaning,
                                               wordString: wordString)
