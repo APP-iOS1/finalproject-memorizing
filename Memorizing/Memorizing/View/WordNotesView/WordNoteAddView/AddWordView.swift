@@ -201,14 +201,10 @@ struct AddWordView: View {
                         wordMeaning = ""
                         wordLevel = 0
                         
-                        // TODO: 단어 최대 100개로 제한하기
-                        if words.count >= 10 {
-                            print("words가 10개 추가됨.")
-                        }
-                        
                     } label: {
                         Text("등록하기")
                     }
+                    .disabled(wordString.isEmpty || wordMeaning.isEmpty || words.count >= 100)
                     
                 }
             }
