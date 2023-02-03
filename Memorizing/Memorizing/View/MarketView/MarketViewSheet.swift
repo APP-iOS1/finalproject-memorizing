@@ -101,7 +101,7 @@ struct MarketViewSheet: View {
                         .fill(Color.gray3)
                         .frame(width: 355, height: 44)
                         .overlay {
-                            Text("내 암기장은 구매할 수 없습니다.")
+                            Text("구매할 수 없는 암기장 입니다.")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)

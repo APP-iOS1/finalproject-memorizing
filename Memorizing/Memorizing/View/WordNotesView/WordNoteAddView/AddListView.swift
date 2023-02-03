@@ -85,6 +85,7 @@ struct AddListView: View {
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
                     .sheet(isPresented: $isShowingAddView, content: {
                         AddWordView(wordNote: wordNote)
+                           
                     })
                     
                 }
@@ -104,6 +105,7 @@ struct AddListView: View {
             }
             .sheet(isPresented: $isShowingAddView, content: {
                 AddWordView(wordNote: wordNote)
+                    
             })
         }
     }

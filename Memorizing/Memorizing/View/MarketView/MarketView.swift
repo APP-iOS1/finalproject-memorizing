@@ -61,42 +61,44 @@ struct MarketView: View {
                     spacing: 18,
                     content: {
                         ForEach(marketStore.marketWordNotes) { wordNote in
-//                            if searchText.isEmpty
-//                                || wordNote.noteName.contains(searchText) {
-//                                MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-//                                                     selectedCategory: $selectedCategory,
-//                                                     selectedWordNote: wordNote)
-//                            }
-                            if marketStore.marketWordNotes.last!.id == wordNote.id {
-                                GeometryReader { geo in
-                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                         selectedCategory: $selectedCategory,
-                                                         selectedWordNote: wordNote)
-                                    .padding(.leading, 5)
-                                    .onAppear {
-                                        self.time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
-                                    }
-                                    .onReceive(self.time) { (_) in
-                                        if geo.frame(in: .global).maxY < UIScreen.main.bounds.height - 80 {
-                                            
-                                            // 나중에 데이터가 많아지고 limit이 20으로 바뀌면 아래 5를 20으로 바꿔야 됨
-                                            if marketStore.snapshotCounter >= 5 {
-                                                Task {
-                                                    await marketStore.marketNotesWillPagingUpdateFetchDB()
-                                                }
-                                                
-                                                print("Update Data...")
-                                            }
-                                            
-                                            self.time.upstream.connect().cancel()
-                                        }
-                                    }
-                                }
-                            } else {
+                            if searchText.isEmpty
+                                || wordNote.noteName.contains(searchText) {
                                 MarketViewNoteButton(isSheetOpen: $isSheetOpen,
                                                      selectedCategory: $selectedCategory,
                                                      selectedWordNote: wordNote)
                             }
+                            // MARK: - Pagination(InfiniteScroll) 구현 코드
+//                            if marketStore.marketWordNotes.last!.id == wordNote.id {
+//                                GeometryReader { geo in
+//                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+//                                                         selectedCategory: $selectedCategory,
+//                                                         selectedWordNote: wordNote)
+//                                    .padding(.leading, 5)
+//                                    .onAppear {
+//                                        self.time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
+//                                    }
+//                                    .onReceive(self.time) { (_) in
+//                                        if geo.frame(in: .global).maxY < UIScreen.main.bounds.height - 80 {
+//
+//                                            // 나중에 데이터가 많아지고 limit이 20으로 바뀌면 아래 5를 20으로 바꿔야 됨
+//                                            if marketStore.snapshotCounter >= 5 {
+//                                                Task {
+//                                                    await marketStore.marketNotesWillPagingUpdateFetchDB()
+//                                                }
+//
+//                                                print("Update Data...")
+//                                            }
+//
+//                                            self.time.upstream.connect().cancel()
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+//                                                     selectedCategory: $selectedCategory,
+//                                                     selectedWordNote: wordNote)
+//                            }
+                            // MARK: - 여기까지
                         }
                     })
                 .padding(.horizontal)

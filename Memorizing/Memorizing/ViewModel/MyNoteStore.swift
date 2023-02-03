@@ -18,6 +18,7 @@ class MyNoteStore: ObservableObject {
 
     // MARK: - myWordNotes를 페치하는 함수 / 내가 작성한 Notes를 Fetch함
     func myNotesWillBeFetchedFromDB() {
+        print("myNotesWillBeFetchedFromDB")
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         database.collection("users").document(currentUser.uid).collection("myWordNotes")
             .order(by: "repeatCount")
@@ -28,6 +29,7 @@ class MyNoteStore: ObservableObject {
                 } else if let snapshot {
                     for document in snapshot.documents {
                         let docData = document.data()
+                        
                         let id: String = docData["id"] as? String ?? ""
                         let noteName: String = docData["noteName"] as? String ?? ""
                         let noteCategory: String = docData["noteCategory"] as? String ?? ""
@@ -38,6 +40,19 @@ class MyNoteStore: ObservableObject {
                         let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                         let updateDate: Date = createdAtTimeStamp.dateValue()
                         let nextStudyDate: Date? = docData["nextStudyDate"] as? Date
+                        let notePrice: Int = docData["notePrice"] as? Int ?? 0
+                        
+                        var marketPurchaseDate: Date?
+                        var reviewDate: Date?
+                        
+                        if let marketPurchaseTimeStamp: Timestamp = docData["marketPurchaseDate"] as? Timestamp {
+                            marketPurchaseDate = marketPurchaseTimeStamp.dateValue()
+                        }
+                        
+                        if let reviewTimeStamp: Timestamp = docData["reviewDate"] as? Timestamp {
+                            reviewDate = reviewTimeStamp.dateValue()
+                        }
+                        
                         let myWordNote = MyWordNote(id: id,
                                                     noteName: noteName,
                                                     noteCategory: noteCategory,
@@ -46,8 +61,12 @@ class MyNoteStore: ObservableObject {
                                                     firstTestResult: firstTestResult,
                                                     lastTestResult: lastTestResult,
                                                     updateDate: updateDate,
-                                                    nextStudyDate: nextStudyDate)
+                                                    nextStudyDate: nextStudyDate,
+                                                    marketPurchaseDate: marketPurchaseDate,
+                                                    notePrice: notePrice,
+                                                    reviewDate: reviewDate)
                         self.myWordNotes.append(myWordNote)
+                        print("myWordNotes : \(self.myWordNotes)")
                     }
                 }
             }
