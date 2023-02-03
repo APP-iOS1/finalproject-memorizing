@@ -163,7 +163,7 @@ struct MyPageView: View {
                         
                         // 단점: 카카오톡 로그인 했을때만 가능
                         Button(action: {
-                                    let kakaoPlusFriendsURL = URL(string: "http://pf.kakao.com/_nesWxj/chat")!
+                                    let kakaoPlusFriendsURL = URL(string: "http://pf.kakao.com/_hZrWxj/chat")!
                                     UIApplication.shared.open(kakaoPlusFriendsURL)
                                 }) {
                                     HStack {

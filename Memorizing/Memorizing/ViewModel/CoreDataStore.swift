@@ -225,14 +225,14 @@ class CoreDataStore: ObservableObject {
     
     func plusRepeatCount(note: NoteEntity) {
         note.repeatCount += 1
-        
+        note.updateDate = Date()
         save()
         getNotes()
     }
     
     func resetRepeatCount(note: NoteEntity) {
         note.repeatCount = 0
-        
+        note.updateDate = Date()
         save()
         getNotes()
     }

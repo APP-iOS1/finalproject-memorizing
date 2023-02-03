@@ -146,7 +146,8 @@ class MyNoteStore: ObservableObject {
                 .collection("myWordNotes").document(wordNote.id ?? "")
                 .updateData([
                     "repeatCount": FieldValue.increment(Int64(1)),
-                    "nextStudyDate": nextStudyDate as Any // 태영 수정
+                    "nextStudyDate": nextStudyDate as Any, // 태영 수정
+                    "updateDate" : Date()
                 ])
             myNotesWillBeFetchedFromDB()
             print("finish plusRepeatCount")
@@ -163,7 +164,8 @@ class MyNoteStore: ObservableObject {
             .collection("myWordNotes").document(wordNote.id ?? "")
             .updateData([
                 "repeatCount": 0,
-                "nextStudyDate": NSNull() // 태영 수정
+                "nextStudyDate": NSNull(), // 태영 수정
+                "updateDate" : Date()
             ]) { err in
                 if let err {
                     print("repeatCountWillBeResetted error occured : \(err.localizedDescription)")
