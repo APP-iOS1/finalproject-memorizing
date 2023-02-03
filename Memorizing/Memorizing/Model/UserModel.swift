@@ -13,4 +13,11 @@ struct User: Identifiable {
     var email: String
     var nickName: String
     var coin: Int
+    var signInPlatform: String
+    
+    enum Platform: String, CaseIterable {
+        case google
+        case apple
+        case kakao 
+    }
 }

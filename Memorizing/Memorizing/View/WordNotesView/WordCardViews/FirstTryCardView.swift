@@ -302,10 +302,10 @@ struct LevelCheck: View {
             
         }
         .alert(
-            "복습 완료",
+            "학습을 완료했어요!",
             isPresented: $isShowingAlert
         ) {
-            Button("Ok") {
+            Button("확인") {
                 Task {
                     if notiManager.isNotiAllow {
                         if !notiManager.isGranted {

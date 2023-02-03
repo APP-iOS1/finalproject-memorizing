@@ -89,9 +89,10 @@ extension AuthStore: ASAuthorizationControllerDelegate {
                     
                     self.user = User(
                         id: result.user.uid,
-                        email: "Apple_" + "\(result.user.email ?? "NO Email")",
+                        email: "\(result.user.email ?? "NO Email")",
                         nickName: appleIDCredential.fullName?.nickname ?? "No Name",
-                        coin: 1000
+                        coin: 1000,
+                        signInPlatform: User.Platform.apple.rawValue
                     )
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                     print("Apple id: ", result.user.uid)
