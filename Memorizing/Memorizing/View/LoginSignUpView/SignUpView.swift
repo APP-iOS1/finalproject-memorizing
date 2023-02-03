@@ -205,8 +205,7 @@ struct SignUpView: View {
                             if termsAgreed {
                                 Task {
                                     await authStore.signUpDidAuth(email: signUpEmail,
-                                                                  password: signUpPassWord,
-                                                                  nickName: nickName)
+                                                                  password: signUpPassWord)
                                     dismiss()
                                 }
                             }

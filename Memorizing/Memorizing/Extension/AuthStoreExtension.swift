@@ -85,6 +85,7 @@ extension AuthStore: ASAuthorizationControllerDelegate {
             )
             Task {
                 do {
+                    self.user = User(id: "", email: "", nickName: "", coin: 0, signInPlatform: User.Platform.apple.rawValue)
                     let result = try await Auth.auth().signIn(with: credential)
                     
                     self.user = User(
@@ -97,7 +98,7 @@ extension AuthStore: ASAuthorizationControllerDelegate {
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                     print("Apple id: ", result.user.uid)
                     print("Apple email: ", result.user.email as Any)
-                    await self.userInfoWillFetchDB()
+//                    await self.userInfoWillFetchDB()
               //      self.state = .signedIn
                 } catch let error as NSError {
                     self.errorMessage = error.localizedDescription
