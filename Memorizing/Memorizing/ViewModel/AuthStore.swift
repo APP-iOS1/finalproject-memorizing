@@ -433,4 +433,19 @@ class AuthStore: UIViewController, ObservableObject {
             print("delete Account Error: ", self.errorMessage)
         }
     }
+    
+    func plusUserPoint(point: Double) async {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+        
+        do {
+            try await database.collection("users").document(currentUserId).updateData([
+                "coin" : FieldValue.increment(point)
+            ])
+        } catch {
+            print("plusUserPoint error occured: \(error.localizedDescription)")
+        }
+        
+
+        
+    }
 }

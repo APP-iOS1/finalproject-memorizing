@@ -11,6 +11,7 @@ import SwiftUI
 struct GoodJobStampView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
+    @EnvironmentObject var authStore: AuthStore
     var wordNote: NoteEntity
     @Binding var isDismiss: Bool
     var body: some View {
@@ -44,8 +45,13 @@ struct GoodJobStampView: View {
                     Button {
                         // FIXME: - 현기 수정
                         Task.init {
-                            await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote, nextStudyDate: nil)
+                            async let repeatCountWillBePlusOne: () = myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote, nextStudyDate: nil)
+                            async let plusUserPoint: () = authStore.plusUserPoint(point: 5)
+                            
+                            let _ = await (repeatCountWillBePlusOne, plusUserPoint)
+                            
                             coreDataStore.plusRepeatCount(note: wordNote)
+                            
                             isDismiss = true
                         }
                         // 복습하기 리스트 뷰로 이동
