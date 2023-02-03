@@ -302,7 +302,7 @@ struct LevelCheck: View {
             
         }
         .alert(
-            "Alert Title",
+            "복습 완료",
             isPresented: $isShowingAlert
         ) {
             Button("Ok") {
