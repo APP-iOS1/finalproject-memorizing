@@ -309,17 +309,6 @@ class AuthStore: UIViewController, ObservableObject {
     // MARK: - FetchUser Function / FireStore-DB에서 UserInfo를 불러옴
     func userInfoWillFetchDB() async {
         print("Start FetchUser")
-        switch self.user?.signInPlatform {
-        case User.Platform.apple.rawValue:
-            print(OAuthProvider(providerID: "apple.com"))
-            print(OAuthCredential.self)
-        case User.Platform.google.rawValue:
-            print(OAuthProvider(providerID: "google.com"))
-            
-            print(OAuthCredential.self)
-        default:
-            print(OAuthCredential.self)
-        }
        
         do {
             let document = try await database.collection("users").document(Auth.auth().currentUser?.uid ?? "").getDocument()
@@ -361,18 +350,6 @@ class AuthStore: UIViewController, ObservableObject {
     func deleteAccount() async {
         self.errorMessage = ""
         let user = Auth.auth().currentUser
-        switch self.user?.signInPlatform {
-        case User.Platform.apple.rawValue:
-            print(OAuthProvider(providerID: "apple.com"))
-            print(OAuthCredential.self)
-        case User.Platform.google.rawValue:
-            print(OAuthProvider(providerID: "google.com"))
-            
-            print(OAuthCredential.self)
-        default:
-            print(OAuthCredential.self)
-        }
-
 
         do {
             try await user?.delete()
@@ -406,40 +383,12 @@ class AuthStore: UIViewController, ObservableObject {
             print("탈퇴 에러코드: \(error._code)")
             switch error._code {
             case 17014:
-                do {
-                    if self.user?.signInPlatform == User.Platform.apple.rawValue {
-                        signInDidAppleAuth()
-                    } else if self.user?.signInPlatform == User.Platform.google.rawValue {
-                        await signInDidGoogleAuth()
-                    } else {
-                        await signInDidKakaoAuth()
-                    }
-                    try await user?.delete()
-                    if self.user?.signInPlatform == User.Platform.kakao.rawValue {
-                        UserApi.shared.unlink { error in
-                            if let error = error {
-                                print("카카오톡 연결 끊기 실패: \(error.localizedDescription)")
-                            } else {
-                                print("카카오톡 연결 끊기")
-                            }
-                        }
-                    } else if self.user?.signInPlatform == User.Platform.google.rawValue {
-                        GIDSignIn.sharedInstance.disconnect { error in
-                            if let error = error {
-                                print("구글 계정 연결 해제 오류: \(error.localizedDescription)")
-                            }
-                        }
-                    }
-                    
-                    try await self.database.collection("users").document(self.user!.id)
-                        .updateData([
-                            "userState": 3
-                        ])
-                    self.signOutDidAuth()
-
-                } catch let error as NSError {
-                    print("재인증 후 에러")
-                    print("\(error.localizedDescription)")
+                if self.user?.signInPlatform == User.Platform.apple.rawValue {
+                    signInDidAppleAuth()
+                } else if self.user?.signInPlatform == User.Platform.google.rawValue {
+                    await signInDidGoogleAuth()
+                } else {
+                    await signInDidKakaoAuth()
                 }
             default:
                 print("탈퇴 에러: \(error.localizedDescription)")
