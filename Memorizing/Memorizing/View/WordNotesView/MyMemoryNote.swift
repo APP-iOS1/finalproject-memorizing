@@ -104,12 +104,12 @@ struct MyMemoryNote: View {
         }
         .fullScreenCover(isPresented: $isShowingSheet) {
             NavigationStack {
-//                 AddListView(wordNote: myWordNote)
-                if words.isEmpty {
-                    AddListView(wordNote: myWordNote)
-                } else {
-                    EditListView(wordNote: myWordNote)
-                }
+                EditListView(wordNote: myWordNote)
+//                if words.isEmpty {
+//                    AddListView(wordNote: myWordNote)
+//                } else {
+//                    EditListView(wordNote: myWordNote)
+//                }
             }
         }
         .onAppear {
@@ -125,14 +125,7 @@ struct MyMemoryNote: View {
 // struct MyMemoryNote_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationStack {
-//            MyMemoryNote(myWordNote: MyWordNote(id: "03578E93-5DF4-489C-AF66-1671DD8CCE79",
-//                                                noteName: "우리속담 알아보기",
-//                                                noteCategory: "기타",
-//                                                enrollmentUser: "hKWRjBcFi0NTuR5IjGHSsGMZUaV2",
-//                                                repeatCount: 1,
-//                                                firstTestResult: 0,
-//                                                lastTestResult: 0,
-//                                                updateDate: Date()))
+//            MyMemoryNote(myWordNote: word)
 //
 //        }
 //    }

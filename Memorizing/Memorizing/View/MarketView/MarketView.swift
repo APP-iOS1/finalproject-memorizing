@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+enum SortCategory: String, Equatable, CaseIterable {
+    case salesCount = "판매 많은 순"
+    case starScoreTotal = "평점 높은 순"
+    case reviewCount = "리뷰 많은 순"
+    
+    var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
+}
+
 // MARK: - 마켓 탭에서 가장 메인으로 보여주는 View
 struct MarketView: View {
     @EnvironmentObject var marketStore: MarketStore
@@ -16,6 +24,8 @@ struct MarketView: View {
     @State private var isSheetOpen: Bool = false
     
     @State var time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
+    
+    @State private var index: Int = 0
     
     /// 카테고리 목록
     static let categoryArray: [String] = [
@@ -27,6 +37,7 @@ struct MarketView: View {
     ]
     
     @State private var selectedCategory: String  = "전체"
+    @State private var selectedSortCategory: SortCategory = .salesCount
     
     var body: some View {
         
@@ -42,10 +53,32 @@ struct MarketView: View {
         .padding(.leading, 13)
         
         // MARK: - 검색창 하단 구분선
-        Divider()
-            .frame(height: 5)
-            .overlay(Color("Gray5"))
-            .padding(.top, -3)
+//        Divider()
+//            .frame(height: 5)
+//            .overlay(Color("Gray5"))
+//            .padding(.top, -3)
+        
+        // MARK: - 정렬기준 선택하기
+        HStack {
+            Spacer()
+            
+            Menu {
+                ForEach(SortCategory.allCases, id: \.self) { value in
+                    Button {
+                        self.selectedSortCategory = value
+                    } label: {
+                        HStack {
+                            Text(value.localizedName)
+                        }
+                    }
+                }
+            } label: {
+                Text(selectedSortCategory.localizedName)
+                    .foregroundColor(Color.black)
+                    .scaledToFit()
+                    .padding(.trailing, 20)
+            }
+        }
         
         ZStack {
             ScrollView(showsIndicators: false) {
@@ -60,13 +93,36 @@ struct MarketView: View {
                     columns: columns,
                     spacing: 18,
                     content: {
-                        ForEach(marketStore.marketWordNotes) { wordNote in
-                            if searchText.isEmpty
-                                || wordNote.noteName.contains(searchText) {
-                                MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                     selectedCategory: $selectedCategory,
-                                                     selectedWordNote: wordNote)
+                        switch selectedSortCategory {
+                        case .salesCount:
+                            ForEach(marketStore.marketWordNotes.sorted{ $0.salesCount > $1.salesCount }) { wordNote in
+                                if searchText.isEmpty
+                                    || wordNote.noteName.contains(searchText) {
+                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                         selectedCategory: $selectedCategory,
+                                                         selectedWordNote: wordNote)
+                                }
                             }
+                        case .starScoreTotal:
+                            ForEach(marketStore.marketWordNotes.sorted{ $0.starScoreTotal > $1.starScoreTotal }) { wordNote in
+                                if searchText.isEmpty
+                                    || wordNote.noteName.contains(searchText) {
+                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                         selectedCategory: $selectedCategory,
+                                                         selectedWordNote: wordNote)
+                                }
+                            }
+                        case .reviewCount:
+                            ForEach(marketStore.marketWordNotes.sorted{ $0.reviewCount > $1.reviewCount }) { wordNote in
+                                if searchText.isEmpty
+                                    || wordNote.noteName.contains(searchText) {
+                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                         selectedCategory: $selectedCategory,
+                                                         selectedWordNote: wordNote)
+                                }
+                            }
+                        }
+                        
                             // MARK: - Pagination(InfiniteScroll) 구현 코드
 //                            if marketStore.marketWordNotes.last!.id == wordNote.id {
 //                                GeometryReader { geo in
@@ -99,7 +155,6 @@ struct MarketView: View {
 //                                                     selectedWordNote: wordNote)
 //                            }
                             // MARK: - 여기까지
-                        }
                     })
                 .padding(.horizontal)
                 .padding(.top, 15)

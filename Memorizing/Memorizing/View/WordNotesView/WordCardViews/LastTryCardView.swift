@@ -54,13 +54,13 @@ struct LastTryCardView: View {
                     WordCardMeaningView(
                         listLength: words.count,
                         currentListLength: $num,
-                        currentWordDef: words[num].wordString ?? "No String"
+                        currentWordDef: words[num].wordMeaning ?? "No Meaning"
                     )
                 } else {
                     WordCardWordView(
                         listLength: words.count,
                         currentListLength: $num,
-                        currentWord: words[num].wordMeaning ?? "No Meaning"
+                        currentWord: words[num].wordString ??  "No String"
                     )
                 }
             }

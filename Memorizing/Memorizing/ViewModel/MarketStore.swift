@@ -261,6 +261,12 @@ class MarketStore: ObservableObject {
                     "coin": FieldValue.increment(Int64(marketWordNote.notePrice))
                 ])
             
+            database.collection("marketWordNotes")
+                .document(marketWordNote.id)
+                .updateData([
+                    "salesCount": FieldValue.increment(Int64(1))
+                ])
+            
             marketNotesWillBringMyNotesDB(marketWordNote: marketWordNote, words: words)
         }
     }
@@ -324,9 +330,44 @@ class MarketStore: ObservableObject {
     }
     
     // MARK: - 등록해제하면 해당 암기장 데이터들은 마켓컬렉션에서 삭제되도록 하는 함수
-    func marketNotesWillDeleteDB(marketWordNote: MarketWordNote, words: [Word]) {
-        // TODO: - 하위 컬렉션도 문서에 하나하나 접근해서 다 지워줘야됨
-        database.collection("marketWordNotes").document(marketWordNote.id).delete()
+    func marketNotesWillDeleteDB(marketWordNote: MarketWordNote) async {
+        let reviewStore: ReviewStore = ReviewStore()
+        
+        // 하위 컬렉션으로 review와 word가 존재하는지 확인
+        await reviewStore.reviewsWillFetchDB(marketID: marketWordNote.id)
+        await wordsWillFetchDB(wordNoteID: marketWordNote.id)
+        
+        do {
+            // 하위 컬렉션으로 review가 존재하면 전부 삭제
+            if reviewStore.reviews.count > 0 {
+                for review in reviewStore.reviews {
+                    try await database
+                        .collection("marketWordNotes").document(marketWordNote.id)
+                        .collection("review").document(review.id)
+                        .delete()
+                }
+                
+                // 하위 컬렉션으로 word가 존재하면 전부 삭제
+                if self.words.count > 0 {
+                    for word in self.words {
+                        try await database
+                            .collection("marketWordNotes").document(marketWordNote.id)
+                            .collection("words").document(word.id)
+                            .delete()
+                    }
+                    
+                    // 하위 컬렉션 전부 삭제 후 해당 암기장 데이터 삭제
+                    try await database
+                        .collection("marketWordNotes").document(marketWordNote.id)
+                        .delete()
+                    
+                    await marketNotesWillFetchDB()
+                }
+            }
+            
+        } catch {
+            print("marketNotesWillDeleteDB error")
+        }
     }
     
     // MARK: - Market에서 Note를 구매할 경우, 해당 Notes를 My Notes DB에 저장
@@ -365,6 +406,8 @@ class MarketStore: ObservableObject {
                     self.filterMyWordNotes.append(myWordNote)
                 })
             }
+            
+            
         } catch {
             print("filterMyNoteWillFetchDB Function Error: \(error)")
         }

@@ -85,8 +85,17 @@ import SwiftUI
                             AddListRow(word: list)
                         }
                         .onDelete { indexSet in
-                            // TODO: 서버에서도 삭제되는 메서드 만들어야함 (현재 코데에서만 삭제 중)
-                            coreDataStore.deleteWord(note: wordNote, offsets: indexSet)
+                            
+                            Task {
+                                let word = await myNoteStore.deleteWord(note: wordNote, offset: indexSet)
+                                if let word {
+                                    coreDataStore.deleteWord(word: word)
+                                } else {
+                                    print("no word")
+                                }
+                            }
+                            
+
                         }
                         //                    .onMove(perform: moveList)
                     }

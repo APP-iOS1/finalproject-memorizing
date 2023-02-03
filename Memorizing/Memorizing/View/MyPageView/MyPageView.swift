@@ -161,22 +161,32 @@ struct MyPageView: View {
                     VStack {
                         Divider()
                         
-                        NavigationLink {
-                            // TODO: 1:1 문의하기 페이지로 이동
-                        } label: {
-                            HStack {
-                                Text("1:1 문의하기")
-                                    .font(.body)
-                                    .fontWeight(.medium)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .font(.title3)
-                                    .fontWeight(.light)
-                            } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
-                            .foregroundColor(.mainBlack)
-                        }
+                        // 단점: 카카오톡 로그인 했을때만 가능
+                        Button(action: {
+                                    let kakaoPlusFriendsURL = URL(string: "http://pf.kakao.com/_hZrWxj/chat")!
+                                    UIApplication.shared.open(kakaoPlusFriendsURL)
+                                }) {
+                                    HStack {
+                                        Text("1:1 문의하기")
+                                            .font(.body)
+                                            .fontWeight(.medium)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .font(.title3)
+                                            .fontWeight(.light)
+                                    } // 문의하기
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor(.mainBlack)
+                                }
+                        
+                        Button(action: {
+                            //공용 구글 이메일을 만들어서 직접 이메일로 보내는것은 어떨까요?
+                                    guard let url = URL(string: "https://www.kakaowork.com/?utm_source=google_pc&tum_medium=sa&utm_campaign=kakaowork&utm_term=%EA%B8%B0%EC%97%85%EC%9A%A9%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1&gclid=Cj0KCQiA2-2eBhClARIsAGLQ2RnWOe4lycDpoECGLUZSy1sh1UAp_rLXxOazNpK6Un04HcfgA7E6cDYaAschEALw_wcB") else { return }
+                                    UIApplication.shared.open(url)
+                                }, label: {
+                                    Text("Open in Kakao Plus Friend")
+                                })
                     }
                     
                     VStack {

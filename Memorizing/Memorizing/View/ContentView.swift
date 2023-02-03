@@ -55,8 +55,10 @@ struct ContentView: View {
         .task {
             // 알림 권한 여부 확인
             try? await notiManager.requestAuthorization()
-            if UserDefaults.standard.string(forKey: UserDefaults.Keys.isExistingAuth.rawValue) != nil {
+            if Auth.auth().currentUser != nil {
+                print("task")
                 await authStore.signInDidExistingAuth()
+
             }
         }
     }

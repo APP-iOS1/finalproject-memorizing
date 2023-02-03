@@ -29,7 +29,7 @@ struct WordNotesView: View {
     @Namespace var namespace
     @State private var isShowingNewMemorySheet: Bool = false
     // @State private var isShownNotification: Bool = false
-//    @EnvironmentObject var myNoteStore: MyNoteStore
+    //    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     
     var body: some View {
@@ -49,7 +49,7 @@ struct WordNotesView: View {
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
                     ScrollView(showsIndicators: false) {
-                        ForEach(coreDataStore.notes) { myWordNote in
+                        ForEach(coreDataStore.notes.filter({$0.words?.count != 0})) { myWordNote in
                             StudyAgainView(myWordNote: myWordNote)
                         }
                     }
@@ -125,14 +125,13 @@ struct Header: View {
         VStack(spacing: 5) {
             HStack(spacing: 25) {
                 VStack(spacing: 5) {
-                    Button {
-                        memoryStepToggle = true
-                        reviewStepToggle = false
-                    } label: {
-                        Text("메모 암기장")
-                            .foregroundColor(memoryStepToggle ? .mainDarkBlue : .gray3)
-                            .fontWeight(.bold)
-                    }
+                    Text("메모 암기장")
+                        .foregroundColor(memoryStepToggle ? .mainDarkBlue : .gray3)
+                        .fontWeight(.bold)
+                        .onTapGesture {
+                            memoryStepToggle = true
+                            reviewStepToggle = false
+                        }
                     
                     if memoryStepToggle {
                         Rectangle()
@@ -145,14 +144,13 @@ struct Header: View {
                 }
                 
                 VStack(spacing: 5) {
-                    Button {
-                        reviewStepToggle = true
-                        memoryStepToggle = false
-                    } label: {
-                        Text("복습하기")
-                            .foregroundColor(reviewStepToggle ? .mainDarkBlue : .gray3)
-                            .fontWeight(.bold)
-                    }
+                    Text("복습하기")
+                        .foregroundColor(reviewStepToggle ? .mainDarkBlue : .gray3)
+                        .fontWeight(.bold)
+                        .onTapGesture {
+                            reviewStepToggle = true
+                            memoryStepToggle = false
+                        }
                     
                     if !memoryStepToggle {
                         Rectangle()
@@ -177,6 +175,6 @@ struct Header: View {
 struct WordNotesView_Previews: PreviewProvider {
     static var previews: some View {
         WordNotesView()
-            .environmentObject(MyNoteStore())
+            .environmentObject(CoreDataStore())
     }
 }

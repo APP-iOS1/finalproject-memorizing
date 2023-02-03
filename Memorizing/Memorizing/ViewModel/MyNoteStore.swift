@@ -40,9 +40,18 @@ class MyNoteStore: ObservableObject {
                         let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                         let updateDate: Date = createdAtTimeStamp.dateValue()
                         let nextStudyDate: Date? = docData["nextStudyDate"] as? Date
-                        let marketPurchaseDate: Date = docData["marketPurchaseDate"] as? Date ?? Date()
                         let notePrice: Int = docData["notePrice"] as? Int ?? 0
-                        let reviewDate: Date? = docData["reviewDate"] as? Date
+                        
+                        var marketPurchaseDate: Date?
+                        var reviewDate: Date?
+                        
+                        if let marketPurchaseTimeStamp: Timestamp = docData["marketPurchaseDate"] as? Timestamp {
+                            marketPurchaseDate = marketPurchaseTimeStamp.dateValue()
+                        }
+                        
+                        if let reviewTimeStamp: Timestamp = docData["reviewDate"] as? Timestamp {
+                            reviewDate = reviewTimeStamp.dateValue()
+                        }
                         
                         let myWordNote = MyWordNote(id: id,
                                                     noteName: noteName,
@@ -57,6 +66,7 @@ class MyNoteStore: ObservableObject {
                                                     notePrice: notePrice,
                                                     reviewDate: reviewDate)
                         self.myWordNotes.append(myWordNote)
+                        print("myWordNotes : \(self.myWordNotes)")
                     }
                 }
             }
@@ -136,7 +146,8 @@ class MyNoteStore: ObservableObject {
                 .collection("myWordNotes").document(wordNote.id ?? "")
                 .updateData([
                     "repeatCount": FieldValue.increment(Int64(1)),
-                    "nextStudyDate": nextStudyDate as Any // 태영 수정
+                    "nextStudyDate": nextStudyDate as Any, // 태영 수정
+                    "updateDate" : Date()
                 ])
             myNotesWillBeFetchedFromDB()
             print("finish plusRepeatCount")
@@ -153,7 +164,8 @@ class MyNoteStore: ObservableObject {
             .collection("myWordNotes").document(wordNote.id ?? "")
             .updateData([
                 "repeatCount": 0,
-                "nextStudyDate": NSNull() // 태영 수정
+                "nextStudyDate": NSNull(), // 태영 수정
+                "updateDate" : Date()
             ]) { err in
                 if let err {
                     print("repeatCountWillBeResetted error occured : \(err.localizedDescription)")
@@ -189,5 +201,25 @@ class MyNoteStore: ObservableObject {
                 count += 1
         }
         return count
+    }
+    
+    func deleteWord(note: NoteEntity, offset: IndexSet) async -> WordEntity? {
+
+        guard let currentUser = Auth.auth().currentUser else { return nil }
+        guard let index = offset.first else { return nil }
+        
+        let words = note.words?.allObjects as? [WordEntity] ?? []
+        
+        print("test: \(words[index])")
+        do {
+            try await database.collection("users").document(currentUser.uid)
+                .collection("myWordNotes").document(note.id ?? "")
+                .collection("words").document(words[index].id ?? "")
+                .delete()
+        } catch {
+            print("delete word error occured: \(error.localizedDescription)")
+        }
+        
+        return words[index]
     }
 }

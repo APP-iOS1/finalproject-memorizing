@@ -225,23 +225,21 @@ class CoreDataStore: ObservableObject {
     
     func plusRepeatCount(note: NoteEntity) {
         note.repeatCount += 1
-        
+        note.updateDate = Date()
         save()
         getNotes()
     }
     
     func resetRepeatCount(note: NoteEntity) {
         note.repeatCount = 0
-        
+        note.updateDate = Date()
         save()
         getNotes()
     }
     
-    func deleteWord(note: NoteEntity, offsets: IndexSet) {
-        guard let index = offsets.first else { return }
-        let word = note.words?.allObjects as? [WordEntity] ?? []
+    func deleteWord(word: WordEntity) {
         
-        manager.context.delete(word[index])
+        manager.context.delete(word)
         
         save()
     }

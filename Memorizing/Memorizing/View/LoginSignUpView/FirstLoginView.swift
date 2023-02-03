@@ -57,7 +57,7 @@ struct FirstLoginView: View {
             Button {
                 Task {
                     authStore.user?.nickName = newName
-                    authStore.userInfoDidSaveDB(user: authStore.user!)
+                    authStore.userInfoDidSaveDB(platform: authStore.user!.signInPlatform)
                     authStore.state = .signedIn
                     isFirstLogin.toggle()
                 }
