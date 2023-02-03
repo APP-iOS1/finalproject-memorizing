@@ -9,6 +9,10 @@ import SwiftUI
 import AVFoundation
 
 struct FirstTryCardView: View {
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var notiManager: NotificationManager
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    
     @Environment(\.dismiss) private var dismiss
     var myWordNote: NoteEntity
     var words: [WordEntity] {
@@ -75,10 +79,9 @@ struct FirstTryCardView: View {
                 isFlipped: $isFlipped,
                 isDismiss: $isDismiss,
                 totalScore: $totalScore,
-                lastWordIndex: wordCount,
                 num: $num,
                 isShowingAlert: $isShowingAlert,
-                wordNote: myWordNote,
+                lastWordIndex: wordCount,
                 word: words[num]
             )
             .padding(.top)
@@ -94,6 +97,45 @@ struct FirstTryCardView: View {
         .onChange(of: isFlipped, perform: { _ in
             flipCard()
         })
+        .customAlert(isPresented: $isShowingAlert,
+                     title: "학습을 완료했어요!",
+                     message: "모든 단어를 공부했습니다 :)",
+                     primaryButtonTitle: "확인",
+                     primaryAction: {
+                        Task {
+                            if notiManager.isNotiAllow {
+                                if !notiManager.isGranted {
+                                    notiManager.openSetting()
+                                } else {
+                                    // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
+                                    print("set localNotification")
+                                    var localNotification = LocalNotification(
+                                        identifier: myWordNote.id ?? "No Id",
+                                        title: "MEMOrizing 암기 시간",
+                                        body: "\(myWordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
+                                        timeInterval: 10,
+                                        repeats: false
+                                    )
+                                    localNotification.subtitle = "\(myWordNote.noteName ?? "No Name")"
+                                    print("localNotification: ", localNotification)
+                                    await notiManager.schedule(localNotification: localNotification)
+                                    await myNoteStore.repeatCountWillBePlusOne(
+                                        wordNote: myWordNote,
+                                        nextStudyDate: Date() + Double(myWordNote.repeatCount * 1000)
+                                    )
+                                    coreDataStore.plusRepeatCount(note: myWordNote)
+                                    await notiManager.getPendingRequests()
+                                    for request in notiManager.pendingRequests {
+                                        print("request: ", request as Any)
+                                    }
+                                    isDismiss.toggle()
+                                }
+                            } else {
+                                isDismiss.toggle()
+                            }
+                        }
+                     },
+                     withCancelButton: false)
         
     }
     
@@ -223,14 +265,12 @@ struct LevelCheck: View {
     @Binding var isFlipped: Bool
     @Binding var isDismiss: Bool
     @Binding var totalScore: Double
-    var lastWordIndex: Int
     @Binding var num: Int
     @Binding var isShowingAlert: Bool
-    var wordNote: NoteEntity
+    
+    var lastWordIndex: Int
     var word: WordEntity
     
-    @EnvironmentObject var myNoteStore: MyNoteStore
-    @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var coreDataStore: CoreDataStore
     var body: some View {
         HStack(spacing: 15) {
@@ -301,47 +341,7 @@ struct LevelCheck: View {
             }
             
         }
-        .alert(
-            "학습을 완료했어요!",
-            isPresented: $isShowingAlert
-        ) {
-            Button("확인") {
-                Task {
-                    if notiManager.isNotiAllow {
-                        if !notiManager.isGranted {
-                            notiManager.openSetting()
-                        } else {
-                            // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
-                            print("set localNotification")
-                            var localNotification = LocalNotification(
-                                identifier: wordNote.id ?? "No Id",
-                                title: "MEMOrizing 암기 시간",
-                                body: "\(wordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
-                                timeInterval: 10,
-                                repeats: false
-                            )
-                            localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
-                            print("localNotification: ", localNotification)
-                            await notiManager.schedule(localNotification: localNotification)
-                            await myNoteStore.repeatCountWillBePlusOne(
-                                wordNote: wordNote,
-                                nextStudyDate: Date() + Double(wordNote.repeatCount * 1000)
-                            )
-                            coreDataStore.plusRepeatCount(note: wordNote)
-                            await notiManager.getPendingRequests()
-                            for request in notiManager.pendingRequests {
-                                print("request: ", request as Any)
-                            }
-                            isDismiss.toggle()
-                        }
-                    } else {
-                        isDismiss.toggle()
-                    }
-                }
-            }
-        } message: {
-            Text("모든 단어를 공부했습니다 :)")
-        }
+        
     }
 }
 
