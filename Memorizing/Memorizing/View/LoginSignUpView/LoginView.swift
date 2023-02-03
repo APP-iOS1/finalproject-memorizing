@@ -15,111 +15,109 @@ struct LoginView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ZStack {
+//                LinearGradient(gradient: Gradient(colors: [Color("MainBlue"), Color("MainDarkBlue")]), startPoint: .top, endPoint: .bottom)
+//                    .ignoresSafeArea()
+                Color("LoginViewBackgroundColor")
+                
                 VStack(spacing: 35) {
                     
-                    Image("MainLogo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 250, height: 150)
-                        .padding(.top, 100)
+                    Spacer()
+                        .frame(height: UIScreen.main.bounds.height * 0.12)
+                    
+                    Image("LoginTitle")
                     
                     Spacer()
                     
-                    TextField(text: $loginId) {
-                        Text("이메일을 입력해 주세요")
-                        //                    .modifier(CustomTextFieldPlaceHolder())
-                            .foregroundColor(Color("Gray2"))
-                            .font(.subheadline)
-                    }
-                    .textFieldStyle(CustomTextField())
-                    .modifier(ClearButton(text: $loginId))
-                    .autocapitalization(.none)
-                    
-                    SecureField(text: $loginPW) {
-                        Text("비밀번호를 입력해 주세요")
-                            .foregroundColor(Color("Gray2"))
-                            .font(.subheadline)
-                    }
-                    .textFieldStyle(CustomTextField())
-                    .modifier(ClearButton(text: $loginPW))
-                    
-                    HStack {
-                        Spacer()
-                        
-                        NavigationLink {
-                            // TODO: 비밀번호 찾기 뷰로 이동
-                            FindIdPwView()
-                        } label: {
-                            Text("아이디 및 비밀번호 찾기")
-                                .underline()
-                                .foregroundColor(Color("Gray2"))
-                                .font(.caption2)
-                                .padding(.trailing)
-                            
-                        }
-                    }
-                    .padding(.top, -20)
-                    .frame(width: 330)
-                    
-                    Button {
-                        Task {
-                            print("click Button login")
-                            await authStore.signInDidAuth(email: loginId, password: loginPW)
-                        }
-                    } label: {
-                        Text("로그인")
-                            .modifier(CustomButtonStyle(backgroundColor: "MainBlue"))
-                    }
-                    .padding(.top, 30)
-                    
-                    HStack {
-                        Text("메모라이징이 처음이라면?")
-                            .foregroundColor(Color("Gray1"))
-                        
-                        NavigationLink {
-                            SignUpView()
-                        } label: {
-                            Text("회원가입하기")
-                                .foregroundColor(Color("MainDarkBlue"))
-                        }
-                    }
-                    .padding(.top, -20)
-                    .font(.caption2)
-                    
                     Spacer()
+                        .frame(height: UIScreen.main.bounds.height * 0.01)
                     
-                    GoogleSignInButton {
-                        Task {
-                            await authStore.signInDidGoogleAuth()
-                        }
-                    }
-                    .padding(.horizontal, 50)
-                    
-                    VStack {
+                    VStack(spacing: 10) {
+                        // MARK: 카카오 로그인 버튼
                         HStack {
                             Button {
                                 Task {
                                     await authStore.signInDidKakaoAuth()
                                 }
                             } label: {
-                                Text("Kakao SignIn")
-                            }
-                            
-                            Button {
-                                authStore.signOutDidKakao()
-                            } label: {
-                                Text("Logout")
-                            }
-                        }
-                        HStack {
-                            SignInWithAppleButton()
-                                .frame(width: 280, height: 45)
-                                .onTapGesture {
-                                    authStore.signInDidAppleAuth()
+                                HStack {
+                                    Image("KakaoLogo")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                    
+                                    Spacer()
+                                    
+                                    Text("카카오로 시작하기")
+                                        .foregroundColor(.black)
+                                    
+                                    Spacer()
                                 }
+                                .frame(width: UIScreen.main.bounds.width * 0.6)
+                                .modifier(CustomButtonStyle(backgroundColor: "KakaoYellow"))
+                            }
+                            // MARK: 카카오 로그아웃
+//                            Button {
+//                                authStore.signOutDidKakao()
+//                            } label: {
+//                                Text("Logout")
+//                            }
                         }
+                        
+                        // MARK: 애플 로그인
+                        HStack {
+                            Button {
+                                authStore.signInDidAppleAuth()
+                                
+                            } label: {
+                                HStack {
+                                    Image("AppleLogo")
+                                    
+                                    Spacer()
+                                    
+                                    Text("Apple ID로 시작하기")
+                                        .foregroundColor(.white)
+                                    
+                                    Spacer()
+                                }
+                                .frame(width: UIScreen.main.bounds.width * 0.6)
+                                .modifier(CustomButtonStyle(backgroundColor: "MainBlack"))
+                            }
+                        }
+                        
+                        // MARK: 구글 로그인 버튼
+                        HStack {
+                            Button {
+                                Task {
+                                    await authStore.signInDidGoogleAuth()
+                                }
+                            } label: {
+                                HStack {
+                                    Image("GoogleLogo")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                    
+                                    Spacer()
+                                    
+                                    Text("Google로 시작하기")
+                                        .foregroundColor(.black)
+                                    
+                                    Spacer()
+                                }
+                                .frame(width: UIScreen.main.bounds.width * 0.6)
+                                .font(.subheadline)
+                                .frame(width: UIScreen.main.bounds.width * 0.77, height: UIScreen.main.bounds.height * 0.056)
+                                .background(Color("MainWhite"))
+                                .cornerRadius(30)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .stroke(Color.gray5)
+                                }
+                            }
+                        }
+                        
                     }
+                    Spacer()
+                        .frame(height: UIScreen.main.bounds.height * 0.18)
                 } // vstack
             } // scroll view
         } // navigationstack
