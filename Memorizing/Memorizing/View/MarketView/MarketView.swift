@@ -73,7 +73,7 @@ struct MarketView: View {
                     }
                 }
             } label: {
-                Text("▼")
+                Text(selectedSortCategory.localizedName)
                     .foregroundColor(Color.black)
                     .scaledToFit()
                     .padding(.trailing, 20)
