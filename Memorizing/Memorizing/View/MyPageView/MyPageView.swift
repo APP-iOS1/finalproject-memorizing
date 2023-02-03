@@ -29,18 +29,25 @@ struct MyPageView: View {
                     
                     VStack(alignment: .leading, spacing: 2) {
                         Text("안녕하세요")
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                        Text("\(authStore.user?.nickName ?? "")님!")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                        Text("\(authStore.user?.email ?? "")")
-                            .font(.footnote)
-                            .fontWeight(.light)
                             .foregroundColor(.gray2)
+                            .fontWeight(.semibold)
+                        
+                        HStack {
+                            Text("\(authStore.user?.nickName ?? "") 님")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                            
+                            let email: String = authStore.user?.email ?? ""
+                            if email.contains("kakao") {
+                                loginLogo(name: "KakaoLogo")
+                            } else if email.contains("appleid") {
+                                loginLogo(name: "AppleLogo")
+                            } else if email.contains("gmail") {
+                                loginLogo(name: "GoogleLogo")
+                            }
+                        }
                         
                     } // 그리팅메세지
-                    
                     .padding(.top, -30)
                     
                     HStack(spacing: 15) {
@@ -83,7 +90,6 @@ struct MyPageView: View {
 
                     } // 내 암기장개수 . 받은 도장 개수
                     .font(.footnote)
-                    .padding(.vertical, 2)
                 } // 유저정보
                 .padding(.bottom, 10)
                 
@@ -266,6 +272,35 @@ struct MyPageView: View {
             myNoteStore.myWordNotes = []
         },
                      withCancelButton: true)
+    }
+}
+
+struct loginLogo: View {
+    let name: String
+    var color: Color {
+        switch name {
+        case "GoogleLogo":
+            return .white
+        case "KakaoLogo":
+            return .kakaoYellow
+        default:
+            return .black
+        }
+    }
+    
+    var body: some View {
+        Circle()
+            .stroke(name == "GoogleLogo"
+                    ? Color.gray4
+                    : Color.white)
+            .background(Circle().fill(color))
+            .frame(width: 27)
+            .overlay {
+                Image(name)
+                    .resizable()
+                    .frame(width: name == "AppleLogo" ? 13 : 17,
+                           height: 17)
+            }
     }
 }
 
