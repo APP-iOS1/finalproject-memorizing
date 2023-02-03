@@ -109,6 +109,7 @@ struct MyPageView: View {
                             .padding(.vertical, 10)
                             .foregroundColor(.mainBlack)
                         }
+                        .isDetailLink(false)
                     }
 
                     VStack {
@@ -231,24 +232,6 @@ struct MyPageView: View {
                             
                         }
                     }
-                    .alert(
-                        "로그아웃",
-                        isPresented: $signOutAlertToggle
-                    ) {
-                        HStack {
-                            Button("닫기", role: .cancel) {
-                                // 그냥 닫기
-                            }
-                            Button("로그아웃", role: .destructive) {
-                                authStore.signOutDidAuth()
-                                notiManager.removeAllRequest()
-                                myNoteStore.myWords = []
-                                myNoteStore.myWordNotes = []
-                            }
-                        }
-                    } message: {
-                        Text("정말 로그아웃 하시겠습니까?")
-                    }
                     
                     Divider()
                     
@@ -272,6 +255,17 @@ struct MyPageView: View {
             }
             .padding(.horizontal, 30)
         }
+        .customAlert(isPresented: $signOutAlertToggle,
+                     title: "로그아웃",
+                     message: "정말 로그아웃 하시겠습니까?",
+                     primaryButtonTitle: "로그아웃",
+                     primaryAction: {
+            authStore.signOutDidAuth()
+            notiManager.removeAllRequest()
+            myNoteStore.myWords = []
+            myNoteStore.myWordNotes = []
+        },
+                     withCancelButton: true)
     }
 }
 

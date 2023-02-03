@@ -8,12 +8,25 @@
 import SwiftUI
 
 struct MarketTradeListView: View {
-    @State private var marketTradeToggle: Bool = true
-    @State private var isReviewed: Bool = true
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var coreDataStore: CoreDataStore
+    
+    @State private var marketTradeToggle: Bool = true
+    @State private var isReviewed: Bool = true
+    @State private var isAlertOpen: Bool = false
+    @State private var isfullScreenCoverOpen: Bool = false
+    @State private var marketWordNote: MarketWordNote
+        = MarketWordNote(id: "",
+                         noteName: "",
+                         noteCategory: "",
+                         enrollmentUser: "",
+                         notePrice: 0,
+                         updateDate: Date(),
+                         salesCount: 0,
+                         starScoreTotal: 0.0,
+                         reviewCount: 0)
     
     var body: some View {
         ScrollView {
@@ -52,6 +65,18 @@ struct MarketTradeListView: View {
             if marketTradeToggle {
                 ForEach(myNoteStore.myWordNotes, id: \.id) { note in
                     if note.enrollmentUser != authStore.user?.id {
+                        
+                        let noteEntity: NoteEntity
+                        = coreDataStore
+                            .returnNote(id: note.id,
+                                        noteName: note.noteName,
+                                        enrollmentUser: note.enrollmentUser,
+                                        noteCategory: note.noteCategory,
+                                        repeatCount: note.repeatCount,
+                                        firstTestResult: note.firstTestResult,
+                                        lastTestResult: note.lastTestResult,
+                                        updateDate: note.updateDate)
+                        
                         VStack {
                             HStack {
                                 Text("\(note.marketPurchaseDateFormatter ?? "날짜 정보 표시불가")")
@@ -74,17 +99,6 @@ struct MarketTradeListView: View {
                                 
                                 if note.reviewDate == nil {
                                     NavigationLink {
-                                        let noteEntity: NoteEntity
-                                        = coreDataStore
-                                            .returnNote(id: note.id,
-                                                        noteName: note.noteName,
-                                                        enrollmentUser: note.enrollmentUser,
-                                                        noteCategory: note.noteCategory,
-                                                        repeatCount: note.repeatCount,
-                                                        firstTestResult: note.firstTestResult,
-                                                        lastTestResult: note.lastTestResult,
-                                                        updateDate: note.updateDate)
-                                        
                                         CreateReviewView(wordNote: noteEntity,
                                                          marketPurchaseDate: note.marketPurchaseDate)
                                     } label: {
@@ -139,10 +153,8 @@ struct MarketTradeListView: View {
                                 Text("판매 가격 : \(marketNote.notePrice)P")
                                 Spacer()
                                 Button {
-                                    // TODO: alert 추가
-                                    Task {
-                                        await marketStore.marketNotesWillDeleteDB(marketWordNote: marketNote)
-                                    }
+                                    isAlertOpen = true
+                                    marketWordNote = marketNote
                                 } label: {
                                     HStack {
                                         Image(systemName: "trash.fill")
@@ -169,6 +181,17 @@ struct MarketTradeListView: View {
         .onAppear {
             myNoteStore.myNotesWillBeFetchedFromDB()
         }
+        .customAlert(isPresented: $isAlertOpen,
+                     title: "판매등록 취소",
+                     message: "판매등록을 취소 하시겠습니까?",
+                     primaryButtonTitle: "확인",
+                     primaryAction: {
+                        Task {
+                            await marketStore.marketNotesWillDeleteDB(marketWordNote: marketWordNote)
+                        }
+                        isAlertOpen = false
+                    },
+                     withCancelButton: true)
     }
 }
 

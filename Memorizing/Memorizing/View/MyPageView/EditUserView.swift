@@ -195,19 +195,6 @@ struct EditUserView: View {
                     Text("회원 탈퇴")
                         .foregroundColor(.gray4)
                 }
-                .alert(isPresented: $isShownDeleteAccountAlert) {
-                    Alert(
-                        title: Text("회원 탈퇴하기"),
-                        message: Text("정말 가실거에요? 삭제된 회원정보는 복구할 수 없어요!"),
-                        primaryButton: .cancel(Text("탈퇴 안할래요")),
-                        secondaryButton: .destructive(Text("탈퇴 할래요!"), action: {
-                            Task {
-                               await authStore.deleteAccount()
-                            }
-                        })
-                    )
-                    
-                }
                 Spacer()
             }
             
@@ -217,6 +204,16 @@ struct EditUserView: View {
         .padding(.horizontal, 20)
         .navigationTitle("내 정보 수정")
         .navigationBarTitleDisplayMode(.inline)
+        .customAlert(isPresented: $isShownDeleteAccountAlert,
+                     title: "회원 탈퇴하기",
+                     message: "정말 가실거에요?\n삭제된 회원정보는 복구할 수 없어요!",
+                     primaryButtonTitle: "탈퇴하기",
+                     primaryAction: {
+            Task {
+                await authStore.deleteAccount()
+            }
+        },
+                     withCancelButton: true)
         
     }// ZStack
     

@@ -28,7 +28,7 @@ struct LastTryCardView: View {
     var wordCount: Int {
         words.count - 1
     }
-    @State var isShowingModal: Bool = false
+    
     @State var totalScore: Double = 0
     
     // MARK: 카드 뒤집는데 쓰일 것들
@@ -71,7 +71,6 @@ struct LastTryCardView: View {
             }
             
             LevelCheckForLast(
-                isShowingModal: $isShowingModal,
                 isFlipped: $isFlipped,
                 isDismiss: $isDismiss,
                 totalScore: $totalScore,
@@ -129,7 +128,7 @@ struct LastTryCardView: View {
 }
 
 struct LevelCheckForLast: View {
-    @Binding var isShowingModal: Bool
+    @State var isShowingModal: Bool = false
     @Binding var isFlipped: Bool
     @Binding var isDismiss: Bool
     @Binding var totalScore: Double
@@ -150,7 +149,6 @@ struct LevelCheckForLast: View {
                     num += 1
                     isFlipped = false
                 } else {
-                    //                    isShowingAlert = true
                     isShowingModal = true
                 }
                 
@@ -172,7 +170,6 @@ struct LevelCheckForLast: View {
                     isFlipped = false
                     totalScore += 0.25
                 } else {
-                    //                    isShowingAlert = true
                     isShowingModal = true
                 }
             } label: {
@@ -193,7 +190,6 @@ struct LevelCheckForLast: View {
                     isFlipped = false
                     totalScore += 1
                 } else {
-                    //                    isShowingAlert = true
                     isShowingModal = true
                 }
             } label: {

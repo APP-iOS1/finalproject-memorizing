@@ -23,21 +23,19 @@ struct NotificationScheduleView: View {
                     ScheduleCell(notiId: request.identifier)
                         .listRowSeparator(.hidden)
                         .padding(.horizontal, 5)
-                        .alert(isPresented: $isShownDeleteAlert) {
-                            Alert(
-                                title: Text("복습 알림 끄기"),
-                                message: Text("이번 회차의 복습 알림을 지우시면 다시 설정할 수 없어요!"),
-                                primaryButton: .cancel(Text("안지울래요!")),
-                                secondaryButton: .destructive(Text("이번만 지울래요!"), action: {
-                                    if let indexSet = toBeDeleted {
-                                        for index in indexSet {
-                                            let removeItem: UNNotificationRequest = notiManager.pendingRequests[index]
-                                            notiManager.removeRequest(withIdentifier: removeItem.identifier)
+                        .customAlert(isPresented: $isShownDeleteAlert,
+                                     title: "복습 알림 끄기",
+                                     message: "이번 회차의 복습 알림을 지우시면 다시 설정할 수 없어요!",
+                                     primaryButtonTitle: "알림 삭제",
+                                     primaryAction: {
+                                        if let indexSet = toBeDeleted {
+                                            for index in indexSet {
+                                                let removeItem: UNNotificationRequest = notiManager.pendingRequests[index]
+                                                notiManager.removeRequest(withIdentifier: removeItem.identifier)
+                                            }
                                         }
-                                    }
-                                })
-                            )
-                        }
+                                     },
+                                     withCancelButton: true)
                 }
                 .onDelete { indexSet in
                     self.isShownDeleteAlert.toggle()
