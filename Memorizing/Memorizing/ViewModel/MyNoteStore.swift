@@ -40,9 +40,18 @@ class MyNoteStore: ObservableObject {
                         let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                         let updateDate: Date = createdAtTimeStamp.dateValue()
                         let nextStudyDate: Date? = docData["nextStudyDate"] as? Date
-                        let marketPurchaseDate: Date = docData["marketPurchaseDate"] as? Date ?? Date()
                         let notePrice: Int = docData["notePrice"] as? Int ?? 0
-                        let reviewDate: Date? = docData["reviewDate"] as? Date
+                        
+                        var marketPurchaseDate: Date?
+                        var reviewDate: Date?
+                        
+                        if let marketPurchaseTimeStamp: Timestamp = docData["marketPurchaseDate"] as? Timestamp {
+                            marketPurchaseDate = marketPurchaseTimeStamp.dateValue()
+                        }
+                        
+                        if let reviewTimeStamp: Timestamp = docData["reviewDate"] as? Timestamp {
+                            reviewDate = reviewTimeStamp.dateValue()
+                        }
                         
                         let myWordNote = MyWordNote(id: id,
                                                     noteName: noteName,
@@ -57,6 +66,7 @@ class MyNoteStore: ObservableObject {
                                                     notePrice: notePrice,
                                                     reviewDate: reviewDate)
                         self.myWordNotes.append(myWordNote)
+                        print("myWordNotes : \(self.myWordNotes)")
                     }
                 }
             }
