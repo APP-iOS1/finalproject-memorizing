@@ -17,6 +17,7 @@ struct CreateReviewView: View {
     @State private var reviewStarCount: Int = 5
     
     var wordNote: NoteEntity
+    var marketPurchaseDate: Date?
     @State private var reviewPlaceholder: String = "리뷰를 작성해주세요. 다른 사용자분들께 도움이 된답니다!"
     
     var body: some View {
@@ -52,7 +53,7 @@ struct CreateReviewView: View {
             // 암기장 마켓등록일, 판매 금액
             HStack {
                 // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
-                Text("\((wordNote.updateDate ?? Date()).formatted(.dateTime.day().month().year()))")
+                Text("\((marketPurchaseDate ?? Date()).formatted(.dateTime.day().month().year()))")
                     .font(.footnote)
                     .foregroundColor(.gray2)
                     .multilineTextAlignment(.leading)

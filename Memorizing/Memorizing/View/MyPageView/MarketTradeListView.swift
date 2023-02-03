@@ -13,12 +13,13 @@ struct MarketTradeListView: View {
     @EnvironmentObject var marketStore: MarketStore
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     
     var body: some View {
         ScrollView {
             // MARK: - 판매내역 / 구매내역 토글
             VStack(spacing: 5) {
-                HStack(spacing: 20) {
+                HStack(spacing: 12) {
                     Button {
                         marketTradeToggle = true
                     } label: {
@@ -53,7 +54,7 @@ struct MarketTradeListView: View {
                     if note.enrollmentUser != authStore.user?.id {
                         VStack {
                             HStack {
-                                Text(note.updateDateFormatter)
+                                Text("\(note.marketPurchaseDateFormatter ?? "날짜 정보 표시불가")")
                                     .foregroundColor(.gray1)
                                     .font(.footnote)
                                 Spacer()
@@ -72,10 +73,26 @@ struct MarketTradeListView: View {
                                 Spacer()
                                 
                                 if note.reviewDate == nil {
-                                    Text("후기 작성하고 ")
-                                    + Text("10P ")
-                                    + Text("받기!")
-                                    Image(systemName: "chevron.right")
+                                    NavigationLink {
+                                        let noteEntity: NoteEntity
+                                        = coreDataStore
+                                            .returnNote(id: note.id,
+                                                        noteName: note.noteName,
+                                                        enrollmentUser: note.enrollmentUser,
+                                                        noteCategory: note.noteCategory,
+                                                        repeatCount: note.repeatCount,
+                                                        firstTestResult: note.firstTestResult,
+                                                        lastTestResult: note.lastTestResult,
+                                                        updateDate: note.updateDate)
+                                        
+                                        CreateReviewView(wordNote: noteEntity,
+                                                         marketPurchaseDate: note.marketPurchaseDate)
+                                    } label: {
+                                        Text("후기 작성하고 ")
+                                        + Text("10P ")
+                                        + Text("받기!")
+                                        Image(systemName: "chevron.right")
+                                    }
                                 } else {
                                     Text("후기 작성 완료")
                                 }
@@ -89,7 +106,7 @@ struct MarketTradeListView: View {
                             Divider()
                                 .padding(.vertical, 10)
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 30)
                     }
                 }
             // MARK: - 판매내역 보기
@@ -142,7 +159,7 @@ struct MarketTradeListView: View {
                             Divider()
                                 .padding(.bottom, 10)
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 30)
                     }
                 }
             }

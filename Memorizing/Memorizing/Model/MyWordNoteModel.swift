@@ -26,7 +26,7 @@ struct MyWordNote: Identifiable, NoteProtocol {
     /// 마켓에서 구매한 가격
     var notePrice: Int?
     /// 리뷰 작성 시간
-    var reviewDate: Date?
+    var reviewDate: Date? 
     
     // 카테고리와 색상 매칭
     var noteColor: Color {
@@ -62,8 +62,8 @@ struct MyWordNote: Identifiable, NoteProtocol {
         }
     }
     
-    /// 날짜 형식 변경
-    var updateDateFormatter: String {
+    /// marketPurchaseDate 날짜 형식 변경
+    var marketPurchaseDateFormatter: String? {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_kr")
         dateFormatter.timeZone = TimeZone(abbreviation: "KST")
@@ -71,4 +71,5 @@ struct MyWordNote: Identifiable, NoteProtocol {
         
         return dateFormatter.string(from: marketPurchaseDate ?? Date())
     }
+    
 }
