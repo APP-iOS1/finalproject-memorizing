@@ -9,12 +9,13 @@ import SwiftUI
 
  struct EditListView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
-     @EnvironmentObject var coreDataStore: CoreDataStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     var wordNote: NoteEntity
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
 
     @State private var isShowingAddView = false
+    @State private var isToastToggle = false
     @State private var showingAlert = false
     var body: some View {
         ZStack {
@@ -45,6 +46,7 @@ import SwiftUI
                     
                     // MARK: 단어장 날짜
                     HStack {
+                        // FIXME: 날짜 변경
                         Text("2023.01.18")
                             .foregroundColor(.gray2)
                         
@@ -123,7 +125,10 @@ import SwiftUI
             }
             .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
             .sheet(isPresented: $isShowingAddView, content: {
-                AddWordView(wordNote: wordNote)
+                AddWordView(wordNote: wordNote,
+                            isToastToggle: $isToastToggle)
+                .customToastMessage(isPresented: $isToastToggle,
+                                    message: "단어 저장 완료!")
             })
         }
         .toolbar {

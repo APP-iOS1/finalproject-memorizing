@@ -22,6 +22,7 @@ struct MarketView: View {
     /// 검색창 입력 텍스트
     @State private var searchText: String = ""
     @State private var isSheetOpen: Bool = false
+    @State private var isToastToggle: Bool = false
     
     @State var time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
     
@@ -40,172 +41,176 @@ struct MarketView: View {
     @State private var selectedSortCategory: SortCategory = .salesCount
     
     var body: some View {
-        
-        // MARK: - 검색창
-        MarketViewSearchBar(searchText: $searchText)
-            .padding(.top, 15)
-        
-        // MARK: - 카테고리 버튼들
-        ScrollView(.horizontal, showsIndicators: false) {
-            MarketViewCategoryButton(selectedCategory: $selectedCategory,
-                                     categoryArray: MarketView.categoryArray)
-        }
-        .padding(.leading, 13)
-        
-        // MARK: - 검색창 하단 구분선
-//        Divider()
-//            .frame(height: 5)
-//            .overlay(Color("Gray5"))
-//            .padding(.top, -3)
-        
-        // MARK: - 정렬기준 선택하기
-        HStack {
-            Spacer()
-            
-            Menu {
-                ForEach(SortCategory.allCases, id: \.self) { value in
-                    Button {
-                        self.selectedSortCategory = value
-                    } label: {
-                        HStack {
-                            Text(value.localizedName)
-                        }
-                    }
-                }
-            } label: {
-                Text(selectedSortCategory.localizedName)
-                    .foregroundColor(Color.black)
-                    .scaledToFit()
-                    .padding(.trailing, 20)
-            }
-        }
-        
-        ZStack {
-            ScrollView(showsIndicators: false) {
-                // MARK: - Grid View
-                
-                let columns = [
-                    GridItem(.flexible(), spacing: 0, alignment: nil),
-                    GridItem(.flexible(), spacing: 0, alignment: nil)
-                ]
-                
-                LazyVGrid(
-                    columns: columns,
-                    spacing: 18,
-                    content: {
-                        switch selectedSortCategory {
-                        case .salesCount:
-                            ForEach(marketStore.marketWordNotes.sorted{ $0.salesCount > $1.salesCount }) { wordNote in
-                                if searchText.isEmpty
-                                    || wordNote.noteName.contains(searchText) {
-                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                         selectedCategory: $selectedCategory,
-                                                         selectedWordNote: wordNote)
-                                }
-                            }
-                        case .starScoreTotal:
-                            ForEach(marketStore.marketWordNotes.sorted{ $0.starScoreTotal > $1.starScoreTotal }) { wordNote in
-                                if searchText.isEmpty
-                                    || wordNote.noteName.contains(searchText) {
-                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                         selectedCategory: $selectedCategory,
-                                                         selectedWordNote: wordNote)
-                                }
-                            }
-                        case .reviewCount:
-                            ForEach(marketStore.marketWordNotes.sorted{ $0.reviewCount > $1.reviewCount }) { wordNote in
-                                if searchText.isEmpty
-                                    || wordNote.noteName.contains(searchText) {
-                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                         selectedCategory: $selectedCategory,
-                                                         selectedWordNote: wordNote)
-                                }
-                            }
-                        }
-                        
-                            // MARK: - Pagination(InfiniteScroll) 구현 코드
-//                            if marketStore.marketWordNotes.last!.id == wordNote.id {
-//                                GeometryReader { geo in
-//                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-//                                                         selectedCategory: $selectedCategory,
-//                                                         selectedWordNote: wordNote)
-//                                    .padding(.leading, 5)
-//                                    .onAppear {
-//                                        self.time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
-//                                    }
-//                                    .onReceive(self.time) { (_) in
-//                                        if geo.frame(in: .global).maxY < UIScreen.main.bounds.height - 80 {
-//
-//                                            // 나중에 데이터가 많아지고 limit이 20으로 바뀌면 아래 5를 20으로 바꿔야 됨
-//                                            if marketStore.snapshotCounter >= 5 {
-//                                                Task {
-//                                                    await marketStore.marketNotesWillPagingUpdateFetchDB()
-//                                                }
-//
-//                                                print("Update Data...")
-//                                            }
-//
-//                                            self.time.upstream.connect().cancel()
-//                                        }
-//                                    }
-//                                }
-//                            } else {
-//                                MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-//                                                     selectedCategory: $selectedCategory,
-//                                                     selectedWordNote: wordNote)
-//                            }
-                            // MARK: - 여기까지
-                    })
-                .padding(.horizontal)
+        VStack {
+            // MARK: - 검색창
+            MarketViewSearchBar(searchText: $searchText)
                 .padding(.top, 15)
-                .padding(.bottom, 120)
-            }   // ScrollView end
-            .padding(.bottom, 1)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Image("Logo")
-                        .resizable()
-                        .frame(width: 35, height: 22)
-                        .padding(.leading, 10)
-                }
-                ToolbarItem(placement: .principal) {
-                    Text("암기장 마켓")
-                        .font(.title3.bold())
-                        .accessibilityAddTraits(.isHeader)
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                   
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Color.mainBlue)
-                        .frame(width: 60, height: 30)
-                        .overlay {
-                            Text("\(authStore.user?.coin ?? 0)P")
-                                .foregroundColor(.mainBlue)
-                                .font(.subheadline)
-                        }
-                }
+            
+            // MARK: - 카테고리 버튼들
+            ScrollView(.horizontal, showsIndicators: false) {
+                MarketViewCategoryButton(selectedCategory: $selectedCategory,
+                                         categoryArray: MarketView.categoryArray)
             }
-            .fullScreenCover(isPresented: $isSheetOpen) {
-                // TODO: 단어장 클릭시 단어 목록 리스트 보여주기
-                MarketViewSheet(wordNote: marketStore.sendWordNote)
+            .padding(.leading, 13)
+            
+            // MARK: - 검색창 하단 구분선
+            //        Divider()
+            //            .frame(height: 5)
+            //            .overlay(Color("Gray5"))
+            //            .padding(.top, -3)
+            
+            // MARK: - 정렬기준 선택하기
+            HStack {
+                Spacer()
+                
+                Menu {
+                    ForEach(SortCategory.allCases, id: \.self) { value in
+                        Button {
+                            self.selectedSortCategory = value
+                        } label: {
+                            HStack {
+                                Text(value.localizedName)
+                            }
+                        }
+                    }
+                } label: {
+                    Text(selectedSortCategory.localizedName)
+                        .foregroundColor(Color.black)
+                        .scaledToFit()
+                        .padding(.trailing, 20)
+                }
             }
             
-            NavigationLink(destination: MarketViewAddButton()) {
-                Circle()
-                    .foregroundColor(.mainBlue)
-                    .frame(width: 65, height: 65)
-                    .overlay {
-                        Image(systemName: "plus")
-                            .foregroundColor(.white)
-                            .font(.title3)
-                            .bold()
+            ZStack {
+                ScrollView(showsIndicators: false) {
+                    // MARK: - Grid View
+                    
+                    let columns = [
+                        GridItem(.flexible(), spacing: 0, alignment: nil),
+                        GridItem(.flexible(), spacing: 0, alignment: nil)
+                    ]
+                    
+                    LazyVGrid(
+                        columns: columns,
+                        spacing: 18,
+                        content: {
+                            switch selectedSortCategory {
+                            case .salesCount:
+                                ForEach(marketStore.marketWordNotes.sorted{ $0.salesCount > $1.salesCount }) { wordNote in
+                                    if searchText.isEmpty
+                                        || wordNote.noteName.contains(searchText) {
+                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                             selectedCategory: $selectedCategory,
+                                                             selectedWordNote: wordNote)
+                                    }
+                                }
+                            case .starScoreTotal:
+                                ForEach(marketStore.marketWordNotes.sorted{ $0.starScoreTotal > $1.starScoreTotal }) { wordNote in
+                                    if searchText.isEmpty
+                                        || wordNote.noteName.contains(searchText) {
+                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                             selectedCategory: $selectedCategory,
+                                                             selectedWordNote: wordNote)
+                                    }
+                                }
+                            case .reviewCount:
+                                ForEach(marketStore.marketWordNotes.sorted{ $0.reviewCount > $1.reviewCount }) { wordNote in
+                                    if searchText.isEmpty
+                                        || wordNote.noteName.contains(searchText) {
+                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                             selectedCategory: $selectedCategory,
+                                                             selectedWordNote: wordNote)
+                                    }
+                                }
+                            }
+                            
+                            // MARK: - Pagination(InfiniteScroll) 구현 코드
+                            //                            if marketStore.marketWordNotes.last!.id == wordNote.id {
+                            //                                GeometryReader { geo in
+                            //                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                            //                                                         selectedCategory: $selectedCategory,
+                            //                                                         selectedWordNote: wordNote)
+                            //                                    .padding(.leading, 5)
+                            //                                    .onAppear {
+                            //                                        self.time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
+                            //                                    }
+                            //                                    .onReceive(self.time) { (_) in
+                            //                                        if geo.frame(in: .global).maxY < UIScreen.main.bounds.height - 80 {
+                            //
+                            //                                            // 나중에 데이터가 많아지고 limit이 20으로 바뀌면 아래 5를 20으로 바꿔야 됨
+                            //                                            if marketStore.snapshotCounter >= 5 {
+                            //                                                Task {
+                            //                                                    await marketStore.marketNotesWillPagingUpdateFetchDB()
+                            //                                                }
+                            //
+                            //                                                print("Update Data...")
+                            //                                            }
+                            //
+                            //                                            self.time.upstream.connect().cancel()
+                            //                                        }
+                            //                                    }
+                            //                                }
+                            //                            } else {
+                            //                                MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                            //                                                     selectedCategory: $selectedCategory,
+                            //                                                     selectedWordNote: wordNote)
+                            //                            }
+                            // MARK: - 여기까지
+                        })
+                    .padding(.horizontal)
+                    .padding(.top, 15)
+                    .padding(.bottom, 120)
+                }   // ScrollView end
+                .padding(.bottom, 1)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Image("Logo")
+                            .resizable()
+                            .frame(width: 35, height: 22)
+                            .padding(.leading, 10)
                     }
-                    .shadow(radius: 1, x: 1, y: 1)
+                    ToolbarItem(placement: .principal) {
+                        Text("암기장 마켓")
+                            .font(.title3.bold())
+                            .accessibilityAddTraits(.isHeader)
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        
+                        RoundedRectangle(cornerRadius: 30)
+                            .stroke(Color.mainBlue)
+                            .frame(width: 60, height: 30)
+                            .overlay {
+                                Text("\(authStore.user?.coin ?? 0)P")
+                                    .foregroundColor(.mainBlue)
+                                    .font(.subheadline)
+                            }
+                    }
+                }
+                .fullScreenCover(isPresented: $isSheetOpen) {
+                    // TODO: 단어장 클릭시 단어 목록 리스트 보여주기
+                    MarketViewSheet(wordNote: marketStore.sendWordNote,
+                                    isToastToggle: $isToastToggle)
+                }
+                
+                NavigationLink(destination: MarketViewAddButton()) {
+                    Circle()
+                        .foregroundColor(.mainBlue)
+                        .frame(width: 65, height: 65)
+                        .overlay {
+                            Image(systemName: "plus")
+                                .foregroundColor(.white)
+                                .font(.title3)
+                                .bold()
+                        }
+                        .shadow(radius: 1, x: 1, y: 1)
+                }
+                .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.25)
             }
-            .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.25)
         }
+        .customToastMessage(isPresented: $isToastToggle,
+                            message: "구매가 완료되었습니다!")
 //        .onAppear {
 //            marketStore.fetchMarketWordNotes()
 //        }
