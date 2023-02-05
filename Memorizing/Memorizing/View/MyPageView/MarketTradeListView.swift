@@ -13,6 +13,8 @@ struct MarketTradeListView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var marketTradeToggle: Bool = true
     @State private var isReviewed: Bool = true
     @State private var isAlertOpen: Bool = false
@@ -180,6 +182,9 @@ struct MarketTradeListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             myNoteStore.myNotesWillBeFetchedFromDB()
+        }
+        .onDisappear {
+            dismiss()
         }
         .customAlert(isPresented: $isAlertOpen,
                      title: "판매등록 취소",
