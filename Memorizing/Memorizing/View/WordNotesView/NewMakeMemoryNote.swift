@@ -119,7 +119,7 @@ struct NewMakeMemoryNote: View {
                     Spacer()
                     Text("\(manager.noteName.count)/20")
                         .font(.caption)
-                        .foregroundColor(.gray3)
+                        .foregroundColor(manager.noteName.count == 0 ? Color.gray3 : Color.mainBlue)
                         .padding(.trailing)
                         .padding(.top, 4)
                 }
