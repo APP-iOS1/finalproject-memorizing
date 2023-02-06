@@ -263,10 +263,18 @@ class AuthStore: UIViewController, ObservableObject {
     // MARK: - Firestore SignUp Function / FireStore-DB에 UserInfo를 저장함
     func userInfoDidSaveDB(platform: String) {
         if let currentUser = Auth.auth().currentUser {
+            var newEmail = Auth.auth().currentUser?.email ?? "\(self.user!.email)"
+            print("저장 전 이메일: \(newEmail)")
+            if newEmail.hasPrefix("kakao_") {
+                let range = newEmail.firstRange(of: "kakao_")
+                newEmail.removeSubrange(range!)
+                print("저장 할 이메일: \(newEmail)")
+            }
+            self.user!.coin = 1000
             database.collection("users").document(currentUser.uid)
                 .setData([
                     "id": currentUser.uid,
-                    "email": self.user!.email,
+                    "email": newEmail,
                     "nickName": self.user!.nickName,
                     "coin": 1000,
                     "signInPlatform": self.user!.signInPlatform

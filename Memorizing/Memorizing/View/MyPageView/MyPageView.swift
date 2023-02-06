@@ -38,11 +38,11 @@ struct MyPageView: View {
                                 .fontWeight(.semibold)
                             
                             let email: String = authStore.user?.email ?? ""
-                            if email.contains("kakao") {
-                                loginLogo(name: "KakaoLogo")
-                            } else if email.contains("appleid") {
+                            switch authStore.user?.signInPlatform {
+                            case "kakao": loginLogo(name: "KakaoLogo")
+                            case "apple":
                                 loginLogo(name: "AppleLogo")
-                            } else if email.contains("gmail") {
+                            default:
                                 loginLogo(name: "GoogleLogo")
                             }
                         }
