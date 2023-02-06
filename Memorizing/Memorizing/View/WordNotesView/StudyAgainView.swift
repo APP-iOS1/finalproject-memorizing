@@ -36,29 +36,30 @@ struct StudyAgainView: View {
                                     RoundedRectangle(cornerRadius: 20)
                                         .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""),
                                                 lineWidth: 1)
-                                        .frame(width: 50, height: 20)
+                                        .frame(width: 45, height: 23)
                                         .overlay {
                                             Text(myWordNote.noteCategory ?? "No Categoryname")
-                                                .font(.caption)
+                                                .font(.caption2)
                                         }
                                     Spacer()
                                 }
-                                .padding(.horizontal, 15)
+                                .padding(.horizontal, 8)
                                 
                                 HStack {
                                     HStack {
                                         Text(myWordNote.noteName ?? "No Notename")
                                             .foregroundColor(.mainBlack)
-                                            .font(.headline)
+                                            .font(.body)
+                                            .fontWeight(.semibold)
                                             .padding(.top, 7)
-                                            .padding(.leading, 4)
+                                            .padding(.leading, 6)
                                             .padding(.bottom, 3)
                                             .lineLimit(1)
                                         
                                         Spacer()
                                     }
                                     .frame(width: UIScreen.main.bounds.width * 0.62)
-                                    .padding(.horizontal, 15)
+                                    .padding(.horizontal, 6)
                                     .padding(.bottom, 10)
                                     
                                     Spacer()
@@ -155,8 +156,9 @@ struct StudyAgainView: View {
                                     // 도장 이미지
                                     Image("goodicon")
                                         .resizable()
-                                        .frame(width: 75, height: 75)
-                                        .rotationEffect(.degrees(30))
+                                        .frame(width: 70, height: 70)
+                                        .rotationEffect(.degrees(10))
+                                        .padding(.top, 2)
                                         .padding(.bottom, 35)
                                         .padding(.leading, 55)
                                 }

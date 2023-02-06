@@ -28,7 +28,7 @@ struct MarketViewNoteButton: View {
             } label: {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(Color.gray4)
-                    .frame(width: 168, height: 111)
+                    .frame(width: 168, height: 115)
                     .overlay {
                         HStack {
                             Rectangle()
@@ -40,65 +40,66 @@ struct MarketViewNoteButton: View {
                             
                             VStack {
                                 // 암기장 카테고리
-                                HStack {
+                                HStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 30)
                                         .stroke(selectedWordNote.noteColor)
-                                        .frame(width: 40, height: 20)
+                                        .frame(width: 32, height: 18)
                                         .overlay {
                                             Text(selectedWordNote.noteCategory)
                                                 .font(.caption2)
                                                 .fontWeight(.bold)
                                                 .foregroundColor(selectedWordNote.noteColor)
                                         }
+                                        .padding(.top, 2)
                                     
                                     Spacer()
                                 }
-                                .frame(height: 20)
+                                .frame(height: 18)
                                 
                                 // 암기장 제목
-                                HStack(alignment: .top) {
+                                HStack{
                                     Text(selectedWordNote.noteName)
                                         .foregroundColor(.mainBlack)
                                         .font(.footnote)
-                                        .fontWeight(.heavy)
-                                        .bold()
+                                        .fontWeight(.bold)
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(2)
                                     
                                     Spacer()
                                 }
-                                .frame(width: 140, height: 30)
-                                .padding(.bottom, 3)
+                                .frame(width: 140, height: 40)
+//                                .padding(.bottom, 3)
                                 
                                 // 암기장 판매 가격
                                 HStack {
-                                    HStack(spacing: 6) {
+                                    HStack(spacing: 2) {
                                         let reviewCount: Int = selectedWordNote.reviewCount
                                         let reviewScore: Double = selectedWordNote.starScoreTotal / Double(reviewCount)
                                         let score: String = String(format: "%.1f", reviewScore) // "5.1"
 
                                         Image(systemName: "star.fill")
-                                            .font(.subheadline)
+                                            .font(.caption)
                                             .foregroundColor(Color.iTColor)
+                                            .padding(.trailing, 1)
                                         
                                         if reviewCount == 0 {
-                                            Text("0.0 (0)")
-                                                .font(.caption)
+                                            Text("(0)")
+                                                .font(.caption2)
                                                 .foregroundColor(Color.gray3)
                                         } else {
                                             Text("\(score) (\(reviewCount))")
-                                                .font(.caption)
-                                                .foregroundColor(Color.gray3)
+                                                .font(.caption2)
+                                                .foregroundColor(Color.gray2)
                                         }
 
                                     }
                                     
                                     Spacer()
                                     Text("\(selectedWordNote.notePrice) P")
-                                        .font(.subheadline)
+                                        .font(.callout)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.mainDarkBlue)
-                                        .padding(.trailing, 5)
+                                        .padding(.trailing, 8)
                                 }
                                 .frame(height: 20)
                             }
