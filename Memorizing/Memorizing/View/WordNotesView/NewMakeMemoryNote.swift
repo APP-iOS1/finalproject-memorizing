@@ -29,8 +29,13 @@ struct NewMakeMemoryNote: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     @Binding var isShowingNewMemorySheet: Bool
+    
+    // 글자수 제한을 위한 manager 선언 -> 내부에 noteName 변수를 manager.noteName으로 선언함
+    @StateObject var manager = TFManamger()
+
     @Binding var isToastToggle: Bool
-    @State private var noteName: String = ""
+    // @State private var noteName: String = ""
+
     // 카테고리를 눌렀을때 담기는 변수
     @State private var noteCategory: String = ""
     @State private var categoryColorIndex: Int = 0
@@ -101,7 +106,7 @@ struct NewMakeMemoryNote: View {
                     .font(.headline)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.leading)
-                TextField("암기장 제목을 입력해주세요(필수)", text: $noteName)
+                TextField("암기장 제목을 입력해주세요(필수)", text: $manager.noteName)
                     .padding(15)
                     .accentColor(.mainBlue)
                     .lineLimit(3...5)
@@ -113,6 +118,15 @@ struct NewMakeMemoryNote: View {
                     .onAppear {
                         UIApplication.shared.hideKeyboard()
                     }
+                // 글자수 제한 표시
+                HStack {
+                    Spacer()
+                    Text("\(manager.noteName.count)/20")
+                        .font(.caption)
+                        .foregroundColor(manager.noteName.count == 0 ? Color.gray3 : Color.mainBlue)
+                        .padding(.trailing)
+                        .padding(.top, 4)
+                }
             }
             
             VStack(alignment: .leading, spacing: 20) {
@@ -184,14 +198,14 @@ struct NewMakeMemoryNote: View {
     // 하단 ( 버튼 )
     var makeNoteButton: some View {
         RoundedRectangle(cornerRadius: 30)
-            .fill(!noteName.isEmpty && !noteCategory.isEmpty ? .blue : .gray)
+            .fill(!manager.noteName.isEmpty && !noteCategory.isEmpty ? .blue : .gray)
             .frame(width: 350, height: 40)
             .overlay {
                 Button {
                     let id = UUID().uuidString
                     myNoteStore.myNotesWillBeSavedOnDB(
                         wordNote: MyWordNote(id: id,
-                                             noteName: noteName,
+                                             noteName: manager.noteName,
                                              noteCategory: noteCategory,
                                              enrollmentUser: authStore.user?.id ?? "",
                                              repeatCount: 0,
@@ -203,7 +217,7 @@ struct NewMakeMemoryNote: View {
                     
                     // coreData에 저장
                     coreDataStore.addNote(id: id,
-                                          noteName: noteName,
+                                          noteName: manager.noteName,
                                           enrollmentUser: authStore.user?.id ?? "No Enrollment User",
                                           noteCategory: noteCategory,
                                           firstTestResult: 0,
@@ -223,7 +237,20 @@ struct NewMakeMemoryNote: View {
                         .fontWeight(.bold)
                 }
             }
-            .disabled(!noteName.isEmpty && !noteCategory.isEmpty ? false : true)
+            .disabled(!manager.noteName.isEmpty && !noteCategory.isEmpty ? false : true)
+    }
+    // MARK: - 글자수 제한(20자) 메서드, NoteName(암기장 이름) 변수를 여기서 선언함
+    class TFManamger: ObservableObject {
+        @Published var noteName = "" {
+            
+            didSet {
+                // noteName의 길이가 20개 이상이거나, oldValue의 NoteCount가 20이하일 경우
+                // noteName은 oldValue로 설정함! (즉, 20자 미만으로 설정)
+                if noteName.count > 20 && oldValue.count <= 20 {
+                    noteName = oldValue
+                }
+            }
+        }
     }
 }
 
