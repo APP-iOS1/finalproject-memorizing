@@ -41,6 +41,9 @@ class CoreDataStore: ObservableObject {
     let database = Firestore.firestore()
     @Published var notes: [NoteEntity] = []
     
+    // WordEntity 내부의 id를 받아올 수 있도록 선언하려고 함
+    @Published var words: [WordEntity] = []
+    
     init() {
         getNotes()
     }
@@ -240,12 +243,18 @@ class CoreDataStore: ObservableObject {
     func deleteWord(word: WordEntity) {
         
         manager.context.delete(word)
-        
         save()
     }
     
+    // MARK: - 코어데이터 상에서도 note 자체를 지워줘야 하는데.. 왜 업데이트가 안되는거지?
+    func deleteNote(note: NoteEntity) {
+        manager.context.delete(note)
+        save()
+        getNotes()
+    }
+    
     func returnColor(category: String) -> Color {
-       
+        
             switch category {
             case "영어":
                 return Color.englishColor
