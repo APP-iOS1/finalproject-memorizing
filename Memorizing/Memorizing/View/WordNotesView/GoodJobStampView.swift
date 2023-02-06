@@ -12,8 +12,12 @@ struct GoodJobStampView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     @EnvironmentObject var authStore: AuthStore
+    
+    var lastTestResult: Double
     var wordNote: NoteEntity
+    
     @Binding var isDismiss: Bool
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -45,12 +49,18 @@ struct GoodJobStampView: View {
                     Button {
                         // FIXME: - 현기 수정
                         Task.init {
-                            async let repeatCountWillBePlusOne: () = myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote, nextStudyDate: nil)
+                            async let repeatCountWillBePlusOne: ()
+                                = myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote,
+                                                                       nextStudyDate: nil,
+                                                                       firstTestResult: wordNote.firstTestResult,
+                                                                       lastTestResult: lastTestResult)
                             async let plusUserPoint: () = authStore.plusUserPoint(point: 5)
                             
                             let _ = await (repeatCountWillBePlusOne, plusUserPoint)
                             
-                            coreDataStore.plusRepeatCount(note: wordNote)
+                            coreDataStore.plusRepeatCount(note: wordNote,
+                                                          firstTestResult: wordNote.firstTestResult,
+                                                          lastTestResult: lastTestResult)
                             
                             isDismiss = true
                         }

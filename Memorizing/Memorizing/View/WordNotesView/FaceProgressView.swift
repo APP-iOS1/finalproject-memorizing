@@ -12,6 +12,22 @@ struct FaceProgressView: View {
     
     var myWordNote: NoteEntity
     @EnvironmentObject var coreDataStore: CoreDataStore
+    
+    /// 1,4회차 학습 성취도에 따라 표정 이모지 변경
+    func returnTestResultFace(result: Double) -> String {
+        var face: String = "FaceNormal"
+        
+        if result > 0 && result <= 0.5 {
+            face = "FaceBad"
+        } else if result > 0.5 && result <= 0.8 {
+            face = "FaceNormal"
+        } else {
+            face = "FaceGood"
+        }
+        
+        return face
+    }
+    
     var body: some View {
         ZStack {
             
@@ -53,7 +69,7 @@ struct FaceProgressView: View {
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                                 // FIXME: DB수정 후 결과에 따라 표정 변하도록 수정
-                                Image("FaceNomal")
+                                Image("\(returnTestResultFace(result: myWordNote.firstTestResult))")
                                     .resizable()
                                     .frame(width: 24,
                                            height: 24)
@@ -135,7 +151,7 @@ struct FaceProgressView: View {
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                                 // FIXME: DB수정 후 결과에 따라 표정 변하도록 수정
-                                Image("FaceGood")
+                                Image("\(returnTestResultFace(result: myWordNote.lastTestResult))")
                                     .resizable()
                                     .frame(width: 24,
                                            height: 24)

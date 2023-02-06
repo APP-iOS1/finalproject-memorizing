@@ -7,105 +7,115 @@
 
 import SwiftUI
 
- struct EditListView: View {
+struct EditListView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
-     @EnvironmentObject var coreDataStore: CoreDataStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     var wordNote: NoteEntity
     // MARK: - 취소, 등록 시 창을 나가는 dismiss()
     @Environment(\.dismiss) private var dismiss
-
+    
     @State private var isShowingAddView = false
+    @State private var isToastToggle = false
     @State private var showingAlert = false
+    @State private var todayDate = Date()
+    
     var body: some View {
         ZStack {
             VStack {
-                VStack(spacing: 15) {
-                    // MARK: 단어장 카테고리
+                VStack(spacing: 5) {
+                    
+                    // MARK: 단어장 날짜
                     HStack {
-                        Text("\(wordNote.noteCategory ?? "No Categoty")")
-                            .foregroundColor(.white)
-                            .bold()
-                            .padding(.horizontal, 25)
-                            .padding(.vertical, 7)
-                            .background(coreDataStore.returnColor(category: wordNote.noteCategory ?? ""))
-                            .cornerRadius(20)
+                        // FIXME: 날짜 변경
+                        Text("2023.01.18")
+                            .foregroundColor(.gray2)
+                            .font(.caption)
                         
                         Spacer()
                     }
                     
-                    // MARK: 단어장 제목
-                    HStack {
+                    HStack(alignment: .top) {
+                        // MARK: 단어장 제목
                         Text("\(wordNote.noteName ?? "No name")")
                             .bold()
                             .foregroundColor(Color("MainBlack"))
                             .font(.title2)
+                            .lineLimit(2)
                         
                         Spacer()
-                    }
-                    
-                    // MARK: 단어장 날짜
-                    HStack {
-                        Text("2023.01.18")
-                            .foregroundColor(.gray2)
                         
-                        Spacer()
+                        // MARK: 단어장 카테고리
+                        Text("\(wordNote.noteCategory ?? "No Categoty")")
+                            .foregroundColor(.white)
+                            .font(.caption)
+                            .bold()
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 7)
+                            .background(coreDataStore.returnColor(category: wordNote.noteCategory ?? ""))
+                            .cornerRadius(20)
                     }
-                    
                 }
-                .padding()
+                .padding(.vertical)
+                .padding(.bottom)
+                .padding(.horizontal, 25)
+                .background(Color.gray6)
                 
-                Divider()
-                    .frame(width: 400, height: 5)
-                    .overlay(Color("Gray5"))
-                
-                HStack(spacing: 0) {
+                HStack {
                     Spacer()
-                    
-                    if (wordNote.words?.allObjects as? [WordEntity] ?? []).isEmpty {
-                        Text("추가된 단어가 없습니다!")
-                            .font(.callout)
-                            .fontWeight(.medium)
-                            .foregroundColor(.mainDarkBlue)
-                    } else {
-                        Text("총 ")
-                        Text("\((wordNote.words?.allObjects as? [WordEntity] ?? []).count)개")
-                            .foregroundColor(.mainDarkBlue)
-                        Text("의 단어")
-                    }
-                    
+                        HStack(spacing: 0) {
+                            Text("총 ")
+                            Text("\((wordNote.words?.allObjects as? [WordEntity] ?? []).count)개")
+                                .foregroundColor(.mainDarkBlue)
+                            Text("의 단어")
+                        }
+                        .font(.callout)
+                        .padding(.horizontal, 25)
+//                    }
                 }
                 .bold()
-                .padding(.trailing, 9)
-                .padding(.vertical)
+                .padding(.top, 7)
                 
                 // MARK: 등록된 단어 밀어서 삭제 리스트 구현
                 VStack {
-                    List {
-                        ForEach((wordNote.words?.allObjects as? [WordEntity] ?? [])) { list in
-                            AddListRow(word: list)
-                        }
-                        .onDelete { indexSet in
+                    if wordNote.words?.count == 0 {
+                        VStack {
+                            Spacer()
+                                .frame(height: UIScreen.main.bounds.height * 0.23)
                             
-                            Task {
-                                let word = await myNoteStore.deleteWord(note: wordNote, offset: indexSet)
-                                if let word {
-                                    coreDataStore.deleteWord(word: word)
-                                } else {
-                                    print("no word")
+                            Text("단어가 없습니다.")
+                                .foregroundColor(Color.gray1)
+                                .font(.caption)
+                                .fontWeight(.medium)
+                            Text("우측하단의 버튼을 눌러 단어를 추가해주세요!")
+                                .foregroundColor(Color.gray1)
+                                .font(.caption)
+                                .fontWeight(.medium)
+                            
+                            Spacer()
+                        }
+                    } else {
+                        List {
+                            ForEach((wordNote.words?.allObjects as? [WordEntity] ?? [])) { list in
+                                AddListRow(word: list)
+                            }
+                            .onDelete { indexSet in
+                                Task {
+                                    let word = await myNoteStore.deleteWord(note: wordNote, offset: indexSet)
+                                    if let word {
+                                        coreDataStore.deleteWord(word: word)
+                                    } else {
+                                        print("no word")
+                                    }
                                 }
                             }
-                            
-
                         }
-                        //                    .onMove(perform: moveList)
+                        .listStyle(.inset)
                     }
-                    .listStyle(.inset)
-                    //                .toolbar {
-                    //                    EditButton()
-                    //                }
                 }
+                .padding(.horizontal, 25)
+                
+                Spacer()
             }
-            .padding()
             
             Button {
                 isShowingAddView.toggle()
@@ -123,28 +133,44 @@ import SwiftUI
             }
             .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
             .sheet(isPresented: $isShowingAddView, content: {
-                AddWordView(wordNote: wordNote)
+                AddWordView(wordNote: wordNote,
+                            isToastToggle: $isToastToggle)
+                .customToastMessage(isPresented: $isToastToggle,
+                                    message: "단어 저장 완료!")
             })
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            // MARK: 뒤로가기 버튼
+            ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: "xmark")
                         .foregroundColor(.gray2)
                         .fontWeight(.light)
                 }
-                
+            }
+            // MARK: 삭제하기 등 추가 액션 메뉴 버튼
+            ToolbarItem(placement: .navigationBarLeading) {
+                Menu {
+                    Button("삭제하기") {
+                        // MARK: 암기장 삭제하기 액션
+                    }
+                } label: {
+                    Image(systemName: "gear")
+                        .foregroundColor(.mainBlack)
+                }
             }
         }
+        .navigationTitle("나의 암기장")
+        .navigationBarTitleDisplayMode(.inline)
     }
-
+    
     // MARK: 리스트 순서 수정 함수
-//    func moveList(from source: IndexSet, to destination: Int) {
-//        word.move(fromOffsets: source, toOffset: destination)
-//    }
- }
+    //    func moveList(from source: IndexSet, to destination: Int) {
+    //        word.move(fromOffsets: source, toOffset: destination)
+    //    }
+}
 
 // struct EditListView_Previews: PreviewProvider {
 //    static var previews: some View {

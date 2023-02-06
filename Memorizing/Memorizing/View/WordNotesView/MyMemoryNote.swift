@@ -40,30 +40,30 @@ struct MyMemoryNote: View {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""),
                                             lineWidth: 1)
-                                    .frame(width: 50, height: 20)
+                                    .frame(width: 45, height: 23)
                                     .overlay {
                                         Text(myWordNote.noteCategory ?? "No Category")
                                             .foregroundColor(.black)
-                                            .font(.caption)
-
+                                            .font(.caption2)
                                     }
                                 Spacer()
                             }
-                            .padding(.horizontal, 15)
+                            .padding(.horizontal, 8)
 
                             // 암기할 것 등록하기에서 받아오기
                             HStack {
                                 Text(myWordNote.noteName ?? "No Name")
                                     .foregroundColor(.mainBlack)
-                                    .font(.headline)
+                                    .font(.body)
+                                    .fontWeight(.semibold)
                                     .padding(.top, 7)
-                                    .padding(.leading, 4)
+                                    .padding(.leading, 6)
                                     .padding(.bottom, 3)
                                     .lineLimit(1)
                                 
                                 Spacer()
                             }
-                            .padding(.horizontal, 15)
+                            .padding(.horizontal, 6)
                             .padding(.bottom, 10)
                             
                             if words.isEmpty {
@@ -86,7 +86,7 @@ struct MyMemoryNote: View {
                 .overlay {
                     HStack {
                         Spacer()
-
+                        
                         VStack {
                             Image(systemName: "chevron.forward")
                                 .foregroundColor(.gray2)
@@ -100,22 +100,34 @@ struct MyMemoryNote: View {
                 .padding(.vertical, 5)
                 .onTapGesture(perform: {
                     isShowingSheet.toggle()
+                    
                 })
-        }
-        .fullScreenCover(isPresented: $isShowingSheet) {
-            NavigationStack {
-                EditListView(wordNote: myWordNote)
-//                if words.isEmpty {
-//                    AddListView(wordNote: myWordNote)
-//                } else {
-//                    EditListView(wordNote: myWordNote)
-//                }
-            }
-        }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                opacityValue = 1
-            }
+            // MARK: - ContextMenu를 활용한 암기장 삭제
+            // 해당 데이터가 삭제는 되는데.. 왜 새로고침 하면 다시 words 하위하위 컬렉션은 다시 살아나는지?
+                .contextMenu {
+                    Button(role: .destructive, action: {
+                        myNoteStore.myNotesDidDeleteDB(wordNote: myWordNote)
+                        coreDataStore.deleteNote(note: myWordNote)
+                    }, label: {
+                        Text("삭제하기")
+                        Image(systemName: "trash.fill")
+                    })
+                }
+                .fullScreenCover(isPresented: $isShowingSheet) {
+                    NavigationStack {
+                        EditListView(wordNote: myWordNote)
+                        //                if words.isEmpty {
+                        //                    AddListView(wordNote: myWordNote)
+                        //                } else {
+                        //                    EditListView(wordNote: myWordNote)
+                        //                }
+                    }
+                }
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        opacityValue = 1
+                    }
+                }
         }
     }
 }

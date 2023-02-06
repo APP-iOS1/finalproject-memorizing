@@ -29,18 +29,25 @@ struct MyPageView: View {
                     
                     VStack(alignment: .leading, spacing: 2) {
                         Text("안녕하세요")
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                        Text("\(authStore.user?.nickName ?? "")님!")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                        Text("\(authStore.user?.email ?? "")")
-                            .font(.footnote)
-                            .fontWeight(.light)
                             .foregroundColor(.gray2)
+                            .fontWeight(.semibold)
+                        
+                        HStack {
+                            Text("\(authStore.user?.nickName ?? "") 님")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                            
+                            let email: String = authStore.user?.email ?? ""
+                            if email.contains("kakao") {
+                                loginLogo(name: "KakaoLogo")
+                            } else if email.contains("appleid") {
+                                loginLogo(name: "AppleLogo")
+                            } else if email.contains("gmail") {
+                                loginLogo(name: "GoogleLogo")
+                            }
+                        }
                         
                     } // 그리팅메세지
-                    
                     .padding(.top, -30)
                     
                     HStack(spacing: 15) {
@@ -83,7 +90,6 @@ struct MyPageView: View {
 
                     } // 내 암기장개수 . 받은 도장 개수
                     .font(.footnote)
-                    .padding(.vertical, 2)
                 } // 유저정보
                 .padding(.bottom, 10)
                 
@@ -109,6 +115,7 @@ struct MyPageView: View {
                             .padding(.vertical, 10)
                             .foregroundColor(.mainBlack)
                         }
+                        .isDetailLink(false)
                     }
 
                     VStack {
@@ -161,32 +168,23 @@ struct MyPageView: View {
                     VStack {
                         Divider()
                         
-                        // 단점: 카카오톡 로그인 했을때만 가능
-                        Button(action: {
-                                    let kakaoPlusFriendsURL = URL(string: "http://pf.kakao.com/_hZrWxj/chat")!
-                                    UIApplication.shared.open(kakaoPlusFriendsURL)
-                                }) {
-                                    HStack {
-                                        Text("1:1 문의하기")
-                                            .font(.body)
-                                            .fontWeight(.medium)
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .font(.title3)
-                                            .fontWeight(.light)
-                                    } // 문의하기
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 10)
-                                    .foregroundColor(.mainBlack)
-                                }
-                        
-                        Button(action: {
-                            //공용 구글 이메일을 만들어서 직접 이메일로 보내는것은 어떨까요?
-                                    guard let url = URL(string: "https://www.kakaowork.com/?utm_source=google_pc&tum_medium=sa&utm_campaign=kakaowork&utm_term=%EA%B8%B0%EC%97%85%EC%9A%A9%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1&gclid=Cj0KCQiA2-2eBhClARIsAGLQ2RnWOe4lycDpoECGLUZSy1sh1UAp_rLXxOazNpK6Un04HcfgA7E6cDYaAschEALw_wcB") else { return }
-                                    UIApplication.shared.open(url)
-                                }, label: {
-                                    Text("Open in Kakao Plus Friend")
-                                })
+                        Button {
+                            let kakaoPlusFriendsURL = URL(string: "http://pf.kakao.com/_hZrWxj/chat")!
+                            UIApplication.shared.open(kakaoPlusFriendsURL)
+                        } label: {
+                            HStack {
+                                Text("1:1 문의하기")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.title3)
+                                    .fontWeight(.light)
+                            } // 문의하기
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 10)
+                            .foregroundColor(.mainBlack)
+                        }
                     }
                     
                     VStack {
@@ -231,24 +229,6 @@ struct MyPageView: View {
                             
                         }
                     }
-                    .alert(
-                        "로그아웃",
-                        isPresented: $signOutAlertToggle
-                    ) {
-                        HStack {
-                            Button("닫기", role: .cancel) {
-                                // 그냥 닫기
-                            }
-                            Button("로그아웃", role: .destructive) {
-                                authStore.signOutDidAuth()
-                                notiManager.removeAllRequest()
-                                myNoteStore.myWords = []
-                                myNoteStore.myWordNotes = []
-                            }
-                        }
-                    } message: {
-                        Text("정말 로그아웃 하시겠습니까?")
-                    }
                     
                     Divider()
                     
@@ -272,6 +252,46 @@ struct MyPageView: View {
             }
             .padding(.horizontal, 30)
         }
+        .customAlert(isPresented: $signOutAlertToggle,
+                     title: "로그아웃",
+                     message: "정말 로그아웃 하시겠습니까?",
+                     primaryButtonTitle: "로그아웃",
+                     primaryAction: {
+            authStore.signOutDidAuth()
+            notiManager.removeAllRequest()
+            myNoteStore.myWords = []
+            myNoteStore.myWordNotes = []
+        },
+                     withCancelButton: true)
+    }
+}
+
+struct loginLogo: View {
+    let name: String
+    var color: Color {
+        switch name {
+        case "GoogleLogo":
+            return .white
+        case "KakaoLogo":
+            return .kakaoYellow
+        default:
+            return .black
+        }
+    }
+    
+    var body: some View {
+        Circle()
+            .stroke(name == "GoogleLogo"
+                    ? Color.gray4
+                    : Color.white)
+            .background(Circle().fill(color))
+            .frame(width: 27)
+            .overlay {
+                Image(name)
+                    .resizable()
+                    .frame(width: name == "AppleLogo" ? 13 : 17,
+                           height: 17)
+            }
     }
 }
 

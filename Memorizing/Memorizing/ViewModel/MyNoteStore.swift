@@ -135,19 +135,56 @@ class MyNoteStore: ObservableObject {
                     print("myWordsWillBeSavedOnDB error occured : \(err.localizedDescription)")
                 }
             }
-
     }
     
+    // MARK: - words를 삭제하는 함수 / 메모 암기장에서 ContextMenu 기능을 통해 서버에서 삭제할 수 있도록
+    // 하위 컬렉션으로 먼저 접근한 후 -> 상위 컬렉션 내 해당 노트(문서)를 작성해야 함
+    func myNotesDidDeleteDB(wordNote: NoteEntity) {
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        
+        for mywords in myWords {
+            database.collection("users").document(currentUser.uid)
+                .collection("myWordNotes").document(wordNote.id ?? "")
+                .collection("words").document(mywords.id)
+                .delete() { error in
+                    if let error = error {
+                        print("Error removing document : \(error)")
+                    } else {
+                        print("myNotes Words Document successfully removed!")
+                    }
+                }
+        }
+
+        database.collection("users").document(currentUser.uid)
+            .collection("myWordNotes").document(wordNote.id ?? "")
+        //            .collection("words").document(wordNote.id ?? "")
+            .delete() { error in
+                if let error = error {
+                    print("Error removing document : \(error)")
+                } else {
+                    print("myNotes Document successfully removed!")
+                }
+            }
+    }
+    
+    
+    
+
     // MARK: - 복습 완료시 파베에 repeatCount를 1씩 올림 / 반복학습에 따른 Count를 1씩 증가
-    func repeatCountWillBePlusOne(wordNote: NoteEntity, nextStudyDate: Date?) async {
+    func repeatCountWillBePlusOne(wordNote: NoteEntity,
+                                  nextStudyDate: Date?,
+                                  firstTestResult: Double?,
+                                  lastTestResult: Double?) async {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         do {
             _ = try await database.collection("users").document(currentUser.uid)
                 .collection("myWordNotes").document(wordNote.id ?? "")
                 .updateData([
                     "repeatCount": FieldValue.increment(Int64(1)),
-                    "nextStudyDate": nextStudyDate as Any, // 태영 수정
-                    "updateDate" : Date()
+                    "nextStudyDate": nextStudyDate ?? NSNull(), // 태영 수정
+                    "updateDate" : Date(),
+                    "firstTestResult" : firstTestResult ?? NSNull(),
+                    "LastTestResult" : lastTestResult ?? NSNull()
                 ])
             myNotesWillBeFetchedFromDB()
             print("finish plusRepeatCount")
@@ -165,7 +202,9 @@ class MyNoteStore: ObservableObject {
             .updateData([
                 "repeatCount": 0,
                 "nextStudyDate": NSNull(), // 태영 수정
-                "updateDate" : Date()
+                "updateDate" : Date(),
+                "firstTestResult" : NSNull(),
+                "LastTestResult" : NSNull()
             ]) { err in
                 if let err {
                     print("repeatCountWillBeResetted error occured : \(err.localizedDescription)")

@@ -9,6 +9,10 @@ import SwiftUI
 import AVFoundation
 
 struct FirstTryCardView: View {
+    @EnvironmentObject var myNoteStore: MyNoteStore
+    @EnvironmentObject var notiManager: NotificationManager
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    
     @Environment(\.dismiss) private var dismiss
     var myWordNote: NoteEntity
     var words: [WordEntity] {
@@ -20,16 +24,8 @@ struct FirstTryCardView: View {
     @State var isShowingModal: Bool = false
     @State var totalScore: Double = 0
     @State var isShowingAlert: Bool = false
-    // FIXME: 단어장 이름 firebase에서 가져오기...?
-    //    @State private var wordListName: String
-    // FIXME: 단어장 단어 총 수
-    //    @State private var listLength: Int = 0
-    // FIXME: 단어장 현재 단어 x번째
-    //    @State private var currentListLength: Int
-    // FIXME: 현재 단어
-    //    @State private var currentWord: String
-    // FIXME: 현재 단어 뜻
-    //    @State private var currentWordDef: String
+    @State private var isShowingNotSaveAlert: Bool = false
+    
     var wordCount: Int {
         words.count - 1
     }
@@ -51,13 +47,13 @@ struct FirstTryCardView: View {
             // MARK: 카드뷰
             ZStack {
                 if isFlipped {
-                    WordCardMeaningView(
+                    WordCardAnswerView(
                         listLength: words.count,
                         currentListLength: $num,
                         currentWordDef: words[num].wordMeaning ?? "No Meaning"
                     )
                 } else {
-                    WordCardWordView(
+                    WordCardQuestionView(
                         listLength: words.count,
                         currentListLength: $num,
                         currentWord: words[num].wordString ?? "No String"
@@ -75,16 +71,22 @@ struct FirstTryCardView: View {
                 isFlipped: $isFlipped,
                 isDismiss: $isDismiss,
                 totalScore: $totalScore,
-                lastWordIndex: wordCount,
                 num: $num,
                 isShowingAlert: $isShowingAlert,
-                wordNote: myWordNote,
+                lastWordIndex: wordCount,
                 word: words[num]
             )
             .padding(.top)
             
             Spacer()
             
+        }
+        .navigationBarBackButtonHidden(true)
+        // MARK: navigationLink destination 커스텀 백 버튼
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
         }
         .navigationTitle(myWordNote.noteName ?? "No Name")
         .navigationBarTitleDisplayMode(.inline)
@@ -94,7 +96,59 @@ struct FirstTryCardView: View {
         .onChange(of: isFlipped, perform: { _ in
             flipCard()
         })
-        
+        .customAlert(isPresented: $isShowingAlert,
+                     title: "학습을 완료했어요!",
+                     message: "모든 단어를 공부했습니다 :)",
+                     primaryButtonTitle: "확인",
+                     primaryAction: {
+                        Task {
+                            if notiManager.isNotiAllow {
+                                if !notiManager.isGranted {
+                                    notiManager.openSetting()
+                                } else {
+                                    // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
+                                    var localNotification = LocalNotification(
+                                        identifier: myWordNote.id ?? "No Id",
+                                        title: "MEMOrizing 암기 시간",
+                                        body: "\(myWordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
+                                        timeInterval: 10,
+                                        repeats: false
+                                    )
+                                    localNotification.subtitle = "\(myWordNote.noteName ?? "No Name")"
+                                    
+                                    let firstTestResult = totalScore / Double(num * 3)
+                                    
+                                    await notiManager.schedule(localNotification: localNotification)
+                                    await myNoteStore.repeatCountWillBePlusOne(
+                                        wordNote: myWordNote,
+                                        nextStudyDate: Date() + Double(myWordNote.repeatCount * 1000),
+                                        firstTestResult: firstTestResult,
+                                        lastTestResult: nil
+                                    )
+                                    coreDataStore.plusRepeatCount(note: myWordNote,
+                                                                  firstTestResult: firstTestResult,
+                                                                  lastTestResult: nil)
+                                    await notiManager.getPendingRequests()
+                                    for request in notiManager.pendingRequests {
+                                        print("request: ", request as Any)
+                                    }
+                                    isDismiss.toggle()
+                                }
+                            } else {
+                                isDismiss.toggle()
+                            }
+                        }
+                     },
+                     withCancelButton: false)
+        // MARK: 뒤로가기 누렀을 때 저장 안된다는 경고창 보여줌
+        .customAlert(isPresented: $isShowingNotSaveAlert,
+                     title: "제목",
+                     message: "저장 안됨 ㄱㅊ?",
+                     primaryButtonTitle: "나가기",
+                     primaryAction: {
+            dismiss()
+        },
+                     withCancelButton: true)
     }
     
     // MARK: 파란 진행바 뷰
@@ -122,6 +176,15 @@ struct FirstTryCardView: View {
         }
     }
     
+    // MARK: NavigationLink 커스텀 뒤로가기 버튼
+    var backButton : some View {
+        Button {
+            isShowingNotSaveAlert.toggle()
+        } label: {
+            Image(systemName: "chevron.left")
+        }
+    }
+    
     // MARK: 카드 뒤집기 함수
     func flipCard () {
         isFlipped.toggle()
@@ -129,8 +192,8 @@ struct FirstTryCardView: View {
     
 }
 
-// MARK: 카드 단어 뜻 뷰
-struct WordCardMeaningView: View {
+// MARK: 카드 단어 질문 뷰
+struct WordCardAnswerView: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -138,6 +201,8 @@ struct WordCardMeaningView: View {
     @Binding var currentListLength: Int
     // MARK: 현재 단어 뜻
     var currentWordDef: String
+    // MARK: 단어 프레임 크기
+    
     
     var body: some View {
         ZStack {
@@ -151,30 +216,36 @@ struct WordCardMeaningView: View {
                 HStack {
                     // MARK: 현재 단어 순서 / 총 단어 수
                     Text("\(currentListLength + 1) / \(listLength)")
+                        .padding(.leading, 20)
+                        .padding(.top, 20)
                     
                     Spacer()
                     
                 }
-                .padding()
                 
                 Spacer()
                 
                 // MARK: 현재 단어
                 Text("\(currentWordDef)")
+                    .font(.system(size: 30, weight: .bold))
+                    .minimumScaleFactor(0.4)
                     .foregroundColor(Color("MainBlue"))
-                    .padding(.bottom, 70)
-                    .font(.largeTitle).bold()
+                    .frame(width: UIScreen.main.bounds.width * 0.8,
+                           height: UIScreen.main.bounds.width * 0.4)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 
             }
         }
-        .frame(width: 330, height: 330)
+        .frame(width: UIScreen.main.bounds.width * 0.84,
+               height: UIScreen.main.bounds.width * 0.84)
     }
 }
 
 // MARK: 카드 단어 뷰
-struct WordCardWordView: View {
+struct WordCardQuestionView: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -195,25 +266,31 @@ struct WordCardWordView: View {
                 HStack {
                     // MARK: 현재 단어 순서 / 총 단어 수
                     Text("\(currentListLength + 1) / \(listLength)")
+                        .padding(.leading, 20)
+                        .padding(.top, 20)
                     
                     Spacer()
                     
                 }
-                .padding()
                 
                 Spacer()
                 
                 // MARK: 현재 단어 뜻
                 Text("\(currentWord)")
+                    .font(.system(size: 30, weight: .bold))
+                    .minimumScaleFactor(0.4)
                     .foregroundColor(Color("MainBlack"))
-                    .padding(.bottom, 70)
-                    .font(.largeTitle).bold()
+                    .frame(width: UIScreen.main.bounds.width * 0.8,
+                           height: UIScreen.main.bounds.width * 0.4)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 
             }
         }
-        .frame(width: 330, height: 330)
+        .frame(width: UIScreen.main.bounds.width * 0.84,
+               height: UIScreen.main.bounds.width * 0.84)
     }
 }
 
@@ -223,14 +300,12 @@ struct LevelCheck: View {
     @Binding var isFlipped: Bool
     @Binding var isDismiss: Bool
     @Binding var totalScore: Double
-    var lastWordIndex: Int
     @Binding var num: Int
     @Binding var isShowingAlert: Bool
-    var wordNote: NoteEntity
+    
+    var lastWordIndex: Int
     var word: WordEntity
     
-    @EnvironmentObject var myNoteStore: MyNoteStore
-    @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var coreDataStore: CoreDataStore
     var body: some View {
         HStack(spacing: 15) {
@@ -239,6 +314,7 @@ struct LevelCheck: View {
                 coreDataStore.updateWordLevel(word: word, level: 0)
                 if lastWordIndex != num {
                     isFlipped = false
+                    totalScore += 1
                     num += 1
                     
                 } else {
@@ -248,7 +324,7 @@ struct LevelCheck: View {
                 
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceBad")
                         .font(.largeTitle)
                         .padding(1)
                     Text("모르겠어요")
@@ -261,7 +337,7 @@ struct LevelCheck: View {
                 coreDataStore.updateWordLevel(word: word, level: 1)
                 if lastWordIndex != num {
                     isFlipped = false
-                    totalScore += 0.25
+                    totalScore += 2
                     num += 1
                 } else {
                     isShowingAlert = true
@@ -269,7 +345,7 @@ struct LevelCheck: View {
                 }
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceNormal")
                         .font(.largeTitle)
                         .padding(1)
                     Text("애매해요")
@@ -282,8 +358,8 @@ struct LevelCheck: View {
                 coreDataStore.updateWordLevel(word: word, level: 2)
                 if lastWordIndex != num {
                     isFlipped = false
+                    totalScore += 3
                     num += 1
-                    totalScore += 1
                     
                 } else {
                     isShowingAlert = true
@@ -291,7 +367,7 @@ struct LevelCheck: View {
                 }
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceGood")
                         .font(.largeTitle)
                         .padding(1)
                     Text("외웠어요!")
@@ -301,47 +377,7 @@ struct LevelCheck: View {
             }
             
         }
-        .alert(
-            "학습을 완료했어요!",
-            isPresented: $isShowingAlert
-        ) {
-            Button("확인") {
-                Task {
-                    if notiManager.isNotiAllow {
-                        if !notiManager.isGranted {
-                            notiManager.openSetting()
-                        } else {
-                            // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
-                            print("set localNotification")
-                            var localNotification = LocalNotification(
-                                identifier: wordNote.id ?? "No Id",
-                                title: "MEMOrizing 암기 시간",
-                                body: "\(wordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
-                                timeInterval: 10,
-                                repeats: false
-                            )
-                            localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
-                            print("localNotification: ", localNotification)
-                            await notiManager.schedule(localNotification: localNotification)
-                            await myNoteStore.repeatCountWillBePlusOne(
-                                wordNote: wordNote,
-                                nextStudyDate: Date() + Double(wordNote.repeatCount * 1000)
-                            )
-                            coreDataStore.plusRepeatCount(note: wordNote)
-                            await notiManager.getPendingRequests()
-                            for request in notiManager.pendingRequests {
-                                print("request: ", request as Any)
-                            }
-                            isDismiss.toggle()
-                        }
-                    } else {
-                        isDismiss.toggle()
-                    }
-                }
-            }
-        } message: {
-            Text("모든 단어를 공부했습니다 :)")
-        }
+        
     }
 }
 

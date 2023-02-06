@@ -67,9 +67,13 @@ struct StudyingStampView: View {
                             await notiManager.schedule(localNotification: localNotification)
                             await myNoteStore.repeatCountWillBePlusOne(
                                 wordNote: wordNote,
-                                nextStudyDate: Date() + Double(wordNote.repeatCount * 1000)
+                                nextStudyDate: Date() + Double(wordNote.repeatCount * 1000),
+                                firstTestResult: wordNote.firstTestResult,
+                                lastTestResult: wordNote.lastTestResult
                             )
-                            coreDataStore.plusRepeatCount(note: wordNote)
+                            coreDataStore.plusRepeatCount(note: wordNote,
+                                                          firstTestResult: wordNote.firstTestResult,
+                                                          lastTestResult: wordNote.lastTestResult)
                             await notiManager.getPendingRequests()
                             isDismiss.toggle()
                         }

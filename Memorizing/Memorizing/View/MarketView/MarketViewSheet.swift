@@ -22,6 +22,7 @@ struct MarketViewSheet: View {
     @State private var isAlertToggle: Bool = false
     @State private var isCoinCheckToggle: Bool = false
     
+    @Binding var isToastToggle: Bool
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -30,26 +31,29 @@ struct MarketViewSheet: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Button("닫기") {
+                        Button {
                             dismiss()
+                        } label: {
+                            Image(systemName:"xmark")
+                                .foregroundColor(.black)
                         }
-                        .font(.headline)
-                        .foregroundColor(.gray1)
                     }
                     
                     // 암기장 카테고리
                     HStack {
                         RoundedRectangle(cornerRadius: 15)
                             .fill(wordNote.noteColor)
-                            .frame(width: 40, height: 20)
+                            .frame(width: 50, height: 25)
                             .overlay {
                                 Text(wordNote.noteCategory)
-                                    .font(.caption2)
+                                    .font(.footnote)
                                     .foregroundColor(.white)
+                                    .fontWeight(.semibold)
                             }
                         
                         Spacer()
                     }
+                    .padding(.top, 10)
                     
                     // 암기장 제목
                     HStack {
@@ -57,6 +61,7 @@ struct MarketViewSheet: View {
                             .foregroundColor(.mainBlack)
                             .font(.title3)
                             .bold()
+                            .padding(.leading, 5)
                             .multilineTextAlignment(.leading)
                             .lineLimit(1)
                         
@@ -106,10 +111,10 @@ struct MarketViewSheet: View {
                 // MARK: - 암기장 구매하기 버튼
                 if marketStore.myWordNoteIdArray.contains(wordNote.id) {
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.gray3)
+                        .fill(Color.gray4)
                         .frame(width: 355, height: 44)
                         .overlay {
-                            Text("구매할 수 없는 암기장 입니다.")
+                            Text("이미 소유하고 있는 암기장 입니다.")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
@@ -134,37 +139,37 @@ struct MarketViewSheet: View {
                                     .foregroundColor(.white)
                             }
                     })
-                    .padding(.top)
-                    .alert(isPresented: $isAlertToggle) {
-                        if isCoinCheckToggle {
-                            return Alert(title: Text("구매하기"),
-                                         message: Text("\(wordNote.noteName)을(를) 구매하시겠습니까?"),
-                                         primaryButton: .destructive(Text("구매하기"),
-                                                                     action: {
-                                marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
-                                                                words: marketStore.words,
-                                                                userCoin: authStore.user?.coin ?? 0)
-                                
-                                // 코데로 구매한 노트와 워드들이 추가됨.
-                                coreDataStore.addNoteAndWord(note: wordNote, words: marketStore.words)
-                                coreDataStore.getNotes()
-                                
-                                dismiss()
-                                
-                                Task {
-                                    await authStore.userInfoWillFetchDB()
-                                    await marketStore.myNotesArrayWillFetchDB()
-                                    await marketStore.filterMyNoteWillFetchDB()
-                                }
-                            }),
-                                         secondaryButton: .cancel(Text("취소")))
-                        } else {
-                            return Alert(title: Text("포인트 부족"),
-                                         message: Text("포인트가 부족합니다"),
-                                         dismissButton: .default(Text("닫기")))
-                        }
-                    }
+                    .padding(.vertical, 10)
                     
+//                    .alert(isPresented: $isAlertToggle) {
+//                        if isCoinCheckToggle {
+//                            return Alert(title: Text("구매하기"),
+//                                         message: Text("\(wordNote.noteName)을(를) 구매하시겠습니까?"),
+//                                         primaryButton: .destructive(Text("구매하기"),
+//                                                                     action: {
+//                                marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
+//                                                                words: marketStore.words,
+//                                                                userCoin: authStore.user?.coin ?? 0)
+//
+//                                // 코데로 구매한 노트와 워드들이 추가됨.
+//                                coreDataStore.addNoteAndWord(note: wordNote, words: marketStore.words)
+//                                coreDataStore.getNotes()
+//
+//                                dismiss()
+//
+//                                Task {
+//                                    await authStore.userInfoWillFetchDB()
+//                                    await marketStore.myNotesArrayWillFetchDB()
+//                                    await marketStore.filterMyNoteWillFetchDB()
+//                                }
+//                            }),
+//                                         secondaryButton: .cancel(Text("취소")))
+//                        } else {
+//                            return Alert(title: Text("포인트 부족"),
+//                                         message: Text("포인트가 부족합니다"),
+//                                         dismissButton: .default(Text("닫기")))
+//                        }
+//                    }
                 }
                 
                 // MARK: - 암기장 리뷰
@@ -288,6 +293,38 @@ struct MarketViewSheet: View {
                 await reviewStore.reviewsWillFetchDB(marketID: wordNote.id)
             }
         }
+        .customAlert(isPresented: $isAlertToggle,
+                     title: isCoinCheckToggle
+                            ? "구매하기"
+                            : "포인트 부족",
+                     message: isCoinCheckToggle
+                              ? "\(wordNote.noteName)을(를) 구매하시겠습니까?"
+                              : "구매에 필요한 포인트가 부족합니다",
+                     primaryButtonTitle: isCoinCheckToggle
+                                         ? "구매하기"
+                                         : "확인",
+                     primaryAction: {
+                        if isCoinCheckToggle {
+                            marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
+                                                            words: marketStore.words,
+                                                            userCoin: authStore.user?.coin ?? 0)
+                            
+                            // 코데로 구매한 노트와 워드들이 추가됨.
+                            coreDataStore.addNoteAndWord(note: wordNote, words: marketStore.words)
+                            coreDataStore.getNotes()
+                            
+                            Task {
+                                await authStore.userInfoWillFetchDB()
+                                await marketStore.myNotesArrayWillFetchDB()
+                                await marketStore.filterMyNoteWillFetchDB()
+                                isToastToggle = true
+                            }
+                        }
+            
+                        dismiss()
+                     },
+                     withCancelButton: isCoinCheckToggle)
+        
     }
 }
 

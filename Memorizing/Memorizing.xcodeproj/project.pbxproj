@@ -31,6 +31,8 @@
 		3FDCCA87298A5877005E7C4E /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCCA86298A5877005E7C4E /* MyReviewView.swift */; };
 		3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E32966628C00A47C5A /* AddWordView.swift */; };
 		3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */; };
+		48238A8D298D1A25000E1709 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48238A8C298D1A25000E1709 /* CustomAlert.swift */; };
+		48238A8F298D1A2D000E1709 /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48238A8E298D1A2D000E1709 /* CustomAlertModifier.swift */; };
 		4847EEB2298A3DD800C34274 /* MarketTradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */; };
 		484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D65702966987900C56E87 /* MarketViewNoteButton.swift */; };
 		484D657329669B5F00C56E87 /* MarketViewCategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */; };
@@ -42,6 +44,8 @@
 		488F0AA62967E8A1007EAAC1 /* OnBoardingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */; };
 		488F0AA82967E8AB007EAAC1 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */; };
 		488F0AAA2967E8BC007EAAC1 /* OnBoardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */; };
+		48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */; };
+		48A9CDF4298E194700CF1D27 /* CustomToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */; };
 		48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */; };
 		48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */; };
 		48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */; };
@@ -112,6 +116,8 @@
 		3FDC1496297A5EC700AE186F /* EditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListView.swift; sourceTree = "<group>"; };
 		3FDCCA86298A5877005E7C4E /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
 		3FF9B3E32966628C00A47C5A /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
+		48238A8C298D1A25000E1709 /* CustomAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		48238A8E298D1A2D000E1709 /* CustomAlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertModifier.swift; sourceTree = "<group>"; };
 		4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTradeListView.swift; sourceTree = "<group>"; };
 		484D65702966987900C56E87 /* MarketViewNoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewNoteButton.swift; sourceTree = "<group>"; };
 		484D657229669B5F00C56E87 /* MarketViewCategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewCategoryButton.swift; sourceTree = "<group>"; };
@@ -123,6 +129,8 @@
 		488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingTabView.swift; sourceTree = "<group>"; };
 		488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingData.swift; sourceTree = "<group>"; };
+		48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToastMessageModifier.swift; sourceTree = "<group>"; };
+		48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToastMessage.swift; sourceTree = "<group>"; };
 		48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviews.swift; sourceTree = "<group>"; };
 		48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviewsMore.swift; sourceTree = "<group>"; };
 		48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
@@ -243,6 +251,10 @@
 				52BCE8D72966918100A85A1F /* ColorExtension.swift */,
 				18C4485D2977C48000FEB345 /* hideKeyboradExtension.swift */,
 				66982A22297A22E20052269D /* AuthStoreExtension.swift */,
+				48238A8E298D1A2D000E1709 /* CustomAlertModifier.swift */,
+				48238A8C298D1A25000E1709 /* CustomAlert.swift */,
+				48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */,
+				48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -538,7 +550,9 @@
 				3FDCCA87298A5877005E7C4E /* MyReviewView.swift in Sources */,
 				3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */,
 				523C30DB297918D600FAE229 /* MyNoteStore.swift in Sources */,
+				48238A8F298D1A2D000E1709 /* CustomAlertModifier.swift in Sources */,
 				52C222AE297782EE00181367 /* ReviewStore.swift in Sources */,
+				48A9CDF4298E194700CF1D27 /* CustomToastMessage.swift in Sources */,
 				484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */,
 				F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */,
 				52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */,
@@ -552,6 +566,7 @@
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
+				48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */,
 				F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */,
 				52D8F2522965F37E00755E5A /* WordModel.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
@@ -604,6 +619,7 @@
 				484D65712966987900C56E87 /* MarketViewNoteButton.swift in Sources */,
 				52D8F25C2965F65B00755E5A /* MarketView.swift in Sources */,
 				4847EEB2298A3DD800C34274 /* MarketTradeListView.swift in Sources */,
+				48238A8D298D1A25000E1709 /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,7 +765,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codelion.Memorizing.JHLee;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codelion.Memorizing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -783,7 +799,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codelion.Memorizing.JHLee;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codelion.Memorizing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

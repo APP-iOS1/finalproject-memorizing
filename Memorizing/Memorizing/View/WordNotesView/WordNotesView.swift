@@ -8,26 +8,15 @@
 import SwiftUI
 import SwiftUIProgressiveOnboard
 
-// let progressiveOnboardsJson = """
-// [
-//    {
-//        "description": "우측 아래에 +버튼을 눌러서, 나만의 암기장을 만들어보세요!",
-//        "previousButtonTitle": "이전",
-//        "nextButtonTitle": "시작!"
-//    }
-// ]
-// """
-
 // MARK: 암기장 탭에서 가장 메인으로 보여주는 View
 struct WordNotesView: View {
-    
-    //    @ObservedObject var onboard = ProgressiveOnboard.init(withJson: progressiveOnboardsJson)
     
     @State private var isShowingSheet: Bool = false
     @State private var memoryStepToggle: Bool = true
     @State private var reviewStepToggle: Bool = false
-    @Namespace var namespace
+    @State private var isToastToggle: Bool = false
     @State private var isShowingNewMemorySheet: Bool = false
+    @Namespace var namespace
     // @State private var isShownNotification: Bool = false
     //    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
@@ -76,7 +65,6 @@ struct WordNotesView: View {
             }
             
             VStack {
-                
                 if memoryStepToggle == true && reviewStepToggle == false {
                     Button {
                         print("새로운 일기장 만들기 버튼이 눌렸습니다.")
@@ -95,15 +83,17 @@ struct WordNotesView: View {
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
                     .sheet(isPresented: $isShowingNewMemorySheet) {
-                        NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
+                        NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet,
+                                          isToastToggle: $isToastToggle)
                     }
                 }
             }
-            
             //            if(onboard.showOnboardScreen) {
             //                ProgressiveOnboardView.init(withProgressiveOnboard: self.onboard)
             //            }
         }
+        .customToastMessage(isPresented: $isToastToggle,
+                            message: "새로운 암기장 등록완료!")
         //        .frame(maxWidth: .infinity, maxHeight: .infinity)
         //        .coordinateSpace(name: "OnboardSpace")
         //        .onAppear() {

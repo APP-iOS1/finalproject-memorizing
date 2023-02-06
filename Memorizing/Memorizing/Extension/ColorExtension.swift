@@ -25,4 +25,5 @@ extension Color {
     static let economyColor = Color("EconomyColor")
     static let knowledgeColor = Color("KnowledgeColor")
     static let etcColor = Color("EtcColor")
+    static let kakaoYellow = Color("KakaoYellow")
 }
