@@ -17,8 +17,9 @@ struct MarketViewSearchBar: View {
             .frame(width: 346, height: 45)
             .overlay {
                 HStack {
-                    TextField("암기장 이름을 입력해보세요!", text: $searchText)
+                    TextField("내가 원하는 암기장을 검색해보세요!", text: $searchText)
                         .font(.caption)
+                        .padding(.leading, 6)
                     
                     Spacer()
                     

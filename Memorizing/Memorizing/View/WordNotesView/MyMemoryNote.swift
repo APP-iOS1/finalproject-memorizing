@@ -40,30 +40,30 @@ struct MyMemoryNote: View {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""),
                                             lineWidth: 1)
-                                    .frame(width: 50, height: 20)
+                                    .frame(width: 45, height: 23)
                                     .overlay {
                                         Text(myWordNote.noteCategory ?? "No Category")
                                             .foregroundColor(.black)
-                                            .font(.caption)
-                                        
+                                            .font(.caption2)
                                     }
                                 Spacer()
                             }
-                            .padding(.horizontal, 15)
-                            
+                            .padding(.horizontal, 8)
+
                             // 암기할 것 등록하기에서 받아오기
                             HStack {
                                 Text(myWordNote.noteName ?? "No Name")
                                     .foregroundColor(.mainBlack)
-                                    .font(.headline)
+                                    .font(.body)
+                                    .fontWeight(.semibold)
                                     .padding(.top, 7)
-                                    .padding(.leading, 4)
+                                    .padding(.leading, 6)
                                     .padding(.bottom, 3)
                                     .lineLimit(1)
                                 
                                 Spacer()
                             }
-                            .padding(.horizontal, 15)
+                            .padding(.horizontal, 6)
                             .padding(.bottom, 10)
                             
                             if words.isEmpty {

@@ -24,16 +24,8 @@ struct FirstTryCardView: View {
     @State var isShowingModal: Bool = false
     @State var totalScore: Double = 0
     @State var isShowingAlert: Bool = false
-    // FIXME: 단어장 이름 firebase에서 가져오기...?
-    //    @State private var wordListName: String
-    // FIXME: 단어장 단어 총 수
-    //    @State private var listLength: Int = 0
-    // FIXME: 단어장 현재 단어 x번째
-    //    @State private var currentListLength: Int
-    // FIXME: 현재 단어
-    //    @State private var currentWord: String
-    // FIXME: 현재 단어 뜻
-    //    @State private var currentWordDef: String
+    @State private var isShowingNotSaveAlert: Bool = false
+    
     var wordCount: Int {
         words.count - 1
     }
@@ -55,13 +47,13 @@ struct FirstTryCardView: View {
             // MARK: 카드뷰
             ZStack {
                 if isFlipped {
-                    WordCardMeaningView(
+                    WordCardAnswerView(
                         listLength: words.count,
                         currentListLength: $num,
                         currentWordDef: words[num].wordMeaning ?? "No Meaning"
                     )
                 } else {
-                    WordCardWordView(
+                    WordCardQuestionView(
                         listLength: words.count,
                         currentListLength: $num,
                         currentWord: words[num].wordString ?? "No String"
@@ -88,6 +80,13 @@ struct FirstTryCardView: View {
             
             Spacer()
             
+        }
+        .navigationBarBackButtonHidden(true)
+        // MARK: navigationLink destination 커스텀 백 버튼
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
         }
         .navigationTitle(myWordNote.noteName ?? "No Name")
         .navigationBarTitleDisplayMode(.inline)
@@ -136,7 +135,15 @@ struct FirstTryCardView: View {
                         }
                      },
                      withCancelButton: false)
-        
+        // MARK: 뒤로가기 누렀을 때 저장 안된다는 경고창 보여줌
+        .customAlert(isPresented: $isShowingNotSaveAlert,
+                     title: "제목",
+                     message: "저장 안됨 ㄱㅊ?",
+                     primaryButtonTitle: "나가기",
+                     primaryAction: {
+            dismiss()
+        },
+                     withCancelButton: true)
     }
     
     // MARK: 파란 진행바 뷰
@@ -164,6 +171,15 @@ struct FirstTryCardView: View {
         }
     }
     
+    // MARK: NavigationLink 커스텀 뒤로가기 버튼
+    var backButton : some View {
+        Button {
+            isShowingNotSaveAlert.toggle()
+        } label: {
+            Image(systemName: "chevron.left")
+        }
+    }
+    
     // MARK: 카드 뒤집기 함수
     func flipCard () {
         isFlipped.toggle()
@@ -171,8 +187,8 @@ struct FirstTryCardView: View {
     
 }
 
-// MARK: 카드 단어 뜻 뷰
-struct WordCardMeaningView: View {
+// MARK: 카드 단어 질문 뷰
+struct WordCardAnswerView: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -180,6 +196,8 @@ struct WordCardMeaningView: View {
     @Binding var currentListLength: Int
     // MARK: 현재 단어 뜻
     var currentWordDef: String
+    // MARK: 단어 프레임 크기
+    
     
     var body: some View {
         ZStack {
@@ -193,30 +211,36 @@ struct WordCardMeaningView: View {
                 HStack {
                     // MARK: 현재 단어 순서 / 총 단어 수
                     Text("\(currentListLength + 1) / \(listLength)")
+                        .padding(.leading, 20)
+                        .padding(.top, 20)
                     
                     Spacer()
                     
                 }
-                .padding()
                 
                 Spacer()
                 
                 // MARK: 현재 단어
                 Text("\(currentWordDef)")
+                    .font(.system(size: 30, weight: .bold))
+                    .minimumScaleFactor(0.4)
                     .foregroundColor(Color("MainBlue"))
-                    .padding(.bottom, 70)
-                    .font(.largeTitle).bold()
+                    .frame(width: UIScreen.main.bounds.width * 0.8,
+                           height: UIScreen.main.bounds.width * 0.4)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 
             }
         }
-        .frame(width: 330, height: 330)
+        .frame(width: UIScreen.main.bounds.width * 0.84,
+               height: UIScreen.main.bounds.width * 0.84)
     }
 }
 
 // MARK: 카드 단어 뷰
-struct WordCardWordView: View {
+struct WordCardQuestionView: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -237,25 +261,31 @@ struct WordCardWordView: View {
                 HStack {
                     // MARK: 현재 단어 순서 / 총 단어 수
                     Text("\(currentListLength + 1) / \(listLength)")
+                        .padding(.leading, 20)
+                        .padding(.top, 20)
                     
                     Spacer()
                     
                 }
-                .padding()
                 
                 Spacer()
                 
                 // MARK: 현재 단어 뜻
                 Text("\(currentWord)")
+                    .font(.system(size: 30, weight: .bold))
+                    .minimumScaleFactor(0.4)
                     .foregroundColor(Color("MainBlack"))
-                    .padding(.bottom, 70)
-                    .font(.largeTitle).bold()
+                    .frame(width: UIScreen.main.bounds.width * 0.8,
+                           height: UIScreen.main.bounds.width * 0.4)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 
             }
         }
-        .frame(width: 330, height: 330)
+        .frame(width: UIScreen.main.bounds.width * 0.84,
+               height: UIScreen.main.bounds.width * 0.84)
     }
 }
 
