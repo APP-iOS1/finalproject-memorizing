@@ -42,7 +42,7 @@ struct NewMakeMemoryNote: View {
     
     // MARK: - 총 3개 뷰 (상단 Header / 암기장 타이틀 입력 / 카테고리 선택)
     var body: some View {
-        VStack(spacing: 50) {
+        VStack(spacing: 40) {
             // 새로운 암기장 만들기
             makeNewNote
             // 암기장 이름
@@ -50,10 +50,10 @@ struct NewMakeMemoryNote: View {
             // 카테고리
 //            category
             Spacer()
-                .frame(height: 90)
+//                .frame(height: 50)
             // 버튼
             makeNoteButton
-            Spacer()
+//            Spacer()
         }
         .padding()
     }
@@ -87,9 +87,7 @@ struct NewMakeMemoryNote: View {
                     isShowingNewMemorySheet.toggle()
                     dismiss()
                 } label: {
-                    Text("취소")
-                        .font(.subheadline)
-                        .fontWeight(.regular)
+                    Image(systemName: "xmark")
                         .foregroundColor(.mainBlack)
                 }
             }
@@ -106,8 +104,10 @@ struct NewMakeMemoryNote: View {
                     .font(.headline)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.leading)
+                    .padding(.leading, 10)
                 TextField("암기장 제목을 입력해주세요(필수)", text: $manager.noteName)
                     .padding(15)
+                    .padding(.leading, 3)
                     .accentColor(.mainBlue)
                     .lineLimit(3...5)
                     .background(Color.gray6)
@@ -134,6 +134,7 @@ struct NewMakeMemoryNote: View {
                     .font(.headline)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.leading)
+                    .padding(.leading, 6)
                 
                 // MARK: - 버튼 눌리는 색상 표시 외 레이아웃 변경
                 HStack {
@@ -147,7 +148,7 @@ struct NewMakeMemoryNote: View {
                                 .foregroundColor(
                                     noteCategory == category ? Color.white : Color.gray4)
                         }
-                        .frame(width: 53, height: 25)
+                        .frame(width: 53, height: 30)
                         .background {
                             RoundedRectangle(cornerRadius: 30, style: .continuous)
                                 .fill(noteCategory == category ? noteCategoryColor[index] : Color.white)
@@ -198,8 +199,8 @@ struct NewMakeMemoryNote: View {
     // 하단 ( 버튼 )
     var makeNoteButton: some View {
         RoundedRectangle(cornerRadius: 30)
-            .fill(!manager.noteName.isEmpty && !noteCategory.isEmpty ? .blue : .gray)
-            .frame(width: 350, height: 40)
+            .fill(!manager.noteName.isEmpty && !noteCategory.isEmpty ? .blue : .gray4)
+            .frame(height: 55)
             .overlay {
                 Button {
                     let id = UUID().uuidString

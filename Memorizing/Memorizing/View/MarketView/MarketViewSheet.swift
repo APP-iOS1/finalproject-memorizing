@@ -31,26 +31,29 @@ struct MarketViewSheet: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Button("닫기") {
+                        Button {
                             dismiss()
+                        } label: {
+                            Image(systemName:"xmark")
+                                .foregroundColor(.black)
                         }
-                        .font(.headline)
-                        .foregroundColor(.gray1)
                     }
                     
                     // 암기장 카테고리
                     HStack {
                         RoundedRectangle(cornerRadius: 15)
                             .fill(wordNote.noteColor)
-                            .frame(width: 40, height: 20)
+                            .frame(width: 50, height: 25)
                             .overlay {
                                 Text(wordNote.noteCategory)
-                                    .font(.caption2)
+                                    .font(.footnote)
                                     .foregroundColor(.white)
+                                    .fontWeight(.semibold)
                             }
                         
                         Spacer()
                     }
+                    .padding(.top, 10)
                     
                     // 암기장 제목
                     HStack {
@@ -58,6 +61,7 @@ struct MarketViewSheet: View {
                             .foregroundColor(.mainBlack)
                             .font(.title3)
                             .bold()
+                            .padding(.leading, 5)
                             .multilineTextAlignment(.leading)
                             .lineLimit(1)
                         
@@ -107,10 +111,10 @@ struct MarketViewSheet: View {
                 // MARK: - 암기장 구매하기 버튼
                 if marketStore.myWordNoteIdArray.contains(wordNote.id) {
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.gray3)
+                        .fill(Color.gray4)
                         .frame(width: 355, height: 44)
                         .overlay {
-                            Text("구매할 수 없는 암기장 입니다.")
+                            Text("이미 소유하고 있는 암기장 입니다.")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
@@ -135,7 +139,8 @@ struct MarketViewSheet: View {
                                     .foregroundColor(.white)
                             }
                     })
-                    .padding(.top)
+                    .padding(.vertical, 10)
+                    
 //                    .alert(isPresented: $isAlertToggle) {
 //                        if isCoinCheckToggle {
 //                            return Alert(title: Text("구매하기"),
