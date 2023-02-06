@@ -26,6 +26,7 @@ struct WordNotesView: View {
     @State private var isShowingSheet: Bool = false
     @State private var memoryStepToggle: Bool = true
     @State private var reviewStepToggle: Bool = false
+    @State private var isToastToggle: Bool = false
     @Namespace var namespace
     @State private var isShowingNewMemorySheet: Bool = false
     // @State private var isShownNotification: Bool = false
@@ -95,7 +96,8 @@ struct WordNotesView: View {
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
                     .sheet(isPresented: $isShowingNewMemorySheet) {
-                        NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet)
+                        NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet,
+                                          isToastToggle: $isToastToggle)
                     }
                 }
             }
@@ -104,6 +106,8 @@ struct WordNotesView: View {
             //                ProgressiveOnboardView.init(withProgressiveOnboard: self.onboard)
             //            }
         }
+        .customToastMessage(isPresented: $isToastToggle,
+                            message: "새로운 암기장 등록완료!")
         //        .frame(maxWidth: .infinity, maxHeight: .infinity)
         //        .coordinateSpace(name: "OnboardSpace")
         //        .onAppear() {

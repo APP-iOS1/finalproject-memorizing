@@ -13,6 +13,8 @@ struct MyReviewView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var reviewStore: ReviewStore
     
+    @Environment(\.dismiss) private var dismiss
+    
     var wordNote: MarketWordNote
     
     var body: some View {
@@ -84,6 +86,9 @@ struct MyReviewView: View {
             Task {
                 await reviewStore.reviewsWillEqualToFetchDB(currentUserID: authStore.user?.id ?? "")
             }
+        }
+        .onDisappear {
+            dismiss()
         }
     }
 }

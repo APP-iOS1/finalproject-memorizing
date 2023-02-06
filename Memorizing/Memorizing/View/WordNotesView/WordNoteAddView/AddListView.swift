@@ -16,6 +16,7 @@ struct AddListView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var isShowingAddView = false
+    @State private var isToastToggle = false
     @State private var showingAlert = false
     var body: some View {
         
@@ -92,7 +93,8 @@ struct AddListView: View {
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
                     .sheet(isPresented: $isShowingAddView, content: {
-                        AddWordView(wordNote: wordNote)
+                        AddWordView(wordNote: wordNote,
+                                    isToastToggle: $isToastToggle)
                            
                     })
                     
@@ -112,8 +114,8 @@ struct AddListView: View {
                 }
             }
             .sheet(isPresented: $isShowingAddView, content: {
-                AddWordView(wordNote: wordNote)
-                    
+                AddWordView(wordNote: wordNote,
+                            isToastToggle: $isToastToggle)
             })
         }
     }

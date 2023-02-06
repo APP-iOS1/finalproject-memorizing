@@ -44,6 +44,8 @@
 		488F0AA62967E8A1007EAAC1 /* OnBoardingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */; };
 		488F0AA82967E8AB007EAAC1 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */; };
 		488F0AAA2967E8BC007EAAC1 /* OnBoardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */; };
+		48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */; };
+		48A9CDF4298E194700CF1D27 /* CustomToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */; };
 		48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */; };
 		48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */; };
 		48D86B0F2977E07B0085A4B5 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */; };
@@ -127,6 +129,8 @@
 		488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingTabView.swift; sourceTree = "<group>"; };
 		488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		488F0AA92967E8BC007EAAC1 /* OnBoardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingData.swift; sourceTree = "<group>"; };
+		48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToastMessageModifier.swift; sourceTree = "<group>"; };
+		48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToastMessage.swift; sourceTree = "<group>"; };
 		48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviews.swift; sourceTree = "<group>"; };
 		48D86B0C2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviewsMore.swift; sourceTree = "<group>"; };
 		48D86B0E2977E07B0085A4B5 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 				66982A22297A22E20052269D /* AuthStoreExtension.swift */,
 				48238A8E298D1A2D000E1709 /* CustomAlertModifier.swift */,
 				48238A8C298D1A25000E1709 /* CustomAlert.swift */,
+				48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */,
+				48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -546,6 +552,7 @@
 				523C30DB297918D600FAE229 /* MyNoteStore.swift in Sources */,
 				48238A8F298D1A2D000E1709 /* CustomAlertModifier.swift in Sources */,
 				52C222AE297782EE00181367 /* ReviewStore.swift in Sources */,
+				48A9CDF4298E194700CF1D27 /* CustomToastMessage.swift in Sources */,
 				484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */,
 				F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */,
 				52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */,
@@ -559,6 +566,7 @@
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
+				48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */,
 				F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */,
 				52D8F2522965F37E00755E5A /* WordModel.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,

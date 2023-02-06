@@ -32,6 +32,10 @@ struct NewMakeMemoryNote: View {
     
     // 글자수 제한을 위한 manager 선언 -> 내부에 noteName 변수를 manager.noteName으로 선언함
     @StateObject var manager = TFManamger()
+
+    @Binding var isToastToggle: Bool
+    // @State private var noteName: String = ""
+
     // 카테고리를 눌렀을때 담기는 변수
     @State private var noteCategory: String = ""
     @State private var categoryColorIndex: Int = 0
@@ -222,6 +226,7 @@ struct NewMakeMemoryNote: View {
                     
                     Task {
                         await marketStore.filterMyNoteWillFetchDB()
+                        isToastToggle = true
                     }
                     
                     isShowingNewMemorySheet = false
@@ -252,7 +257,8 @@ struct NewMakeMemoryNote: View {
 struct NewMakeMemoryNote_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            NewMakeMemoryNote(isShowingNewMemorySheet: .constant(true))
+            NewMakeMemoryNote(isShowingNewMemorySheet: .constant(true),
+                              isToastToggle: .constant(true))
         }
     }
 }
