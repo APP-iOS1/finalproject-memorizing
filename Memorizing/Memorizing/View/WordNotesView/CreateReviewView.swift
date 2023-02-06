@@ -158,6 +158,10 @@ struct CreateReviewView: View {
             
             Spacer()
         }
+        //MARK: - 키보드 내리기
+        .onAppear {
+            UIApplication.shared.hideKeyboard()
+        }
         .padding(.horizontal, 30)
         .onDisappear {
             myNoteStore.myNotesWillBeFetchedFromDB()
