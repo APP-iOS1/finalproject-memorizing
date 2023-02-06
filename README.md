@@ -182,3 +182,23 @@
         4. 구매를 누르면 내 암기장에 구매한 암기장 추가
             1. ‘구매 완료’ 토스트 팝업
 
+---
+
+|  염성필  <br/>[@strongyeom](https://github.com/strongyeom) | 진준호 <br/> [@jincode93](https://github.com/jincode93) | 이종현 <br/> [@JongHyunLee84](https://github.com/JongHyunLee84) |  진태영 <br/>[@elisha0103](https://github.com/elisha0103) |
+| :----------------------------------------------------------: | :---------------------------------------------: | :------: | :-------------------------------------------------: |
+|<img src="https://avatars.githubusercontent.com/u/101084872?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/111134273?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/112399028?v=4" width=150>  | <img src="https://avatars.githubusercontent.com/u/41459466?v=4" width=150> |
+
+|  임재혁  <br/>[@onthelots](https://github.com/onthelots) | 윤현기 <br/> [@Yoon-Hyeongi](https://github.com/Yoon-Hyeongi) | 김혜지 <br/> [@hyehyehye99](https://github.com/hyehyehye99) |  전근섭 <br/>[@JKSeub](https://github.com/JKSeub) |
+| :----------------------------------------------------------: | :---------------------------------------------: | :------: | :-------------------------------------------------: |
+|<img src="https://avatars.githubusercontent.com/u/107039500?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/84693317?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/107675865?v=4" width=150>  | <img src="https://avatars.githubusercontent.com/u/86897750?v=4" width=150> |
+
+
+
+
+
+
+
+
+
+
+
