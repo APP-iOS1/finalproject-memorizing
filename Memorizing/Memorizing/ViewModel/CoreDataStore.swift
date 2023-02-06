@@ -69,7 +69,11 @@ class CoreDataStore: ObservableObject {
         getNotes()
     }
     
-    func addWord(note: NoteEntity, id: String, wordLevel: Int64, wordMeaning: String, wordString: String) {
+    func addWord(note: NoteEntity,
+                 id: String,
+                 wordLevel: Int64,
+                 wordMeaning: String,
+                 wordString: String) {
         let newWord = WordEntity(context: manager.context)
         newWord.id = id
         newWord.wordLevel = wordLevel
@@ -82,15 +86,20 @@ class CoreDataStore: ObservableObject {
         getNotes()
     }
     
-    func addNoteAndWord<T: NoteProtocol>(note: T, words: [Word], _ repeatCount: Int? = nil) {
+    func addNoteAndWord<T: NoteProtocol>(note: T,
+                                         words: [Word],
+                                         _ repeatCount: Int? = nil,
+                                         firstTestResult: Double? = nil,
+                                         lastTestResult: Double? = nil)
+    {
         let returnedNote = returnNote(
                    id: note.id,
                    noteName: note.noteName,
                    enrollmentUser: note.enrollmentUser,
                    noteCategory: note.noteCategory,
                    repeatCount: repeatCount ?? 0,
-                   firstTestResult: 0,
-                   lastTestResult: 0,
+                   firstTestResult: firstTestResult ?? 0,
+                   lastTestResult: lastTestResult ?? 0,
                    updateDate: note.updateDate
         )
         for word in words {
@@ -131,10 +140,14 @@ class CoreDataStore: ObservableObject {
         let repeatCountFilter = NSSortDescriptor(key: "repeatCount", ascending: true)
         // MARK: 두가지 정렬 해결해야함. (현재 방식으론 한개만 적용됨)
         let categoryFilter = NSSortDescriptor(key: "updateDate", ascending: false)
-        
         let request = NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
+        
         request.sortDescriptors = [repeatCountFilter, categoryFilter]
+        
         DispatchQueue.main.async {
+            
+            self.notes.removeAll()
+            
             do {
                 self.notes = try self.manager.context.fetch(request)
             } catch {
@@ -177,15 +190,19 @@ class CoreDataStore: ObservableObject {
                 let noteCategory: String = docData["noteCategory"] as? String ?? ""
                 let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
                 let repeatCount: Int = docData["repeatCount"] as? Int ?? 0
+                let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0.0
+                let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0.0
                 let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                 let updateDate: Date = createdAtTimeStamp.dateValue()
+                
+                print("syncronizeWithDB firstTestResult : \(firstTestResult)")
                 let note: MyWordNote = MyWordNote(id: id,
                                                   noteName: noteName,
                                                   noteCategory: noteCategory,
                                                   enrollmentUser: enrollmentUser,
                                                   repeatCount: repeatCount,
-                                                  firstTestResult: 0,
-                                                  lastTestResult: 0,
+                                                  firstTestResult: firstTestResult,
+                                                  lastTestResult: lastTestResult,
                                                   updateDate: updateDate)
                 do {
                     let snapshot = try await self.database.collection("users").document(currentUser.uid)
@@ -209,7 +226,11 @@ class CoreDataStore: ObservableObject {
                         
                         words.append(word)
                     }
-                    self.addNoteAndWord(note: note, words: words, note.repeatCount)
+                    self.addNoteAndWord(note: note,
+                                        words: words,
+                                        note.repeatCount,
+                                        firstTestResult: firstTestResult,
+                                        lastTestResult: lastTestResult)
                 } catch {
                     print("fetch words in syncronizeWithDB error occured")
                 }
@@ -226,7 +247,17 @@ class CoreDataStore: ObservableObject {
         save()
     }
     
-    func plusRepeatCount(note: NoteEntity) {
+    func plusRepeatCount(note: NoteEntity,
+                         firstTestResult: Double?,
+                         lastTestResult: Double?) {
+        if let firstTestResult {
+            note.firstTestResult = firstTestResult
+        }
+        
+        if let lastTestResult {
+            note.lastTestResult = lastTestResult
+        }
+        
         note.repeatCount += 1
         note.updateDate = Date()
         save()
@@ -235,6 +266,8 @@ class CoreDataStore: ObservableObject {
     
     func resetRepeatCount(note: NoteEntity) {
         note.repeatCount = 0
+        note.firstTestResult = 0.0
+        note.lastTestResult = 0.0
         note.updateDate = Date()
         save()
         getNotes()
