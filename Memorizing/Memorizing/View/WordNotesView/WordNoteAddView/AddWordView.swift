@@ -255,7 +255,7 @@ struct AddWordView: View {
                     } label: {
                         Text("등록하기")
                             .fontWeight(.semibold)
-                            .modifier(CustomButtonStyle(backgroundColor: "MainBlue"))
+                            .modifier(CustomButtonStyle(backgroundColor: wordString.isEmpty || wordMeaning.isEmpty || words.count >= 100 ? "Gray4" : "MainBlue"))
                     }
                     .disabled(wordString.isEmpty || wordMeaning.isEmpty || words.count >= 100)
                     

@@ -48,13 +48,13 @@ struct OtherTryCardView: View {
             // MARK: 카드뷰
             ZStack {
                 if isFlipped {
-                    WordCardMeaningView2(
+                    WordCardAnswerView2(
                         listLength: wordCount,
                         currentListLength: $num,
                         currentWordDef: words[num].wordMeaning ?? "No Meaning"
                     )
                 } else {
-                    WordCardWordView2(
+                    WordCardQuestionView2(
                         listLength: wordCount,
                         currentListLength: $num,
                         currentWord: words[num].wordString ?? "No String"
@@ -121,7 +121,7 @@ struct OtherTryCardView: View {
 }
 
 // MARK: 카드 단어 뜻 뷰
-struct WordCardMeaningView2: View {
+struct WordCardAnswerView2: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -152,9 +152,13 @@ struct WordCardMeaningView2: View {
                 
                 // MARK: 현재 단어
                 Text("\(currentWordDef)")
+                    .font(.system(size: 30, weight: .bold))
+                    .minimumScaleFactor(0.4)
                     .foregroundColor(Color("MainBlue"))
-                    .padding(.bottom, 70)
-                    .font(.largeTitle).bold()
+                    .frame(width: UIScreen.main.bounds.width * 0.8,
+                           height: UIScreen.main.bounds.width * 0.4)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 
@@ -165,7 +169,7 @@ struct WordCardMeaningView2: View {
 }
 
 // MARK: 카드 단어 뷰
-struct WordCardWordView2: View {
+struct WordCardQuestionView2: View {
     
     // MARK: 단어장 단어 총 수
     var listLength: Int
@@ -196,9 +200,13 @@ struct WordCardWordView2: View {
                 
                 // MARK: 현재 단어 뜻
                 Text("\(currentWord)")
+                    .font(.system(size: 30, weight: .bold))
+                    .minimumScaleFactor(0.4)
                     .foregroundColor(Color("MainBlack"))
-                    .padding(.bottom, 70)
-                    .font(.largeTitle).bold()
+                    .frame(width: UIScreen.main.bounds.width * 0.8,
+                           height: UIScreen.main.bounds.width * 0.4)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 

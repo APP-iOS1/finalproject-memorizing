@@ -51,13 +51,13 @@ struct LastTryCardView: View {
             // MARK: 카드뷰
             ZStack {
                 if isFlipped {
-                    WordCardMeaningView(
+                    WordCardAnswerView(
                         listLength: words.count,
                         currentListLength: $num,
                         currentWordDef: words[num].wordMeaning ?? "No Meaning"
                     )
                 } else {
-                    WordCardWordView(
+                    WordCardQuestionView(
                         listLength: words.count,
                         currentListLength: $num,
                         currentWord: words[num].wordString ??  "No String"

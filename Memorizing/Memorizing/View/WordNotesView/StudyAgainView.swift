@@ -85,7 +85,7 @@ struct StudyAgainView: View {
                                             .foregroundColor(coreDataStore.returnColor(category:
                                                                                         myWordNote.noteCategory ?? ""))
                                             .overlay {
-                                                VStack {
+                                                VStack(spacing: 6) {
                                                     Image(systemName: "play.circle")
                                                         .font(.headline)
                                                     Text("학습시작")
@@ -141,7 +141,7 @@ struct StudyAgainView: View {
                                             .foregroundColor(coreDataStore.returnColor(category:
                                                                                         myWordNote.noteCategory ?? ""))
                                             .overlay {
-                                                VStack {
+                                                VStack(spacing: 6) {
                                                     Image(systemName: "play.circle")
                                                         .font(.headline)
                                                     Text("복습시작")
