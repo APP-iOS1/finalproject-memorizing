@@ -206,7 +206,8 @@ class AuthStore: UIViewController, ObservableObject {
                     _ = oauthToken
                     Task {
                         await self.loadingInfoDidKakaoAuth() // 사용자 정보 불러와서 Firebase Auth 로그인하기
-                    }                                } // 로그인 성공
+                    }
+                } // 로그인 성공
             } // 카톡 로그인
         } // 웹 로그인
     }
@@ -267,7 +268,7 @@ class AuthStore: UIViewController, ObservableObject {
                     "id": currentUser.uid,
                     "email": self.user!.email,
                     "nickName": self.user!.nickName,
-                    "coin": self.user!.coin,
+                    "coin": 1000,
                     "signInPlatform": self.user!.signInPlatform
                 ])
         }
