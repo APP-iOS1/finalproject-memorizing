@@ -89,6 +89,7 @@
     - 에빙하우스의 망각곡선 이론 적용
     - 신뢰성 있는 앱 기능을 통해 효과적인 암기 프로세스 구축
     
+     <aside>
     <img src="https://user-images.githubusercontent.com/101084872/210939055-9f3f3f01-a9f9-448f-b034-e9cff09e76de.jpg" width="400" height="300">
     
     ### 3. 다양한 유형의 암기장 제공
