@@ -29,6 +29,7 @@ struct NewMakeMemoryNote: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     @Binding var isShowingNewMemorySheet: Bool
+    @Binding var isToastToggle: Bool
     @State private var noteName: String = ""
     // 카테고리를 눌렀을때 담기는 변수
     @State private var noteCategory: String = ""
@@ -211,6 +212,7 @@ struct NewMakeMemoryNote: View {
                     
                     Task {
                         await marketStore.filterMyNoteWillFetchDB()
+                        isToastToggle = true
                     }
                     
                     isShowingNewMemorySheet = false
@@ -228,7 +230,8 @@ struct NewMakeMemoryNote: View {
 struct NewMakeMemoryNote_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            NewMakeMemoryNote(isShowingNewMemorySheet: .constant(true))
+            NewMakeMemoryNote(isShowingNewMemorySheet: .constant(true),
+                              isToastToggle: .constant(true))
         }
     }
 }

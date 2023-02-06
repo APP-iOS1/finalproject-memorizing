@@ -22,6 +22,7 @@ struct MarketViewSheet: View {
     @State private var isAlertToggle: Bool = false
     @State private var isCoinCheckToggle: Bool = false
     
+    @Binding var isToastToggle: Bool
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -311,12 +312,14 @@ struct MarketViewSheet: View {
                                 await authStore.userInfoWillFetchDB()
                                 await marketStore.myNotesArrayWillFetchDB()
                                 await marketStore.filterMyNoteWillFetchDB()
+                                isToastToggle = true
                             }
                         }
             
                         dismiss()
                      },
                      withCancelButton: isCoinCheckToggle)
+        
     }
 }
 

@@ -30,6 +30,7 @@ struct AddWordView: View {
     @State private var wordLevel: Int = 0
     //    @State private var showingAlert = false
     @State private var displayLists: Bool = false
+    @Binding var isToastToggle: Bool
     
     // MARK: - Navigation Stack 사용 안함
     var body: some View {
@@ -201,7 +202,7 @@ struct AddWordView: View {
                         wordString = ""
                         wordMeaning = ""
                         wordLevel = 0
-                        
+                        isToastToggle = true
                     } label: {
                         Text("등록하기")
                     }
