@@ -108,7 +108,6 @@ struct FirstTryCardView: View {
                                     notiManager.openSetting()
                                 } else {
                                     // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
-                                    print("set localNotification")
                                     var localNotification = LocalNotification(
                                         identifier: myWordNote.id ?? "No Id",
                                         title: "MEMOrizing 암기 시간",
@@ -117,13 +116,19 @@ struct FirstTryCardView: View {
                                         repeats: false
                                     )
                                     localNotification.subtitle = "\(myWordNote.noteName ?? "No Name")"
-                                    print("localNotification: ", localNotification)
+                                    
+                                    let firstTestResult = totalScore / Double(num * 3)
+                                    
                                     await notiManager.schedule(localNotification: localNotification)
                                     await myNoteStore.repeatCountWillBePlusOne(
                                         wordNote: myWordNote,
-                                        nextStudyDate: Date() + Double(myWordNote.repeatCount * 1000)
+                                        nextStudyDate: Date() + Double(myWordNote.repeatCount * 1000),
+                                        firstTestResult: firstTestResult,
+                                        lastTestResult: nil
                                     )
-                                    coreDataStore.plusRepeatCount(note: myWordNote)
+                                    coreDataStore.plusRepeatCount(note: myWordNote,
+                                                                  firstTestResult: firstTestResult,
+                                                                  lastTestResult: nil)
                                     await notiManager.getPendingRequests()
                                     for request in notiManager.pendingRequests {
                                         print("request: ", request as Any)
@@ -279,6 +284,7 @@ struct LevelCheck: View {
                 coreDataStore.updateWordLevel(word: word, level: 0)
                 if lastWordIndex != num {
                     isFlipped = false
+                    totalScore += 1
                     num += 1
                     
                 } else {
@@ -288,7 +294,7 @@ struct LevelCheck: View {
                 
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceBad")
                         .font(.largeTitle)
                         .padding(1)
                     Text("모르겠어요")
@@ -301,7 +307,7 @@ struct LevelCheck: View {
                 coreDataStore.updateWordLevel(word: word, level: 1)
                 if lastWordIndex != num {
                     isFlipped = false
-                    totalScore += 0.25
+                    totalScore += 2
                     num += 1
                 } else {
                     isShowingAlert = true
@@ -309,7 +315,7 @@ struct LevelCheck: View {
                 }
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceNormal")
                         .font(.largeTitle)
                         .padding(1)
                     Text("애매해요")
@@ -322,8 +328,8 @@ struct LevelCheck: View {
                 coreDataStore.updateWordLevel(word: word, level: 2)
                 if lastWordIndex != num {
                     isFlipped = false
+                    totalScore += 3
                     num += 1
-                    totalScore += 1
                     
                 } else {
                     isShowingAlert = true
@@ -331,7 +337,7 @@ struct LevelCheck: View {
                 }
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceGood")
                         .font(.largeTitle)
                         .padding(1)
                     Text("외웠어요!")

@@ -15,6 +15,7 @@ struct LastTryCardView: View {
     }
     @State var isDismiss: Bool = false
     @State var num = 0
+    @State var count = 0
     //    // FIXME: 단어장 이름 firebase에서 가져오기...?
     //    @State private var wordListName: String
     //    // FIXME: 단어장 단어 총 수
@@ -76,6 +77,7 @@ struct LastTryCardView: View {
                 totalScore: $totalScore,
                 lastWordIndex: wordCount,
                 num: $num,
+                count: $count,
                 wordNote: myWordNote,
                 word: words[num]
             )
@@ -134,6 +136,7 @@ struct LevelCheckForLast: View {
     @Binding var totalScore: Double
     var lastWordIndex: Int
     @Binding var num: Int
+    @Binding var count: Int
     var wordNote: NoteEntity
     var word: WordEntity
     
@@ -146,15 +149,20 @@ struct LevelCheckForLast: View {
             Button {
                 coreDataStore.updateWordLevel(word: word, level: 0)
                 if lastWordIndex != num {
+                    totalScore += 1
+                    count += 1
                     num += 1
                     isFlipped = false
                 } else {
+                    totalScore += 1
+                    count += 1
                     isShowingModal = true
                 }
                 
+                
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceBad")
                         .font(.largeTitle)
                         .padding(1)
                     Text("모르겠어요")
@@ -166,15 +174,18 @@ struct LevelCheckForLast: View {
             Button {
                 coreDataStore.updateWordLevel(word: word, level: 1)
                 if lastWordIndex != num {
+                    totalScore += 2
+                    count += 1
                     num += 1
                     isFlipped = false
-                    totalScore += 0.25
                 } else {
+                    totalScore += 2
+                    count += 1
                     isShowingModal = true
                 }
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceNormal")
                         .font(.largeTitle)
                         .padding(1)
                     Text("애매해요")
@@ -186,15 +197,18 @@ struct LevelCheckForLast: View {
             Button {
                 coreDataStore.updateWordLevel(word: word, level: 2)
                 if lastWordIndex != num {
+                    totalScore += 3
+                    count += 1
                     num += 1
                     isFlipped = false
-                    totalScore += 1
                 } else {
+                    totalScore += 3
+                    count += 1
                     isShowingModal = true
                 }
             } label: {
                 VStack {
-                    Image(systemName: "face.smiling")
+                    Image("FaceGood")
                         .font(.largeTitle)
                         .padding(1)
                     Text("외웠어요!")
@@ -202,11 +216,13 @@ struct LevelCheckForLast: View {
                 }
                 .modifier(CheckDifficultyButton(backGroundColor: "MainDarkBlue"))
             }
-            
         }
         .fullScreenCover(isPresented: $isShowingModal) {
-            if totalScore / Double(lastWordIndex) >= 0.75 {
-                GoodJobStampView(wordNote: wordNote, isDismiss: $isDismiss)
+            if totalScore / Double(count * 3) > 0.8 {
+                let lastTestResult: Double = totalScore / Double(count * 3)
+                GoodJobStampView(lastTestResult: lastTestResult,
+                                 wordNote: wordNote,
+                                 isDismiss: $isDismiss)
             } else {
                 TryAgainView(wordNote: wordNote, isDismiss: $isDismiss)
             }
