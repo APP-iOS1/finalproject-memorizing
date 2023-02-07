@@ -314,7 +314,6 @@ class AuthStore: UIViewController, ObservableObject {
                 self.user?.coin = docData?["coin"] as? Int ?? 0
                 self.user?.signInPlatform = docData?["signInPlatform"] as? String ?? User.Platform.google.rawValue
                 self.state = .signedIn
-                print("complete fetchUser Function")
             } else {
                 self.state = .firstIn
                 self.userInfoDidSaveDB(platform: self.user!.signInPlatform)

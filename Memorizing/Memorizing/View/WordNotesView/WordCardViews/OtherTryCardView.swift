@@ -112,7 +112,7 @@ struct OtherTryCardView: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .foregroundColor(Color("MainBlue"))
-                    .frame(width: CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
+                    .frame(width: num == 0 ? 0 : CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
                     .animation(.easeInOut, value: num)
             }
             
