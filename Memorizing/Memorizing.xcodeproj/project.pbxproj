@@ -79,6 +79,7 @@
 		661BD91C29874A3D00F34317 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661BD91B29874A3C00F34317 /* NotificationCell.swift */; };
 		661BD91E2987974000F34317 /* NotificationScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661BD91D2987974000F34317 /* NotificationScheduleView.swift */; };
 		661BD9202987974E00F34317 /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661BD91F2987974E00F34317 /* ScheduleCell.swift */; };
+		6660EEBF2991D91700D8B72A /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 6660EEBE2991D91700D8B72A /* KakaoSDKTalk */; };
 		66982A0C297787A30052269D /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A0B297787A30052269D /* AuthStore.swift */; };
 		66982A132977A7660052269D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A122977A7660052269D /* GoogleSignIn */; };
 		66982A152977A7660052269D /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A142977A7660052269D /* GoogleSignInSwift */; };
@@ -194,6 +195,7 @@
 				3F7DA2FE2987A8A3001EDFC8 /* FirebaseFirestore in Frameworks */,
 				3F7DA2FA2987A8A3001EDFC8 /* FirebaseAuth in Frameworks */,
 				3F7DA3022987A8A3001EDFC8 /* FirebaseStorage in Frameworks */,
+				6660EEBF2991D91700D8B72A /* KakaoSDKTalk in Frameworks */,
 				3F7DA2FC2987A8A3001EDFC8 /* FirebaseDatabase in Frameworks */,
 				66982A1D2977B9BD0052269D /* KakaoSDKUser in Frameworks */,
 			);
@@ -265,6 +267,7 @@
 				F203AD1B297533F30047A212 /* .swiftlint.yml */,
 				52D8F23C2965F2C600755E5A /* Memorizing */,
 				52D8F23B2965F2C600755E5A /* Products */,
+				6660EEBD2991D91700D8B72A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -416,6 +419,13 @@
 			path = NotificationView;
 			sourceTree = "<group>";
 		};
+		6660EEBD2991D91700D8B72A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -446,6 +456,7 @@
 				3F7DA2FD2987A8A3001EDFC8 /* FirebaseFirestore */,
 				3F7DA2FF2987A8A3001EDFC8 /* FirebaseMessaging */,
 				3F7DA3012987A8A3001EDFC8 /* FirebaseStorage */,
+				6660EEBE2991D91700D8B72A /* KakaoSDKTalk */,
 			);
 			productName = Memorizing;
 			productReference = 52D8F23A2965F2C600755E5A /* Memorizing.app */;
@@ -676,7 +687,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -730,7 +741,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -759,7 +770,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -793,7 +804,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -896,6 +907,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3FF9B3E92966ECA400A47C5A /* XCRemoteSwiftPackageReference "SwiftUIProgressiveOnboard" */;
 			productName = SwiftUIProgressiveOnboard;
+		};
+		6660EEBE2991D91700D8B72A /* KakaoSDKTalk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66982A172977B9BD0052269D /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKTalk;
 		};
 		66982A122977A7660052269D /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;

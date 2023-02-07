@@ -27,8 +27,8 @@ struct FirstLoginView: View {
                     } // Group
                     .font(.system(size: 36, weight: .bold))
                     .fontWeight(.bold)
-                    Text("이름을 입력해주세요!")
-                        .font(.system(size: 20))
+                    Text("앱 내에서 사용할 이름을 입력해주세요!")
+                        .font(.system(size: 16))
                         .padding(.top, -15)
                 } // VStack
                 Spacer()
