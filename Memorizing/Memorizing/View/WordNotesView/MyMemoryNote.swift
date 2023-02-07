@@ -103,17 +103,6 @@ struct MyMemoryNote: View {
                     isShowingSheet.toggle()
                     
                 })
-            // MARK: - ContextMenu를 활용한 암기장 삭제
-            // 해당 데이터가 삭제는 되는데.. 왜 새로고침 하면 다시 words 하위하위 컬렉션은 다시 살아나는지?
-                .contextMenu {
-                    Button(role: .destructive, action: {
-                        myNoteStore.myNotesDidDeleteDB(wordNote: myWordNote)
-                        coreDataStore.deleteNote(note: myWordNote)
-                    }, label: {
-                        Text("삭제하기")
-                        Image(systemName: "trash.fill")
-                    })
-                }
                 .fullScreenCover(isPresented: $isShowingSheet) {
                     NavigationStack {
                         EditListView(wordNote: myWordNote)
