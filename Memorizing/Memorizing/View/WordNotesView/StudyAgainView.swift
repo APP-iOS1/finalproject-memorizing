@@ -29,7 +29,7 @@ struct StudyAgainView: View {
                         HStack {
                             Rectangle()
                                 .cornerRadius(10, corners: [.topLeft, .bottomLeft])
-                                .frame(width: 20)
+                                .frame(width: UIScreen.main.bounds.width * 0.04)
                                 .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                             
                             VStack(spacing: 5) {

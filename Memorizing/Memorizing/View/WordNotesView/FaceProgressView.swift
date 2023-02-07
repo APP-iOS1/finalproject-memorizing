@@ -12,8 +12,9 @@ struct FaceProgressView: View {
     
     var myWordNote: NoteEntity
     @EnvironmentObject var coreDataStore: CoreDataStore
-    
+    // MARK: 진행도 배경 동그라미 크기
     @State private var backgroundCircleSize = UIScreen.main.bounds.width * 0.08
+    // MARK: 진행도 숫자 or 얼굴 동그라미 크기
     @State private var numberCircleSize = UIScreen.main.bounds.width * 0.06
     
     /// 1,4회차 학습 성취도에 따라 표정 이모지 변경
