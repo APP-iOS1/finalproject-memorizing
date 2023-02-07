@@ -27,7 +27,7 @@ struct MyMemoryNote: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color.gray4, lineWidth: 1)
                 .foregroundColor(.white)
-                .frame(width: 350, height: 140)
+                .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.15)
                 .overlay {
                     HStack {
                         Rectangle()
@@ -98,6 +98,7 @@ struct MyMemoryNote: View {
                     .padding(.trailing, 25)
                 }
                 .padding(.vertical, 5)
+                .padding(.horizontal, 20)
                 .onTapGesture(perform: {
                     isShowingSheet.toggle()
                     

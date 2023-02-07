@@ -18,6 +18,9 @@ class MarketStore: ObservableObject {
     @Published var filterMyWordNotes: [MyWordNote] = []
     @Published var myWordNoteIdArray: [String] = []
     
+    // 리스너를 위해 필요한 프로퍼티
+    // @Published var currentCoin: Int = 0
+    
     // MARK: - Pagination(InfiniteScroll) 구현 코드
     // @Published var snapshotCounter: Int = 19
     // private var lastDocumentSnapshot: DocumentSnapshot?
@@ -323,8 +326,6 @@ class MarketStore: ObservableObject {
                         print(error)
                         return
                     }
-                    
-                    print("Buy Market WordNote Success")
                 }
         }
     }
@@ -434,4 +435,25 @@ class MarketStore: ObservableObject {
             print("myNotesArrayWillFetchDB Function Error: \(error)")
         }
     }
+    
+    // MARK: - 코인이 업데이트되면 읽어서 반영해주는 메서드
+    // 근데 이거 없이도 기존 메서드로 잘됨...ㅎ
+    /*
+    func myCoinWillFetchDBWithListener() {
+        database.collection("users").document(Auth.auth().currentUser?.uid ?? "")
+            .addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let data = document.data() else {
+                    print("Document data was empty.")
+                    return
+                }
+                let currentCoin: Int = data["coin"] as? Int ?? 0
+                
+                self.currentCoin = currentCoin
+            }
+    }
+     */
 }

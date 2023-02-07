@@ -35,7 +35,8 @@ struct NotificationScheduleView: View {
                                             }
                                         }
                                      },
-                                     withCancelButton: true)
+                                     withCancelButton: true,
+                                     cancelButtonText: "취소")
                 }
                 .onDelete { indexSet in
                     self.isShownDeleteAlert.toggle()

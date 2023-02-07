@@ -28,6 +28,8 @@ struct OtherTryCardView: View {
     }
     @State var isDismiss: Bool = false
     @State var num = 0
+    @State private var isShowingNotSaveAlert: Bool = false
+    
     var wordCount: Int {
         words.count - 1
     }
@@ -77,6 +79,13 @@ struct OtherTryCardView: View {
             Spacer()
             
         }
+        .navigationBarBackButtonHidden(true)
+        // MARK: navigationLink destination 커스텀 백 버튼
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
+        }
         .navigationTitle(myWordNote.noteName ?? "No Name")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: isDismiss, perform: { _ in
@@ -85,6 +94,16 @@ struct OtherTryCardView: View {
         .onChange(of: isFlipped, perform: { _ in
             flipCard()
         })
+        // MARK: 뒤로가기 누렀을 때 저장 안된다는 경고창 보여줌
+        .customAlert(isPresented: $isShowingNotSaveAlert,
+                     title: "학습 중단하기",
+                     message: "학습 진행 상황은 저장되지 않습니다.\n중단하시겠어요?",
+                     primaryButtonTitle: "네",
+                     primaryAction: {
+            dismiss()
+        },
+                     withCancelButton: true,
+                     cancelButtonText: "아니요")
     }
     
     // MARK: 파란 진행바 뷰
@@ -109,6 +128,15 @@ struct OtherTryCardView: View {
                 .frame(width: 393, height: 3)
                 .foregroundColor(Color("Gray4"))
             
+        }
+    }
+    
+    // MARK: NavigationLink 커스텀 뒤로가기 버튼
+    var backButton : some View {
+        Button {
+            isShowingNotSaveAlert.toggle()
+        } label: {
+            Image(systemName: "chevron.left")
         }
     }
     

@@ -28,7 +28,7 @@ struct MarketViewSheet: View {
             ScrollView {
                 
                 // MARK: - 단어장 정보
-                VStack {
+                VStack (spacing: 10){
                     HStack {
                         Spacer()
                         Button {
@@ -54,20 +54,20 @@ struct MarketViewSheet: View {
                         Spacer()
                     }
                     .padding(.top, 10)
+                    .padding(.leading, 3)
                     
                     // 암기장 제목
                     HStack {
                         Text(wordNote.noteName)
+                            .font(.title2)
                             .foregroundColor(.mainBlack)
-                            .font(.title3)
-                            .bold()
+                            .fontWeight(.semibold)
                             .padding(.leading, 5)
                             .multilineTextAlignment(.leading)
-                            .lineLimit(1)
                         
                         Spacer()
                     }
-                    .padding(.vertical, 5)
+                    .padding(.top, 1)
                     
                     // 암기장 마켓등록일, 판매 금액
                     HStack(spacing: 3) {
@@ -75,24 +75,24 @@ struct MarketViewSheet: View {
                             .foregroundColor(Color("ITColor"))
                             .font(.footnote)
                         
-                        HStack {
+                        HStack (alignment: .top){
                             // FIXME: 별점 총점 및 후기 총 갯수
                             let reviewCount: Int = wordNote.reviewCount
                             let reviewScore: Double = wordNote.starScoreTotal / Double(reviewCount)
                             let score: String = String(format: "%.1f", reviewScore) // "5.1"
 
                             if reviewCount == 0 {
-                                Text("0.0 (0)")
+                                Text("별점 없음  |")
                                     .font(.caption)
-                                    .foregroundColor(Color.gray3)
+                                    .foregroundColor(Color.gray2)
                             } else {
-                                Text("\(score) (\(reviewCount))")
+                                Text("\(score) (\(reviewCount))  |")
                                     .font(.caption)
-                                    .foregroundColor(Color.gray3)
+                                    .foregroundColor(Color.gray2)
                             }
                         
                             // FIXME: 마켓 등록일 관련 데이터 추가 후 수정
-                            Text("\(wordNote.updateDateFormatter)")
+                            Text("\(wordNote.updateDateFormatter) 등록")
                         }
                         .font(.footnote)
                         .foregroundColor(.gray2)
@@ -104,21 +104,25 @@ struct MarketViewSheet: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                             .foregroundColor(.mainDarkBlue)
+
                     }
                 }
-                .padding(.horizontal, 30)
+                .padding(.horizontal, 23)
 
                 // MARK: - 암기장 구매하기 버튼
                 if marketStore.myWordNoteIdArray.contains(wordNote.id) {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.gray4)
-                        .frame(width: 355, height: 44)
+                        .frame(height: 44)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 4)
                         .overlay {
                             Text("이미 소유하고 있는 암기장 입니다.")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
                         }
+                        .padding(.bottom, -20)
                 } else {
                     Button(action: {
                         if authStore.user?.coin ?? 0 >= wordNote.notePrice {
@@ -131,15 +135,17 @@ struct MarketViewSheet: View {
                     }, label: {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.mainBlue)
-                            .frame(width: 355, height: 44)
+                            .frame(height: 44)
+                            .padding(.horizontal, 20)
+                            .padding(.top, 4)
                             .overlay {
-                                Text("\(wordNote.notePrice)P로 지식 구매하기!")
+                                Text("\(wordNote.notePrice)P 로 지식 구매하기!")
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.white)
                             }
+                            .padding(.bottom, -20)
                     })
-                    .padding(.vertical, 10)
                     
 //                    .alert(isPresented: $isAlertToggle) {
 //                        if isCoinCheckToggle {
@@ -177,14 +183,15 @@ struct MarketViewSheet: View {
                 
                 // MARK: - 구분선
                 Divider()
-                    .frame(width: 400, height: 5)
+                    .frame(height: 3)
                     .overlay { Color.gray5 }
                     .padding(.bottom)
                 
                 // MARK: - 단어 미리보기
                 HStack {
                     Text("미리보기")
-                        .foregroundColor(.gray3)
+                        .foregroundColor(.gray2)
+                        .fontWeight(.medium)
                     
                     Spacer()
                     
@@ -194,10 +201,11 @@ struct MarketViewSheet: View {
                             .foregroundColor(.mainDarkBlue)
                         Text("의 단어")
                     }
+                    .fontWeight(.semibold)
                 }
                 .padding(.horizontal, 30)
                 .font(.subheadline)
-                .bold()
+                
                 
                 // 5개의 단어만 가져오도록 함
                 ForEach(Array(zip(0...4, marketStore.words)), id: \.0) { _, word in
@@ -323,7 +331,8 @@ struct MarketViewSheet: View {
             
                         dismiss()
                      },
-                     withCancelButton: isCoinCheckToggle)
+                     withCancelButton: isCoinCheckToggle,
+                     cancelButtonText: "취소")
         
     }
 }

@@ -213,7 +213,8 @@ struct EditUserView: View {
                 await authStore.deleteAccount()
             }
         },
-                     withCancelButton: true)
+                     withCancelButton: true,
+                     cancelButtonText: "취소")
         
     }// ZStack
     
