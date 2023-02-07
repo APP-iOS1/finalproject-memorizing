@@ -243,6 +243,10 @@ struct LevelCheckForLast: View {
                 TryAgainView(wordNote: wordNote, isDismiss: $isDismiss)
             }
         }
+        // MARK: 이해 불가 (없으면 goodjobstamp가 나오지 않는 버그)
+        .onChange(of: count, perform: { newValue in
+            //
+        })
     }
 }
 
