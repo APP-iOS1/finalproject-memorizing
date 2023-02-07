@@ -29,7 +29,7 @@ struct StudyAgainView: View {
                         HStack {
                             Rectangle()
                                 .cornerRadius(10, corners: [.topLeft, .bottomLeft])
-                                .frame(width: 20)
+                                .frame(width: UIScreen.main.bounds.width * 0.04)
                                 .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                             
                             VStack(spacing: 5) {
@@ -44,7 +44,8 @@ struct StudyAgainView: View {
                                         }
                                     Spacer()
                                 }
-                                // .padding(.horizontal, 8)
+                                // .padding(.horizontal, 10)
+                                .padding(.leading, 6)
                                 
                                 HStack {
                                     HStack {
@@ -52,7 +53,7 @@ struct StudyAgainView: View {
                                             .foregroundColor(.mainBlack)
                                             .font(.body)
                                             .fontWeight(.semibold)
-                                            .padding(.top, 7)
+                                            .padding(.top, 5)
                                             .padding(.leading, 6)
                                             .padding(.bottom, 3)
                                             .lineLimit(1)
