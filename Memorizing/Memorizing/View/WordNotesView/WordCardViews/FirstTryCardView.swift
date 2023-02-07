@@ -139,16 +139,18 @@ struct FirstTryCardView: View {
                             }
                         }
                      },
-                     withCancelButton: false)
+                     withCancelButton: false,
+                     cancelButtonText: "취소")
         // MARK: 뒤로가기 누렀을 때 저장 안된다는 경고창 보여줌
         .customAlert(isPresented: $isShowingNotSaveAlert,
-                     title: "제목",
-                     message: "저장 안됨 ㄱㅊ?",
-                     primaryButtonTitle: "나가기",
+                     title: "학습 중단하기",
+                     message: "학습 진행 상황은 저장되지 않습니다.\n중단하시겠어요?",
+                     primaryButtonTitle: "네",
                      primaryAction: {
             dismiss()
         },
-                     withCancelButton: true)
+                     withCancelButton: true,
+                     cancelButtonText: "아니요")
     }
     
     // MARK: 파란 진행바 뷰

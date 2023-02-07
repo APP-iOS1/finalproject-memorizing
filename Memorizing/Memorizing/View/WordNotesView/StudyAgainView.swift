@@ -23,7 +23,7 @@ struct StudyAgainView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.gray4, lineWidth: 1)
                     .foregroundColor(.white)
-                    .frame(width: 350, height: 140)
+                    .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.15)
                     .overlay {
                         HStack {
                             Rectangle()
@@ -58,8 +58,8 @@ struct StudyAgainView: View {
                                         
                                         Spacer()
                                     }
-                                    .frame(width: UIScreen.main.bounds.width * 0.62)
-                                    .padding(.horizontal, 6)
+                                    .frame(width: UIScreen.main.bounds.width * 0.64)
+                                    .padding(.leading, 6)
                                     .padding(.bottom, 10)
                                     
                                     Spacer()
