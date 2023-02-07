@@ -287,9 +287,7 @@ struct MyPageView: View {
     
     struct KakaoTalkChannelView: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> SFSafariViewController {
-            let safariViewController: SFSafariViewController = SFSafariViewController(url: TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hZrWxj")!)
-            print("카카오톡 채널 주소\(String(describing: TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hZrWxj")))")
-            
+            let safariViewController: SFSafariViewController = SFSafariViewController(url: TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hZrWxj")!)            
             safariViewController.modalTransitionStyle = .crossDissolve
             safariViewController.modalPresentationStyle = .overCurrentContext
             

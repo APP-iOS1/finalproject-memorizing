@@ -87,7 +87,6 @@ struct NewMakeMemoryNote: View {
             
             VStack {
                 Button {
-                    print("취소버튼이 눌렸습니다.")
                     isShowingNewMemorySheet.toggle()
                     dismiss()
                 } label: {
@@ -235,7 +234,6 @@ struct NewMakeMemoryNote: View {
                     }
                     
                     isShowingNewMemorySheet = false
-                    print("새로운 암기장 만들기")
                 } label: {
                     Text("새로운 암기장 만들기")
                         .foregroundColor(.white)

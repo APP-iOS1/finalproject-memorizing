@@ -50,13 +50,11 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - FirebaseAuth SignIn Function / Auth에 signIn을 진행함
     func signInDidAuth(email: String, password: String) async {
-        print("start signInDidAuth function")
         self.errorMessage = ""
         do {
             self.user = User(id: "", email: "", nickName: "", coin: 0, signInPlatform: User.Platform.kakao.rawValue)
             try await Auth.auth().signIn(withEmail: email, password: password)
             if let result = Auth.auth().currentUser {
-                print("userId: ", result.uid)
                 self.user = User(
                     id: result.uid,
                     email: result.email ?? "No Email",
@@ -67,7 +65,6 @@ class AuthStore: UIViewController, ObservableObject {
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                 //   self.state = .signedIn
-                print("signed In complete")
                 
             }
 //            await self.userInfoWillFetchDB()
@@ -98,7 +95,6 @@ class AuthStore: UIViewController, ObservableObject {
                     
                     guard error == nil else { return }
                     guard let user = user else { return }
-                    print("구글 아이디: \( Auth.auth().currentUser?.uid ?? "No ID")")
                     self.user = User(
                         id: Auth.auth().currentUser?.uid ?? "No ID",
                         email: user.profile?.email ?? "No Email",
@@ -106,7 +102,6 @@ class AuthStore: UIViewController, ObservableObject {
                         coin: 0,
                         signInPlatform: User.Platform.google.rawValue
                     )
-                    print("Google first Login")
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
 //                    await userInfoWillFetchDB()
                     //    self.state = .signedIn
@@ -128,7 +123,6 @@ class AuthStore: UIViewController, ObservableObject {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
         do {
             try await Auth.auth().signIn(with: credential)
-            print("google sign state signIn")
             //    self.state = .signedIn
         } catch let error as NSError {
             errorMessage = error.localizedDescription
@@ -165,7 +159,6 @@ class AuthStore: UIViewController, ObservableObject {
                 print("Kakao loading user Info error: ", self.errorMessage)
             } else {
                 Task {
-                    print("Kakao Email: ", kakaoUser?.kakaoAccount?.email ?? "No Email")
                     await self.signUpDidAuth(
                         email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
                         password: "\(String(describing: kakaoUser?.id))"
@@ -187,7 +180,6 @@ class AuthStore: UIViewController, ObservableObject {
                     self.errorMessage = error.localizedDescription
                     print("Kakao Sign In Error: ", self.errorMessage)
                 } else { // 로그인 성공
-                    print("New kakao Login")
                     _ = oauthToken
                     Task {
                         await self.loadingInfoDidKakaoAuth() // 사용자 정보 불러와서 Firebase Auth 로그인하기
@@ -202,7 +194,6 @@ class AuthStore: UIViewController, ObservableObject {
                     print("Kakao web Sign in error: ", self.errorMessage)
                     print("Kakao web Sign in error code: ", error.asAFError?.responseCode as Any)
                 } else { // 로그인 성공
-                    print("New kakao Login")
                     _ = oauthToken
                     Task {
                         await self.loadingInfoDidKakaoAuth() // 사용자 정보 불러와서 Firebase Auth 로그인하기
@@ -264,11 +255,9 @@ class AuthStore: UIViewController, ObservableObject {
     func userInfoDidSaveDB(platform: String) {
         if let currentUser = Auth.auth().currentUser {
             var newEmail = Auth.auth().currentUser?.email ?? "\(self.user!.email)"
-            print("저장 전 이메일: \(newEmail)")
             if newEmail.hasPrefix("kakao_") {
                 let range = newEmail.firstRange(of: "kakao_")
                 newEmail.removeSubrange(range!)
-                print("저장 할 이메일: \(newEmail)")
             }
             self.user!.coin = 1000
             database.collection("users").document(currentUser.uid)
@@ -284,7 +273,6 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - FirebaseAuth SignOut Function / Auth에 signOut을 진행함
     func signOutDidAuth() {
-        print("start emailAuthSignOut")
         self.errorMessage = ""
         do {
             try Auth.auth().signOut()
@@ -296,7 +284,6 @@ class AuthStore: UIViewController, ObservableObject {
             UserDefaults.standard.reset()
             state = .signedOut
             self.user = nil
-            print("finish AuthSignOut")
         } catch let signOutError as NSError {
             self.errorMessage = signOutError.localizedDescription
             print("SignOut Fail: ", errorMessage)
@@ -310,14 +297,12 @@ class AuthStore: UIViewController, ObservableObject {
                 self.errorMessage = error.localizedDescription
                 print("Kakao logout error: ", self.errorMessage)
             } else {
-                print("Kakao SignOut")
             }
         }
     }
     
     // MARK: - FetchUser Function / FireStore-DB에서 UserInfo를 불러옴
     func userInfoWillFetchDB() async {
-        print("Start FetchUser")
        
         do {
             let document = try await database.collection("users").document(Auth.auth().currentUser?.uid ?? "").getDocument()
@@ -329,7 +314,6 @@ class AuthStore: UIViewController, ObservableObject {
                 self.user?.coin = docData?["coin"] as? Int ?? 0
                 self.user?.signInPlatform = docData?["signInPlatform"] as? String ?? User.Platform.google.rawValue
                 self.state = .signedIn
-                print("complete fetchUser Function")
             } else {
                 self.state = .firstIn
                 self.userInfoDidSaveDB(platform: self.user!.signInPlatform)
@@ -339,7 +323,6 @@ class AuthStore: UIViewController, ObservableObject {
         } catch {
             print("Fail: fetchUser")
         }
-        print("finish fetchUser function")
     } // fetchUser
     
     // MARK: - User의 닉네임을 변경
@@ -366,8 +349,6 @@ class AuthStore: UIViewController, ObservableObject {
                 UserApi.shared.unlink { error in
                     if let error = error {
                         print("카카오톡 연결 끊기 실패: \(error.localizedDescription)")
-                    } else {
-                        print("카카오톡 연결 끊기")
                     }
                 }
             } else if self.user?.signInPlatform == User.Platform.google.rawValue {
@@ -382,7 +363,6 @@ class AuthStore: UIViewController, ObservableObject {
                 .updateData([
                     "userState": 3
                 ])
-            print("탈퇴완료")
             self.signOutDidAuth()
         } catch let error as NSError {
             /*

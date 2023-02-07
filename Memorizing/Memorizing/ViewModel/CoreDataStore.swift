@@ -195,7 +195,6 @@ class CoreDataStore: ObservableObject {
                 let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                 let updateDate: Date = createdAtTimeStamp.dateValue()
                 
-                print("syncronizeWithDB firstTestResult : \(firstTestResult)")
                 let note: MyWordNote = MyWordNote(id: id,
                                                   noteName: noteName,
                                                   noteCategory: noteCategory,

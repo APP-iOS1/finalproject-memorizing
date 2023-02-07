@@ -188,7 +188,7 @@ struct MarketTradeListView: View {
         }
         .customAlert(isPresented: $isAlertOpen,
                      title: "판매등록 취소",
-                     message: "판매등록을 취소 하시겠습니까?",
+                     message: "취소하시게되면, 기존에 있던 \n 평점과 리뷰가 사라집니다.",
                      primaryButtonTitle: "확인",
                      primaryAction: {
                         Task {

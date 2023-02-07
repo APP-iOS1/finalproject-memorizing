@@ -26,7 +26,6 @@ struct ContentView: View {
                     LoginView()
                         .environmentObject(marketStore)
                 } else if authStore.state == .firstIn {
-                    var _ = print("OnBoardingTabView: \(self.email) / \(self.password)")
                     OnBoardingTabView(currentTab: self.email.isEmpty
                                       && self.password.isEmpty
                                       ? 0
@@ -56,7 +55,6 @@ struct ContentView: View {
             // 알림 권한 여부 확인
             try? await notiManager.requestAuthorization()
             if Auth.auth().currentUser != nil {
-                print("task")
                 await authStore.signInDidExistingAuth()
 
             }

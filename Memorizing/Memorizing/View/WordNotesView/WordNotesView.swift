@@ -67,7 +67,6 @@ struct WordNotesView: View {
             VStack {
                 if memoryStepToggle == true && reviewStepToggle == false {
                     Button {
-                        print("새로운 일기장 만들기 버튼이 눌렸습니다.")
                         isShowingNewMemorySheet.toggle()
                     } label: {
                         Circle()

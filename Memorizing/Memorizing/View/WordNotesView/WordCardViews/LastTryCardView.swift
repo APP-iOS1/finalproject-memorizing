@@ -58,8 +58,6 @@ struct LastTryCardView: View {
                 }
             }
             .onTapGesture {
-                print("flipcard 실행")
-                print(isFlipped)
                 flipCard()
             }
             
@@ -113,7 +111,7 @@ struct LastTryCardView: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .foregroundColor(Color("MainBlue"))
-                    .frame(width: CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
+                    .frame(width: num == 0 ? 0 : CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
                     .animation(.easeInOut, value: num)
             }
             
@@ -245,6 +243,10 @@ struct LevelCheckForLast: View {
                 TryAgainView(wordNote: wordNote, isDismiss: $isDismiss)
             }
         }
+        // MARK: 이해 불가 (없으면 goodjobstamp가 나오지 않는 버그)
+        .onChange(of: count, perform: { newValue in
+            //
+        })
     }
 }
 
