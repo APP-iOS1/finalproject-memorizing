@@ -308,13 +308,13 @@ class CoreDataStore: ObservableObject {
     func returnWidth(width: CGFloat) -> Double {
             switch width {
             case 0, 1:
-                return UIScreen.main.bounds.width * 0.75 * 0.0
+                return UIScreen.main.bounds.width * 0.72 * 0.0
             case 2:
-                return UIScreen.main.bounds.width * 0.75 * 0.33
+                return UIScreen.main.bounds.width * 0.72 * 0.3333
             case 3:
-                return UIScreen.main.bounds.width * 0.75 * 0.66
+                return UIScreen.main.bounds.width * 0.72 * 0.6666
             default:
-                return UIScreen.main.bounds.width * 0.75
+                return UIScreen.main.bounds.width * 0.72
             }
     }
     

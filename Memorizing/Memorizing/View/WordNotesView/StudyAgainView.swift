@@ -44,8 +44,7 @@ struct StudyAgainView: View {
                                         }
                                     Spacer()
                                 }
-                                // .padding(.horizontal, 10)
-                                .padding(.leading, 6)
+                                .padding(.horizontal, 10)
                                 
                                 HStack {
                                     HStack {
@@ -68,8 +67,9 @@ struct StudyAgainView: View {
                                 }
                                 // MARK: 얼굴 진행도
                                 FaceProgressView(myWordNote: myWordNote)
+                                    .padding(.leading, -5)
                             }
-                            .padding(.trailing, 15)
+//                            .padding(.trailing, 15)
                         }
                     }
                     .overlay {
