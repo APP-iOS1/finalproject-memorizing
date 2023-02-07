@@ -234,6 +234,7 @@ struct WordCardAnswerView: View {
                     .foregroundColor(Color("MainBlue"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -284,6 +285,7 @@ struct WordCardQuestionView: View {
                     .foregroundColor(Color("MainBlack"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -332,7 +334,7 @@ struct LevelCheck: View {
                     Text("모르겠어요")
                         .font(.headline)
                 }
-                .modifier(CheckDifficultyButton(backGroundColor: "Gray2"))
+                .modifier(CheckDifficultyButton(backGroundColor: "Gray3"))
             }
             
             Button {

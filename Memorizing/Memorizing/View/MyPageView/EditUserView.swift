@@ -114,41 +114,37 @@ struct EditUserView: View {
         VStack(spacing: 30) {
             // MARK: 닉네임 변경 파트
             VStack(alignment: .leading) {
-                Text("닉네임 변경")
+                Text("이름 변경")
+                    .fontWeight(.semibold)
                 
-                HStack {
-                    TextField(text: $nickName) {
-                        Text("변경할 닉네임")
+                HStack{
+                    VStack{
+                        TextField(text: $nickName) {
+                            Text("이름을 입력해주세요.(최대 5자까지 가능)")
+                                .font(.subheadline)
+                        }
+                        Divider()
+                            .overlay(Color.black)
                     }
-                    .padding(.vertical, 13)
-                    .padding(.horizontal, 25)
-                    .background(Color("Gray5"))
-                    .cornerRadius(30)
-                    .disableAutocorrection(true)
-                    .textInputAutocapitalization(.never)
-                    .foregroundColor(Color("Black"))
-                    
-                    Spacer()
-                    
                     Button {
                         Task {
                             try await authStore.userInfoDidChangeDB(nickName: nickName)
                         }
                     } label: {
                         Text("변경하기")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
                             .foregroundColor(.white)
-                            .bold()
-                            .padding(.vertical, 13)
-                            .padding(.horizontal, 20)
-                            .background {
-                                Color.mainDarkBlue
-                            }
-                            .cornerRadius(40)
+                            .padding(10)
+                            .background(Color.black)
+                            .cornerRadius(10)
                     }
-                    
                 }
+                .padding(.leading, 3)
+                .padding(.vertical, 5)
             }
-            .padding(.top, 20)
+            .padding(.top, 40)
+            .padding(.horizontal, 20)
             
             /*
             // MARK: 비밀번호 변경 파트, securefield로 할지 그냥 textfield로 할지 고민 중
@@ -187,21 +183,24 @@ struct EditUserView: View {
              */
             
             Divider()
+                .padding(.horizontal, 10)
             
             HStack {
                 Button {
                     isShownDeleteAccountAlert.toggle()
                 } label: {
                     Text("회원 탈퇴")
-                        .foregroundColor(.gray4)
+                        .foregroundColor(.gray2)
+                        .font(.footnote)
                 }
                 Spacer()
             }
+            .padding(.horizontal, 30)
+            .padding(.top, -10)
             
             Spacer()
             
         }
-        .padding(.horizontal, 20)
         .navigationTitle("내 정보 수정")
         .navigationBarTitleDisplayMode(.inline)
         .customAlert(isPresented: $isShownDeleteAccountAlert,

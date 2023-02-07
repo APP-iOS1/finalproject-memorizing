@@ -61,7 +61,7 @@ struct MarketViewNoteButton: View {
                                     Text(selectedWordNote.noteName)
                                         .foregroundColor(.mainBlack)
                                         .font(.footnote)
-                                        .fontWeight(.bold)
+                                        .fontWeight(.semibold)
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(2)
                                     
