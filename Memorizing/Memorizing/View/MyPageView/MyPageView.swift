@@ -39,12 +39,11 @@ struct MyPageView: View {
                                 .font(.title)
                                 .fontWeight(.semibold)
                             
-                            let email: String = authStore.user?.email ?? ""
-                            if email.contains("kakao") {
-                                loginLogo(name: "KakaoLogo")
-                            } else if email.contains("appleid") {
+                            switch authStore.user?.signInPlatform {
+                            case "kakao": loginLogo(name: "KakaoLogo")
+                            case "apple":
                                 loginLogo(name: "AppleLogo")
-                            } else if email.contains("gmail") {
+                            default:
                                 loginLogo(name: "GoogleLogo")
                             }
                         }
@@ -268,7 +267,8 @@ struct MyPageView: View {
             myNoteStore.myWords = []
             myNoteStore.myWordNotes = []
         },
-                     withCancelButton: true)
+                     withCancelButton: true,
+                     cancelButtonText: "취소")
     }
     
     struct KakaoTalkChannelView: UIViewControllerRepresentable {

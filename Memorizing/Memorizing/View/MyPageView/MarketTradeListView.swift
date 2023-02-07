@@ -196,7 +196,8 @@ struct MarketTradeListView: View {
                         }
                         isAlertOpen = false
                     },
-                     withCancelButton: true)
+                     withCancelButton: true,
+                     cancelButtonText: "취소")
     }
 }
 

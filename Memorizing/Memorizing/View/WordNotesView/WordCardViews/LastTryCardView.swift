@@ -16,16 +16,8 @@ struct LastTryCardView: View {
     @State var isDismiss: Bool = false
     @State var num = 0
     @State var count = 0
-    //    // FIXME: 단어장 이름 firebase에서 가져오기...?
-    //    @State private var wordListName: String
-    //    // FIXME: 단어장 단어 총 수
-    //    @State private var listLength: Int = 0
-    //    // FIXME: 단어장 현재 단어 x번째
-    //    @State private var currentListLength: Int
-    //    // FIXME: 현재 단어
-    //    @State private var currentWord: String
-    //    // FIXME: 현재 단어 뜻
-    //    @State private var currentWordDef: String
+    @State private var isShowingNotSaveAlert: Bool = false
+
     var wordCount: Int {
         words.count - 1
     }
@@ -86,6 +78,13 @@ struct LastTryCardView: View {
             Spacer()
             
         }
+        .navigationBarBackButtonHidden(true)
+        // MARK: navigationLink destination 커스텀 백 버튼
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
+        }
         .navigationTitle(myWordNote.noteName ?? "No Name")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: isDismiss, perform: { _ in
@@ -94,6 +93,16 @@ struct LastTryCardView: View {
         .onChange(of: isFlipped, perform: { _ in
             flipCard()
         })
+        // MARK: 뒤로가기 누렀을 때 저장 안된다는 경고창 보여줌
+        .customAlert(isPresented: $isShowingNotSaveAlert,
+                     title: "학습 중단하기",
+                     message: "학습 진행 상황은 저장되지 않습니다.\n중단하시겠어요?",
+                     primaryButtonTitle: "네",
+                     primaryAction: {
+            dismiss()
+        },
+                     withCancelButton: true,
+                     cancelButtonText: "아니요")
     }
     
     //    }
@@ -120,6 +129,15 @@ struct LastTryCardView: View {
                 .frame(width: 400, height: 3)
                 .foregroundColor(Color("Gray4"))
             
+        }
+    }
+    
+    // MARK: NavigationLink 커스텀 뒤로가기 버튼
+    var backButton : some View {
+        Button {
+            isShowingNotSaveAlert.toggle()
+        } label: {
+            Image(systemName: "chevron.left")
         }
     }
     

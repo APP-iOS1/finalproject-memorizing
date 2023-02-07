@@ -38,7 +38,7 @@ struct MarketView: View {
     ]
     
     @State private var selectedCategory: String  = "전체"
-    @State private var selectedSortCategory: SortCategory = .salesCount
+    @State private var selectedSortCategory: SortCategory = .starScoreTotal
     
     var body: some View {
         VStack {
@@ -63,23 +63,49 @@ struct MarketView: View {
             HStack {
                 Spacer()
                 
-                Menu {
-                    ForEach(SortCategory.allCases, id: \.self) { value in
-                        Button {
-                            self.selectedSortCategory = value
-                        } label: {
-                            HStack {
-                                Text(value.localizedName)
-                            }
+                HStack {
+                    Image(systemName: "circle.fill")
+                        .font(.system(size: 6))
+                        .foregroundColor(selectedSortCategory == .starScoreTotal ? .mainDarkBlue : .gray4)
+                        
+                    Text("평점 높은")
+                        .bold()
+                        .font(.caption)
+                        .foregroundColor(selectedSortCategory == .starScoreTotal ? .mainDarkBlue : .gray4)
+                        .onTapGesture {
+                            self.selectedSortCategory = .starScoreTotal
                         }
-                    }
-                } label: {
-                    Text(selectedSortCategory.localizedName)
-                        .foregroundColor(Color.black)
-                        .scaledToFit()
-                        .padding(.trailing, 20)
+                }
+                
+                HStack {
+                    Image(systemName: "circle.fill")
+                        .font(.system(size: 6))
+                        .foregroundColor(selectedSortCategory == .reviewCount ? .mainDarkBlue : .gray4)
+                    
+                    Text("리뷰 많은")
+                        .bold()
+                        .font(.caption)
+                        .foregroundColor(selectedSortCategory == .reviewCount ? .mainDarkBlue : .gray4)
+                        .onTapGesture {
+                            self.selectedSortCategory = .reviewCount
+                        }
+                }
+                
+                HStack {
+                    Image(systemName: "circle.fill")
+                        .font(.system(size: 6))
+                        .foregroundColor(selectedSortCategory == .salesCount ? .mainDarkBlue : .gray4)
+                    
+                    Text("구매 많은")
+                        .bold()
+                        .font(.caption)
+                        .foregroundColor(selectedSortCategory == .salesCount ? .mainDarkBlue : .gray4)
+                        .onTapGesture {
+                            self.selectedSortCategory = .salesCount
+                        }
                 }
             }
+            .padding(.trailing)
             
             ZStack {
                 ScrollView(showsIndicators: false) {
@@ -105,7 +131,7 @@ struct MarketView: View {
                                     }
                                 }
                             case .starScoreTotal:
-                                ForEach(marketStore.marketWordNotes.sorted{ $0.starScoreTotal > $1.starScoreTotal }) { wordNote in
+                                ForEach(marketStore.marketWordNotes.sorted{ ($0.starScoreTotal / Double($0.reviewCount == 0 ? 100 : $0.reviewCount)) > ($1.starScoreTotal / Double($1.reviewCount == 0 ? 100 : $1.reviewCount)) }) { wordNote in
                                     if searchText.isEmpty
                                         || wordNote.noteName.contains(searchText) {
                                         MarketViewNoteButton(isSheetOpen: $isSheetOpen,
@@ -182,6 +208,8 @@ struct MarketView: View {
                             .stroke(Color.mainBlue)
                             .frame(width: 60, height: 30)
                             .overlay {
+                                // 리스너 달아주긴 했는데... 지금 확인해보니깐 없어도 잘됨...ㅎ
+                                // Text("\(marketStore.currentCoin == 0 ? authStore.user?.coin ?? 0 : marketStore.currentCoin)P")
                                 Text("\(authStore.user?.coin ?? 0)P")
                                     .foregroundColor(.mainBlue)
                                     .font(.subheadline)
@@ -211,6 +239,11 @@ struct MarketView: View {
         }
         .customToastMessage(isPresented: $isToastToggle,
                             message: "구매가 완료되었습니다!")
+        .refreshable {
+            Task {
+                await marketStore.marketNotesWillFetchDB()
+            }
+        }
 //        .onAppear {
 //            marketStore.fetchMarketWordNotes()
 //        }
