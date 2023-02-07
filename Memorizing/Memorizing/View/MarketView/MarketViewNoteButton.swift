@@ -43,7 +43,7 @@ struct MarketViewNoteButton: View {
                                 HStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 30)
                                         .stroke(selectedWordNote.noteColor)
-                                        .frame(width: 32, height: 18)
+                                        .frame(width: 40, height: 18)
                                         .overlay {
                                             Text(selectedWordNote.noteCategory)
                                                 .font(.caption2)
