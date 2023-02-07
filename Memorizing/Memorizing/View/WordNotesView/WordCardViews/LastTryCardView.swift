@@ -58,8 +58,6 @@ struct LastTryCardView: View {
                 }
             }
             .onTapGesture {
-                print("flipcard 실행")
-                print(isFlipped)
                 flipCard()
             }
             

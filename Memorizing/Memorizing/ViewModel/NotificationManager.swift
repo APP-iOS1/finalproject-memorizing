@@ -52,9 +52,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
                                         didReceive response: UNNotificationResponse) {
         let identifier = response.notification.request.identifier
         let userNotiCenter = UNUserNotificationCenter.current()
-        print("response notification", response.notification.request.content as Any)
         userNotiCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
-        print("Check Notification")
         
     }
     
@@ -73,7 +71,6 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         
         // isGranted 프로퍼티에 현재 인증상태 값을 할당함 (거절을 눌렀다면 false, 동의를 눌렀으면 true로 변환되는걸 볼 수 있음)
         isGranted = (currentSetting.authorizationStatus == .authorized)
-        print(isGranted)
     }
     
     func openSetting() {
@@ -94,7 +91,6 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
      4. Center 저장소로 이동
      */
     func schedule(localNotification: LocalNotification) async {
-        print("start notification schedule")
         // 1. UNMutableNotificationContent에 내장되어 있는 기능활용 -> [Content]
         let content = UNMutableNotificationContent()
         content.title = localNotification.title
@@ -118,7 +114,6 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         
         // scheduleType이 time, 즉 trigger가 timeInterval일 경우
         if localNotification.scheduleType == .time {
-            print("localNotification, timeInterval")
             guard let timeInterval = localNotification.timeInterval else { return }
             //            // 2. 인터벌, 특정 시간대 등 사용자가 알림 시점을 설정할 수 있도록 함 -> [Trigger]
             //            // 여기서는 UNTimeInterval (인터벌) 형태로 선언
@@ -127,9 +122,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
             let request = UNNotificationRequest(identifier: localNotification.identifier,
                                                 content: content,
                                                 trigger: trigger)
-            print("localNOtification request: ", request)
             try? await notificationCenter.add(request)
-            print("finish localNotification schedul")
         } else {
             guard let dateComponet = localNotification.dateComponets else { return }
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponet,
@@ -154,8 +147,6 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     func getPendingRequests() async {
         pendingRequests = await notificationCenter.pendingNotificationRequests()
 
-        // 알림을 예약한 갯수(count)를 확인하기 위한 print
-        print("Pending: \(pendingRequests.count)")
     }
     
     // ----- 사용자가 작성한 알림을 삭제하는 기능 추가
@@ -164,7 +155,6 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         // index 기능을 활용, 사용자 알림을 맨 첫번째 기능한 순서대로 제거함
         if let index = pendingRequests.firstIndex(where: {$0.identifier == identifier}) {
             pendingRequests.remove(at: index)
-            print("Pending: \(pendingRequests.count)")
         }
         
     }

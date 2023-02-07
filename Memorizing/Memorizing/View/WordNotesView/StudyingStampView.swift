@@ -53,7 +53,6 @@ struct StudyingStampView: View {
                         if !notiManager.isGranted {
                             notiManager.openSetting()  // 알림 설정 창
                         } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
-                            print("set localNotification")
                             var localNotification = LocalNotification(
                                 identifier: wordNote.id ?? "No Id",
                                 title: "MEMOrizing 암기 시간",
@@ -62,7 +61,6 @@ struct StudyingStampView: View {
                                 repeats: false
                             )
                             localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
-                            print("localNotification: ", localNotification)
                             
                             await notiManager.schedule(localNotification: localNotification)
                             await myNoteStore.repeatCountWillBePlusOne(

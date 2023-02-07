@@ -62,8 +62,6 @@ struct AddListView: View {
                                 let word = await myNoteStore.deleteWord(note: wordNote, offset: indexSet)
                                 if let word {
                                     coreDataStore.deleteWord(word: word)
-                                } else {
-                                    print("no word")
                                 }
                             }
 

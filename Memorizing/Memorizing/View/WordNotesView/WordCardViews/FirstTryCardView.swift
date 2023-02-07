@@ -61,8 +61,6 @@ struct FirstTryCardView: View {
                 }
             }
             .onTapGesture {
-                print("flipcard 실행")
-                print(isFlipped)
                 flipCard()
             }
             
@@ -129,9 +127,6 @@ struct FirstTryCardView: View {
                                                                   firstTestResult: firstTestResult,
                                                                   lastTestResult: nil)
                                     await notiManager.getPendingRequests()
-                                    for request in notiManager.pendingRequests {
-                                        print("request: ", request as Any)
-                                    }
                                     isDismiss.toggle()
                                 }
                             } else {

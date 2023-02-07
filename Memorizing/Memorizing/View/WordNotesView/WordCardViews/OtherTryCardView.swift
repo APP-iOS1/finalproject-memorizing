@@ -142,8 +142,6 @@ struct OtherTryCardView: View {
     
     // MARK: 카드 뒤집기 함수
     func flipCard () {
-        print("flipcard 실행")
-        print(isFlipped)
         isFlipped.toggle()
     }
 }
