@@ -23,6 +23,7 @@ struct StudyAgainView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.gray4, lineWidth: 1)
                     .foregroundColor(.white)
+                    // .frame(height: 140)
                     .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.15)
                     .overlay {
                         HStack {
@@ -43,7 +44,7 @@ struct StudyAgainView: View {
                                         }
                                     Spacer()
                                 }
-                                .padding(.horizontal, 8)
+                                // .padding(.horizontal, 8)
                                 
                                 HStack {
                                     HStack {
@@ -170,6 +171,7 @@ struct StudyAgainView: View {
                         .padding(.trailing, myWordNote.repeatCount == 4 ? 8 : 15 )
                         .bold()
                     }
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 5)
             }
         }

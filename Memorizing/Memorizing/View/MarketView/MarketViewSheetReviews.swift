@@ -13,79 +13,94 @@ struct MarketViewSheetReviews: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                ForEach(Array(zip(reviews.indices, reviews)), id: \.0) { index, review in
-                    if index < 2 {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray5)
-                            .backgroundStyle(Color.white)
-                            .frame(width: 175, height: 90)
-                            .overlay {
-                                VStack {
-                                    // 별점 표시되는 부분
-                                    HStack(spacing: 2) {
-                                        let scoreInt: Int = Int(review.starScore)
-                                        ForEach(0 ... (scoreInt - 1), id: \.self) { _ in
-                                            Image(systemName: "star.fill")
-                                                .foregroundColor(Color.iTColor)
-                                        }
-                                        
-                                        if scoreInt < 5 {
-                                            ForEach(0 ... (4 - scoreInt), id: \.self) { _ in
-                                                Image(systemName: "star")
+            
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack {
+                    ForEach(Array(zip(reviews.indices, reviews)), id: \.0) { index, review in
+                        if index < 5 {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray5)
+                                .backgroundStyle(Color.white)
+                                .frame(width: 170, height: 110)
+                                .overlay {
+                                    VStack (spacing: 10) {
+                                        // 별점 표시되는 부분
+                                        HStack(spacing: 2) {
+                                            let scoreInt: Int = Int(review.starScore)
+                                            ForEach(0 ... (scoreInt - 1), id: \.self) { _ in
+                                                Image(systemName: "star.fill")
                                                     .foregroundColor(Color.iTColor)
+                                                    .font(.footnote)
                                             }
+                                            
+                                            if scoreInt < 5 {
+                                                ForEach(0 ... (4 - scoreInt), id: \.self) { _ in
+                                                    Image(systemName: "star")
+                                                        .foregroundColor(Color.iTColor)
+                                                        .font(.footnote)
+                                                }
+                                            }
+                                            Spacer()
                                         }
-                                        Spacer()
-                                    }
-                                    
-                                    // 리뷰 내용 부분
-                                    HStack {
-                                        Text("\(review.reviewText)")
-                                            .font(.caption2)
-                                            .lineLimit(1)
+                                        .padding(.leading, 7)
                                         
-                                        Spacer()
-                                    }
-                                    .padding(.top, 5)
-                                    .padding(.bottom, 8)
-                                    
-                                    // 리뷰 작성자
-                                    HStack {
-                                        Text(review.writer)
-                                            .font(.caption2)
-                                            .foregroundColor(.gray3)
+                                        // 리뷰 내용 부분
+                                        HStack {
+                                            Text("\(review.reviewText)")
+                                                .font(.caption2)
+                                                .lineLimit(2)
+                                                .fontWeight(.medium)
+                                            
+                                            Spacer()
+                                        }
+                                        .padding(.leading, 7)
+                                        .frame(height: 35)
                                         
-                                        Spacer()
-                                        
-                                        // FIXME: 신고관련 버튼? 링크?
-                                        Image(systemName: "light.beacon.max")
-                                            .font(.caption2)
-                                            .foregroundColor(.gray3)
+                                        // 리뷰 작성자
+                                        HStack {
+                                            Text(review.writer)
+                                                .font(.caption2)
+                                                .foregroundColor(.gray2)
+                                                .fontWeight(.medium)
+                                            
+                                            Spacer()
+                                            
+                                            // FIXME: 신고관련 버튼? 링크?
+                                            Image(systemName: "light.beacon.max")
+                                                .font(.caption2)
+                                                .foregroundColor(.gray2)
+                                        }
+                                        .padding(.leading, 7)
                                     }
+                                    .padding(.horizontal, 7)
                                 }
-                                .padding(5)
-                            }
+                        }
                     }
-                }
-                }
-            .padding(.horizontal)
+                    }
+                .padding(.horizontal, 5)
+                .padding(.vertical, 10)
+            }
+            
             
             // HStack
-            HStack(spacing: 2) {
+            HStack(spacing: 6) {
                 Spacer()
-                // FIXME: 후기 더보기 페이지 이동
+                // FIXME: 후기 모두보기 페이지 이동
                 NavigationLink(destination: MarketViewSheetReviewsMore(reviews: reviews)) {
-                    Text("후기 더보기")
+                    HStack (spacing: 2){
+                        Text("후기 모두보기")
+                        Image(systemName: "chevron.right")
+                    }
                 }
             }
             .font(.caption2)
             .foregroundColor(.gray2)
-            .padding(.trailing, 12)
-            .padding(.top, 10)
+            .padding(.trailing, 22)
+            .padding(.bottom, 2)
             
         }// VStack
-            .padding(10)
+        .padding(.leading, 18)
+        .padding(.top, 20)
     }
 }
 
