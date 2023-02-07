@@ -39,7 +39,7 @@ struct MarketTradeListView: View {
                         marketTradeToggle = true
                     } label: {
                         Text("구매내역")
-                            .font(.title2)
+                            .font(.headline)
                             .bold()
                             .foregroundColor(marketTradeToggle
                                              ? .mainDarkBlue
@@ -50,7 +50,7 @@ struct MarketTradeListView: View {
                         marketTradeToggle = false
                     } label: {
                         Text("판매내역")
-                            .font(.title2)
+                            .font(.headline)
                             .bold()
                             .foregroundColor(marketTradeToggle
                                              ? .gray3
@@ -59,7 +59,7 @@ struct MarketTradeListView: View {
                     
                     Spacer()
                 }
-                .padding(.leading)
+                .padding(.leading, 23)
             }
             .padding(.vertical, 25)
             
@@ -122,7 +122,7 @@ struct MarketTradeListView: View {
                             Divider()
                                 .padding(.vertical, 10)
                         }
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, 23)
                     }
                 }
             // MARK: - 판매내역 보기
@@ -173,7 +173,7 @@ struct MarketTradeListView: View {
                             Divider()
                                 .padding(.bottom, 10)
                         }
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, 23)
                     }
                 }
             }

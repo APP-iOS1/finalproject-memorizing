@@ -82,7 +82,7 @@ struct MarketViewSheet: View {
                             let score: String = String(format: "%.1f", reviewScore) // "5.1"
 
                             if reviewCount == 0 {
-                                Text("별점 없음  |")
+                                Text("")
                                     .font(.caption)
                                     .foregroundColor(Color.gray2)
                             } else {
@@ -204,6 +204,7 @@ struct MarketViewSheet: View {
                     .fontWeight(.semibold)
                 }
                 .padding(.horizontal, 30)
+                .padding(.bottom, 10)
                 .font(.subheadline)
                 
                 

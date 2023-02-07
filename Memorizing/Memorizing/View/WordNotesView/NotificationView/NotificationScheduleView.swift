@@ -13,11 +13,12 @@ struct NotificationScheduleView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("💡노트별 알림을 확인해보세요!")
+            Text("💡노트별 알림을 설정해보세요!")
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .padding(.leading, 20)
                 .padding(.horizontal, 5)
+                .padding(.top, 10)
             List {
                 ForEach(notiManager.pendingRequests, id: \.self) {request in
                     ScheduleCell(notiId: request.identifier)

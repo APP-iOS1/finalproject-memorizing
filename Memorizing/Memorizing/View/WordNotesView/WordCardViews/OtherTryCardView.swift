@@ -185,6 +185,7 @@ struct WordCardAnswerView2: View {
                     .foregroundColor(Color("MainBlue"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -233,6 +234,7 @@ struct WordCardQuestionView2: View {
                     .foregroundColor(Color("MainBlack"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 

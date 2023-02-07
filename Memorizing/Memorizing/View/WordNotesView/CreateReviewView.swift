@@ -37,7 +37,7 @@ struct CreateReviewView: View {
                 
                 Spacer()
             }
-            .padding(.horizontal, 15)
+            .padding(.horizontal, 25)
             .padding(.top, 5)
             
             // 암기장 제목
@@ -47,12 +47,11 @@ struct CreateReviewView: View {
                     .font(.title3)
                     .bold()
                     .multilineTextAlignment(.leading)
-                    .lineLimit(1)
                 
                 Spacer()
             }
             .padding(.vertical, 5)
-            .padding(.horizontal, 15)
+            .padding(.horizontal, 25)
             
             // 암기장 마켓등록일, 판매 금액
             HStack {
@@ -66,13 +65,14 @@ struct CreateReviewView: View {
                 Spacer()
                 
             }
-            .padding(.horizontal, 15)
+            .padding(.horizontal, 25)
             
             // MARK: - 구분선
             Divider()
                 .frame(width: 400, height: 5)
                 .overlay { Color.gray5 }
                 .padding(.bottom)
+                .padding(.top, 10)
             
             Text("즐거운 학습이 되셨나요?")
                 .font(.headline)
@@ -110,6 +110,7 @@ struct CreateReviewView: View {
                         .padding()
                         .lineLimit(3)
                         .font(.caption)
+                    Spacer()
                 }
                 .padding(.bottom, 10)
             

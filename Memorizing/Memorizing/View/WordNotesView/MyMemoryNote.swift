@@ -48,7 +48,7 @@ struct MyMemoryNote: View {
                                     }
                                 Spacer()
                             }
-                            .padding(.horizontal, 8)
+                            .padding(.horizontal, 10)
 
                             // 암기할 것 등록하기에서 받아오기
                             HStack {
@@ -56,7 +56,7 @@ struct MyMemoryNote: View {
                                     .foregroundColor(.mainBlack)
                                     .font(.body)
                                     .fontWeight(.semibold)
-                                    .padding(.top, 7)
+                                    .padding(.top, 5)
                                     .padding(.leading, 6)
                                     .padding(.bottom, 3)
                                     .lineLimit(1)
