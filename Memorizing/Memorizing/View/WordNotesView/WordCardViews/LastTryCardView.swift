@@ -158,6 +158,7 @@ struct LevelCheckForLast: View {
     var wordNote: NoteEntity
     var word: WordEntity
     
+    @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     
@@ -236,6 +237,7 @@ struct LevelCheckForLast: View {
             }
         }
         .fullScreenCover(isPresented: $isShowingModal) {
+            let _ = notiManager.removeRequest(withIdentifier: wordNote.id!)
             if totalScore / Double(count * 3) > 0.8 {
                 let lastTestResult: Double = totalScore / Double(count * 3)
                 GoodJobStampView(lastTestResult: lastTestResult,
