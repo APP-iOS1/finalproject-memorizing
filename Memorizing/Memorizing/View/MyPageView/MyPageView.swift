@@ -262,7 +262,8 @@ struct MyPageView: View {
             myNoteStore.myWords = []
             myNoteStore.myWordNotes = []
         },
-                     withCancelButton: true)
+                     withCancelButton: true,
+                     cancelButtonText: "취소")
     }
 }
 

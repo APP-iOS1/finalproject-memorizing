@@ -60,7 +60,7 @@ struct NewMakeMemoryNote: View {
     
     // 최상단 (새로운 암기장 만들기 ~ X 표시)
     var makeNewNote: some View {
-        HStack(spacing: 30) {
+        HStack {
             VStack {
                 // 아무 버튼도 아님
                 Button {
@@ -72,7 +72,9 @@ struct NewMakeMemoryNote: View {
                         .foregroundColor(.mainBlack)
                 }
             }
-            .frame(width: 50)
+            .frame(width: 30)
+            
+            Spacer()
             
             VStack {
                 Text("새로운 암기장 만들기")
@@ -80,6 +82,8 @@ struct NewMakeMemoryNote: View {
                     .fontWeight(.bold)
             }
             .frame(width: 200)
+            
+            Spacer()
             
             VStack {
                 Button {
@@ -91,7 +95,7 @@ struct NewMakeMemoryNote: View {
                         .foregroundColor(.mainBlack)
                 }
             }
-            .frame(width: 50)
+            .frame(width: 30)
             
         }
     }
