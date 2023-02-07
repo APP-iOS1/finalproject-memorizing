@@ -44,7 +44,7 @@ struct StudyAgainView: View {
                                         }
                                     Spacer()
                                 }
-                                // .padding(.horizontal, 8)
+                                .padding(.leading, 6)
                                 
                                 HStack {
                                     HStack {
