@@ -92,11 +92,11 @@ struct StudyingStampView: View {
             }
             
             HStack {
-                VStack(alignment: .leading) {
-                    Text("구매한 암기장은 어떠셨나요?")
-                    Text("후기를 작성해보시면 10P을 드립니다!")
-                }.font(.caption) .foregroundColor(.gray2)
-                Spacer()
+//                VStack(alignment: .leading) {
+//                    Text("구매한 암기장은 어떠셨나요?")
+//                    Text("후기를 작성해보시면 10P을 드립니다!")
+//                }.font(.caption) .foregroundColor(.gray2)
+//                Spacer()
                 
 //                Button {
 //                    // 후기작성

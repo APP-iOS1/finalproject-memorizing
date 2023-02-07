@@ -183,6 +183,7 @@ struct WordCardAnswerView2: View {
                     .foregroundColor(Color("MainBlue"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -231,6 +232,7 @@ struct WordCardQuestionView2: View {
                     .foregroundColor(Color("MainBlack"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -260,9 +262,9 @@ struct NextPreviousButton: View {
             // TODO: 이전 버튼
             Button {
                 if 0 != num {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
                         num -= 1
-                    }
+//                    }
                     isFlipped = false
                 }
             } label: {

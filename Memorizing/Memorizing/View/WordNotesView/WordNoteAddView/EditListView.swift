@@ -19,6 +19,9 @@ struct EditListView: View {
     @State private var showingAlert = false
     @State private var todayDate = Date()
     
+    // 단어장 삭제 Flag - 재혁추가
+    @State private var isShownDeleteQuestionAlert: Bool = false
+    
     var body: some View {
         ZStack {
             VStack {
@@ -139,7 +142,7 @@ struct EditListView: View {
         }
         .toolbar {
             // MARK: 뒤로가기 버튼
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     dismiss()
                 } label: {
@@ -149,20 +152,39 @@ struct EditListView: View {
                 }
             }
             // MARK: 삭제하기 등 추가 액션 메뉴 버튼
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    Button("삭제하기") {
-                        // MARK: 암기장 삭제하기 액션
+                    Button(role: .destructive) {
+                        isShownDeleteQuestionAlert.toggle()
+                    } label: {
+                        HStack {
+                            Text("암기장 삭제하기")
+                            Image(systemName: "trash.fill")
+                        }
                     }
                 } label: {
-                    Image(systemName: "gear")
+                    Image(systemName: "ellipsis")
                         .foregroundColor(.mainBlack)
+                        .rotationEffect(.degrees(-90))
                 }
             }
         }
         .navigationTitle("나의 암기장")
         .navigationBarTitleDisplayMode(.inline)
+        
+        // MARK: - 암기장 삭제 - 재혁추가
+        .customAlert(isPresented: $isShownDeleteQuestionAlert,
+                     title: "나의 암기장 삭제하기",
+                     message: "삭제한 암기장은 다시 복구할 수 없습니다.\n삭제하시겠습니까?",
+                     primaryButtonTitle: "네",
+                     primaryAction: {
+            myNoteStore.myNotesDidDeleteDB(wordNote: wordNote)
+            coreDataStore.deleteNote(note: wordNote)
+        },
+                     withCancelButton: true,
+                     cancelButtonText: "아니요")
     }
+    
     
     // MARK: 리스트 순서 수정 함수
     //    func moveList(from source: IndexSet, to destination: Int) {
@@ -170,7 +192,7 @@ struct EditListView: View {
     //    }
 }
 
-// struct EditListView_Previews: PreviewProvider {
+// struct EditListView_Previews: PreviewProvider {#imageLiteral(resourceName: "simulator_screenshot_0F806C70-E81C-435B-9F0C-F05B34247268.png")
 //    static var previews: some View {
 //        NavigationStack {
 //            EditListView(wordNote: MyWordNote(id: "",

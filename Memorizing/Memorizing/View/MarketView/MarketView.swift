@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-enum SortCategory: String, Equatable, CaseIterable {
-    case salesCount = "판매 많은 순"
-    case starScoreTotal = "평점 높은 순"
-    case reviewCount = "리뷰 많은 순"
-    
-    var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
+enum SortCategory: String {
+    case nomalSort
+    case salesCount
+    case starScoreTotal
+    case reviewCount
+    case recentUpdate
 }
 
 // MARK: - 마켓 탭에서 가장 메인으로 보여주는 View
@@ -38,10 +38,10 @@ struct MarketView: View {
     ]
     
     @State private var selectedCategory: String  = "전체"
-    @State private var selectedSortCategory: SortCategory = .starScoreTotal
+    @State private var selectedSortCategory: SortCategory = .nomalSort
     
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             // MARK: - 검색창
             MarketViewSearchBar(searchText: $searchText)
                 .padding(.top, 15)
@@ -60,52 +60,47 @@ struct MarketView: View {
             //            .padding(.top, -3)
             
             // MARK: - 정렬기준 선택하기
-            HStack {
+            HStack(spacing: 10) {
                 Spacer()
                 
-                HStack(spacing: 3) {
-                    Image(systemName: "circle.fill")
-                        .font(.system(size: 6))
-                        .foregroundColor(selectedSortCategory == .starScoreTotal ? .mainDarkBlue : .gray4)
-                        
-                    Text("평점 높은")
-                        .bold()
-                        .font(.caption)
-                        .foregroundColor(selectedSortCategory == .starScoreTotal ? .mainDarkBlue : .gray4)
-                        .onTapGesture {
+                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .starScoreTotal, sortTitle: "평점순")
+                    .onTapGesture {
+                        if self.selectedSortCategory == .starScoreTotal {
+                            self.selectedSortCategory = .nomalSort
+                        } else {
                             self.selectedSortCategory = .starScoreTotal
                         }
-                }
-                
-                HStack {
-                    Image(systemName: "circle.fill")
-                        .font(.system(size: 6))
-                        .foregroundColor(selectedSortCategory == .reviewCount ? .mainDarkBlue : .gray4)
-                    
-                    Text("리뷰 많은")
-                        .bold()
-                        .font(.caption)
-                        .foregroundColor(selectedSortCategory == .reviewCount ? .mainDarkBlue : .gray4)
-                        .onTapGesture {
+                    }
+
+                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .reviewCount, sortTitle: "리뷰순")
+                    .onTapGesture {
+                        if self.selectedSortCategory == .reviewCount {
+                            self.selectedSortCategory = .nomalSort
+                        } else {
                             self.selectedSortCategory = .reviewCount
                         }
-                }
-                
-                HStack {
-                    Image(systemName: "circle.fill")
-                        .font(.system(size: 6))
-                        .foregroundColor(selectedSortCategory == .salesCount ? .mainDarkBlue : .gray4)
-                    
-                    Text("구매 많은")
-                        .bold()
-                        .font(.caption)
-                        .foregroundColor(selectedSortCategory == .salesCount ? .mainDarkBlue : .gray4)
-                        .onTapGesture {
+                    }
+
+                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .salesCount, sortTitle: "판매순")
+                    .onTapGesture {
+                        if self.selectedSortCategory == .salesCount {
+                            self.selectedSortCategory = .nomalSort
+                        } else {
                             self.selectedSortCategory = .salesCount
                         }
-                }
+                    }
+                
+                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .recentUpdate, sortTitle: "최신순")
+                    .onTapGesture {
+                        if self.selectedSortCategory == .recentUpdate {
+                            self.selectedSortCategory = .nomalSort
+                        } else {
+                            self.selectedSortCategory = .recentUpdate
+                        }
+                    }
             }
-            .padding(.trailing)
+            .padding(.trailing, 20)
+            .padding(.bottom, 3)
             
             ZStack {
                 ScrollView(showsIndicators: false) {
@@ -121,6 +116,15 @@ struct MarketView: View {
                         spacing: 18,
                         content: {
                             switch selectedSortCategory {
+                            case .nomalSort:
+                                ForEach(marketStore.marketWordNotes) { wordNote in
+                                    if searchText.isEmpty
+                                        || wordNote.noteName.contains(searchText) {
+                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                             selectedCategory: $selectedCategory,
+                                                             selectedWordNote: wordNote)
+                                    }
+                                }
                             case .salesCount:
                                 ForEach(marketStore.marketWordNotes.sorted{ $0.salesCount > $1.salesCount }) { wordNote in
                                     if searchText.isEmpty
@@ -141,6 +145,15 @@ struct MarketView: View {
                                 }
                             case .reviewCount:
                                 ForEach(marketStore.marketWordNotes.sorted{ $0.reviewCount > $1.reviewCount }) { wordNote in
+                                    if searchText.isEmpty
+                                        || wordNote.noteName.contains(searchText) {
+                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                             selectedCategory: $selectedCategory,
+                                                             selectedWordNote: wordNote)
+                                    }
+                                }
+                            case .recentUpdate:
+                                ForEach(marketStore.marketWordNotes.sorted{ $0.updateDate > $1.updateDate }) { wordNote in
                                     if searchText.isEmpty
                                         || wordNote.noteName.contains(searchText) {
                                         MarketViewNoteButton(isSheetOpen: $isSheetOpen,
@@ -184,7 +197,6 @@ struct MarketView: View {
                             // MARK: - 여기까지
                         })
                     .padding(.horizontal)
-                    .padding(.top, 15)
                     .padding(.bottom, 120)
                 }   // ScrollView end
                 .padding(.bottom, 1)
@@ -247,6 +259,25 @@ struct MarketView: View {
 //        .onAppear {
 //            marketStore.fetchMarketWordNotes()
 //        }
+    }
+}
+
+struct MarketSortButton: View {
+    var selectedSortCategory: SortCategory
+    var categoryState: SortCategory
+    var sortTitle: String
+    
+    var body: some View {
+        HStack(spacing: 3) {
+            Image(systemName: "circle.fill")
+                .font(.system(size: 6))
+                .foregroundColor(selectedSortCategory == categoryState ? .mainDarkBlue : .gray4)
+            
+            Text(sortTitle)
+                .bold()
+                .font(.caption)
+                .foregroundColor(selectedSortCategory == categoryState ? .mainDarkBlue : .gray4)
+        }
     }
 }
 

@@ -135,7 +135,7 @@ class MyNoteStore: ObservableObject {
             }
     }
     
-    // MARK: - words를 삭제하는 함수 / 메모 암기장에서 ContextMenu 기능을 통해 서버에서 삭제할 수 있도록
+    // MARK: - words를 삭제하는 함수 / 암기장 ... Menu에서 들어가서 삭제할 수 있음
     // 하위 컬렉션으로 먼저 접근한 후 -> 상위 컬렉션 내 해당 노트(문서)를 작성해야 함
     func myNotesDidDeleteDB(wordNote: NoteEntity) {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}

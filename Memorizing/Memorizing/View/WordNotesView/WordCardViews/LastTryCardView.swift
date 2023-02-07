@@ -184,7 +184,7 @@ struct LevelCheckForLast: View {
                     Text("모르겠어요")
                         .font(.headline)
                 }
-                .modifier(CheckDifficultyButton(backGroundColor: "Gray2"))
+                .modifier(CheckDifficultyButton(backGroundColor: "Gray3"))
             }
             
             Button {

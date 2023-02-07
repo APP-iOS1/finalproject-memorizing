@@ -55,18 +55,21 @@ struct MyPageView: View {
                         
                         VStack(spacing: 5) {
                             Text("내 암기장")
-                                .foregroundColor(.gray2)
+                                .foregroundColor(.gray1)
+                                .padding(.bottom, 3)
                             
                             Text("\(myNoteStore.myWordNotes.count)")
                                 .bold()
                         }
+                        .padding(.leading, 8)
                         
                         Divider()
                             .frame(height: 30)
                         
                         VStack(spacing: 5) {
                             Text("내 도장")
-                                .foregroundColor(.gray2)
+                                .foregroundColor(.gray1)
+                                .padding(.bottom, 3)
                             
                             Text("\(myNoteStore.calculateStamp(myWordNotes: myNoteStore.myWordNotes))")
                                 .bold()
@@ -92,7 +95,7 @@ struct MyPageView: View {
                     } // 내 암기장개수 . 받은 도장 개수
                     .font(.footnote)
                 } // 유저정보
-                .padding(.bottom, 10)
+                .padding(.bottom, 18)
                 
     // MARK: - 유저 버튼
                 VStack {
@@ -105,15 +108,15 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Text("마켓 거래내역")
-                                    .font(.body)
+                                    .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .font(.title3)
+                                    .font(.body)
                                     .fontWeight(.light)
                             } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
                         }
                         .isDetailLink(false)
@@ -128,15 +131,15 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Text("내가 작성한 리뷰")
-                                    .font(.body)
+                                    .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .font(.title3)
+                                    .font(.body)
                                     .fontWeight(.light)
                             } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
                         }
                     }
@@ -149,15 +152,15 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Text("메모라이징 소개")
-                                    .font(.body)
+                                    .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .font(.title3)
+                                    .font(.body)
                                     .fontWeight(.light)
                             } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
                         }
                         .sheet(isPresented: $isShowingWeb) {
@@ -176,15 +179,15 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Text("1:1 문의하기")
-                                    .font(.body)
+                                    .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .font(.title3)
+                                    .font(.body)
                                     .fontWeight(.light)
                             } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
                         }
                         .sheet(isPresented: $isShowingKakaoTalk) {
@@ -200,15 +203,15 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Text("개인정보 처리 방침")
-                                    .font(.body)
+                                    .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .font(.title3)
+                                    .font(.body)
                                     .fontWeight(.light)
                             } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
                         }
                     }
@@ -221,21 +224,32 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Text("로그아웃하기")
-                                    .font(.body)
+                                    .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .font(.title3)
+                                    .font(.body)
                                     .fontWeight(.light)
                             } // 문의하기
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
                             
                         }
                     }
                     
                     Divider()
+                    
+                    HStack{
+                        Text("버전 정보 1.0.0")
+                            .font(.footnote)
+                            .fontWeight(.medium)
+                            .foregroundColor(.gray3)
+                        Spacer()
+                        Text("")
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 10)
                     
                     Spacer()
                     
