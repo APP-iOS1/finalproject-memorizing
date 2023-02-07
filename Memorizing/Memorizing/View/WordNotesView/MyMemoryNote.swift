@@ -32,7 +32,7 @@ struct MyMemoryNote: View {
                     HStack {
                         Rectangle()
                             .cornerRadius(10, corners: [.topLeft, .bottomLeft])
-                            .frame(width: 20)
+                            .frame(width: UIScreen.main.bounds.width * 0.04)
                             .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                         
                         VStack(spacing: 5) {
@@ -69,7 +69,8 @@ struct MyMemoryNote: View {
                             if words.isEmpty {
                                 Text("단어 등록하러 가기")
                                     .font(.footnote)
-                                    .frame(width: 290, height: 25)
+                                    .frame(width: UIScreen.main.bounds.width * 0.75,
+                                           height: UIScreen.main.bounds.width * 0.06)
                                     .foregroundColor(.white)
                                     .background { coreDataStore.returnColor(category: myWordNote.noteCategory ?? "") }
                                     .cornerRadius(30)

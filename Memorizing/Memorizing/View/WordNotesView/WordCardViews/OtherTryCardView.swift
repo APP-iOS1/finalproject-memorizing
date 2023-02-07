@@ -264,9 +264,9 @@ struct NextPreviousButton: View {
             // TODO: 이전 버튼
             Button {
                 if 0 != num {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
                         num -= 1
-                    }
+//                    }
                     isFlipped = false
                 }
             } label: {

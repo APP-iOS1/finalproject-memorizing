@@ -208,14 +208,15 @@ struct MarketViewSheet: View {
                 .font(.subheadline)
                 
                 
-                // 5개의 단어만 가져오도록 함
+                // MARK: 5개의 단어만 가져오도록 함
                 ForEach(Array(zip(0...4, marketStore.words)), id: \.0) { _, word in
                     
                     if selectedWord.contains(word.wordString) {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.gray5)
                             .backgroundStyle(Color.gray7)
-                            .frame(width: 343, height: 100)
+                            .frame(width: UIScreen.main.bounds.width * 0.9,
+                                   height: UIScreen.main.bounds.height * 0.15)
                             .overlay {
                                 Button {
                                     
@@ -228,12 +229,14 @@ struct MarketViewSheet: View {
                                         Text(word.wordString)
                                             .font(.headline)
                                             .foregroundColor(.mainBlack)
-                                        
-                                        Spacer()
+                                            .frame(width: UIScreen.main.bounds.width * 0.8,
+                                                   height: UIScreen.main.bounds.height * 0.08)
                                         
                                         Text(word.wordMeaning)
                                             .font(.headline)
                                             .foregroundColor(.mainBlue)
+                                            .frame(width: UIScreen.main.bounds.width * 0.8,
+                                                   height: UIScreen.main.bounds.height * 0.05)
                                     }
                                     .padding(.horizontal)
                                     .padding(.vertical, 15)
@@ -244,7 +247,8 @@ struct MarketViewSheet: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.gray5)
                             .backgroundStyle(Color.gray7)
-                            .frame(width: 343, height: 53)
+                            .frame(width: UIScreen.main.bounds.width * 0.9,
+                                   height: UIScreen.main.bounds.height * 0.05)
                             .overlay {
                                 HStack {
                                     Spacer()
@@ -262,14 +266,15 @@ struct MarketViewSheet: View {
                                         Text(word.wordString)
                                             .font(.headline)
                                             .foregroundColor(.mainBlack)
-                                            .frame(maxWidth: 343/2)
+                                            .frame(maxWidth: UIScreen.main.bounds.width * 0.8 * 0.45)
                                             .lineLimit(nil)
+                                            
                                         Spacer()
                                         
                                         Text(word.wordMeaning)
                                             .font(.headline)
                                             .foregroundColor(.mainBlue)
-                                            .frame(maxWidth: 343/2)
+                                            .frame(maxWidth: UIScreen.main.bounds.width * 0.8 * 0.45)
                                             .lineLimit(nil)
                                         
                                     }
