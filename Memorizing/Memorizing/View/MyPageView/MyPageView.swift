@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import SafariServices
+import KakaoSDKTalk
 
 // MARK: 마이페이지 탭에서 가장 메인으로 보여주는 View
 struct MyPageView: View {
@@ -13,10 +15,10 @@ struct MyPageView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var marketStore: MarketStore
-    
     @State private var signOutAlertToggle: Bool = false
 //    @State private var isShownNickNameToggle: Bool = false
     @State private var isShowingWeb: Bool = false
+    @State private var isShowingKakaoTalk: Bool = false
     
     var body: some View {
         
@@ -168,8 +170,9 @@ struct MyPageView: View {
                         Divider()
                         
                         Button {
-                            let kakaoPlusFriendsURL = URL(string: "http://pf.kakao.com/_hZrWxj/chat")!
-                            UIApplication.shared.open(kakaoPlusFriendsURL)
+                            isShowingKakaoTalk.toggle()
+//                            let kakaoPlusFriendsURL = URL(string: "https://pf.kakao.com/_hZrWxj/chat")!
+//                            UIApplication.shared.open(kakaoPlusFriendsURL)
                         } label: {
                             HStack {
                                 Text("1:1 문의하기")
@@ -183,6 +186,9 @@ struct MyPageView: View {
                             .padding(.horizontal, 12)
                             .padding(.vertical, 10)
                             .foregroundColor(.mainBlack)
+                        }
+                        .sheet(isPresented: $isShowingKakaoTalk) {
+                            KakaoTalkChannelView()
                         }
                     }
                     
@@ -263,6 +269,25 @@ struct MyPageView: View {
         },
                      withCancelButton: true,
                      cancelButtonText: "취소")
+    }
+    
+    struct KakaoTalkChannelView: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> SFSafariViewController {
+            let safariViewController: SFSafariViewController = SFSafariViewController(url: TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hZrWxj")!)
+            print("카카오톡 채널 주소\(String(describing: TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hZrWxj")))")
+            
+            safariViewController.modalTransitionStyle = .crossDissolve
+            safariViewController.modalPresentationStyle = .overCurrentContext
+            
+          //  safariViewController.present(safariViewController, animated: true)
+            return safariViewController
+
+        }
+        
+        func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
+            
+        }
+        
     }
 }
 
