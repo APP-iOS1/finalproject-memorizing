@@ -18,7 +18,6 @@ class MyNoteStore: ObservableObject {
 
     // MARK: - myWordNotes를 페치하는 함수 / 내가 작성한 Notes를 Fetch함
     func myNotesWillBeFetchedFromDB() {
-        print("myNotesWillBeFetchedFromDB")
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         database.collection("users").document(currentUser.uid).collection("myWordNotes")
             .order(by: "repeatCount")
@@ -66,7 +65,6 @@ class MyNoteStore: ObservableObject {
                                                     notePrice: notePrice,
                                                     reviewDate: reviewDate)
                         self.myWordNotes.append(myWordNote)
-                        print("myWordNotes : \(self.myWordNotes)")
                     }
                 }
             }
@@ -137,7 +135,7 @@ class MyNoteStore: ObservableObject {
             }
     }
     
-    // MARK: - words를 삭제하는 함수 / 메모 암기장에서 ContextMenu 기능을 통해 서버에서 삭제할 수 있도록
+    // MARK: - words를 삭제하는 함수 / 암기장 ... Menu에서 들어가서 삭제할 수 있음
     // 하위 컬렉션으로 먼저 접근한 후 -> 상위 컬렉션 내 해당 노트(문서)를 작성해야 함
     func myNotesDidDeleteDB(wordNote: NoteEntity) {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
@@ -149,8 +147,6 @@ class MyNoteStore: ObservableObject {
                 .delete() { error in
                     if let error = error {
                         print("Error removing document : \(error)")
-                    } else {
-                        print("myNotes Words Document successfully removed!")
                     }
                 }
         }
@@ -161,8 +157,6 @@ class MyNoteStore: ObservableObject {
             .delete() { error in
                 if let error = error {
                     print("Error removing document : \(error)")
-                } else {
-                    print("myNotes Document successfully removed!")
                 }
             }
     }
@@ -187,7 +181,6 @@ class MyNoteStore: ObservableObject {
                     "LastTestResult" : lastTestResult ?? NSNull()
                 ])
             myNotesWillBeFetchedFromDB()
-            print("finish plusRepeatCount")
         } catch {
             fatalError("fail plusRepeat Count")
         }
@@ -227,9 +220,6 @@ class MyNoteStore: ObservableObject {
                     print("wordsLevelWillBeChangedOnDB error occured : \(err.localizedDescription)")
                 }
             }
-        
-        print("updateWordLevel success")
-        
     }
     
     // MARK: - 도장 숫자 계산 함수
@@ -249,7 +239,6 @@ class MyNoteStore: ObservableObject {
         
         let words = note.words?.allObjects as? [WordEntity] ?? []
         
-        print("test: \(words[index])")
         do {
             try await database.collection("users").document(currentUser.uid)
                 .collection("myWordNotes").document(note.id ?? "")

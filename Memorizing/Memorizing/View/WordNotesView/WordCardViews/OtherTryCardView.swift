@@ -112,7 +112,7 @@ struct OtherTryCardView: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .foregroundColor(Color("MainBlue"))
-                    .frame(width: CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
+                    .frame(width: num == 0 ? 0 : CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
                     .animation(.easeInOut, value: num)
             }
             
@@ -142,8 +142,6 @@ struct OtherTryCardView: View {
     
     // MARK: 카드 뒤집기 함수
     func flipCard () {
-        print("flipcard 실행")
-        print(isFlipped)
         isFlipped.toggle()
     }
 }
@@ -185,6 +183,7 @@ struct WordCardAnswerView2: View {
                     .foregroundColor(Color("MainBlue"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -233,6 +232,7 @@ struct WordCardQuestionView2: View {
                     .foregroundColor(Color("MainBlack"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -262,9 +262,9 @@ struct NextPreviousButton: View {
             // TODO: 이전 버튼
             Button {
                 if 0 != num {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
                         num -= 1
-                    }
+//                    }
                     isFlipped = false
                 }
             } label: {

@@ -33,7 +33,6 @@ class ReviewStore: ObservableObject {
                 reviews.removeAll()
             })
             
-            print("start fetchReviews")
             let documents = try await  database
                 .collection("marketWordNotes")
                 .document(marketID)
@@ -62,7 +61,6 @@ class ReviewStore: ObservableObject {
                     self.reviews.append(myReview)
                 })
                 
-                print("finished fetchMyWordNotes")
             }
         } catch {
             print("reviewsWillFetchDB: \(error)")
@@ -77,9 +75,6 @@ class ReviewStore: ObservableObject {
             await MainActor.run(body: {
                 reviews.removeAll()
             })
-            
-            print("start reviewsWillEqualToFetchDB")
-            print("currentUid: \(currentUserID)")
             
             let documents = try await  database
                 .collectionGroup("reviews")
@@ -193,7 +188,6 @@ class ReviewStore: ObservableObject {
     /// marketWordNote.id에 StarScore를 추가한다.
     /// - Parameter marketWordNote: review에서 평가한 starScore를 marketWordNote.id의 starScore에 추가한다.
     func starScoreDidPlusMarketWordNote(marketWordNoteID: String, reviewStarScore: Int) {
-        print("스코어를 추가합니다.")
         // marketWord.id로 간다음 starScore에 reviewDidSaveDB에서 추가한 starScore를 더해준다.
         database
             .collection("marketWordNotes")
@@ -201,7 +195,6 @@ class ReviewStore: ObservableObject {
             .updateData([
                 "starScoreTotal": FieldValue.increment(Int64(reviewStarScore))
             ])
-        print("marketWord.id에 스코어를 추가했습니다.")
     }
     
     // MARK: - 평점을 남기면 리뷰 카운트 + 1 올림
@@ -210,7 +203,6 @@ class ReviewStore: ObservableObject {
     /// - Parameter marketWordNote: reviewDidSaveDB를 통해 생성이 되면 review가 작성되고,
     /// marketWordNote.id안에 있는 reviewCount를 +1를 한다.
     func reviewCountDidPlusOne(marketWordNoteID: String) {
-        print("리뷰 카운트를 1증가 시킵니다.")
         // marketWord.id로 접근해서 reviewCount에 +1를 해준다.
         database
             .collection("marketWordNotes")
@@ -218,7 +210,6 @@ class ReviewStore: ObservableObject {
             .updateData([
                 "reviewCount": FieldValue.increment(Int64(1))
             ])
-        print("리뷰 카운트에 +1 되었습니다.")
     }
 
     // MARK: - 해당 review 삭제
@@ -235,8 +226,6 @@ class ReviewStore: ObservableObject {
             .delete { err in
                 if let err = err {
                     print("reviewDidDeleteDB 데이터를 삭제할 때 오류 발생 : \(err.localizedDescription)")
-                } else {
-                    print("성공적으로 reviewDidDeleteDB를 삭제 했습니다.")
                 }
             }
     }
@@ -260,8 +249,6 @@ class ReviewStore: ObservableObject {
             ]) { err in
                 if let err = err {
                     print("reviewDidUpdateDB 해당 리뷰 업데이트 실패: \(err.localizedDescription)")
-                } else {
-                    print("reviewDidUpdateDB 해당 리뷰 업데이트 성공")
                 }
             }
     }
@@ -272,7 +259,6 @@ class ReviewStore: ObservableObject {
                 reviews.removeAll()
             })
             
-            print("start fetchReviews")
             let documents = try await  database
                 .collection("marketWordNotes")
                 .document(marketNoteID)
@@ -298,7 +284,6 @@ class ReviewStore: ObservableObject {
                 await MainActor.run(body: {
                     self.reviews.append(myReview)
                 })
-                print("finished fetchMyWordNotes")
             }
         } catch {
             print("reviewsWillFetchDB: \(error)")

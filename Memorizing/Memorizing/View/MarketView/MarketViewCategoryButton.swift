@@ -36,7 +36,8 @@ struct MarketViewCategoryButton: View {
                     }
             }
         }
-        .padding(.all, 10)
+        .padding(.vertical, 5)
+        .padding(.horizontal, 10)
     }
 }
 

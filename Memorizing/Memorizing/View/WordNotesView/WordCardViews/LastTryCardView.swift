@@ -58,8 +58,6 @@ struct LastTryCardView: View {
                 }
             }
             .onTapGesture {
-                print("flipcard 실행")
-                print(isFlipped)
                 flipCard()
             }
             
@@ -113,7 +111,7 @@ struct LastTryCardView: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .foregroundColor(Color("MainBlue"))
-                    .frame(width: CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
+                    .frame(width: num == 0 ? 0 : CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
                     .animation(.easeInOut, value: num)
             }
             
@@ -158,6 +156,7 @@ struct LevelCheckForLast: View {
     var wordNote: NoteEntity
     var word: WordEntity
     
+    @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     
@@ -186,7 +185,7 @@ struct LevelCheckForLast: View {
                     Text("모르겠어요")
                         .font(.headline)
                 }
-                .modifier(CheckDifficultyButton(backGroundColor: "Gray2"))
+                .modifier(CheckDifficultyButton(backGroundColor: "Gray3"))
             }
             
             Button {
@@ -236,6 +235,7 @@ struct LevelCheckForLast: View {
             }
         }
         .fullScreenCover(isPresented: $isShowingModal) {
+            let _ = notiManager.removeRequest(withIdentifier: wordNote.id!)
             if totalScore / Double(count * 3) > 0.8 {
                 let lastTestResult: Double = totalScore / Double(count * 3)
                 GoodJobStampView(lastTestResult: lastTestResult,
@@ -245,6 +245,10 @@ struct LevelCheckForLast: View {
                 TryAgainView(wordNote: wordNote, isDismiss: $isDismiss)
             }
         }
+        // MARK: 이해 불가 (없으면 goodjobstamp가 나오지 않는 버그)
+        .onChange(of: count, perform: { newValue in
+            //
+        })
     }
 }
 

@@ -64,7 +64,6 @@ extension AuthStore: ASAuthorizationControllerDelegate {
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
-        print("Start apple authorization Controller")
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent")
@@ -96,8 +95,6 @@ extension AuthStore: ASAuthorizationControllerDelegate {
                         signInPlatform: User.Platform.apple.rawValue
                     )
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-                    print("Apple id: ", result.user.uid)
-                    print("Apple email: ", result.user.email as Any)
 //                    await self.userInfoWillFetchDB()
               //      self.state = .signedIn
                 } catch let error as NSError {

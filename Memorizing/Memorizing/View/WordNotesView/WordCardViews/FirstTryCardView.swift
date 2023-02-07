@@ -61,8 +61,6 @@ struct FirstTryCardView: View {
                 }
             }
             .onTapGesture {
-                print("flipcard 실행")
-                print(isFlipped)
                 flipCard()
             }
             
@@ -129,9 +127,6 @@ struct FirstTryCardView: View {
                                                                   firstTestResult: firstTestResult,
                                                                   lastTestResult: nil)
                                     await notiManager.getPendingRequests()
-                                    for request in notiManager.pendingRequests {
-                                        print("request: ", request as Any)
-                                    }
                                     isDismiss.toggle()
                                 }
                             } else {
@@ -159,7 +154,7 @@ struct FirstTryCardView: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .foregroundColor(Color("MainBlue"))
-                    .frame(width: CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
+                    .frame(width: num == 0 ? 0 : CGFloat(num) / CGFloat(wordCount) * geometry.size.width)
                     .animation(.easeInOut, value: num)
             }
             
@@ -234,6 +229,7 @@ struct WordCardAnswerView: View {
                     .foregroundColor(Color("MainBlue"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -284,6 +280,7 @@ struct WordCardQuestionView: View {
                     .foregroundColor(Color("MainBlack"))
                     .frame(width: UIScreen.main.bounds.width * 0.8,
                            height: UIScreen.main.bounds.width * 0.4)
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
                 
@@ -332,7 +329,7 @@ struct LevelCheck: View {
                     Text("모르겠어요")
                         .font(.headline)
                 }
-                .modifier(CheckDifficultyButton(backGroundColor: "Gray2"))
+                .modifier(CheckDifficultyButton(backGroundColor: "Gray3"))
             }
             
             Button {

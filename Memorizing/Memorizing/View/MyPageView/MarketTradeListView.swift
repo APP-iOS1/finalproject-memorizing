@@ -39,7 +39,7 @@ struct MarketTradeListView: View {
                         marketTradeToggle = true
                     } label: {
                         Text("구매내역")
-                            .font(.title2)
+                            .font(.headline)
                             .bold()
                             .foregroundColor(marketTradeToggle
                                              ? .mainDarkBlue
@@ -50,7 +50,7 @@ struct MarketTradeListView: View {
                         marketTradeToggle = false
                     } label: {
                         Text("판매내역")
-                            .font(.title2)
+                            .font(.headline)
                             .bold()
                             .foregroundColor(marketTradeToggle
                                              ? .gray3
@@ -59,7 +59,7 @@ struct MarketTradeListView: View {
                     
                     Spacer()
                 }
-                .padding(.leading)
+                .padding(.leading, 23)
             }
             .padding(.vertical, 25)
             
@@ -122,7 +122,7 @@ struct MarketTradeListView: View {
                             Divider()
                                 .padding(.vertical, 10)
                         }
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, 23)
                     }
                 }
             // MARK: - 판매내역 보기
@@ -173,7 +173,7 @@ struct MarketTradeListView: View {
                             Divider()
                                 .padding(.bottom, 10)
                         }
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, 23)
                     }
                 }
             }
@@ -188,7 +188,7 @@ struct MarketTradeListView: View {
         }
         .customAlert(isPresented: $isAlertOpen,
                      title: "판매등록 취소",
-                     message: "판매등록을 취소 하시겠습니까?",
+                     message: "취소하시게되면, 기존에 있던 \n 평점과 리뷰가 사라집니다.",
                      primaryButtonTitle: "확인",
                      primaryAction: {
                         Task {

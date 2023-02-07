@@ -208,7 +208,6 @@ class MarketStore: ObservableObject {
                     "starScoreTotal": starScoreTotal,
                     "reviewCount": reviewCount
                 ])
-            print("Add WordNote to Market complete")
             
             await self.marketNoteWordsDidSaveDB(noteID: noteID)
             await self.marketNotesWillFetchDB()
@@ -240,7 +239,6 @@ class MarketStore: ObservableObject {
                         "wordMeaning": wordMeaning
                     ])
             }
-            print("Add Word to MarketWordNote complete")
         } catch {
             print("marketNoteWordsDidSaveDB Function Error: \(error)")
         }
@@ -299,8 +297,6 @@ class MarketStore: ObservableObject {
                     print(error)
                     return
                 }
-                
-                print("WordNote Complete")
             }
         marketWordsWillBringMyWordsDB(marketWords: words, noteId: id)
     }
