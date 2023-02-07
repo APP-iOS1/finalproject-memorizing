@@ -37,7 +37,6 @@ struct MyPageView: View {
                                 .font(.title)
                                 .fontWeight(.semibold)
                             
-                            let _: String = authStore.user?.email ?? ""
                             switch authStore.user?.signInPlatform {
                             case "kakao": loginLogo(name: "KakaoLogo")
                             case "apple":
