@@ -63,7 +63,7 @@ struct MarketView: View {
             HStack {
                 Spacer()
                 
-                HStack {
+                HStack(spacing: 3) {
                     Image(systemName: "circle.fill")
                         .font(.system(size: 6))
                         .foregroundColor(selectedSortCategory == .starScoreTotal ? .mainDarkBlue : .gray4)
