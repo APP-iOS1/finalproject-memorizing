@@ -28,12 +28,12 @@ struct MarketViewNoteButton: View {
             } label: {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(Color.gray4)
-                    .frame(width: 168, height: 115)
+                    .frame(width: UIScreen.main.bounds.width * 0.43, height: UIScreen.main.bounds.height * 0.133)
                     .overlay {
                         HStack {
                             Rectangle()
                                 .cornerRadius(15, corners: [.topLeft, .bottomLeft])
-                                .frame(width: 10)
+                                .frame(width: 15)
                             
                             // TODO: 카테고리별로 색상 다르게
                                 .foregroundColor(selectedWordNote.noteColor)

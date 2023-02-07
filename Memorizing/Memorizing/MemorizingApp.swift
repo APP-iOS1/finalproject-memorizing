@@ -18,6 +18,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         return true
     }
+    
+    // 세로모드로 설정 
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
 }
 
 @main

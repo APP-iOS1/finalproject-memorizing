@@ -27,7 +27,8 @@ struct MyMemoryNote: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color.gray4, lineWidth: 1)
                 .foregroundColor(.white)
-                .frame(height: 140)
+                // .frame(height: 140)
+                .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.15)
                 .overlay {
                     HStack {
                         Rectangle()
@@ -48,7 +49,7 @@ struct MyMemoryNote: View {
                                     }
                                 Spacer()
                             }
-                            .padding(.horizontal, 8)
+                            // .padding(.horizontal, 8)
 
                             // 암기할 것 등록하기에서 받아오기
                             HStack {

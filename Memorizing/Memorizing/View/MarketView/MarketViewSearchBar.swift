@@ -14,7 +14,7 @@ struct MarketViewSearchBar: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 30)
             .foregroundColor(.gray8)
-            .frame(width: 346, height: 45)
+            .frame(width: UIScreen.main.bounds.width * 0.9, height: 45)
             .overlay {
                 HStack {
                     TextField("내가 원하는 암기장을 검색해보세요!", text: $searchText)

@@ -331,7 +331,8 @@ struct MarketViewSheet: View {
             
                         dismiss()
                      },
-                     withCancelButton: isCoinCheckToggle)
+                     withCancelButton: isCoinCheckToggle,
+                     cancelButtonText: "취소")
         
     }
 }
