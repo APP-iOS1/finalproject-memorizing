@@ -119,7 +119,9 @@ struct MarketView: View {
                             case .nomalSort:
                                 ForEach(marketStore.marketWordNotes) { wordNote in
                                     if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText) {
+                                        || wordNote.noteName.contains(searchText)
+                                        || wordNote.noteName.contains(searchText.uppercased())
+                                        || wordNote.noteName.contains(searchText.lowercased()) {
                                         MarketViewNoteButton(isSheetOpen: $isSheetOpen,
                                                              selectedCategory: $selectedCategory,
                                                              selectedWordNote: wordNote)
@@ -128,7 +130,9 @@ struct MarketView: View {
                             case .salesCount:
                                 ForEach(marketStore.marketWordNotes.sorted{ $0.salesCount > $1.salesCount }) { wordNote in
                                     if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText) {
+                                        || wordNote.noteName.contains(searchText)
+                                        || wordNote.noteName.contains(searchText.uppercased())
+                                        || wordNote.noteName.contains(searchText.lowercased()) {
                                         MarketViewNoteButton(isSheetOpen: $isSheetOpen,
                                                              selectedCategory: $selectedCategory,
                                                              selectedWordNote: wordNote)
@@ -137,7 +141,9 @@ struct MarketView: View {
                             case .starScoreTotal:
                                 ForEach(marketStore.marketWordNotes.sorted{ ($0.starScoreTotal / Double($0.reviewCount == 0 ? 100 : $0.reviewCount)) > ($1.starScoreTotal / Double($1.reviewCount == 0 ? 100 : $1.reviewCount)) }) { wordNote in
                                     if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText) {
+                                        || wordNote.noteName.contains(searchText)
+                                        || wordNote.noteName.contains(searchText.uppercased())
+                                        || wordNote.noteName.contains(searchText.lowercased()) {
                                         MarketViewNoteButton(isSheetOpen: $isSheetOpen,
                                                              selectedCategory: $selectedCategory,
                                                              selectedWordNote: wordNote)
@@ -146,7 +152,9 @@ struct MarketView: View {
                             case .reviewCount:
                                 ForEach(marketStore.marketWordNotes.sorted{ $0.reviewCount > $1.reviewCount }) { wordNote in
                                     if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText) {
+                                        || wordNote.noteName.contains(searchText)
+                                        || wordNote.noteName.contains(searchText.uppercased())
+                                        || wordNote.noteName.contains(searchText.lowercased()) {
                                         MarketViewNoteButton(isSheetOpen: $isSheetOpen,
                                                              selectedCategory: $selectedCategory,
                                                              selectedWordNote: wordNote)
@@ -155,7 +163,9 @@ struct MarketView: View {
                             case .recentUpdate:
                                 ForEach(marketStore.marketWordNotes.sorted{ $0.updateDate > $1.updateDate }) { wordNote in
                                     if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText) {
+                                        || wordNote.noteName.contains(searchText)
+                                        || wordNote.noteName.contains(searchText.uppercased())
+                                        || wordNote.noteName.contains(searchText.lowercased()) {
                                         MarketViewNoteButton(isSheetOpen: $isSheetOpen,
                                                              selectedCategory: $selectedCategory,
                                                              selectedWordNote: wordNote)

@@ -120,7 +120,7 @@ struct EditListView: View {
             }
             
             Button {
-                if wordNote.words?.count ?? 0 < 50 {
+                if wordNote.words?.count ?? 0 < 20 {
                     isShowingAddView.toggle()
                 } else {
                     isWordCountCheckToggle.toggle()
@@ -147,10 +147,10 @@ struct EditListView: View {
             .customAlert(isPresented: $isWordCountCheckToggle,
                          title: "암기장 내용 초과",
                          message: "하나의 암기장에 최대 50개까지만 추가가 가능합니다.",
-                         primaryButtonTitle: "네",
+                         primaryButtonTitle: "확인",
                          primaryAction: {
             },
-                         withCancelButton: true,
+                         withCancelButton: false,
                          cancelButtonText: "아니요")
         }
         .toolbar {

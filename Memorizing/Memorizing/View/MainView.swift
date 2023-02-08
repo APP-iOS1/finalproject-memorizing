@@ -100,7 +100,6 @@ struct MainView: View {
 //                myNoteStore.myNotesWillBeFetchedFromDB()
 
                     await marketStore.marketNotesWillFetchDB()
-                    await marketStore.filterMyNoteWillFetchDB()
                     await marketStore.myNotesArrayWillFetchDB()
         }
     }

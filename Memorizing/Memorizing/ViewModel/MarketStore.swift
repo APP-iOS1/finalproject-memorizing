@@ -378,32 +378,36 @@ class MarketStore: ObservableObject {
                 .collection("myWordNotes").whereField("enrollmentUser", isEqualTo: currentUserUID).getDocuments()
             
             for document in documents.documents {
-                let docData = document.data()
+                let wordDoc = try await database.collection("users").document(currentUserUID)
+                    .collection("myWordNotes").document(document.documentID)
+                    .collection("words").getDocuments()
                 
-                let id: String = docData["id"] as? String ?? ""
-                let noteName: String = docData["noteName"] as? String ?? ""
-                let noteCategory: String = docData["noteCategory"] as? String ?? ""
-                let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
-                let repeatCount: Int = docData["noteName"] as? Int ?? 0
-                let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0
-                let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
-                let updateDate: Date = docData["updateDate"] as? Date ?? Date()
-                
-                let myWordNote = MyWordNote(id: id,
-                                            noteName: noteName,
-                                            noteCategory: noteCategory,
-                                            enrollmentUser: enrollmentUser,
-                                            repeatCount: repeatCount,
-                                            firstTestResult: firstTestResult,
-                                            lastTestResult: lastTestResult,
-                                            updateDate: updateDate)
-                
-                await MainActor.run(body: {
-                    self.filterMyWordNotes.append(myWordNote)
-                })
+                if wordDoc.count > 19 {
+                    let docData = document.data()
+                    
+                    let id: String = docData["id"] as? String ?? ""
+                    let noteName: String = docData["noteName"] as? String ?? ""
+                    let noteCategory: String = docData["noteCategory"] as? String ?? ""
+                    let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+                    let repeatCount: Int = docData["noteName"] as? Int ?? 0
+                    let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0
+                    let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
+                    let updateDate: Date = docData["updateDate"] as? Date ?? Date()
+                    
+                    let myWordNote = MyWordNote(id: id,
+                                                noteName: noteName,
+                                                noteCategory: noteCategory,
+                                                enrollmentUser: enrollmentUser,
+                                                repeatCount: repeatCount,
+                                                firstTestResult: firstTestResult,
+                                                lastTestResult: lastTestResult,
+                                                updateDate: updateDate)
+                    
+                    await MainActor.run(body: {
+                        self.filterMyWordNotes.append(myWordNote)
+                    })
+                }
             }
-            
-            
         } catch {
             print("filterMyNoteWillFetchDB Function Error: \(error)")
         }
