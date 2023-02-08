@@ -37,7 +37,7 @@ struct FaceProgressView: View {
             
             // MARK: ProgressBar baseLine
             Rectangle()
-                .frame(width: UIScreen.main.bounds.width * 0.75, height: 8)
+                .frame(width: UIScreen.main.bounds.width * 0.72, height: 8)
                 .foregroundColor(.gray5)
             
             // MARK: 진행도에 따라 Progressbar 길이 조절
@@ -53,7 +53,7 @@ struct FaceProgressView: View {
                 Spacer()
             }
             
-            HStack {
+            HStack(spacing: 0) {
                 
                 // MARK: 1회차
                 Circle()
@@ -179,7 +179,7 @@ struct FaceProgressView: View {
 //                    .animation(.easeInOut.delay(0.6),
 //                               value: myWordNote.repeatCount)
             }
-            .frame(width: UIScreen.main.bounds.width * 0.75)
+            .frame(width: UIScreen.main.bounds.width * 0.74)
         }
     }
 }

@@ -18,6 +18,7 @@ struct EditListView: View {
     @State private var isToastToggle = false
     @State private var showingAlert = false
     @State private var todayDate = Date()
+    @State private var isWordCountCheckToggle = false
     
     // 단어장 삭제 Flag - 재혁추가
     @State private var isShownDeleteQuestionAlert: Bool = false
@@ -119,7 +120,11 @@ struct EditListView: View {
             }
             
             Button {
-                isShowingAddView.toggle()
+                if wordNote.words?.count ?? 0 < 50 {
+                    isShowingAddView.toggle()
+                } else {
+                    isWordCountCheckToggle.toggle()
+                }
             } label: {
                 Circle()
                     .foregroundColor(.mainBlue)
@@ -139,6 +144,14 @@ struct EditListView: View {
                 .customToastMessage(isPresented: $isToastToggle,
                                     message: "단어 저장 완료!")
             })
+            .customAlert(isPresented: $isWordCountCheckToggle,
+                         title: "암기장 내용 초과",
+                         message: "하나의 암기장에 최대 50개까지만 추가가 가능합니다.",
+                         primaryButtonTitle: "네",
+                         primaryAction: {
+            },
+                         withCancelButton: true,
+                         cancelButtonText: "아니요")
         }
         .toolbar {
             // MARK: 뒤로가기 버튼

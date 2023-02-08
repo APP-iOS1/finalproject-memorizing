@@ -79,9 +79,10 @@ struct MyMemoryNote: View {
                                 // MARK: 얼굴 진행도
                                 FaceProgressView(myWordNote: myWordNote)
                                     .opacity(opacityValue)
+                                    .padding(.leading, -5)
                             }
                         }
-                        .padding(.trailing, 15)
+//                        .padding(.trailing, 15)
                     }
                 }
                 .overlay {
