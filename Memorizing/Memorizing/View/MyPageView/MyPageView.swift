@@ -122,27 +122,27 @@ struct MyPageView: View {
                         .isDetailLink(false)
                     }
 
-                    VStack {
-                        Divider()
-                        
-                        NavigationLink {
-                            // 파라미터 추가
-                            MyReviewView(wordNote: marketStore.sendWordNote)
-                        } label: {
-                            HStack {
-                                Text("내가 작성한 리뷰")
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .font(.body)
-                                    .fontWeight(.light)
-                            } // 문의하기
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 12)
-                            .foregroundColor(.mainBlack)
-                        }
-                    }
+//                    VStack {
+//                        Divider()
+//                        
+//                        NavigationLink {
+//                            // 파라미터 추가
+//                            MyReviewView(wordNote: marketStore.sendWordNote)
+//                        } label: {
+//                            HStack {
+//                                Text("내가 작성한 리뷰")
+//                                    .font(.subheadline)
+//                                    .fontWeight(.medium)
+//                                Spacer()
+//                                Image(systemName: "chevron.right")
+//                                    .font(.body)
+//                                    .fontWeight(.light)
+//                            } // 문의하기
+//                            .padding(.horizontal, 8)
+//                            .padding(.vertical, 12)
+//                            .foregroundColor(.mainBlack)
+//                        }
+//                    }
                     
                     VStack {
                         Divider()
