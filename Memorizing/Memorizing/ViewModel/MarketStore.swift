@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestore
 
 // MARK: 마켓에 내 단어장 등록하기, 단어장 구매 등 마켓 탭에서 필요한 모든 기능
-
+@MainActor // wordsWillFetchDB 메서드 내 words 변수에 할당을 위해서
 class MarketStore: ObservableObject {
     @Published var marketWordNotes: [MarketWordNote] = []
     @Published var words: [Word] = []
@@ -149,7 +149,7 @@ class MarketStore: ObservableObject {
             await MainActor.run(body: {
                 words.removeAll()
             })
-            
+            var wordsInMethod: [Word] = []
             let documents = try await database.collection("marketWordNotes").document(wordNoteID)
                 .collection("words").getDocuments()
             
@@ -166,11 +166,13 @@ class MarketStore: ObservableObject {
                     wordMeaning: wordMeaning,
                     wordLevel: wordLevel
                 )
-                
-                await MainActor.run(body: {
-                    self.words.append(word)
-                })
+                wordsInMethod.append(word)
             }
+            await MainActor.run(body: {
+                // 띠리릭 갯수가 올라가지 않게 한번에 할당해줌
+                    self.words = wordsInMethod
+                
+            })
         } catch {
             print("wordsWillFetchDB Function Error: \(error)")
         }
