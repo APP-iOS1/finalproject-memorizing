@@ -32,6 +32,8 @@ struct AddWordView: View {
     @State private var displayLists: Bool = false
     @Binding var isToastToggle: Bool
     
+    @State private var isWordCountCheckToggle = false
+    
     // MARK: - Navigation Stack 사용 안함
     var body: some View {
         VStack(alignment: .center) {
@@ -219,47 +221,49 @@ struct AddWordView: View {
             Section {
                 VStack {
                     Button {
-                        let id = UUID().uuidString
-                        // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
-                        myNoteStore.myWordsWillBeSavedOnDB(wordNote: MyWordNote(id: wordNote.id ?? UUID().uuidString,
-                                                                                noteName: wordNote.noteName
-                                                                                ?? "no Name",
-                                                                                noteCategory: wordNote.noteCategory
-                                                                                ?? "no Category",
-                                                                                enrollmentUser: wordNote.enrollmentUser
-                                                                                ?? "no Enrollment User",
-                                                                                repeatCount: Int(wordNote.repeatCount),
-                                                                                firstTestResult:
-                                                                                    wordNote.firstTestResult,
-                                                                                lastTestResult:
-                                                                                    wordNote.lastTestResult,
-                                                                                updateDate:
-                                                                                    wordNote.updateDate ?? Date()),
-                                                           word: Word(
-                                                            id: id,
-                                                            wordString: wordString,
-                                                            wordMeaning: wordMeaning,
-                                                            wordLevel: wordLevel)
-                        )
-                        
-                        coreDataStore.addWord(note: wordNote,
-                                              id: id,
-                                              wordLevel: Int64(wordLevel),
-                                              wordMeaning: wordMeaning,
-                                              wordString: wordString)
-                        
-                        wordString = ""
-                        wordMeaning = ""
-                        wordLevel = 0
-                        isToastToggle = true
+                        if wordNote.words?.count ?? 0 < 50 {
+                            let id = UUID().uuidString
+                            // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
+                            myNoteStore.myWordsWillBeSavedOnDB(wordNote: MyWordNote(id: wordNote.id ?? UUID().uuidString,
+                                                                                    noteName: wordNote.noteName
+                                                                                    ?? "no Name",
+                                                                                    noteCategory: wordNote.noteCategory
+                                                                                    ?? "no Category",
+                                                                                    enrollmentUser: wordNote.enrollmentUser
+                                                                                    ?? "no Enrollment User",
+                                                                                    repeatCount: Int(wordNote.repeatCount),
+                                                                                    firstTestResult:
+                                                                                        wordNote.firstTestResult,
+                                                                                    lastTestResult:
+                                                                                        wordNote.lastTestResult,
+                                                                                    updateDate:
+                                                                                        wordNote.updateDate ?? Date()),
+                                                               word: Word(
+                                                                id: id,
+                                                                wordString: wordString,
+                                                                wordMeaning: wordMeaning,
+                                                                wordLevel: wordLevel)
+                            )
+                            
+                            coreDataStore.addWord(note: wordNote,
+                                                  id: id,
+                                                  wordLevel: Int64(wordLevel),
+                                                  wordMeaning: wordMeaning,
+                                                  wordString: wordString)
+                            
+                            wordString = ""
+                            wordMeaning = ""
+                            wordLevel = 0
+                            isToastToggle = true
+                        } else {
+                            isWordCountCheckToggle.toggle()
+                        }
                     } label: {
                         Text("등록하기")
                             .fontWeight(.semibold)
                             .modifier(CustomButtonStyle(backgroundColor: wordString.isEmpty || wordMeaning.isEmpty || words.count >= 100 ? "Gray4" : "MainBlue"))
                     }
                     .disabled(wordString.isEmpty || wordMeaning.isEmpty || words.count >= 100)
-                    
-                    
                 }
             }
         }
@@ -295,6 +299,14 @@ struct AddWordView: View {
 //
 //            }
         }
+        .customAlert(isPresented: $isWordCountCheckToggle,
+                     title: "암기장 내용 초과",
+                     message: "하나의 암기장에 최대 50개까지만 추가가 가능합니다.",
+                     primaryButtonTitle: "네",
+                     primaryAction: {
+        },
+                     withCancelButton: true,
+                     cancelButtonText: "아니요")
     }
 }
 

@@ -29,6 +29,7 @@ struct MarketViewAddButton: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedNote: String = ""
+    @State private var selectedNoteWordCount: Int = 0
     
     var body: some View {
         // FIXME: 왜 LazyVStack으로 하면 Spacer()로 안밀리는가...
