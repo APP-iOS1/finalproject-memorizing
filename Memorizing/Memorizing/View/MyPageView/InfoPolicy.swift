@@ -7,6 +7,9 @@
 import SwiftUI
 
 struct InfoPolicy: View {
+    
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
@@ -329,8 +332,24 @@ struct InfoPolicy: View {
                 }
             }
             .padding()
+            .navigationBarBackButtonHidden(true)
+            // MARK: navigationLink destination 커스텀 백 버튼
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    backButton
+                }
+            }
             .navigationTitle("개인정보 처리방침")
             .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    // MARK: NavigationLink 커스텀 뒤로가기 버튼
+    var backButton : some View {
+        Button {
+            dismiss()
+        } label: {
+            Image(systemName: "chevron.left")
         }
     }
 }

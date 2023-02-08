@@ -166,6 +166,13 @@ struct MarketViewAddButton: View {
             }
             .padding(.bottom)
         }
+        .navigationBarBackButtonHidden(true)
+        // MARK: navigationLink destination 커스텀 백 버튼
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
+        }
         .navigationBarTitle("마켓에 등록하기")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -190,6 +197,15 @@ struct MarketViewAddButton: View {
             Task {
                 await marketStore.marketNotesWillFetchDB()
             }
+        }
+    }
+    
+    // MARK: NavigationLink 커스텀 뒤로가기 버튼
+    var backButton : some View {
+        Button {
+            dismiss()
+        } label: {
+            Image(systemName: "chevron.left")
         }
     }
 }

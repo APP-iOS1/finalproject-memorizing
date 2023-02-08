@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 struct EditUserView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
     //    @Environment(\.dismiss) private var dismiss
     //    @Binding var isShownNickNameToggle: Bool
@@ -201,6 +202,13 @@ struct EditUserView: View {
             Spacer()
             
         }
+        .navigationBarBackButtonHidden(true)
+        // MARK: navigationLink destination 커스텀 백 버튼
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton
+            }
+        }
         .navigationTitle("내 정보 수정")
         .navigationBarTitleDisplayMode(.inline)
         .customAlert(isPresented: $isShownDeleteAccountAlert,
@@ -222,6 +230,15 @@ struct EditUserView: View {
         // upper: 제한 글자 수
         if nickName.count > upper {
             nickName = String(nickName.prefix(upper))
+        }
+    }
+    
+    // MARK: NavigationLink 커스텀 뒤로가기 버튼
+    var backButton : some View {
+        Button {
+            dismiss()
+        } label: {
+            Image(systemName: "chevron.left")
         }
     }
     
