@@ -77,21 +77,20 @@ struct MarketViewNoteButton: View {
                                         let reviewScore: Double = selectedWordNote.starScoreTotal / Double(reviewCount)
                                         let score: String = String(format: "%.1f", reviewScore) // "5.1"
 
-                                        Image(systemName: "star.fill")
-                                            .font(.caption)
-                                            .foregroundColor(Color.iTColor)
-                                            .padding(.trailing, 1)
-                                        
                                         if reviewCount == 0 {
-                                            Text("(0)")
+                                            Text(" ")
                                                 .font(.caption2)
                                                 .foregroundColor(Color.gray3)
                                         } else {
+                                            Image(systemName: "star.fill")
+                                                .font(.caption)
+                                                .foregroundColor(Color.iTColor)
+                                                .padding(.trailing, 1)
+                                            
                                             Text("\(score) (\(reviewCount))")
                                                 .font(.caption2)
                                                 .foregroundColor(Color.gray2)
                                         }
-
                                     }
                                     
                                     Spacer()
