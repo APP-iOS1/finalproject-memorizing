@@ -38,7 +38,7 @@ struct MarketViewCategoryButton: View {
                 }
             }
             .padding(.vertical, 5)
-            .padding(.horizontal, 5)
+            .padding(.horizontal, 1)
         }
         .frame(width: UIScreen.main.bounds.width * 0.9)
     }
