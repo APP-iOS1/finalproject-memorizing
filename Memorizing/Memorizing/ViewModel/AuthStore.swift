@@ -326,13 +326,15 @@ class AuthStore: UIViewController, ObservableObject {
     } // fetchUser
     
     // MARK: - User의 닉네임을 변경
-    func userInfoDidChangeDB(nickName: String) async throws {
+    func userInfoDidChangeDB(nickName: String) async throws -> Bool {
         do {
             _ = try await database.collection("users").document(user?.id ?? "").updateData([
                 "nickName": nickName
             ])
             
             self.user?.nickName = nickName
+            
+            return true
         } catch {
             fatalError("fail update User")
         }
