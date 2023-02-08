@@ -51,11 +51,11 @@ struct MarketViewNoteButton: View {
                                                 .fontWeight(.bold)
                                                 .foregroundColor(selectedWordNote.noteColor)
                                         }
-                                        .padding(.top, 2)
+//                                        .padding(.top, 1)
                                     
                                     Spacer()
                                 }
-                                .frame(height: 18)
+                                .frame(height: UIScreen.main.bounds.height * 0.02)
                                 
                                 // 암기장 제목
                                 HStack{
@@ -68,8 +68,11 @@ struct MarketViewNoteButton: View {
                                     
                                     Spacer()
                                 }
+                                .padding(.vertical, 1)
+                                .background(Color.red)
                                 .frame(width: UIScreen.main.bounds.width * 0.34,
-                                       height: UIScreen.main.bounds.height * 0.055)
+                                       height: UIScreen.main.bounds.height * 0.045)
+                                .background(Color.blue)
                                 
                                 // 암기장 판매 가격
                                 HStack {

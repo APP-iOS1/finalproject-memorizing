@@ -194,6 +194,7 @@ struct MarketView: View {
                             // MARK: - 여기까지
                         })
                     .padding(.horizontal)
+                    .padding(.top, 1)
                     .padding(.bottom, 120)
                 }   // ScrollView end
                 .padding(.bottom, 1)
