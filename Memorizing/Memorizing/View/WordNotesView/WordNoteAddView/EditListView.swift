@@ -104,7 +104,7 @@ struct EditListView: View {
                             }
                             .onDelete { indexSet in
                                 Task {
-                                    let word = await myNoteStore.deleteWord(note: wordNote, offset: indexSet)
+                                    let word = await myNoteStore.myWordDidDeleteMyNote(note: wordNote, offset: indexSet)
                                     if let word {
                                         coreDataStore.deleteWord(word: word)
                                     }
