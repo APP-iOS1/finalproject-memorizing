@@ -54,7 +54,6 @@ struct ScheduleCell: View {
                 Text("")
                     .frame(width: 50)
             } // HStack
-            Divider()
         } // VStack
         .onAppear {
             wordNote = myNoteStore.myWordNotes.first { $0.id == notiId }
