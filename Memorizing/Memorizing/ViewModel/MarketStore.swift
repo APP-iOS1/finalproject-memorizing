@@ -342,27 +342,26 @@ class MarketStore: ObservableObject {
                     .collection("reviews").document(review.id)
                     .delete()
             }
-                
             
             // 하위 컬렉션으로 word가 존재하면 전부 삭제
-            if self.words.count > 0 {
-                for word in self.words {
-                    try await database
-                        .collection("marketWordNotes").document(marketWordNote.id)
-                        .collection("words").document(word.id)
-                        .delete()
-                }
-                
-                // 하위 컬렉션 전부 삭제 후 해당 암기장 데이터 삭제
+            for word in self.words {
                 try await database
                     .collection("marketWordNotes").document(marketWordNote.id)
+                    .collection("words").document(word.id)
                     .delete()
-                
-                await marketNotesWillFetchDB()
             }
             
         } catch {
             print("marketNotesWillDeleteDB error")
+        }
+        
+        do {
+            // 하위 컬렉션 전부 삭제 후 해당 암기장 데이터 삭제
+            try? await database
+                .collection("marketWordNotes").document(marketWordNote.id)
+                .delete()
+            
+            await marketNotesWillFetchDB()
         }
     }
     

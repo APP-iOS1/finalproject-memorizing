@@ -18,7 +18,7 @@ class MyNoteStore: ObservableObject {
 
     // MARK: - myWordNotes를 페치하는 함수 / 내가 작성한 Notes를 Fetch함
     func myNotesWillBeFetchedFromDB() {
-        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user") }
         database.collection("users").document(currentUser.uid).collection("myWordNotes")
             .order(by: "repeatCount")
             .getDocuments { snapshot, error in
@@ -91,7 +91,7 @@ class MyNoteStore: ObservableObject {
     
     // MARK: - words를 패치하는 함수 / 내가 작성한 Words를 Fetch함
     func myWordsWillBeFetchedFromDB(wordNote: MyWordNote, completion: @escaping () -> Void) {
-        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user") }
         database.collection("users").document(currentUser.uid)
             .collection("myWordNotes").document(wordNote.id)
             .collection("words")
@@ -119,7 +119,7 @@ class MyNoteStore: ObservableObject {
     
     // MARK: - words를 추가하는 함수 / 내가 작성한 Words를 DB에 저장함
     func myWordsWillBeSavedOnDB(wordNote: MyWordNote, word: Word) {
-        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user") }
         database.collection("users").document(currentUser.uid)
             .collection("myWordNotes").document(wordNote.id)
             .collection("words").document(word.id)
@@ -138,38 +138,55 @@ class MyNoteStore: ObservableObject {
     // MARK: - words를 삭제하는 함수 / 암기장 ... Menu에서 들어가서 삭제할 수 있음
     // 하위 컬렉션으로 먼저 접근한 후 -> 상위 컬렉션 내 해당 노트(문서)를 작성해야 함
     func myNotesDidDeleteDB(wordNote: NoteEntity) {
-        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user") }
         
-        for mywords in myWords {
+        for myWord in wordNote.words?.allObjects as? [WordEntity] ?? [] {
             database.collection("users").document(currentUser.uid)
                 .collection("myWordNotes").document(wordNote.id ?? "")
-                .collection("words").document(mywords.id)
+                .collection("words").document(myWord.id ?? "")
                 .delete() { error in
                     if let error = error {
                         print("Error removing document : \(error)")
                     }
                 }
         }
-
-        database.collection("users").document(currentUser.uid)
-            .collection("myWordNotes").document(wordNote.id ?? "")
-        //            .collection("words").document(wordNote.id ?? "")
-            .delete() { error in
-                if let error = error {
-                    print("Error removing document : \(error)")
+        
+        do {
+            database.collection("users").document(currentUser.uid)
+                .collection("myWordNotes").document(wordNote.id ?? "")
+                .delete() { error in
+                    if let error = error {
+                        print("Error removing document : \(error)")
+                    }
                 }
-            }
+        }
     }
-    
-    
-    
 
+    // MARK: - 단어장에 있는 단어 삭제 함수
+    func myWordDidDeleteMyNote(note: NoteEntity, offset: IndexSet) async -> WordEntity? {
+
+        guard let currentUser = Auth.auth().currentUser else { return nil }
+        guard let index = offset.first else { return nil }
+        
+        let words = note.words?.allObjects as? [WordEntity] ?? []
+        
+        do {
+            try await database.collection("users").document(currentUser.uid)
+                .collection("myWordNotes").document(note.id ?? "")
+                .collection("words").document(words[index].id ?? "")
+                .delete()
+        } catch {
+            print("delete word error occured: \(error.localizedDescription)")
+        }
+        
+        return words[index]
+    }
     // MARK: - 복습 완료시 파베에 repeatCount를 1씩 올림 / 반복학습에 따른 Count를 1씩 증가
     func repeatCountWillBePlusOne(wordNote: NoteEntity,
                                   nextStudyDate: Date?,
                                   firstTestResult: Double?,
                                   lastTestResult: Double?) async {
-        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user") }
         do {
             _ = try await database.collection("users").document(currentUser.uid)
                 .collection("myWordNotes").document(wordNote.id ?? "")
@@ -188,7 +205,7 @@ class MyNoteStore: ObservableObject {
     
     // MARK: - 복습 다시하기 repeatcount를 0으로 초기화 / 반복학습이 완료될 경우, Count를 Reset
     func repeatCountWillBeResetted(wordNote: NoteEntity) {
-        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user") }
         
         database.collection("users").document(currentUser.uid)
             .collection("myWordNotes").document(wordNote.id ?? "")
@@ -208,7 +225,7 @@ class MyNoteStore: ObservableObject {
     
     // MARK: - 학습 시 각각 Words의 Level(난이도)값을 DB에 저장
     func wordsLevelWillBeChangedOnDB(wordNote: NoteEntity, word: WordEntity, level: Int) {
-        guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
+        guard let currentUser = Auth.auth().currentUser else { return print("return no current user") }
         
         database.collection("users").document(currentUser.uid)
             .collection("myWordNotes").document(wordNote.id ?? "")
@@ -231,23 +248,5 @@ class MyNoteStore: ObservableObject {
         }
         return count
     }
-    
-    func deleteWord(note: NoteEntity, offset: IndexSet) async -> WordEntity? {
 
-        guard let currentUser = Auth.auth().currentUser else { return nil }
-        guard let index = offset.first else { return nil }
-        
-        let words = note.words?.allObjects as? [WordEntity] ?? []
-        
-        do {
-            try await database.collection("users").document(currentUser.uid)
-                .collection("myWordNotes").document(note.id ?? "")
-                .collection("words").document(words[index].id ?? "")
-                .delete()
-        } catch {
-            print("delete word error occured: \(error.localizedDescription)")
-        }
-        
-        return words[index]
-    }
 }

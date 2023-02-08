@@ -59,7 +59,7 @@ struct AddListView: View {
                         .onDelete { indexSet in
                             // TODO: 서버에서도 같이 삭제해야함.
                             Task {
-                                let word = await myNoteStore.deleteWord(note: wordNote, offset: indexSet)
+                                let word = await myNoteStore.myWordDidDeleteMyNote(note: wordNote, offset: indexSet)
                                 if let word {
                                     coreDataStore.deleteWord(word: word)
                                 }
