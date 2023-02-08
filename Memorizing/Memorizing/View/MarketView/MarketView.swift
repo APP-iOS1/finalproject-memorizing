@@ -47,11 +47,8 @@ struct MarketView: View {
                 .padding(.top, 15)
             
             // MARK: - 카테고리 버튼들
-            ScrollView(.horizontal, showsIndicators: false) {
-                MarketViewCategoryButton(selectedCategory: $selectedCategory,
-                                         categoryArray: MarketView.categoryArray)
-            }
-            .padding(.leading, 13)
+            MarketViewCategoryButton(selectedCategory: $selectedCategory,
+                                     categoryArray: MarketView.categoryArray)
             
             // MARK: - 검색창 하단 구분선
             //        Divider()

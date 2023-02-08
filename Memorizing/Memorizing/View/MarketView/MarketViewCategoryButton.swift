@@ -13,31 +13,34 @@ struct MarketViewCategoryButton: View {
     let categoryArray: [String]
     
     var body: some View {
-        HStack {
-            ForEach(Array(zip(categoryArray.indices, categoryArray)), id: \.0) { (index, category) in
-                
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(selectedCategory == category ? MarketView.colorArray[index] : Color.gray4)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(Array(zip(categoryArray.indices, categoryArray)), id: \.0) { (index, category) in
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(selectedCategory == category ? MarketView.colorArray[index] : Color.gray4)
                     // FIXME: 왜 타입추론 에러가...?
-//                    .backgroundStyle(selectedCategory == category ? MarketView.colorArray[index] : Color.white)
-                    .frame(width: 50, height: 30)
-                    .overlay {
-                        Button {
-                            selectedCategory = category
-                            
-                        } label: {
-                            Text("\(category)")
-                                .font(.footnote)
-                                .fontWeight(.medium)
-                                .foregroundColor(selectedCategory == category
-                                                 ? MarketView.colorArray[index]
-                                                 : .gray2)
+                    //                    .backgroundStyle(selectedCategory == category ? MarketView.colorArray[index] : Color.white)
+                        .frame(width: 50, height: 30)
+                        .overlay {
+                            Button {
+                                selectedCategory = category
+                                
+                            } label: {
+                                Text("\(category)")
+                                    .font(.footnote)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(selectedCategory == category
+                                                     ? MarketView.colorArray[index]
+                                                     : .gray2)
+                            }
                         }
-                    }
+                }
             }
+            .padding(.vertical, 5)
+            .padding(.horizontal, 5)
         }
-        .padding(.vertical, 5)
-        .padding(.horizontal, 10)
+        .frame(width: UIScreen.main.bounds.width * 0.9)
     }
 }
 
