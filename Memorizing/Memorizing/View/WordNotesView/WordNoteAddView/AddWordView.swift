@@ -222,7 +222,7 @@ struct AddWordView: View {
             Section {
                 VStack {
                     Button {
-                        if wordNote.words?.count ?? 0 < 20 {
+                        if wordNote.words?.count ?? 0 < 50 {
                             let id = UUID().uuidString
                             // MARK: - 작성된 Words를 List에 추가할 수 있도록 함
                             myNoteStore.myWordsWillBeSavedOnDB(wordNote: MyWordNote(id: wordNote.id ?? UUID().uuidString,

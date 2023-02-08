@@ -120,7 +120,7 @@ struct EditListView: View {
             }
             
             Button {
-                if wordNote.words?.count ?? 0 < 20 {
+                if wordNote.words?.count ?? 0 < 50 {
                     isShowingAddView.toggle()
                 } else {
                     isWordCountCheckToggle.toggle()
