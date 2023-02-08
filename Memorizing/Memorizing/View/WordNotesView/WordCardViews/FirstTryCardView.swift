@@ -109,7 +109,7 @@ struct FirstTryCardView: View {
                                         identifier: myWordNote.id ?? "No Id",
                                         title: "MEMOrizing 암기 시간",
                                         body: "\(myWordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
-                                        timeInterval: 10,
+                                        timeInterval: 1200,
                                         repeats: false
                                     )
                                     localNotification.subtitle = "\(myWordNote.noteName ?? "No Name")"
@@ -119,7 +119,7 @@ struct FirstTryCardView: View {
                                     await notiManager.schedule(localNotification: localNotification)
                                     await myNoteStore.repeatCountWillBePlusOne(
                                         wordNote: myWordNote,
-                                        nextStudyDate: Date() + Double(myWordNote.repeatCount * 120000),
+                                        nextStudyDate: Date() + Double(1200),
                                         firstTestResult: firstTestResult,
                                         lastTestResult: nil
                                     )

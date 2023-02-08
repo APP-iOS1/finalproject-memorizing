@@ -53,11 +53,17 @@ struct StudyingStampView: View {
                         if !notiManager.isGranted {
                             notiManager.openSetting()  // 알림 설정 창
                         } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
+                            let newTimeInterval: Double
+                            if wordNote.repeatCount + 1 == 2 {
+                                newTimeInterval = 3600
+                            } else {
+                                newTimeInterval = 86400
+                            }
                             var localNotification = LocalNotification(
                                 identifier: wordNote.id ?? "No Id",
                                 title: "MEMOrizing 암기 시간",
                                 body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
-                                timeInterval: Double(wordNote.repeatCount * 10),
+                                timeInterval: newTimeInterval,
                                 repeats: false
                             )
                             localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
@@ -66,14 +72,14 @@ struct StudyingStampView: View {
                             if wordNote.repeatCount == 2 {
                                 await myNoteStore.repeatCountWillBePlusOne(
                                     wordNote: wordNote,
-                                    nextStudyDate: Date() + Double(wordNote.repeatCount * 360000),
+                                    nextStudyDate: Date() + Double(3600),
                                     firstTestResult: wordNote.firstTestResult,
                                     lastTestResult: wordNote.lastTestResult
                                 )
                             } else if wordNote.repeatCount == 3 {
                                 await myNoteStore.repeatCountWillBePlusOne(
                                     wordNote: wordNote,
-                                    nextStudyDate: Date() + Double(wordNote.repeatCount * 8640000),
+                                    nextStudyDate: Date() + Double(86400),
                                     firstTestResult: wordNote.firstTestResult,
                                     lastTestResult: wordNote.lastTestResult
                                 )
