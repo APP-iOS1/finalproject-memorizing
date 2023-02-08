@@ -59,7 +59,7 @@ struct AddListView: View {
                         .onDelete { indexSet in
                             // TODO: 서버에서도 같이 삭제해야함.
                             Task {
-                                let word = await myNoteStore.deleteWord(note: wordNote, offset: indexSet)
+                                let word = await myNoteStore.myWordDidDeleteMyNote(note: wordNote, offset: indexSet)
                                 if let word {
                                     coreDataStore.deleteWord(word: word)
                                 }
@@ -90,6 +90,7 @@ struct AddListView: View {
                             .shadow(radius: 1, x: 1, y: 1)
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+//                    .position(x: UIScreen.main.bounds.width * 0.86, y: UIScreen.main.bounds.height * 0.58)
                     .sheet(isPresented: $isShowingAddView, content: {
                         AddWordView(wordNote: wordNote,
                                     isToastToggle: $isToastToggle)

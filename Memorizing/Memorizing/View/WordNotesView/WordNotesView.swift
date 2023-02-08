@@ -81,6 +81,7 @@ struct WordNotesView: View {
                             .shadow(radius: 1, x: 1, y: 1)
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+                    // .position(x: UIScreen.main.bounds.width * 0.86, y: UIScreen.main.bounds.height * 0.58)
                     .sheet(isPresented: $isShowingNewMemorySheet) {
                         NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet,
                                           isToastToggle: $isToastToggle)
@@ -157,7 +158,6 @@ struct Header: View {
             .padding(.leading, 25)
             
         }
-        
     }
 }
 

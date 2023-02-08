@@ -163,7 +163,8 @@ struct AddWordView: View {
                         // MARK: - 유형 제거. 일반 암기장 작성 양식
                         VStack(alignment: .leading, spacing: 20) {
                             HStack{
-                                Text("")
+                                Text("하나의 암기장에 암기항목은 최대 50개까지 추가 가능합니다.")
+                                    .font(.caption)
                                 Spacer()
                                 Button {
                                     dismiss()
@@ -302,10 +303,10 @@ struct AddWordView: View {
         .customAlert(isPresented: $isWordCountCheckToggle,
                      title: "암기장 내용 초과",
                      message: "하나의 암기장에 최대 50개까지만 추가가 가능합니다.",
-                     primaryButtonTitle: "네",
+                     primaryButtonTitle: "확인",
                      primaryAction: {
         },
-                     withCancelButton: true,
+                     withCancelButton: false,
                      cancelButtonText: "아니요")
     }
 }

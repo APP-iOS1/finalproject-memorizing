@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestore
 
 // MARK: 마켓에 내 단어장 등록하기, 단어장 구매 등 마켓 탭에서 필요한 모든 기능
-
+@MainActor // wordsWillFetchDB 메서드 내 words 변수에 할당을 위해서
 class MarketStore: ObservableObject {
     @Published var marketWordNotes: [MarketWordNote] = []
     @Published var words: [Word] = []
@@ -149,7 +149,7 @@ class MarketStore: ObservableObject {
             await MainActor.run(body: {
                 words.removeAll()
             })
-            
+            var wordsInMethod: [Word] = []
             let documents = try await database.collection("marketWordNotes").document(wordNoteID)
                 .collection("words").getDocuments()
             
@@ -166,11 +166,13 @@ class MarketStore: ObservableObject {
                     wordMeaning: wordMeaning,
                     wordLevel: wordLevel
                 )
-                
-                await MainActor.run(body: {
-                    self.words.append(word)
-                })
+                wordsInMethod.append(word)
             }
+            await MainActor.run(body: {
+                // 띠리릭 갯수가 올라가지 않게 한번에 할당해줌
+                    self.words = wordsInMethod
+                
+            })
         } catch {
             print("wordsWillFetchDB Function Error: \(error)")
         }
@@ -342,27 +344,26 @@ class MarketStore: ObservableObject {
                     .collection("reviews").document(review.id)
                     .delete()
             }
-                
             
             // 하위 컬렉션으로 word가 존재하면 전부 삭제
-            if self.words.count > 0 {
-                for word in self.words {
-                    try await database
-                        .collection("marketWordNotes").document(marketWordNote.id)
-                        .collection("words").document(word.id)
-                        .delete()
-                }
-                
-                // 하위 컬렉션 전부 삭제 후 해당 암기장 데이터 삭제
+            for word in self.words {
                 try await database
                     .collection("marketWordNotes").document(marketWordNote.id)
+                    .collection("words").document(word.id)
                     .delete()
-                
-                await marketNotesWillFetchDB()
             }
             
         } catch {
             print("marketNotesWillDeleteDB error")
+        }
+        
+        do {
+            // 하위 컬렉션 전부 삭제 후 해당 암기장 데이터 삭제
+            try? await database
+                .collection("marketWordNotes").document(marketWordNote.id)
+                .delete()
+            
+            await marketNotesWillFetchDB()
         }
     }
     
@@ -378,32 +379,36 @@ class MarketStore: ObservableObject {
                 .collection("myWordNotes").whereField("enrollmentUser", isEqualTo: currentUserUID).getDocuments()
             
             for document in documents.documents {
-                let docData = document.data()
+                let wordDoc = try await database.collection("users").document(currentUserUID)
+                    .collection("myWordNotes").document(document.documentID)
+                    .collection("words").getDocuments()
                 
-                let id: String = docData["id"] as? String ?? ""
-                let noteName: String = docData["noteName"] as? String ?? ""
-                let noteCategory: String = docData["noteCategory"] as? String ?? ""
-                let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
-                let repeatCount: Int = docData["noteName"] as? Int ?? 0
-                let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0
-                let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
-                let updateDate: Date = docData["updateDate"] as? Date ?? Date()
-                
-                let myWordNote = MyWordNote(id: id,
-                                            noteName: noteName,
-                                            noteCategory: noteCategory,
-                                            enrollmentUser: enrollmentUser,
-                                            repeatCount: repeatCount,
-                                            firstTestResult: firstTestResult,
-                                            lastTestResult: lastTestResult,
-                                            updateDate: updateDate)
-                
-                await MainActor.run(body: {
-                    self.filterMyWordNotes.append(myWordNote)
-                })
+                if wordDoc.count > 19 {
+                    let docData = document.data()
+                    
+                    let id: String = docData["id"] as? String ?? ""
+                    let noteName: String = docData["noteName"] as? String ?? ""
+                    let noteCategory: String = docData["noteCategory"] as? String ?? ""
+                    let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
+                    let repeatCount: Int = docData["noteName"] as? Int ?? 0
+                    let firstTestResult: Double = docData["firstTestResult"] as? Double ?? 0
+                    let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
+                    let updateDate: Date = docData["updateDate"] as? Date ?? Date()
+                    
+                    let myWordNote = MyWordNote(id: id,
+                                                noteName: noteName,
+                                                noteCategory: noteCategory,
+                                                enrollmentUser: enrollmentUser,
+                                                repeatCount: repeatCount,
+                                                firstTestResult: firstTestResult,
+                                                lastTestResult: lastTestResult,
+                                                updateDate: updateDate)
+                    
+                    await MainActor.run(body: {
+                        self.filterMyWordNotes.append(myWordNote)
+                    })
+                }
             }
-            
-            
         } catch {
             print("filterMyNoteWillFetchDB Function Error: \(error)")
         }

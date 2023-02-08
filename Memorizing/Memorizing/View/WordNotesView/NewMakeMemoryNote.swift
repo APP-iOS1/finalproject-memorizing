@@ -228,10 +228,7 @@ struct NewMakeMemoryNote: View {
                                           lastTestResult: 0,
                                           updateDate: Date())
                     
-                    Task {
-                        await marketStore.filterMyNoteWillFetchDB()
-                        isToastToggle = true
-                    }
+                    isToastToggle = true
                     
                     isShowingNewMemorySheet = false
                 } label: {

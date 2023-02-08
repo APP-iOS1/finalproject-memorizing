@@ -330,7 +330,6 @@ struct MarketViewSheet: View {
                             Task {
                                 await authStore.userInfoWillFetchDB()
                                 await marketStore.myNotesArrayWillFetchDB()
-                                await marketStore.filterMyNoteWillFetchDB()
                                 isToastToggle = true
                             }
                         }

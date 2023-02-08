@@ -40,9 +40,7 @@ class CoreDataStore: ObservableObject {
     let manager = CoreDataManager.instance
     let database = Firestore.firestore()
     @Published var notes: [NoteEntity] = []
-    
-    // WordEntity 내부의 id를 받아올 수 있도록 선언하려고 함
-    @Published var words: [WordEntity] = []
+    @Published var myWordNotes : [MyWordNote] = []
     
     init() {
         getNotes()
@@ -110,9 +108,10 @@ class CoreDataStore: ObservableObject {
             newWord.wordString = word.wordString
             
             returnedNote.addToWords(newWord)
+            
         }
-        
         save()
+        
     }
     
     func returnNote(id: String,
@@ -132,7 +131,7 @@ class CoreDataStore: ObservableObject {
         newNote.firstTestResult = firstTestResult
         newNote.lastTestResult = lastTestResult
         newNote.updateDate = updateDate
-        
+        save()
         return newNote
     }
     
@@ -174,15 +173,17 @@ class CoreDataStore: ObservableObject {
         getNotes()
     }
     
-    func syncronizeWithDB() async {
+    func syncronizeNotes() async {
         guard let currentUser = Auth.auth().currentUser else { return print("return no current user")}
         // note fetch
         do {
+            await MainActor.run {
+                self.myWordNotes.removeAll()
+            }
             let snapshots = try await database.collection("users")
                 .document(currentUser.uid)
                 .collection("myWordNotes")
                 .getDocuments()
-            
             for document in snapshots.documents {
                 let docData = document.data()
                 let id: String = docData["id"] as? String ?? ""
@@ -194,7 +195,9 @@ class CoreDataStore: ObservableObject {
                 let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0.0
                 let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                 let updateDate: Date = createdAtTimeStamp.dateValue()
-                
+                if id == "" {
+                    continue
+                }
                 let note: MyWordNote = MyWordNote(id: id,
                                                   noteName: noteName,
                                                   noteCategory: noteCategory,
@@ -203,43 +206,59 @@ class CoreDataStore: ObservableObject {
                                                   firstTestResult: firstTestResult,
                                                   lastTestResult: lastTestResult,
                                                   updateDate: updateDate)
-                do {
-                    let snapshot = try await self.database.collection("users").document(currentUser.uid)
-                        .collection("myWordNotes")
-                        .document(id)
-                        .collection("words")
-                        .getDocuments()
-                    var words: [Word] = []
-                    
-                    for document in snapshot.documents {
-                        let docData = document.data()
-                        let id: String = docData["id"] as? String ?? ""
-                        let wordString: String = docData["wordString"] as? String ?? ""
-                        let wordMeaning: String = docData["wordMeaning"] as? String ?? ""
-                        let wordLevel: Int = docData["wordLevel"] as? Int ?? 0
-                        
-                        let word = Word(id: id,
-                                        wordString: wordString,
-                                        wordMeaning: wordMeaning,
-                                        wordLevel: wordLevel)
-                        
-                        words.append(word)
-                    }
-                    self.addNoteAndWord(note: note,
-                                        words: words,
-                                        note.repeatCount,
-                                        firstTestResult: firstTestResult,
-                                        lastTestResult: lastTestResult)
-                } catch {
-                    print("fetch words in syncronizeWithDB error occured")
+                await MainActor.run {
+                    self.myWordNotes.append(note)
                 }
+                
             }
-            
         } catch {
                 print("syncronizeWithDB error occured")
             }
+    }
+    
+    func syncronizeWords(id: String) async -> [Word] {
+        guard let currentUser = Auth.auth().currentUser else { return [] }
+       
+            do {
+                let snapshot = try await self.database.collection("users").document(currentUser.uid)
+                    .collection("myWordNotes")
+                    .document(id)
+                    .collection("words")
+                    .getDocuments()
+                
+                var words: [Word] = []
+                for document in snapshot.documents {
+                    
+                    let docData = document.data()
+                    let id: String = docData["id"] as? String ?? ""
+                    let wordString: String = docData["wordString"] as? String ?? ""
+                    let wordMeaning: String = docData["wordMeaning"] as? String ?? ""
+                    let wordLevel: Int = docData["wordLevel"] as? Int ?? 0
+
+                    let word = Word(id: id,
+                                    wordString: wordString,
+                                    wordMeaning: wordMeaning,
+                                    wordLevel: wordLevel)
+                    words.append(word)
+    
+                }
+                return words
+                
+            } catch {
+                print("fetch words in syncronizeWithDB error occured")
+                return []
+            }
         
     }
+    
+    func saveNotesInCoreData() async {
+        
+        for note in myWordNotes {
+            let words = await self.syncronizeWords(id: note.id)
+            addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult)
+        }
+    }
+    
     func updateWordLevel(word: WordEntity, level: Int64) {
         word.wordLevel = level
         
