@@ -256,9 +256,9 @@ struct MarketView: View {
                 await marketStore.marketNotesWillFetchDB()
             }
         }
-//        .onAppear {
-//            marketStore.fetchMarketWordNotes()
-//        }
+        .onAppear {
+            UIApplication.shared.hideKeyboard()
+        }
     }
 }
 
