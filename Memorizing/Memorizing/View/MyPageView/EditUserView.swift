@@ -10,107 +10,18 @@ import Combine
 
 struct EditUserView: View {
     @EnvironmentObject var authStore: AuthStore
-    //    @Environment(\.dismiss) private var dismiss
-    //    @Binding var isShownNickNameToggle: Bool
     @State private var nickName: String = ""
     @State private var isShownDeleteAccountAlert: Bool = false
     @State private var isShownSignOutAlert: Bool = false
+    @State private var isShownToastMessage: Bool = false
+    
+    let maximumCount: Int = 5
+    
+    private var isOverCount: Bool {
+        nickName.count > maximumCount
+    }
     
     var body: some View {
-        /*
-         VStack {
-         ZStack(alignment: .topLeading) {
-         VStack {
-         // MARK: - 상단 로고 및 뷰 이름
-         
-         HStack {
-         
-         Button {
-         dismiss()
-         } label: {
-         Image(systemName: "xmark")
-         .foregroundColor(.black)
-         } // 닫기
-         .frame(width: 60)
-         
-         Spacer()
-         
-         Text("회원 정보 변경")
-         .font(.headline)
-         
-         Spacer()
-         
-         Button {
-         isShownAlertToggle.toggle()
-         } label: {
-         Text("변경하기")
-         .foregroundColor(.mainBlue)
-         .font(.body)
-         }
-         .frame(width: 60)
-         .alert(
-         "닉네임 변경",
-         isPresented: $isShownAlertToggle
-         ) {
-         HStack {
-         Button {
-         Task {
-         try await authStore.userInfoDidChangeDB(nickName: nickName)
-         isShownNickNameToggle.toggle()
-         }
-         }label: {
-         Text("변경")
-         .foregroundColor(.accentColor)
-         }
-         Spacer()
-         Button {
-         
-         }label: {
-         Text("닫기")
-         .foregroundColor(.black)
-         }
-         }
-         } message: {
-         Text("정말 변경하시겠습니까?")
-         }
-         }
-         .padding(.horizontal, 20)
-         
-         // MARK: - 유저 정보
-         VStack(alignment: .leading) {
-         
-         VStack(alignment: .leading, spacing: 2) {
-         Text("현재 닉네임: \(authStore.user?.nickName ?? "홍길동")")
-         .font(.headline)
-         .fontWeight(.semibold)
-         }
-         .padding(.top, 23)
-         
-         VStack(alignment: .leading, spacing: 2) {
-         // MARK: 닉네임
-         TextField(text: $nickName) {
-         Text("변경할 닉네임을 입력해 주세요(최대 6자)")
-         .foregroundColor(Color("Gray2"))
-         .font(.subheadline)
-         }
-         .autocapitalization(.none)
-         .textFieldStyle(CustomTextField())
-         .modifier(ClearButton(text: $nickName))
-         .onReceive(Just(nickName)) { _ in limitText(6) }
-         
-         }
-         .padding(.vertical, 20)
-         
-         } // 유저정보
-         
-         Spacer()
-         
-         } .padding(.top, 20)
-         } // VStack
-         
-         }
-         */
-        
         VStack(spacing: 30) {
             // MARK: 닉네임 변경 파트
             VStack(alignment: .leading) {
@@ -119,16 +30,23 @@ struct EditUserView: View {
                 
                 HStack{
                     VStack{
-                        TextField(text: $nickName) {
-                            Text("이름을 입력해주세요.(최대 5자까지 가능)")
-                                .font(.subheadline)
-                        }
+                        TextField("이름을 입력해주세요.(최대 5자까지 가능)", text: $nickName)
+                            .font(.subheadline)
+                            .shakeEffect(trigger: isOverCount)
+                            .onChange(of: nickName) { newValue in
+                                if newValue.count > maximumCount {
+                                    nickName = String(newValue.prefix(maximumCount))
+                                }
+                            }
+                        
                         Divider()
                             .overlay(Color.black)
                     }
                     Button {
                         Task {
-                            try await authStore.userInfoDidChangeDB(nickName: nickName)
+                            // 이름변경에 성공시 ToastMessage 출력
+                            isShownToastMessage
+                                = try await authStore.userInfoDidChangeDB(nickName: nickName)
                         }
                     } label: {
                         Text("변경하기")
@@ -145,42 +63,6 @@ struct EditUserView: View {
             }
             .padding(.top, 40)
             .padding(.horizontal, 20)
-            
-            /*
-            // MARK: 비밀번호 변경 파트, securefield로 할지 그냥 textfield로 할지 고민 중
-            VStack(alignment: .leading) {
-                Text("비밀번호 변경")
-                
-                HStack {
-                    TextField(text: $nickName) {
-                        Text("변경할 비밀번호")
-                    }
-                    .padding(.vertical, 13)
-                    .padding(.horizontal, 25)
-                    .background(Color("Gray5"))
-                    .cornerRadius(30)
-                    .disableAutocorrection(true)
-                    .textInputAutocapitalization(.never)
-                    .foregroundColor(Color("Black"))
-                    
-                    Spacer()
-                    
-                    Button {
-                        
-                    } label: {
-                        Text("변경하기")
-                            .foregroundColor(.white)
-                            .bold()
-                            .padding(.vertical, 13)
-                            .padding(.horizontal, 20)
-                            .background {
-                                Color.mainDarkBlue
-                            }
-                            .cornerRadius(40)
-                    }
-                }
-            }
-             */
             
             Divider()
                 .padding(.horizontal, 10)
@@ -208,23 +90,15 @@ struct EditUserView: View {
                      message: "정말 가실거에요?\n삭제된 회원정보는 복구할 수 없어요!",
                      primaryButtonTitle: "탈퇴하기",
                      primaryAction: {
-            Task {
-                await authStore.deleteAccount()
-            }
-        },
+                        Task {
+                            await authStore.deleteAccount()
+                        }},
                      withCancelButton: true,
                      cancelButtonText: "취소")
+        .customToastMessage(isPresented: $isShownToastMessage,
+                            message: "이름이 변경이 완료되었습니다!")
         
     }// ZStack
-    
-    // MARK: - 닉네임 글자수 제한 함수
-    func limitText(_ upper: Int) {
-        // upper: 제한 글자 수
-        if nickName.count > upper {
-            nickName = String(nickName.prefix(upper))
-        }
-    }
-    
 }
 
 struct EditUserView_Previews: PreviewProvider {

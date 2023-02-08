@@ -40,6 +40,7 @@
 		484D657829669CDE00C56E87 /* MarketViewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657729669CDE00C56E87 /* MarketViewSheet.swift */; };
 		484D657A29669E6600C56E87 /* MarketViewAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657929669E6600C56E87 /* MarketViewAddButton.swift */; };
 		484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657E296733F900C56E87 /* FaceProgressView.swift */; };
+		488E7030299351CF008CA0D5 /* ShakeEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */; };
 		488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA22967E802007EAAC1 /* FirstView.swift */; };
 		488F0AA62967E8A1007EAAC1 /* OnBoardingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */; };
 		488F0AA82967E8AB007EAAC1 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */; };
@@ -126,6 +127,7 @@
 		484D657729669CDE00C56E87 /* MarketViewSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheet.swift; sourceTree = "<group>"; };
 		484D657929669E6600C56E87 /* MarketViewAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewAddButton.swift; sourceTree = "<group>"; };
 		484D657E296733F900C56E87 /* FaceProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceProgressView.swift; sourceTree = "<group>"; };
+		488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffectModifier.swift; sourceTree = "<group>"; };
 		488F0AA22967E802007EAAC1 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		488F0AA52967E8A1007EAAC1 /* OnBoardingTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingTabView.swift; sourceTree = "<group>"; };
 		488F0AA72967E8AB007EAAC1 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				48238A8C298D1A25000E1709 /* CustomAlert.swift */,
 				48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */,
 				48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */,
+				488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				66BD007B298A3E3E0001BA9B /* FirstLoginView.swift in Sources */,
 				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */,
+				488E7030299351CF008CA0D5 /* ShakeEffectModifier.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
 				48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */,
 				F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */,

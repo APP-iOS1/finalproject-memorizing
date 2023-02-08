@@ -63,7 +63,9 @@ struct MarketView: View {
             HStack(spacing: 10) {
                 Spacer()
                 
-                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .starScoreTotal, sortTitle: "평점순")
+                MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                 categoryState: .starScoreTotal,
+                                 sortTitle: "평점순")
                     .onTapGesture {
                         if self.selectedSortCategory == .starScoreTotal {
                             self.selectedSortCategory = .nomalSort
@@ -72,7 +74,9 @@ struct MarketView: View {
                         }
                     }
 
-                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .reviewCount, sortTitle: "리뷰순")
+                MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                 categoryState: .reviewCount,
+                                 sortTitle: "리뷰순")
                     .onTapGesture {
                         if self.selectedSortCategory == .reviewCount {
                             self.selectedSortCategory = .nomalSort
@@ -81,7 +85,9 @@ struct MarketView: View {
                         }
                     }
 
-                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .salesCount, sortTitle: "판매순")
+                MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                 categoryState: .salesCount,
+                                 sortTitle: "판매순")
                     .onTapGesture {
                         if self.selectedSortCategory == .salesCount {
                             self.selectedSortCategory = .nomalSort
@@ -90,7 +96,9 @@ struct MarketView: View {
                         }
                     }
                 
-                MarketSortButton(selectedSortCategory: selectedSortCategory, categoryState: .recentUpdate, sortTitle: "최신순")
+                MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                 categoryState: .recentUpdate,
+                                 sortTitle: "최신순")
                     .onTapGesture {
                         if self.selectedSortCategory == .recentUpdate {
                             self.selectedSortCategory = .nomalSort
