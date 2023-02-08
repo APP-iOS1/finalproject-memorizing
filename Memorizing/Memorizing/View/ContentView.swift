@@ -45,7 +45,9 @@ struct ContentView: View {
             } else {
                 // CoreData 서버에서 페치해오기
                 Task {
-                    await coreDataStore.syncronizeWithDB()
+                    print("login")
+                    await coreDataStore.syncronizeNotes()
+                    await coreDataStore.saveNotesInCoreData()
                     coreDataStore.getNotes()
                 }
             }

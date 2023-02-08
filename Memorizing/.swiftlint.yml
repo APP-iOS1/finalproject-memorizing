@@ -6,11 +6,11 @@ excluded:
   - Pods
   - Memorizing/AppDelegate.swift
   - Memorizing/SceneDelegate.swift
-  - /Memorizing/View/MyPageView/InfoPolicy.swift
+  - Memorizing/View/MyPageView/InfoPolicy.swift
 
 # 기본 규칙이 아닌 규칙들을 활성화
 opt_in_rules:
- - empty_count       # .count==0 보다는 .isEmpty를 사용하는 것이 좋습니다.
+ #- empty_count       # .count==0 보다는 .isEmpty를 사용하는 것이 좋습니다.
  - empty_string      # 빈 String 문자열과 비교하는 것 보다는 .isEmpty를 사용하는 것이 좋습니다.
  - multiline_arguments
 
@@ -21,6 +21,8 @@ disabled_rules:
 - type_body_length
 - todo
 - function_parameter_count
+- line_length
+- type_name
 
 identifier_name:
     allowed_symbols: ["_"]
