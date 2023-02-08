@@ -16,7 +16,6 @@ struct MyPageView: View {
     @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var marketStore: MarketStore
     @State private var signOutAlertToggle: Bool = false
-//    @State private var isShownNickNameToggle: Bool = false
     @State private var isShowingWeb: Bool = false
     @State private var isShowingKakaoTalk: Bool = false
     
@@ -121,28 +120,6 @@ struct MyPageView: View {
                         .isDetailLink(false)
                     }
 
-//                    VStack {
-//                        Divider()
-//                        
-//                        NavigationLink {
-//                            // 파라미터 추가
-//                            MyReviewView(wordNote: marketStore.sendWordNote)
-//                        } label: {
-//                            HStack {
-//                                Text("내가 작성한 리뷰")
-//                                    .font(.subheadline)
-//                                    .fontWeight(.medium)
-//                                Spacer()
-//                                Image(systemName: "chevron.right")
-//                                    .font(.body)
-//                                    .fontWeight(.light)
-//                            } // 문의하기
-//                            .padding(.horizontal, 8)
-//                            .padding(.vertical, 12)
-//                            .foregroundColor(.mainBlack)
-//                        }
-//                    }
-                    
                     VStack {
                         Divider()
                         
@@ -173,8 +150,6 @@ struct MyPageView: View {
                         
                         Button {
                             isShowingKakaoTalk.toggle()
-//                            let kakaoPlusFriendsURL = URL(string: "https://pf.kakao.com/_hZrWxj/chat")!
-//                            UIApplication.shared.open(kakaoPlusFriendsURL)
                         } label: {
                             HStack {
                                 Text("1:1 문의하기")
@@ -289,8 +264,6 @@ struct MyPageView: View {
             let safariViewController: SFSafariViewController = SFSafariViewController(url: TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hZrWxj")!)            
             safariViewController.modalTransitionStyle = .crossDissolve
             safariViewController.modalPresentationStyle = .overCurrentContext
-            
-          //  safariViewController.present(safariViewController, animated: true)
             return safariViewController
 
         }

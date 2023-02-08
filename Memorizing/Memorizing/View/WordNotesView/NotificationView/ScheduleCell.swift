@@ -34,7 +34,6 @@ struct ScheduleCell: View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .foregroundColor(.mainBlue)
-                   // .padding(.leading, 10)
                 
                 VStack(alignment: .leading) {
                     Text("\(wordNote?.noteName ?? "NoteName")")

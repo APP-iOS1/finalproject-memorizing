@@ -32,7 +32,6 @@ struct CheckRightForm: ViewModifier {
             .frame(width: 250, alignment: .leading)
             .multilineTextAlignment(.leading)
             .padding(.top, 5)
-//            .padding(.bottom, 15)
             .foregroundColor(Color(correctFormToSignup))
             .font(.caption)
     }

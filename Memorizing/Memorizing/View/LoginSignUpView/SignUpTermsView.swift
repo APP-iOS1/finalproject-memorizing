@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SignUpTermsView: View {
     @Environment(\.dismiss) private var dismiss
-    // @Binding var termsAgreed: Bool
     
     var body: some View {
         VStack {
@@ -61,8 +60,6 @@ struct SignUpTermsView: View {
             }
             
             Button {
-                // MARK: signUpView의 termsAgreed .toggle()
-                // termsAgreed.toggle()
                 dismiss()
             } label: {
                 Text("닫기")

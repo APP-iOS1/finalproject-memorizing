@@ -17,8 +17,6 @@ struct WordNotesView: View {
     @State private var isToastToggle: Bool = false
     @State private var isShowingNewMemorySheet: Bool = false
     @Namespace var namespace
-    // @State private var isShownNotification: Bool = false
-    //    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     
     var body: some View {
@@ -81,27 +79,15 @@ struct WordNotesView: View {
                             .shadow(radius: 1, x: 1, y: 1)
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
-                    // .position(x: UIScreen.main.bounds.width * 0.86, y: UIScreen.main.bounds.height * 0.58)
                     .sheet(isPresented: $isShowingNewMemorySheet) {
                         NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet,
                                           isToastToggle: $isToastToggle)
                     }
                 }
             }
-            //            if(onboard.showOnboardScreen) {
-            //                ProgressiveOnboardView.init(withProgressiveOnboard: self.onboard)
-            //            }
         }
         .customToastMessage(isPresented: $isToastToggle,
                             message: "새로운 암기장 등록완료!")
-        //        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        //        .coordinateSpace(name: "OnboardSpace")
-        //        .onAppear() {
-        //            // Start onboard on appear
-        //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { /// Delay for the UI did load
-        //                self.onboard.showOnboardScreen = true
-        //            }
-        //        }
     }
 }
 

@@ -8,7 +8,6 @@
 import SwiftUI
 import AuthenticationServices
 
-// Implementation courtesy of https://stackoverflow.com/a/56852456/281221
 struct SignInWithAppleButton: View {
   @Environment(\.colorScheme) var colorScheme: ColorScheme // (1)
   

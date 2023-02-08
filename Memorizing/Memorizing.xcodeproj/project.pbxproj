@@ -30,7 +30,6 @@
 		3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDC1496297A5EC700AE186F /* EditListView.swift */; };
 		3FDCCA87298A5877005E7C4E /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDCCA86298A5877005E7C4E /* MyReviewView.swift */; };
 		3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E32966628C00A47C5A /* AddWordView.swift */; };
-		3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */; };
 		48238A8D298D1A25000E1709 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48238A8C298D1A25000E1709 /* CustomAlert.swift */; };
 		48238A8F298D1A2D000E1709 /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48238A8E298D1A2D000E1709 /* CustomAlertModifier.swift */; };
 		4847EEB2298A3DD800C34274 /* MarketTradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EEB1298A3DD700C34274 /* MarketTradeListView.swift */; };
@@ -189,7 +188,6 @@
 				3F7DA3002987A8A3001EDFC8 /* FirebaseMessaging in Frameworks */,
 				66982A132977A7660052269D /* GoogleSignIn in Frameworks */,
 				66982A152977A7660052269D /* GoogleSignInSwift in Frameworks */,
-				3FF9B3EB2966ECA400A47C5A /* SwiftUIProgressiveOnboard in Frameworks */,
 				3F7DA2FE2987A8A3001EDFC8 /* FirebaseFirestore in Frameworks */,
 				3F7DA2FA2987A8A3001EDFC8 /* FirebaseAuth in Frameworks */,
 				3F7DA3022987A8A3001EDFC8 /* FirebaseStorage in Frameworks */,
@@ -442,7 +440,6 @@
 			);
 			name = Memorizing;
 			packageProductDependencies = (
-				3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */,
 				66982A122977A7660052269D /* GoogleSignIn */,
 				66982A142977A7660052269D /* GoogleSignInSwift */,
 				66982A182977B9BD0052269D /* KakaoSDKAuth */,
@@ -484,7 +481,6 @@
 			);
 			mainGroup = 52D8F2312965F2C600755E5A;
 			packageReferences = (
-				3FF9B3E92966ECA400A47C5A /* XCRemoteSwiftPackageReference "SwiftUIProgressiveOnboard" */,
 				66982A112977A7660052269D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				66982A172977B9BD0052269D /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				3F7DA2F82987A8A2001EDFC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
@@ -777,9 +773,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codelion.Memorizing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -813,9 +812,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codelion.Memorizing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -849,14 +851,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 9.0.0;
-			};
-		};
-		3FF9B3E92966ECA400A47C5A /* XCRemoteSwiftPackageReference "SwiftUIProgressiveOnboard" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/muhammedtanriverdi/SwiftUIProgressiveOnboard.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
 			};
 		};
 		66982A112977A7660052269D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
@@ -902,11 +896,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F7DA2F82987A8A2001EDFC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
-		};
-		3FF9B3EA2966ECA400A47C5A /* SwiftUIProgressiveOnboard */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3FF9B3E92966ECA400A47C5A /* XCRemoteSwiftPackageReference "SwiftUIProgressiveOnboard" */;
-			productName = SwiftUIProgressiveOnboard;
 		};
 		6660EEBE2991D91700D8B72A /* KakaoSDKTalk */ = {
 			isa = XCSwiftPackageProductDependency;

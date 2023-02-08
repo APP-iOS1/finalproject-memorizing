@@ -8,38 +8,10 @@
 import SwiftUI
 import Combine
 
-// struct ClearButton: ViewModifier
-// {
-//    @Binding var text: String
-//
-//    public func body(content: Content) -> some View
-//    {
-//        ZStack(alignment: .trailing)
-//        {
-//            content
-//
-//            if !text.isEmpty
-//            {
-//                Button(action:
-//                {
-//                    self.text = ""
-//                })
-//                {
-//                    Image(systemName: "delete.left")
-//                        .foregroundColor(Color(UIColor.opaqueSeparator))
-//                        .padding(.trailing, 7)
-//                }
-//                .padding(.trailing, 8)
-//            }
-//        }
-//    }
-// }
-
 struct SignUpView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
     @State private var nickName: String = ""
-//    @State private var nickNameOldValue: String = ""
     @State private var signUpEmail: String = ""
     @State private var signUpPassWord: String = ""
     @State private var signUpPassWordCheck: String = ""
@@ -68,18 +40,6 @@ struct SignUpView: View {
                     
                     Spacer()
                         .frame(height: 25)
-//                        .frame(height: nickName.count == 0 ? 0 : 10)
-                    
-//                    if 0 < nickName.count && nickName.count < 7 {
-//                        Text("올바른 형식의 닉네임입니다")
-//                            .modifier(CheckRightForm(textColor: "MainBlue"))
-//                    } else if nickName.count == 0 {
-//                        Text("")
-//                    } else {
-//                        Text("닉네임은 최대 6자입니다")
-//                            .modifier(CheckRightForm(textColor: "Red"))
-//                    }
-                    
                 }
                 
                 // MARK: 이메일
@@ -102,10 +62,7 @@ struct SignUpView: View {
                     }
                     .textFieldStyle(CustomTextField())
                     .modifier(ClearButton(text: $signUpPassWord))
-                    
-//                    Spacer()
-//                        .frame(height: 5)
-                    
+                  
                     if signUpPassWord.count < 6 && !signUpPassWord.isEmpty {
                         Text("6자리 이상 비밀번호를 입력해주세요")
                             .modifier(CheckRightForm(correctFormToSignup: "Red"))
@@ -115,7 +72,6 @@ struct SignUpView: View {
                         
                     }
                 }// VStack
-//                .frame(height: 20)
                 
                 // MARK: 비밀번호 확인
                 VStack {
@@ -126,8 +82,6 @@ struct SignUpView: View {
                     }
                     .textFieldStyle(CustomTextField())
                     .modifier(ClearButton(text: $signUpPassWordCheck))
-                    
-//                    Spacer()
                     
                     // 1차 비밀번호 텍스트란에 내용이 있고, 2차 비밀번호 텍스트란에도 내용이 있는데, 1차와 2차가 같지 않은 경우
                     if signUpPassWord

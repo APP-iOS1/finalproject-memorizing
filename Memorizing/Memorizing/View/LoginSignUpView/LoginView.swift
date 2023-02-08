@@ -16,8 +16,6 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-//                LinearGradient(gradient: Gradient(colors: [Color("MainBlue"), Color("MainDarkBlue")]), startPoint: .top, endPoint: .bottom)
-//                    .ignoresSafeArea()
                 Color("LoginViewBackgroundColor")
                 
                 VStack(spacing: 35) {
@@ -55,12 +53,6 @@ struct LoginView: View {
                                 .frame(width: UIScreen.main.bounds.width * 0.6)
                                 .modifier(CustomButtonStyle(backgroundColor: "KakaoYellow"))
                             }
-                            // MARK: 카카오 로그아웃
-//                            Button {
-//                                authStore.signOutDidKakao()
-//                            } label: {
-//                                Text("Logout")
-//                            }
                         }
                         
                         // MARK: 애플 로그인

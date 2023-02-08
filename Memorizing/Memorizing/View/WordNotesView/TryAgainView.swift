@@ -78,9 +78,3 @@ struct TryAgainView: View {
         }
     }
 }
-
-// struct TryAgainView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TryAgainView()
-//    }
-// }

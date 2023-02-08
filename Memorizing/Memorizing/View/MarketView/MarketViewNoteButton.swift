@@ -51,7 +51,6 @@ struct MarketViewNoteButton: View {
                                                 .fontWeight(.bold)
                                                 .foregroundColor(selectedWordNote.noteColor)
                                         }
-//                                        .padding(.top, 1)
                                     
                                     Spacer()
                                 }

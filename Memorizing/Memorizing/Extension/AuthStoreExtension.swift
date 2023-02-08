@@ -95,8 +95,6 @@ extension AuthStore: ASAuthorizationControllerDelegate {
                         signInPlatform: User.Platform.apple.rawValue
                     )
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-//                    await self.userInfoWillFetchDB()
-              //      self.state = .signedIn
                 } catch let error as NSError {
                     self.errorMessage = error.localizedDescription
                     print("Apple SignIn Error: ", self.errorMessage)

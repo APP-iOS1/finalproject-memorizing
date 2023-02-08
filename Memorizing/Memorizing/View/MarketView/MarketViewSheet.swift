@@ -146,36 +146,6 @@ struct MarketViewSheet: View {
                             }
                             .padding(.bottom, -20)
                     })
-                    
-//                    .alert(isPresented: $isAlertToggle) {
-//                        if isCoinCheckToggle {
-//                            return Alert(title: Text("구매하기"),
-//                                         message: Text("\(wordNote.noteName)을(를) 구매하시겠습니까?"),
-//                                         primaryButton: .destructive(Text("구매하기"),
-//                                                                     action: {
-//                                marketStore.userCoinWillCheckDB(marketWordNote: wordNote,
-//                                                                words: marketStore.words,
-//                                                                userCoin: authStore.user?.coin ?? 0)
-//
-//                                // 코데로 구매한 노트와 워드들이 추가됨.
-//                                coreDataStore.addNoteAndWord(note: wordNote, words: marketStore.words)
-//                                coreDataStore.getNotes()
-//
-//                                dismiss()
-//
-//                                Task {
-//                                    await authStore.userInfoWillFetchDB()
-//                                    await marketStore.myNotesArrayWillFetchDB()
-//                                    await marketStore.filterMyNoteWillFetchDB()
-//                                }
-//                            }),
-//                                         secondaryButton: .cancel(Text("취소")))
-//                        } else {
-//                            return Alert(title: Text("포인트 부족"),
-//                                         message: Text("포인트가 부족합니다"),
-//                                         dismissButton: .default(Text("닫기")))
-//                        }
-//                    }
                 }
                 
                 // MARK: - 암기장 리뷰
@@ -341,10 +311,3 @@ struct MarketViewSheet: View {
         
     }
 }
-
-// struct MarketViewSheet_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MarketViewSheet()
-//            .environmentObject(MarketStore())
-//    }
-// }

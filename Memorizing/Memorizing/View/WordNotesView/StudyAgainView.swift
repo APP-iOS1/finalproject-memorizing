@@ -23,7 +23,6 @@ struct StudyAgainView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.gray4, lineWidth: 1)
                     .foregroundColor(.white)
-                    // .frame(height: 140)
                     .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.15)
                     .overlay {
                         HStack {
@@ -69,7 +68,6 @@ struct StudyAgainView: View {
                                 FaceProgressView(myWordNote: myWordNote)
                                     .padding(.leading, -5)
                             }
-//                            .padding(.trailing, 15)
                         }
                     }
                     .overlay {
@@ -178,10 +176,3 @@ struct StudyAgainView: View {
         }
     }
 }
-
-//
-// struct StudyAgainView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StudyAgainView()
-//    }
-// }

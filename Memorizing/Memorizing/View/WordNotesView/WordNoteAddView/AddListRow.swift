@@ -92,10 +92,3 @@ struct AddListRow: View {
         
     }
 }
-
-// struct AddListRow_Previews: PreviewProvider {
-//    static let word = Word(id: "장범준", wordString: "맥북", wordMeaning: "우리의 밥줄", wordLevel: 0)
-//    static var previews: some View {
-//        AddListRow(word: word)
-//    }
-// }

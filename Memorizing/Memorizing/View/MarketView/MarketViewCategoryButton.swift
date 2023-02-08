@@ -19,8 +19,6 @@ struct MarketViewCategoryButton: View {
                     
                     RoundedRectangle(cornerRadius: 15)
                         .stroke(selectedCategory == category ? MarketView.colorArray[index] : Color.gray4)
-                    // FIXME: 왜 타입추론 에러가...?
-                    //                    .backgroundStyle(selectedCategory == category ? MarketView.colorArray[index] : Color.white)
                         .frame(width: 50, height: 30)
                         .overlay {
                             Button {

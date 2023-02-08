@@ -44,7 +44,6 @@ class AuthStore: UIViewController, ObservableObject {
                 coin: 0,
                 signInPlatform: User.Platform.google.rawValue
             )
-//            await self.userInfoWillFetchDB()
         }
     }
     
@@ -64,14 +63,11 @@ class AuthStore: UIViewController, ObservableObject {
                 )
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-                //   self.state = .signedIn
-                
             }
-//            await self.userInfoWillFetchDB()
         } catch {
             errorMessage = "로그인 정보가 맞지 않습니다."
             print("Login fail: \(self.errorMessage)")
-            self.state = .signedOut     // 현기 추가
+            self.state = .signedOut
         }
         
     } // emailAuthSignIn
@@ -103,10 +99,7 @@ class AuthStore: UIViewController, ObservableObject {
                         signInPlatform: User.Platform.google.rawValue
                     )
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-//                    await userInfoWillFetchDB()
-                    //    self.state = .signedIn
                 }
-     //       }
         }
     }
     
@@ -123,7 +116,6 @@ class AuthStore: UIViewController, ObservableObject {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
         do {
             try await Auth.auth().signIn(with: credential)
-            //    self.state = .signedIn
         } catch let error as NSError {
             errorMessage = error.localizedDescription
             print("Error sign In:", errorMessage)
@@ -317,8 +309,6 @@ class AuthStore: UIViewController, ObservableObject {
             } else {
                 self.state = .firstIn
                 self.userInfoDidSaveDB(platform: self.user!.signInPlatform)
-                
-                
             }
         } catch {
             print("Fail: fetchUser")
@@ -367,10 +357,6 @@ class AuthStore: UIViewController, ObservableObject {
                 ])
             self.signOutDidAuth()
         } catch let error as NSError {
-            /*
-             error code: 17014
-             error description: This operation is sensitive and requires recent authentication. Log in again before retrying this request.
-             */
             print("탈퇴 에러코드: \(error._code)")
             switch error._code {
             case 17014:

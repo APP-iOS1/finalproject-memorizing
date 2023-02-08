@@ -30,7 +30,6 @@ struct LocalNotification {
     internal init(identifier: String,
                   title: String,
                   body: String,
-//                  timeInterval: Double? = nil,
                   dateComponets: DateComponents,
                   repeats: Bool) {
         self.identifier = identifier
@@ -58,7 +57,6 @@ struct LocalNotification {
     var dateComponets: DateComponents?
     
     // TODO: - 캘린더 타입의 store를 하나 생성해서, dateComponets에서 받아오는 데이터를 변환, 저장하도록 한다
-    
     var repeats: Bool
 }
 

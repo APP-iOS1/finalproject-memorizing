@@ -28,7 +28,6 @@ struct AddWordView: View {
     @State private var wordString: String = ""
     @State private var wordMeaning: String = ""
     @State private var wordLevel: Int = 0
-    //    @State private var showingAlert = false
     @State private var displayLists: Bool = false
     @Binding var isToastToggle: Bool
     
@@ -37,129 +36,10 @@ struct AddWordView: View {
     // MARK: - Navigation Stack 사용 안함
     var body: some View {
         VStack(alignment: .center) {
-            // MARK: - Section2 - 카테고리 세그먼트 피커
-//            Section {
-//                HStack {
-//                    Text("유형")
-//                        .font(.subheadline)
-//                        .fontWeight(.semibold)
-//                    Picker("", selection: $segmnetationSelection) {
-//                        ForEach(AddWordCategory.allCases, id: \.self) { option in
-//                            Text(option.rawValue)
-//                        }
-//                    }
-//                    .pickerStyle(SegmentedPickerStyle())
-//                    .backgroundStyle(Color.white)
-//                    .padding()
-//                }
-//                .padding()
-//            }
-//            Divider()
             // MARK: - Section3 - 단어 / 문장 / 질문과 답 입력하는 창
             Section {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading) {
-                        // MARK: - 1. 단어 암기장 만들기
-//                        if segmnetationSelection == .word {
-//                            VStack(alignment: .leading) {
-//                                VStack(alignment: .leading) {
-//                                    Text("단어")
-//                                        .font(.subheadline)
-//                                        .fontWeight(.semibold)
-//                                    TextField("단어를 입력해주세요", $wordString, axis: .vertical)
-//                                        .padding(10)
-//                                        .accentColor(.mainBlue)
-//                                        .lineLimit(3...5)
-//                                        .background(Color.gray6)
-//                                        .cornerRadius(20, corners: .allCorners)
-//                                        .fontWeight(.semibold)
-//                                        .font(.subheadline)
-//                                        .multilineTextAlignment(.leading)
-//                                }
-//                                VStack(alignment: .leading) {
-//                                    Text("뜻")
-//                                        .font(.subheadline)
-//                                        .fontWeight(.semibold)
-//                                        .foregroundColor(Color.mainBlack)
-//                                    TextField("뜻을 입력해주세요", $wordMeaning, axis: .vertical)
-//                                        .padding(10)
-//                                        .accentColor(.mainBlue)
-//                                        .lineLimit(3...5)
-//                                        .background(Color.gray6)
-//                                        .cornerRadius(20, corners: .allCorners)
-//                                        .fontWeight(.semibold)
-//                                        .font(.subheadline)
-//                                        .multilineTextAlignment(.leading)
-//                                }
-//                            }
-//                        }
-//                        // MARK: - 2. 문장 암기장 만들기
-//                        else if segmnetationSelection == .sentence {
-//                            VStack(alignment: .leading, spacing: 10) {
-//                                VStack(alignment: .leading) {
-//                                    Text("문장")
-//                                        .font(.subheadline)
-//                                        .fontWeight(.semibold)
-//                                    TextField("문장을 입력해주세요", $wordString, axis: .vertical)
-//                                        .padding(10)
-//                                        .accentColor(.mainBlue)
-//                                        .lineLimit(5...8)
-//                                        .background(Color.gray6)
-//                                        .cornerRadius(20, corners: .allCorners)
-//                                        .fontWeight(.semibold)
-//                                        .font(.subheadline)
-//                                        .multilineTextAlignment(.leading)
-//                                }
-//                                VStack(alignment: .leading) {
-//                                    Text("의미")
-//                                        .font(.subheadline)
-//                                        .fontWeight(.semibold)
-//                                    TextField("의미를 입력해주세요", $wordMeaning, axis: .vertical)
-//                                        .padding(10)
-//                                        .accentColor(.mainBlue)
-//                                        .lineLimit(6...9)
-//                                        .background(Color.gray6)
-//                                        .cornerRadius(20, corners: .allCorners)
-//                                        .fontWeight(.semibold)
-//                                        .font(.subheadline)
-//                                        .multilineTextAlignment(.leading)
-//                                }
-//                            }
-//                        }
-//                        // MARK: - 3. 질문답변 암기장 만들기
-//                        else {
-//                            VStack(alignment: .leading, spacing: 10) {
-//                                VStack(alignment: .leading) {
-//                                    Text("질문")
-//                                        .font(.subheadline)
-//                                        .fontWeight(.semibold)
-//                                    TextField("문장을 입력해주세요", $wordString, axis: .vertical)
-//                                        .padding(10)
-//                                        .accentColor(.mainBlue)
-//                                        .lineLimit(8...12)
-//                                        .background(Color.gray6)
-//                                        .cornerRadius(20, corners: .allCorners)
-//                                        .fontWeight(.semibold)
-//                                        .font(.subheadline)
-//                                        .multilineTextAlignment(.leading)
-//                                }
-//                                VStack(alignment: .leading) {
-//                                    Text("답변")
-//                                        .font(.subheadline)
-//                                        .fontWeight(.semibold)
-//                                    TextField("의미를 입력해주세요", $wordMeaning, axis: .vertical)
-//                                        .padding(10)
-//                                        .accentColor(.mainBlue)
-//                                        .lineLimit(8...12)
-//                                        .background(Color.gray6)
-//                                        .cornerRadius(20, corners: .allCorners)
-//                                        .fontWeight(.semibold)
-//                                        .font(.subheadline)
-//                                        .multilineTextAlignment(.leading)
-//                                }
-//                            }
-//                        }
-                        
                         // MARK: - 유형 제거. 일반 암기장 작성 양식
                         VStack(alignment: .leading, spacing: 20) {
                             HStack{
@@ -279,26 +159,8 @@ struct AddWordView: View {
                         .font(.subheadline)
                         .fontWeight(.regular)
                         .foregroundColor(.mainBlack)
-                    
                 }
-                
             }
-//
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//                Button {
-//                    myNoteStore.myWordsWillBeFetchedFromDB(wordNote: wordNote) {
-//                        self.noteLists = myNoteStore.myWords
-//                    }
-//                    dismiss()
-//                } label: {
-//                    Text("저장하기")
-//                        .font(.subheadline)
-//                        .fontWeight(.regular)
-//                        .foregroundColor(.mainBlack)
-//
-//                }
-//
-//            }
         }
         .customAlert(isPresented: $isWordCountCheckToggle,
                      title: "암기장 내용 초과",
@@ -317,15 +179,3 @@ enum AddWordCategory: String, CaseIterable {
     case sentence = "문장"
     case qustionAndAnswer = "질문과 답"
 }
-
-// struct AddWordView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            AddWordView(wordNote: NoteEntity(),
-//                        noteLists: .constant([Word(id: "",
-//                                                   wordString: "Hello",
-//                                                   wordMeaning: "안녕",
-//                                                   wordLevel: 0)]))
-//        }
-//    }
-// }

@@ -68,17 +68,6 @@ struct MarketTradeListView: View {
                 ForEach(myNoteStore.myWordNotes, id: \.id) { note in
                     if note.enrollmentUser != authStore.user?.id {
                         
-//                        let noteEntity: NoteEntity
-//                        = coreDataStore
-//                            .returnNote(id: note.id,
-//                                        noteName: note.noteName,
-//                                        enrollmentUser: note.enrollmentUser,
-//                                        noteCategory: note.noteCategory,
-//                                        repeatCount: note.repeatCount,
-//                                        firstTestResult: note.firstTestResult,
-//                                        lastTestResult: note.lastTestResult,
-//                                        updateDate: note.updateDate)
-                        
                         VStack {
                             HStack {
                                 Text("\(note.marketPurchaseDateFormatter ?? "날짜 정보 표시불가")")
@@ -100,16 +89,9 @@ struct MarketTradeListView: View {
                                 Spacer()
                                 
                                 if note.reviewDate == nil {
-                                    // FIXME: NavigationLink 넘어갈 때 앱 멈춰버려서 일단 막아둠
-//                                    NavigationLink {
-//                                        CreateReviewView(wordNote: noteEntity,
-//                                                         marketPurchaseDate: note.marketPurchaseDate)
-//                                    } label: {
                                         Text("후기 작성하고 ")
                                         + Text("10P ")
                                         + Text("받기!")
-//                                        Image(systemName: "chevron.right")
-//                                    }
                                 } else {
                                     Text("후기 작성 완료")
                                 }

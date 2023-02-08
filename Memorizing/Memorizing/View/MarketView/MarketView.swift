@@ -50,12 +50,6 @@ struct MarketView: View {
             MarketViewCategoryButton(selectedCategory: $selectedCategory,
                                      categoryArray: MarketView.categoryArray)
             
-            // MARK: - 검색창 하단 구분선
-            //        Divider()
-            //            .frame(height: 5)
-            //            .overlay(Color("Gray5"))
-            //            .padding(.top, -3)
-            
             // MARK: - 정렬기준 선택하기
             HStack(spacing: 10) {
                 Spacer()
@@ -177,39 +171,6 @@ struct MarketView: View {
                                     }
                                 }
                             }
-                            
-                            // MARK: - Pagination(InfiniteScroll) 구현 코드
-                            //                            if marketStore.marketWordNotes.last!.id == wordNote.id {
-                            //                                GeometryReader { geo in
-                            //                                    MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                            //                                                         selectedCategory: $selectedCategory,
-                            //                                                         selectedWordNote: wordNote)
-                            //                                    .padding(.leading, 5)
-                            //                                    .onAppear {
-                            //                                        self.time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
-                            //                                    }
-                            //                                    .onReceive(self.time) { (_) in
-                            //                                        if geo.frame(in: .global).maxY < UIScreen.main.bounds.height - 80 {
-                            //
-                            //                                            // 나중에 데이터가 많아지고 limit이 20으로 바뀌면 아래 5를 20으로 바꿔야 됨
-                            //                                            if marketStore.snapshotCounter >= 5 {
-                            //                                                Task {
-                            //                                                    await marketStore.marketNotesWillPagingUpdateFetchDB()
-                            //                                                }
-                            //
-                            //                                                print("Update Data...")
-                            //                                            }
-                            //
-                            //                                            self.time.upstream.connect().cancel()
-                            //                                        }
-                            //                                    }
-                            //                                }
-                            //                            } else {
-                            //                                MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                            //                                                     selectedCategory: $selectedCategory,
-                            //                                                     selectedWordNote: wordNote)
-                            //                            }
-                            // MARK: - 여기까지
                         })
                     .padding(.horizontal)
                     .padding(.top, 1)
@@ -236,8 +197,6 @@ struct MarketView: View {
                             .stroke(Color.mainBlue)
                             .frame(width: 60, height: 30)
                             .overlay {
-                                // 리스너 달아주긴 했는데... 지금 확인해보니깐 없어도 잘됨...ㅎ
-                                // Text("\(marketStore.currentCoin == 0 ? authStore.user?.coin ?? 0 : marketStore.currentCoin)P")
                                 Text("\(authStore.user?.coin ?? 0)P")
                                     .foregroundColor(.mainBlue)
                                     .font(.subheadline)
@@ -249,8 +208,6 @@ struct MarketView: View {
                     MarketViewSheet(wordNote: marketStore.sendWordNote,
                                     isToastToggle: $isToastToggle)
                 }
-                
-//                VStack {
                     NavigationLink(destination: MarketViewAddButton()) {
                         Circle()
                             .foregroundColor(.mainBlue)
@@ -264,9 +221,6 @@ struct MarketView: View {
                             .shadow(radius: 1, x: 1, y: 1)
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.243)
-                    //.position(x: UIScreen.main.bounds.width * 0.86, y: UIScreen.main.bounds.height * 0.58)
-//                    .position(x: 100, y: 100)
-//                }
             }
         }
         .customToastMessage(isPresented: $isToastToggle,

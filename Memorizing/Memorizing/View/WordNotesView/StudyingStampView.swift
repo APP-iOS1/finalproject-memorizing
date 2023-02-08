@@ -107,37 +107,10 @@ struct StudyingStampView: View {
             }
             
             HStack {
-//                VStack(alignment: .leading) {
-//                    Text("구매한 암기장은 어떠셨나요?")
-//                    Text("후기를 작성해보시면 10P을 드립니다!")
-//                }.font(.caption) .foregroundColor(.gray2)
-//                Spacer()
                 
-//                Button {
-//                    // 후기작성
-//                } label: {
-//                    HStack {
-//                        Text("후기 작성 하기")
-//                        Image(systemName: "chevron.right")
-//                    }
-//                    .font(.subheadline) .fontWeight(.semibold)
-//                }
             }
             .frame(width: 320, alignment: .leading)
             .padding(.top, 20)
         }
     }
 }
-// struct StudyingStampView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StudyingStampView(wordNote: MyWordNote(id: "1",
-//                                               noteName: "hi",
-//                                               noteCategory: "경제",
-//                                               enrollmentUser: "",
-//                                               repeatCount: 1,
-//                                               firstTestResult: 1.0,
-//                                               lastTestResult: 0,
-//                                               updateDate: Date()),
-//                          isDismiss: .constant(false))
-//    }
-// }

@@ -17,7 +17,6 @@ struct MyMemoryNote: View {
     }
     @State private var isShowingSheet: Bool = false
     @State private var opacityValue: Double = 0
-    //    @State var isAddShowing: Bool = false
     
     // 한 번도 안 하면 -1, 한 번씩 할 때마다 1씩 증가
     @State var progressStep: Int = 0
@@ -82,7 +81,6 @@ struct MyMemoryNote: View {
                                     .padding(.leading, -5)
                             }
                         }
-//                        .padding(.trailing, 15)
                     }
                 }
                 .overlay {
@@ -108,11 +106,6 @@ struct MyMemoryNote: View {
                 .fullScreenCover(isPresented: $isShowingSheet) {
                     NavigationStack {
                         EditListView(wordNote: myWordNote)
-                        //                if words.isEmpty {
-                        //                    AddListView(wordNote: myWordNote)
-                        //                } else {
-                        //                    EditListView(wordNote: myWordNote)
-                        //                }
                     }
                 }
                 .onAppear {
@@ -123,14 +116,3 @@ struct MyMemoryNote: View {
         }
     }
 }
-
-// MARK: - onAppear 수정자가 있을 경우, 데이터에 따라 화면이 바뀌므로 Preview Crashed가 날 수 밖에 없음
-// 따라서, 프리뷰를 보기 위해 .onAppear 수정자 내용을 싹 지워주고 나서 확인할 것
-// struct MyMemoryNote_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            MyMemoryNote(myWordNote: word)
-//
-//        }
-//    }
-// }

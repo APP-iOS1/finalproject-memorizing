@@ -74,7 +74,6 @@ struct EditListView: View {
                         }
                         .font(.callout)
                         .padding(.horizontal, 25)
-//                    }
                 }
                 .bold()
                 .padding(.top, 7)
@@ -197,29 +196,4 @@ struct EditListView: View {
                      withCancelButton: true,
                      cancelButtonText: "아니요")
     }
-    
-    
-    // MARK: 리스트 순서 수정 함수
-    //    func moveList(from source: IndexSet, to destination: Int) {
-    //        word.move(fromOffsets: source, toOffset: destination)
-    //    }
 }
-
-// struct EditListView_Previews: PreviewProvider {#imageLiteral(resourceName: "simulator_screenshot_0F806C70-E81C-435B-9F0C-F05B34247268.png")
-//    static var previews: some View {
-//        NavigationStack {
-//            EditListView(wordNote: MyWordNote(id: "",
-//                                             noteName: "이상한 나라의 노트",
-//                                             noteCategory: "IT",
-//                                             enrollmentUser: "",
-//                                             repeatCount: 0,
-//                                             firstTestResult: 0,
-//                                             lastTestResult: 0,
-//                                             updateDate: Date()),
-//                        myWords: .constant([Word(id: "",
-//                                   wordString: "앨리스는 누구인가?",
-//                                   wordMeaning: "이상한 나라에 사는 공주",
-//                                   wordLevel: 1)]))
-//        }
-//    }
-// }

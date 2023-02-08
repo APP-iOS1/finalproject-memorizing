@@ -30,9 +30,3 @@ struct OnBoardingTabView: View {
         }
     }
 }
-
-// struct OnBoardingTabView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OnBoardingTabView()
-//    }
-// }
