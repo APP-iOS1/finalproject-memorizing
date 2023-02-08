@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIProgressiveOnboard
 
 // MARK: 암기장 탭에서 가장 메인으로 보여주는 View
 struct WordNotesView: View {
