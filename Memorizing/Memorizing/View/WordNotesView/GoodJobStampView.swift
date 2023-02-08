@@ -48,15 +48,31 @@ struct GoodJobStampView: View {
                 VStack {
                     Button {
                         // FIXME: - 현기 수정
+//                        Task.init {
+//                            async let repeatCountWillBePlusOne: ()
+//                                = myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote,
+//                                                                       nextStudyDate: nil,
+//                                                                       firstTestResult: wordNote.firstTestResult,
+//                                                                       lastTestResult: lastTestResult)
+//                            async let plusUserPoint: () = authStore.plusUserPoint(point: 5)
+//
+//                            let _ = await (repeatCountWillBePlusOne, plusUserPoint)
+//
+//                            coreDataStore.plusRepeatCount(note: wordNote,
+//                                                          firstTestResult: wordNote.firstTestResult,
+//                                                          lastTestResult: lastTestResult)
+//
+//                            isDismiss = true
+//                        }
                         Task.init {
-                            async let repeatCountWillBePlusOne: ()
-                                = myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote,
+                            await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote,
                                                                        nextStudyDate: nil,
                                                                        firstTestResult: wordNote.firstTestResult,
                                                                        lastTestResult: lastTestResult)
-                            async let plusUserPoint: () = authStore.plusUserPoint(point: 5)
-                            
-                            let _ = await (repeatCountWillBePlusOne, plusUserPoint)
+                            if wordNote.words?.count ?? 0 >= 20 {
+                                await authStore.plusUserPoint(point: 20)
+                                await authStore.userInfoWillFetchDB()
+                            }
                             
                             coreDataStore.plusRepeatCount(note: wordNote,
                                                           firstTestResult: wordNote.firstTestResult,

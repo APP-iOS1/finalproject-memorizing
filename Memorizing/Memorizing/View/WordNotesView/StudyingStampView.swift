@@ -63,12 +63,21 @@ struct StudyingStampView: View {
                             localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
                             
                             await notiManager.schedule(localNotification: localNotification)
-                            await myNoteStore.repeatCountWillBePlusOne(
-                                wordNote: wordNote,
-                                nextStudyDate: Date() + Double(wordNote.repeatCount * 1000),
-                                firstTestResult: wordNote.firstTestResult,
-                                lastTestResult: wordNote.lastTestResult
-                            )
+                            if wordNote.repeatCount == 2 {
+                                await myNoteStore.repeatCountWillBePlusOne(
+                                    wordNote: wordNote,
+                                    nextStudyDate: Date() + Double(wordNote.repeatCount * 360000),
+                                    firstTestResult: wordNote.firstTestResult,
+                                    lastTestResult: wordNote.lastTestResult
+                                )
+                            } else if wordNote.repeatCount == 3 {
+                                await myNoteStore.repeatCountWillBePlusOne(
+                                    wordNote: wordNote,
+                                    nextStudyDate: Date() + Double(wordNote.repeatCount * 8640000),
+                                    firstTestResult: wordNote.firstTestResult,
+                                    lastTestResult: wordNote.lastTestResult
+                                )
+                            }
                             coreDataStore.plusRepeatCount(note: wordNote,
                                                           firstTestResult: wordNote.firstTestResult,
                                                           lastTestResult: wordNote.lastTestResult)

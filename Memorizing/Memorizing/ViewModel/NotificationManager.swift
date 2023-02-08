@@ -15,7 +15,6 @@ import UserNotifications
 
 // 쓰레드 게시 오류를 해소하기 위해 선언
 @MainActor
-
 class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     
     // MARK: - MyWordNote에서 아래의 데이터를 가져옴

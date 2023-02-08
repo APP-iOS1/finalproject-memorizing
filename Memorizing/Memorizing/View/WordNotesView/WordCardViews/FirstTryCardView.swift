@@ -119,7 +119,7 @@ struct FirstTryCardView: View {
                                     await notiManager.schedule(localNotification: localNotification)
                                     await myNoteStore.repeatCountWillBePlusOne(
                                         wordNote: myWordNote,
-                                        nextStudyDate: Date() + Double(myWordNote.repeatCount * 1000),
+                                        nextStudyDate: Date() + Double(myWordNote.repeatCount * 120000),
                                         firstTestResult: firstTestResult,
                                         lastTestResult: nil
                                     )
