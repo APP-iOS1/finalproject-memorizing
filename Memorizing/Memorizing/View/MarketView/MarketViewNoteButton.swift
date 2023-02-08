@@ -28,7 +28,8 @@ struct MarketViewNoteButton: View {
             } label: {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.gray4)
-                    .frame(width: UIScreen.main.bounds.width * 0.43, height: UIScreen.main.bounds.height * 0.133)
+                    .frame(width: UIScreen.main.bounds.width * 0.43,
+                           height: UIScreen.main.bounds.height * 0.133)
                     .overlay {
                         HStack {
                             Rectangle()
@@ -38,7 +39,7 @@ struct MarketViewNoteButton: View {
                             // TODO: 카테고리별로 색상 다르게
                                 .foregroundColor(selectedWordNote.noteColor)
                             
-                            VStack {
+                            VStack(alignment: .leading) {
                                 // 암기장 카테고리
                                 HStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 30)
@@ -50,11 +51,11 @@ struct MarketViewNoteButton: View {
                                                 .fontWeight(.bold)
                                                 .foregroundColor(selectedWordNote.noteColor)
                                         }
-                                        .padding(.top, 2)
+//                                        .padding(.top, 1)
                                     
                                     Spacer()
                                 }
-                                .frame(height: 18)
+                                .frame(height: UIScreen.main.bounds.height * 0.02)
                                 
                                 // 암기장 제목
                                 HStack{
@@ -67,8 +68,9 @@ struct MarketViewNoteButton: View {
                                     
                                     Spacer()
                                 }
-                                .frame(width: 140, height: 40)
-//                                .padding(.bottom, 3)
+                                .padding(.vertical, 1)
+                                .frame(width: UIScreen.main.bounds.width * 0.34,
+                                       height: UIScreen.main.bounds.height * 0.045)
                                 
                                 // 암기장 판매 가격
                                 HStack {

@@ -47,11 +47,8 @@ struct MarketView: View {
                 .padding(.top, 15)
             
             // MARK: - 카테고리 버튼들
-            ScrollView(.horizontal, showsIndicators: false) {
-                MarketViewCategoryButton(selectedCategory: $selectedCategory,
-                                         categoryArray: MarketView.categoryArray)
-            }
-            .padding(.leading, 13)
+            MarketViewCategoryButton(selectedCategory: $selectedCategory,
+                                     categoryArray: MarketView.categoryArray)
             
             // MARK: - 검색창 하단 구분선
             //        Divider()
@@ -205,6 +202,7 @@ struct MarketView: View {
                             // MARK: - 여기까지
                         })
                     .padding(.horizontal)
+                    .padding(.top, 1)
                     .padding(.bottom, 120)
                 }   // ScrollView end
                 .padding(.bottom, 1)
@@ -242,19 +240,23 @@ struct MarketView: View {
                                     isToastToggle: $isToastToggle)
                 }
                 
-                NavigationLink(destination: MarketViewAddButton()) {
-                    Circle()
-                        .foregroundColor(.mainBlue)
-                        .frame(width: 65, height: 65)
-                        .overlay {
-                            Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .font(.title3)
-                                .bold()
-                        }
-                        .shadow(radius: 1, x: 1, y: 1)
-                }
-                .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.25)
+//                VStack {
+                    NavigationLink(destination: MarketViewAddButton()) {
+                        Circle()
+                            .foregroundColor(.mainBlue)
+                            .frame(width: 65, height: 65)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .foregroundColor(.white)
+                                    .font(.title3)
+                                    .bold()
+                            }
+                            .shadow(radius: 1, x: 1, y: 1)
+                    }
+//                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+                    .position(x: UIScreen.main.bounds.width * 0.86, y: UIScreen.main.bounds.height * 0.58)
+//                    .position(x: 100, y: 100)
+//                }
             }
         }
         .customToastMessage(isPresented: $isToastToggle,
