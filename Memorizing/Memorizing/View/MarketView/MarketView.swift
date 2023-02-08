@@ -232,19 +232,23 @@ struct MarketView: View {
                                     isToastToggle: $isToastToggle)
                 }
                 
-                NavigationLink(destination: MarketViewAddButton()) {
-                    Circle()
-                        .foregroundColor(.mainBlue)
-                        .frame(width: 65, height: 65)
-                        .overlay {
-                            Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .font(.title3)
-                                .bold()
-                        }
-                        .shadow(radius: 1, x: 1, y: 1)
-                }
-                .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.25)
+//                VStack {
+                    NavigationLink(destination: MarketViewAddButton()) {
+                        Circle()
+                            .foregroundColor(.mainBlue)
+                            .frame(width: 65, height: 65)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .foregroundColor(.white)
+                                    .font(.title3)
+                                    .bold()
+                            }
+                            .shadow(radius: 1, x: 1, y: 1)
+                    }
+//                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+                    .position(x: UIScreen.main.bounds.width * 0.86, y: UIScreen.main.bounds.height * 0.58)
+//                    .position(x: 100, y: 100)
+//                }
             }
         }
         .customToastMessage(isPresented: $isToastToggle,
