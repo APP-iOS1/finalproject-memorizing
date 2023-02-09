@@ -41,22 +41,23 @@ struct MarketView: View {
     @State private var selectedSortCategory: SortCategory = .nomalSort
     
     var body: some View {
-        VStack(spacing: 10) {
-            // MARK: - 검색창
-            MarketViewSearchBar(searchText: $searchText)
-                .padding(.top, 15)
-            
-            // MARK: - 카테고리 버튼들
-            MarketViewCategoryButton(selectedCategory: $selectedCategory,
-                                     categoryArray: MarketView.categoryArray)
-            
-            // MARK: - 정렬기준 선택하기
-            HStack(spacing: 10) {
-                Spacer()
+        ZStack {
+            VStack(spacing: 10) {
+                // MARK: - 검색창
+                MarketViewSearchBar(searchText: $searchText)
+                    .padding(.top, 15)
                 
-                MarketSortButton(selectedSortCategory: selectedSortCategory,
-                                 categoryState: .starScoreTotal,
-                                 sortTitle: "평점순")
+                // MARK: - 카테고리 버튼들
+                MarketViewCategoryButton(selectedCategory: $selectedCategory,
+                                         categoryArray: MarketView.categoryArray)
+                
+                // MARK: - 정렬기준 선택하기
+                HStack(spacing: 10) {
+                    Spacer()
+                    
+                    MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                     categoryState: .starScoreTotal,
+                                     sortTitle: "평점순")
                     .onTapGesture {
                         if self.selectedSortCategory == .starScoreTotal {
                             self.selectedSortCategory = .nomalSort
@@ -64,10 +65,10 @@ struct MarketView: View {
                             self.selectedSortCategory = .starScoreTotal
                         }
                     }
-
-                MarketSortButton(selectedSortCategory: selectedSortCategory,
-                                 categoryState: .reviewCount,
-                                 sortTitle: "리뷰순")
+                    
+                    MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                     categoryState: .reviewCount,
+                                     sortTitle: "리뷰순")
                     .onTapGesture {
                         if self.selectedSortCategory == .reviewCount {
                             self.selectedSortCategory = .nomalSort
@@ -75,10 +76,10 @@ struct MarketView: View {
                             self.selectedSortCategory = .reviewCount
                         }
                     }
-
-                MarketSortButton(selectedSortCategory: selectedSortCategory,
-                                 categoryState: .salesCount,
-                                 sortTitle: "판매순")
+                    
+                    MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                     categoryState: .salesCount,
+                                     sortTitle: "판매순")
                     .onTapGesture {
                         if self.selectedSortCategory == .salesCount {
                             self.selectedSortCategory = .nomalSort
@@ -86,10 +87,10 @@ struct MarketView: View {
                             self.selectedSortCategory = .salesCount
                         }
                     }
-                
-                MarketSortButton(selectedSortCategory: selectedSortCategory,
-                                 categoryState: .recentUpdate,
-                                 sortTitle: "최신순")
+                    
+                    MarketSortButton(selectedSortCategory: selectedSortCategory,
+                                     categoryState: .recentUpdate,
+                                     sortTitle: "최신순")
                     .onTapGesture {
                         if self.selectedSortCategory == .recentUpdate {
                             self.selectedSortCategory = .nomalSort
@@ -97,131 +98,134 @@ struct MarketView: View {
                             self.selectedSortCategory = .recentUpdate
                         }
                     }
-            }
-            .padding(.trailing, 20)
-            .padding(.bottom, 3)
-            
-            ZStack {
-                ScrollView(showsIndicators: false) {
-                    // MARK: - Grid View
-                    
-                    let columns = [
-                        GridItem(.flexible(), spacing: 0, alignment: nil),
-                        GridItem(.flexible(), spacing: 0, alignment: nil)
-                    ]
-                    
-                    LazyVGrid(
-                        columns: columns,
-                        spacing: 18,
-                        content: {
-                            switch selectedSortCategory {
-                            case .nomalSort:
-                                ForEach(marketStore.marketWordNotes) { wordNote in
-                                    if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText)
-                                        || wordNote.noteName.contains(searchText.uppercased())
-                                        || wordNote.noteName.contains(searchText.lowercased()) {
-                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                             selectedCategory: $selectedCategory,
-                                                             selectedWordNote: wordNote)
-                                    }
-                                }
-                            case .salesCount:
-                                ForEach(marketStore.marketWordNotes.sorted{ $0.salesCount > $1.salesCount }) { wordNote in
-                                    if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText)
-                                        || wordNote.noteName.contains(searchText.uppercased())
-                                        || wordNote.noteName.contains(searchText.lowercased()) {
-                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                             selectedCategory: $selectedCategory,
-                                                             selectedWordNote: wordNote)
-                                    }
-                                }
-                            case .starScoreTotal:
-                                ForEach(marketStore.marketWordNotes.sorted{ ($0.starScoreTotal / Double($0.reviewCount == 0 ? 100 : $0.reviewCount)) > ($1.starScoreTotal / Double($1.reviewCount == 0 ? 100 : $1.reviewCount)) }) { wordNote in
-                                    if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText)
-                                        || wordNote.noteName.contains(searchText.uppercased())
-                                        || wordNote.noteName.contains(searchText.lowercased()) {
-                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                             selectedCategory: $selectedCategory,
-                                                             selectedWordNote: wordNote)
-                                    }
-                                }
-                            case .reviewCount:
-                                ForEach(marketStore.marketWordNotes.sorted{ $0.reviewCount > $1.reviewCount }) { wordNote in
-                                    if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText)
-                                        || wordNote.noteName.contains(searchText.uppercased())
-                                        || wordNote.noteName.contains(searchText.lowercased()) {
-                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                             selectedCategory: $selectedCategory,
-                                                             selectedWordNote: wordNote)
-                                    }
-                                }
-                            case .recentUpdate:
-                                ForEach(marketStore.marketWordNotes.sorted{ $0.updateDate > $1.updateDate }) { wordNote in
-                                    if searchText.isEmpty
-                                        || wordNote.noteName.contains(searchText)
-                                        || wordNote.noteName.contains(searchText.uppercased())
-                                        || wordNote.noteName.contains(searchText.lowercased()) {
-                                        MarketViewNoteButton(isSheetOpen: $isSheetOpen,
-                                                             selectedCategory: $selectedCategory,
-                                                             selectedWordNote: wordNote)
-                                    }
-                                }
-                            }
-                        })
-                    .padding(.horizontal)
-                    .padding(.top, 1)
-                    .padding(.bottom, 120)
-                }   // ScrollView end
-                .padding(.bottom, 1)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Image("Logo")
-                            .resizable()
-                            .frame(width: 35, height: 22)
-                            .padding(.leading, 10)
-                    }
-                    ToolbarItem(placement: .principal) {
-                        Text("암기장 마켓")
-                            .font(.title3.bold())
-                            .accessibilityAddTraits(.isHeader)
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                }
+                .padding(.trailing, 20)
+                .padding(.bottom, 3)
+                
+                ZStack {
+                    ScrollView(showsIndicators: false) {
+                        // MARK: - Grid View
                         
-                        RoundedRectangle(cornerRadius: 30)
-                            .stroke(Color.mainBlue)
-                            .frame(width: 60, height: 30)
-                            .overlay {
-                                Text("\(authStore.user?.coin ?? 0)P")
-                                    .foregroundColor(.mainBlue)
-                                    .font(.subheadline)
-                            }
+                        let columns = [
+                            GridItem(.flexible(), spacing: 0, alignment: nil),
+                            GridItem(.flexible(), spacing: 0, alignment: nil)
+                        ]
+                        
+                        LazyVGrid(
+                            columns: columns,
+                            spacing: 18,
+                            content: {
+                                switch selectedSortCategory {
+                                case .nomalSort:
+                                    ForEach(marketStore.marketWordNotes) { wordNote in
+                                        if searchText.isEmpty
+                                            || wordNote.noteName.contains(searchText)
+                                            || wordNote.noteName.contains(searchText.uppercased())
+                                            || wordNote.noteName.contains(searchText.lowercased()) {
+                                            MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                                 selectedCategory: $selectedCategory,
+                                                                 selectedWordNote: wordNote)
+                                        }
+                                    }
+                                case .salesCount:
+                                    ForEach(marketStore.marketWordNotes.sorted{ $0.salesCount > $1.salesCount }) { wordNote in
+                                        if searchText.isEmpty
+                                            || wordNote.noteName.contains(searchText)
+                                            || wordNote.noteName.contains(searchText.uppercased())
+                                            || wordNote.noteName.contains(searchText.lowercased()) {
+                                            MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                                 selectedCategory: $selectedCategory,
+                                                                 selectedWordNote: wordNote)
+                                        }
+                                    }
+                                case .starScoreTotal:
+                                    ForEach(marketStore.marketWordNotes.sorted{ ($0.starScoreTotal / Double($0.reviewCount == 0 ? 100 : $0.reviewCount)) > ($1.starScoreTotal / Double($1.reviewCount == 0 ? 100 : $1.reviewCount)) }) { wordNote in
+                                        if searchText.isEmpty
+                                            || wordNote.noteName.contains(searchText)
+                                            || wordNote.noteName.contains(searchText.uppercased())
+                                            || wordNote.noteName.contains(searchText.lowercased()) {
+                                            MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                                 selectedCategory: $selectedCategory,
+                                                                 selectedWordNote: wordNote)
+                                        }
+                                    }
+                                case .reviewCount:
+                                    ForEach(marketStore.marketWordNotes.sorted{ $0.reviewCount > $1.reviewCount }) { wordNote in
+                                        if searchText.isEmpty
+                                            || wordNote.noteName.contains(searchText)
+                                            || wordNote.noteName.contains(searchText.uppercased())
+                                            || wordNote.noteName.contains(searchText.lowercased()) {
+                                            MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                                 selectedCategory: $selectedCategory,
+                                                                 selectedWordNote: wordNote)
+                                        }
+                                    }
+                                case .recentUpdate:
+                                    ForEach(marketStore.marketWordNotes.sorted{ $0.updateDate > $1.updateDate }) { wordNote in
+                                        if searchText.isEmpty
+                                            || wordNote.noteName.contains(searchText)
+                                            || wordNote.noteName.contains(searchText.uppercased())
+                                            || wordNote.noteName.contains(searchText.lowercased()) {
+                                            MarketViewNoteButton(isSheetOpen: $isSheetOpen,
+                                                                 selectedCategory: $selectedCategory,
+                                                                 selectedWordNote: wordNote)
+                                        }
+                                    }
+                                }
+                            })
+                        .padding(.horizontal)
+                        .padding(.top, 1)
+                        .padding(.bottom, 120)
+                    }   // ScrollView end
+                    .padding(.bottom, 1)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Image("Logo")
+                                .resizable()
+                                .frame(width: 35, height: 22)
+                                .padding(.leading, 10)
+                        }
+                        ToolbarItem(placement: .principal) {
+                            Text("암기장 마켓")
+                                .font(.title3.bold())
+                                .accessibilityAddTraits(.isHeader)
+                        }
+                        
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            
+                            RoundedRectangle(cornerRadius: 30)
+                                .stroke(Color.mainBlue)
+                                .frame(width: 60, height: 30)
+                                .overlay {
+                                    Text("\(authStore.user?.coin ?? 0)P")
+                                        .foregroundColor(.mainBlue)
+                                        .font(.subheadline)
+                                }
+                        }
+                    }
+                    .fullScreenCover(isPresented: $isSheetOpen) {
+                        // TODO: 단어장 클릭시 단어 목록 리스트 보여주기
+                        MarketViewSheet(wordNote: marketStore.sendWordNote,
+                                        isToastToggle: $isToastToggle)
                     }
                 }
-                .fullScreenCover(isPresented: $isSheetOpen) {
-                    // TODO: 단어장 클릭시 단어 목록 리스트 보여주기
-                    MarketViewSheet(wordNote: marketStore.sendWordNote,
-                                    isToastToggle: $isToastToggle)
-                }
-                    NavigationLink(destination: MarketViewAddButton()) {
-                        Circle()
-                            .foregroundColor(.mainBlue)
-                            .frame(width: 65, height: 65)
-                            .overlay {
-                                Image(systemName: "plus")
-                                    .foregroundColor(.white)
-                                    .font(.title3)
-                                    .bold()
-                            }
-                            .shadow(radius: 1, x: 1, y: 1)
-                    }
-                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.243)
             }
+            
+            NavigationLink(destination: MarketViewAddButton()) {
+                Circle()
+                    .foregroundColor(.mainBlue)
+                    .frame(width: 65, height: 65)
+                    .overlay {
+                        Image(systemName: "plus")
+                            .foregroundColor(.white)
+                            .font(.title3)
+                            .bold()
+                    }
+                    .shadow(radius: 1, x: 1, y: 1)
+            }
+            .offset(x: UIScreen.main.bounds.width * 0.36,
+                    y: UIScreen.main.bounds.height * 0.33)
         }
         .customToastMessage(isPresented: $isToastToggle,
                             message: "구매가 완료되었습니다!")

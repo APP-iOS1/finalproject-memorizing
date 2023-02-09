@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		180D8A58296673D8005BDBF0 /* SignUpTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D8A57296673D8005BDBF0 /* SignUpTermsView.swift */; };
 		180D8A5A29668857005BDBF0 /* FindIdPwView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180D8A5929668857005BDBF0 /* FindIdPwView.swift */; };
+		1865830929949476009B4119 /* DetermineDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865830829949476009B4119 /* DetermineDevice.swift */; };
 		18C4485E2977C48000FEB345 /* hideKeyboradExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C4485D2977C48000FEB345 /* hideKeyboradExtension.swift */; };
 		18FC714429672FEB00E3CED5 /* OtherTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FC714329672FEB00E3CED5 /* OtherTryCardView.swift */; };
 		2612880F298A4ED00011D663 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2612880E298A4ED00011D663 /* SafariView.swift */; };
@@ -99,6 +100,7 @@
 /* Begin PBXFileReference section */
 		180D8A57296673D8005BDBF0 /* SignUpTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTermsView.swift; sourceTree = "<group>"; };
 		180D8A5929668857005BDBF0 /* FindIdPwView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIdPwView.swift; sourceTree = "<group>"; };
+		1865830829949476009B4119 /* DetermineDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineDevice.swift; sourceTree = "<group>"; };
 		18C4485D2977C48000FEB345 /* hideKeyboradExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hideKeyboradExtension.swift; sourceTree = "<group>"; };
 		18FC714329672FEB00E3CED5 /* OtherTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTryCardView.swift; sourceTree = "<group>"; };
 		2612880E298A4ED00011D663 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */,
 				48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */,
 				488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */,
+				1865830829949476009B4119 /* DetermineDevice.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				48238A8F298D1A2D000E1709 /* CustomAlertModifier.swift in Sources */,
 				52C222AE297782EE00181367 /* ReviewStore.swift in Sources */,
 				48A9CDF4298E194700CF1D27 /* CustomToastMessage.swift in Sources */,
+				1865830929949476009B4119 /* DetermineDevice.swift in Sources */,
 				484D657529669C7A00C56E87 /* MarketViewSearchBar.swift in Sources */,
 				F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */,
 				52BCE8D2296690E700A85A1F /* MyMemoryNote.swift in Sources */,
