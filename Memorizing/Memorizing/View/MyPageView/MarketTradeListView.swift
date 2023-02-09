@@ -35,27 +35,28 @@ struct MarketTradeListView: View {
             // MARK: - 구매목록 / 판매목록 토글
             VStack(spacing: 5) {
                 HStack(spacing: 12) {
-                    Button {
-                        marketTradeToggle = true
-                    } label: {
+                    
                         Text("구매목록")
                             .font(.headline)
                             .bold()
                             .foregroundColor(marketTradeToggle
                                              ? .mainDarkBlue
                                              : .gray3)
-                    }
+                            .onTapGesture {
+                                marketTradeToggle = true
+                            }
                     
-                    Button {
-                        marketTradeToggle = false
-                    } label: {
+                    
+                    
                         Text("판매목록")
                             .font(.headline)
                             .bold()
                             .foregroundColor(marketTradeToggle
                                              ? .gray3
                                              : .mainDarkBlue)
-                    }
+                            .onTapGesture {
+                                marketTradeToggle = false
+                            }
                     
                     Spacer()
                 }
