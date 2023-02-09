@@ -32,8 +32,8 @@
 `💡암기가 쉬워지는 반복학습, 타인과 함께 공유하는 단어장 마켓`
 
 ### 과학적이고 신뢰있는 방식을 통해 효율적인 암기를 도와드릴게요!
->**규칙적으로 암기학습을 진행할 수 있도록 총 4단계의 학습루틴을 지원합니다.**
-> 1차 학습  ➔  1차 복습(20min)  ➔  2차 복습(1hr) ➔ 3차 복습(1day) 
+>**규칙적으로 암기학습을 진행할 수 있도록 총 4단계의 학습루틴을 지원합니다.**  
+1차 학습 ➔ 1차 복습(20min) ➔ 2차 복습(1hr) ➔ 3차 복습(1day) 
 
 |<img src="https://user-images.githubusercontent.com/107039500/217727221-68055c6a-a421-492e-ab0d-dfbf99fd44a1.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727242-6c92ac9d-2397-4601-8142-e42a6895c9a3.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727247-05dd98aa-d45b-4fce-b2dc-b4706aeeca9f.png"></img>|
 |:-:|:-:|:-:|
@@ -42,8 +42,8 @@
 <br>
 
 ### 단순한 영단어 암기 No! 기초상식부터 속담, 한국사 등 다양한 유형의 암기를 지원해요!
->**Memorizing은 영단어 뿐만이 아닌, 사용자가 원하시는 모든 유형의 암기장을 생성하고, 학습합니다.**
->시사, 상식, IT, 한국사, 수학공식 부터 자주 잊어버리기 쉬운 모든 것들을 자유롭게 암기할 수 있습니다.
+>**Memorizing은 영단어 뿐만이 아닌, 사용자가 원하시는 모든 유형의 암기장을 생성하고, 학습합니다.**  
+시사, 상식, IT, 한국사, 수학공식 부터 자주 잊어버리기 쉬운 모든 것들을 자유롭게 암기할 수 있습니다.
 
 |<img src="https://user-images.githubusercontent.com/107039500/217727233-1c8b3132-1db6-4211-85fd-299292176145.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217728556-741c396c-845a-41dd-8742-039087da6df0.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217728115-29ca0017-dbfe-4b02-8d2e-88a374edb494.png"></img>|
 |:-:|:-:|:-:|
@@ -52,8 +52,8 @@
 <br>
 
 ### 암기장 마켓기능을 통해 나만의 단어장을 공유하고, 타인과 함께 성장할 기회를 드려요!
->**혼자만 알고있기 아까운 나만의 단어장을 마켓에 등록하고, 다른 사람들이 만든 단어장도 구매할 수 있습니다.**
->학습을 완료한 내 단어장을 삭제하긴 아쉽지 않나요? 마켓에서 모든 사람들과 함께 주고받을 수 있습니다.
+>**혼자만 알고있기 아까운 나만의 단어장을 마켓에 등록하고, 다른 사람들이 만든 단어장도 구매할 수 있습니다.**  
+학습을 완료한 내 단어장을 삭제하긴 아쉽지 않나요? 마켓에서 모든 사람들과 함께 주고받을 수 있습니다.
 
 |<img src="https://user-images.githubusercontent.com/107039500/217727241-e310aec4-ed3b-4e84-9d74-12ba88fce932.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727239-16a7dfdf-d605-4ec2-8102-605fdaf24f2e.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727244-cfbf8a9c-c257-40a0-807e-4237b532b153.png"></img>|
 |:-:|:-:|:-:|
