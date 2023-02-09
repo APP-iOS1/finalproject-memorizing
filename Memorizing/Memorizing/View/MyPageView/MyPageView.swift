@@ -18,6 +18,7 @@ struct MyPageView: View {
     @EnvironmentObject var coreDataStore: CoreDataStore
     @State private var signOutAlertToggle: Bool = false
     @State private var isShowingWeb: Bool = false
+    @State private var isShowingPolicyWeb: Bool = false
     @State private var isShowingKakaoTalk: Bool = false
     
     var body: some View {
@@ -173,11 +174,11 @@ struct MyPageView: View {
                     VStack {
                         Divider()
                         
-                        NavigationLink {
-                            InfoPolicy()
+                        Button {
+                            isShowingPolicyWeb.toggle()
                         } label: {
                             HStack {
-                                Text("개인정보 처리 방침")
+                                Text("이용약관 및 개인정보 처리방침")
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
@@ -188,6 +189,9 @@ struct MyPageView: View {
                             .padding(.horizontal, 8)
                             .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
+                        }
+                        .sheet(isPresented: $isShowingPolicyWeb) {
+                            PolicyWebView()
                         }
                     }
                     

@@ -22,6 +22,7 @@
 		3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026F29672F3100FCFC3A /* AddListRow.swift */; };
 		3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F200271296754EB00FCFC3A /* LocalNotification.swift */; };
 		3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2002732967551400FCFC3A /* NotificationManager.swift */; };
+		3F7A1D272994E5D900670AB3 /* PolicyWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7A1D262994E5D900670AB3 /* PolicyWebView.swift */; };
 		3F7DA2FA2987A8A3001EDFC8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3F7DA2F92987A8A3001EDFC8 /* FirebaseAuth */; };
 		3F7DA2FC2987A8A3001EDFC8 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3F7DA2FB2987A8A3001EDFC8 /* FirebaseDatabase */; };
 		3F7DA2FE2987A8A3001EDFC8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 3F7DA2FD2987A8A3001EDFC8 /* FirebaseFirestore */; };
@@ -112,6 +113,7 @@
 		3F20026F29672F3100FCFC3A /* AddListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListRow.swift; sourceTree = "<group>"; };
 		3F200271296754EB00FCFC3A /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		3F2002732967551400FCFC3A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		3F7A1D262994E5D900670AB3 /* PolicyWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyWebView.swift; sourceTree = "<group>"; };
 		3FDC1496297A5EC700AE186F /* EditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListView.swift; sourceTree = "<group>"; };
 		3FDCCA86298A5877005E7C4E /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
 		3FF9B3E32966628C00A47C5A /* AddWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordView.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			children = (
 				2612880E298A4ED00011D663 /* SafariView.swift */,
 				26128810298A4EED0011D663 /* WebView.swift */,
+				3F7A1D262994E5D900670AB3 /* PolicyWebView.swift */,
 			);
 			path = SafariWebView;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				52C222B029778CB800181367 /* MarketWordNoteModel.swift in Sources */,
 				66982A23297A22E20052269D /* AuthStoreExtension.swift in Sources */,
 				180D8A5A29668857005BDBF0 /* FindIdPwView.swift in Sources */,
+				3F7A1D272994E5D900670AB3 /* PolicyWebView.swift in Sources */,
 				5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */,
 				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				661BD9202987974E00F34317 /* ScheduleCell.swift in Sources */,
