@@ -38,11 +38,15 @@ class MyNoteStore: ObservableObject {
                         let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0
                         let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                         let updateDate: Date = createdAtTimeStamp.dateValue()
-                        let nextStudyDate: Date? = docData["nextStudyDate"] as? Date
                         let notePrice: Int = docData["notePrice"] as? Int ?? 0
                         
                         var marketPurchaseDate: Date?
                         var reviewDate: Date?
+                        var nextStudyDate: Date?
+
+                        if let nextStudyTimeStamp: Timestamp = docData["nextStudyDate"] as? Timestamp {
+                            nextStudyDate = nextStudyTimeStamp.dateValue()
+                        }
                         
                         if let marketPurchaseTimeStamp: Timestamp = docData["marketPurchaseDate"] as? Timestamp {
                             marketPurchaseDate = marketPurchaseTimeStamp.dateValue()
