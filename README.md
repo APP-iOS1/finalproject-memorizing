@@ -1,7 +1,7 @@
 # Memorizing - 나만의 암기장 <img src="https://user-images.githubusercontent.com/107039500/217715514-adf5eaa8-eda8-428a-9234-fd2254e42af2.png" width="25" height="25">
 > 스스로 만들고 학습하며, 타인과 함께 공유하는 암기장, Memorizing
 
-프로젝트 PAGE : <a href="https://crystalline-honey-179.notion.site/7186dcfc77794dd593dc292be31df131" target="_blank"><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
+#### 프로젝트 페이지<a href="https://crystalline-honey-179.notion.site/7186dcfc77794dd593dc292be31df131" target="_blank"><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
 
 <img src="https://user-images.githubusercontent.com/107039500/217719200-e3bc3e24-18b0-42c5-a6c7-30b2c1192546.png" width="100%" height="100%">
 
