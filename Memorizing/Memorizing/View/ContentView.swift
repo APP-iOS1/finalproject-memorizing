@@ -19,8 +19,13 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if Auth.auth().currentUser != nil {
-                MainView()
-                    .environmentObject(marketStore)
+                if coreDataStore.progressBool {
+                        MainView()
+                            .environmentObject(marketStore)
+                } else {
+                    ProgressView()
+                }
+                
             } else {
                 if authStore.state == .signedOut {
                     LoginView()
@@ -40,15 +45,14 @@ struct ContentView: View {
             
         }
         .onChange(of: Auth.auth().currentUser, perform: { newValue in
-            if newValue == nil {
-                coreDataStore.deleteAll()
-            } else {
+             if newValue != nil {
                 // CoreData 서버에서 페치해오기
                 Task {
-                    print("login")
+                    coreDataStore.progressBool = false
                     await coreDataStore.syncronizeNotes()
                     await coreDataStore.saveNotesInCoreData()
                     coreDataStore.getNotes()
+                    coreDataStore.progressBool = true
                 }
             }
             
