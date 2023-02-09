@@ -1,204 +1,90 @@
-- 기존 앱 설명
-    
-    # 프로젝트 명 : MEMOrizing
-    
-    > “망각의 속도를 거스르는 방법, 반복 학습”
-    > 
-    ### 에빙하우스의 망각곡선이론을 아시나요? 모른다면 👇👇👇
-    
-    망각곡선이란, 시간이 지날 수록 학습한 내용을 얼마나 잊어버리는지에 대한 연구결과입니다. 여러 그룹에게 아무 의미가 없는 숫자나 문자를 암기시킨 후, 그룹별로 시간을 달리 하여 얼마나 암기하고 있는지를 측정하였는데, 그 결과는 다음과 같습니다. 
-    
-    | 시간 | 기억률 (Retention) | 망각률 (Forgetting) | 
-    | --- | --- | --- |
-    | 19분 | 58% | 42% |
-    | 1시간  | 44% | 56% |
-    | 9시간 | 36% | 64% |
-    | 1일 | 33% | 67% |
-    | 2일 | 28% | 72% |
-    | 6일 | 25% | 75% |
-    | 31일 | 21% | 79% |
-    
-     <img src="https://user-images.githubusercontent.com/101084872/210939055-9f3f3f01-a9f9-448f-b034-e9cff09e76de.jpg" width="400" height="300">
-    
-    
-    
-    이러한 망각 곡선 그래프를 통해 학습 직후 9시간동안 급격한 속도로 망각이 이루어졌다는 사실을 알 수 있었습니다. 그렇다면 망각의 속도를 늦추는 방법은 무엇일까요? 
-    
-    
-    ## **정답은, 복습의 타이밍에 있었습니다.**
-    
-    후속 연구자들은 일정 시간 내에 복습을 반복하게 되면, 망각 곡선이 점차 완만해져, 학습내용을 잊지 않게 된다. (출처: Tony Buzan, 2003, use your head) 라고 하였습니다. 반복은 망각의 속도를 늦추고 오랫동안 기억하게 하는 방법입니다. 반복횟수가 증가할 수록 장기기억으로 넘어갑니다. 
-    
-    따라서, **최초의 복습은 학습 후 10분 이내, 두번째 복습은 24시간 이내, 세번째 복습은 일주일 이내, 네번째 복습은 한 달 이내 할 것을 추천**합니다. 
-    
-    # 우리 앱은요!
-    
-    <aside>
-    💡 프로젝트의 필요성
-    
-    </aside>
-    
-    ### 1. 어려운 암기, 반복학습을 자연스럽게 유도하여 꼭 외울 수 있도록 도와드릴게요!
-    
-    **에빙하우스의 망각곡선이론**을 적용하여 보다 과학적이고 신뢰있게 암기를 도와드릴게요! 
-    
-    <aside>
-    ❓ 시간별로 복습 할 수 있게끔 처음등록을 하고 → 10분뒤에 알람떠가지구 테스트 보여주기? 
-    ⇒ 복습 시간 남음을 어떻게 구현할 것이냐? 
-    첫번째 복습까지 - 10분 
-    두번째 복습까지 - 14시간
-    세번째복습까지 - 6일 2시간 남음
-    네번째 복습까지 - 12일 남음
-    
-    </aside>
-    
-    
-    
-    ### 2. 다양한 유형의 암기를 지원해드릴게요!
-    
-    암기라고 하면 흔히 영단어, 일본어 단어 이런 언어만 생각하시나요?! MEMOrizing은 기초 상식, 메모형, 단어형, 날짜? (친구의 생일??) 등 다양한 유형을 암기할 수 있도록 도와드릴게요! ( 용어 - 뜻 형식으로만 ) (고조선을 건국한 왕은? 단군왕검) (apple - 사과) (정육면체의 부피를 구하는 공식은 ? 가로 * 세로 * 높이) (신차 구입 시 임시운행 허가의 유효기간의 기준은? 30일 이내)
+# Memorizing - 나만의 암기장 <img src="https://user-images.githubusercontent.com/107039500/217715514-adf5eaa8-eda8-428a-9234-fd2254e42af2.png" width="25" height="25">
+> 스스로 만들고 학습하며, 타인과 함께 공유하는 암기장, Memorizing
 
-    </aside>
-    
-    ### 3. 마켓에서 암기장을 사고 팔 수 있어요!
-    
-    내게 필요한 암기장을 사고 판매함으로써 포인트를 얻어 다양한 암기장을 구매할 수 있어요!
+<a href="https://crystalline-honey-179.notion.site/7186dcfc77794dd593dc292be31df131" target="_blank"><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
 
-    
-    </aside>
-    
-    ### 4. 공부를 위한 앱? NO! ‘나의 자기개발을 위한 앱!’
-    
-    MEMOrizing은 교육만을 위한 앱은 아니에요. 교육뿐만아니라 **나의 성장**을 위한 앱이랍니다. 깔끔하고 친숙한 UI/UX로 공부한다는 느낌이아닌, 성장한다는 느낌을 드릴게요. 우리 앱에 편하게 와서 놀다 가세요! (덤으로 얻게 되는 장기기억까지 +_+) 
-    
-    # 프로젝트 특징
-    
-    ---
-    
-    ### 1. 깔끔하고 친숙한 UI/UX 구성
-    
-    - 암기를 교육적인 측면에서 접근하여 딱딱한 느낌이 아닌, 친숙하고 보다 말랑한 느낌의 UIUX 제공
-    - 보다 많은 사용자가 가이드없이도 충분히 작동될 수 있게 꼭 필요한 기능만 첨부.
-    - 필요한건 다 있게. 쓸데없는 건 없게가 목표
-    
-    <img src="https://user-images.githubusercontent.com/101084872/216892254-ce4f5ad6-2fb9-4ab4-82ed-b4d04c9dbc30.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/101084872/216893688-be40b96b-5042-442f-8671-1e8c834391b2.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/101084872/216893758-babea742-4945-41e5-bd17-f63d4bc0891b.png" width="20%" height="20%">
-    
-    
-    ### 2. 과학적인 근거가 담긴 앱 작동 방식
-    
-    - 에빙하우스의 망각곡선 이론 적용
-    - 신뢰성 있는 앱 기능을 통해 효과적인 암기 프로세스 구축
-    
-     <aside>
-    <img src="https://user-images.githubusercontent.com/101084872/210939055-9f3f3f01-a9f9-448f-b034-e9cff09e76de.jpg" width="400" height="300">
-    
-    ### 3. 다양한 유형의 암기장 제공
-    
-    - 단어 뿐 만 아니라, 사소한 상식, 날짜 등 다양한 유형의 암기장 제공
+<img src="https://user-images.githubusercontent.com/107039500/217719200-e3bc3e24-18b0-42c5-a6c7-30b2c1192546.png" width="100%" height="100%">
 
-    
-    ### 🍎 앱의 측면
-    
-    - 단어시험 뿐만 아니라 각종 시험 및 퀴즈 대비 가능
-    - 기초 상식이나 새로운 분야를 시작할 때 익숙하지 않던 용어들에 빠르게 접근 가능
-    
-    ### 🦁 개발팀의 측면
-    
-    - 볼륨을 최소화하고 디테일을 높이는 방향으로 개발 예정. 해커톤 이후 바로 출시가 가능할 정도의 완성도를 구현해보고자함이 목표.디테일을 높이는 부분에서 큰 경험이 될 것임!
-    - 필요한 기능과 필요하지않는 기능에 대해 깊게 논의하여 알맹이가 탄탄한 앱을 기획 및 개발하고자함. 앱의 방향결정을 위한 토론을 통해 개발의 우선순위를 정하는데에 있어서 큰 경험이 될 것이라고 생각함.
+<br>
 
-    ---
+## 앱 소개
+`🔎 어렵고 지루한 암기, 정답은 타이밍과 반복학습!`
+>📝 중간고사가 코앞으로 다가왔는데, 하루만 시간이 더 있었으면..  
+>🤷🏻‍♂️ 가까스로 어려운 단어를 암기했는데, 일주일만 지나도 기억이 흐릿해!  
+>📗 지하철에서 영단어 공부를 하고 싶은데, 책을 들고다니긴 불편해..
 
-## 프로젝트 소개 (페르소나, ADS)
- - 페르소나
- 학생들 및 자격증 시험 준비생
+#### 학습한 내용을 완벽히 암기하고 싶은데, 마음대로 쉽지 않습니다.
+
+<br>
+
+`❓혹시, 에빙하우스의 📈 망각곡선 이론에 대해 들어 보셨나요?`
+
+>망각곡선(forgetting curve)이란, 시간이 흐를수록 학습한 내용을 잊는 속도를 나타낸 그래프입니다.  
+>심리학자 에빙하우스(Ebbinghaus, 1885)는 모두가 겪고있는 문제인 ‘망각’에 대한 문제를 극복하기 위해  
+>규칙적이고 반복적인 학습 루틴을 해결책으로 제시합니다.
+
+#### 혹시, 잘못된 암기습관 때문에 여전히 고민이신가요?  
+#### 그렇다면, 당신이 선택해야 할 암기장 앱은 바로 Memorizing 입니다!
+
+<br>
+
+## 프로젝트 특징
+`💡암기가 쉬워지는 반복학습, 타인과 함께 공유하는 단어장 마켓`
+
+### 과학적이고 신뢰있는 방식을 통해 효율적인 암기를 도와드릴게요!
+>**규칙적으로 암기학습을 진행할 수 있도록 총 4단계의 학습루틴을 지원합니다.**
+> 1차 학습  ➔  1차 복습(20min)  ➔  2차 복습(1hr) ➔ 3차 복습(1day) 
+
+|<img src="https://user-images.githubusercontent.com/107039500/217727221-68055c6a-a421-492e-ab0d-dfbf99fd44a1.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727242-6c92ac9d-2397-4601-8142-e42a6895c9a3.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727247-05dd98aa-d45b-4fce-b2dc-b4706aeeca9f.png"></img>|
+|:-:|:-:|:-:|
+|`나의 단어장`|`학습화면`|`복습알림`|
+
+<br>
+
+### 단순한 영단어 암기 No! 기초상식부터 속담, 한국사 등 다양한 유형의 암기를 지원해요!
+>**Memorizing은 영단어 뿐만이 아닌, 사용자가 원하시는 모든 유형의 암기장을 생성하고, 학습합니다.**
+>시사, 상식, IT, 한국사, 수학공식 부터 자주 잊어버리기 쉬운 모든 것들을 자유롭게 암기할 수 있습니다.
+
+|<img src="https://user-images.githubusercontent.com/107039500/217727233-1c8b3132-1db6-4211-85fd-299292176145.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217728556-741c396c-845a-41dd-8742-039087da6df0.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217728115-29ca0017-dbfe-4b02-8d2e-88a374edb494.png"></img>|
+|:-:|:-:|:-:|
+|`유형선택`|`시사상식`|`영단어 학습`|
+
+<br>
+
+### 암기장 마켓기능을 통해 나만의 단어장을 공유하고, 타인과 함께 성장할 기회를 드려요!
+>**혼자만 알고있기 아까운 나만의 단어장을 마켓에 등록하고, 다른 사람들이 만든 단어장도 구매할 수 있습니다.**
+>학습을 완료한 내 단어장을 삭제하긴 아쉽지 않나요? 마켓에서 모든 사람들과 함께 주고받을 수 있습니다.
+
+|<img src="https://user-images.githubusercontent.com/107039500/217727241-e310aec4-ed3b-4e84-9d74-12ba88fce932.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727239-16a7dfdf-d605-4ec2-8102-605fdaf24f2e.png"></img>|<img src="https://user-images.githubusercontent.com/107039500/217727244-cfbf8a9c-c257-40a0-807e-4237b532b153.png"></img>|
+|:-:|:-:|:-:|
+|`마켓`|`암기장 구매`|`암기장 판매`|
+
+<br>
+
+## 활용기술
+
+### Platforms
+<img src="https://img.shields.io/badge/iOS-5A29E4?style=flat&logo=iOS&logoColor=white"/>  
+    
+### Language & Tools
+
+<img src="https://img.shields.io/badge/Xcode-147EFB?style=flat&logo=Xcode&logoColor=white"/> <img src="https://img.shields.io/badge/SwiftUI-2396F3?style=flat&logo=Swift&logoColor=white"/> <img src="https://img.shields.io/badge/Swift-F05138?style=flat&logo=swift&logoColor=white"/><img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=Firebase&logoColor=white"/>
  
- - ADS
- 암기를 위한 노트를 대체 할 것입니다. 왜냐하면 기존 암기장들은 재미요소가 없고 정보 전달에만 의미를 두기 때문입니다.
+<br>
 
-- 사용자 시나리오
-    
-    ## 사용자 시나리오
-    
-    ---
-    
-    로그인 뷰
-    
-    1. SNS 로그인(최초 로그인시 회원 등록)
-    
-    ---
-    
-    메인 뷰
-    
-    1. 암기장 추가(+버튼 클릭) - 내 암기장이 없을 시 온보딩뷰 출력
-        1. 암기장 제목 입력
-        2. 암기장 카테고리 선택
-        3. 새로운 암기장 만들기 버튼 클릭(a, b 미 입력 시 버튼 비활성화)
-        4. 추가 완료 시 ‘암기장이 추가되었습니다’ 토스트 팝업
-    2. 단어 등록하러 가기 버튼 클릭해서 암기 할 내용 등록하기 - 최초 등록 시에만 버튼이 보임 이후에는 암기장 클릭 시 상세보기 뷰로 넘어가서 추가가능
-        1. 플러스 버튼 클릭
-        2. 단어, 문장, 질문 입력하기
-        3. 뜻, 의미, 답 입력하기
-        4. ‘등록하기’ 클릭(b,c 미 입력 시 버튼 비활성화)
-        5. 추가 완료 시 ‘단어 저장 완료’ 토스트 팝업
-    3. ‘복습하기’ 상단 탭 클릭하기
-    4. ‘학습 시작’ 버튼 클릭
-    - 복습방법
-        
-        - 총 4회 복습
-        
-        - 첫번째 학습 - 난이도 설정과 학습을 함께 진행
-            
-            → 학습이 완료된 순간 타임인터벌로 20분 뒤 두번째 복습 알림을 주도록 함
-            
-        - 두번째 복습 - 첫번째 학습에서 모르겠어요, 애매해요 를 선택한 단어들을 보여줌
-            
-            → 학습이 완료된 순간 타임인터벌로 1시간 뒤 세번째 복습 알림을 주도록 함
-            
-        - 세번째 복습 - 첫번째 학습에서 모르겠어요 를 선택한 단어들을 보여줌
-            
-            → 학습이 완료된 순간 타임인터벌로 1일 뒤 네번째 복습 알림을 주도록 함
-            
-        - 네번째 복습 - 모든 단어를 다 보여주고 난이도를 선택한다
-            
-            → 난이도의 4분의 3 이상이 외웠어요가 되면 학습을 다시 할건지 완료할건지 선택한다
-            
-            → 다시 하면 복습 횟수를 0으로 초기화한다
-            
-            → 완료하면 단어장에 완료 스템프가 찍힌다
-            
-            → 난이도의 4분의 3 이하가 외웠어요이면 “우리 다시 복습해요~”를 띄우고 횟수를 0으로 초기화
-            
-    
-    ---
-    
-    마켓뷰
-    
-    1. 마켓으로 가서 내가 원하는 암기장 찾고 클릭하기
-    2. 후기 및 미리보기를 참고해서 마음에 들면 지식 구매하기 버튼을 눌러서 구매
-        1. 사용자 포인트를 확인해서 구매할 수 없으면 포인트가 부족합니다 alert 출력
-        2. 사용자 포인트를 확인해서 구매할 수 있으면 정말 구매할지 alert 출력
-        3. 취소를 누르면 다시 암기장 상세보기 뷰로 돌아감
-        4. 구매를 누르면 내 암기장에 구매한 암기장 추가
-            1. ‘구매 완료’ 토스트 팝업
+## 개발환경
 
----
+iOS 16.0 이상
+iPhone 14 Pro에서 최적화됨
+가로모드 미지원, 다크모드 미지원
 
+<br>
+
+## 프로젝트 참여자
 |  염성필  <br/>[@strongyeom](https://github.com/strongyeom) | 진준호 <br/> [@jincode93](https://github.com/jincode93) | 이종현 <br/> [@JongHyunLee84](https://github.com/JongHyunLee84) |  진태영 <br/>[@elisha0103](https://github.com/elisha0103) |
 | :----------------------------------------------------------: | :---------------------------------------------: | :------: | :-------------------------------------------------: |
-|<img src="https://avatars.githubusercontent.com/u/101084872?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/111134273?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/112399028?v=4" width=150>  | <img src="https://avatars.githubusercontent.com/u/41459466?v=4" width=150> |
+|<img src="https://avatars.githubusercontent.com/u/101084872?v=4" width=200> | <img src="https://avatars.githubusercontent.com/u/111134273?v=4" width=200> | <img src="https://avatars.githubusercontent.com/u/112399028?v=4" width=200>  | <img src="https://avatars.githubusercontent.com/u/41459466?v=4" width=200> |
 
 |  임재혁  <br/>[@onthelots](https://github.com/onthelots) | 윤현기 <br/> [@Yoon-Hyeongi](https://github.com/Yoon-Hyeongi) | 김혜지 <br/> [@hyehyehye99](https://github.com/hyehyehye99) |  전근섭 <br/>[@JKSeub](https://github.com/JKSeub) |
 | :----------------------------------------------------------: | :---------------------------------------------: | :------: | :-------------------------------------------------: |
-|<img src="https://avatars.githubusercontent.com/u/107039500?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/84693317?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/107675865?v=4" width=150>  | <img src="https://avatars.githubusercontent.com/u/86897750?v=4" width=150> |
-
-
-
-
-
-
-
-
-
-
-
+|<img src="https://avatars.githubusercontent.com/u/107039500?v=4" width=200> | <img src="https://avatars.githubusercontent.com/u/84693317?v=4" width=200> | <img src="https://avatars.githubusercontent.com/u/107675865?v=4" width=200>  | <img src="https://avatars.githubusercontent.com/u/86897750?v=4" width=200> |
