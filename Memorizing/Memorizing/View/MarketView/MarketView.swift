@@ -23,6 +23,7 @@ struct MarketView: View {
     @State private var searchText: String = ""
     @State private var isSheetOpen: Bool = false
     @State private var isToastToggle: Bool = false
+    @State private var isPointTap: Bool = false
     
     @State var time = Timer.publish(every: 0.1, on: .main, in: .tracking).autoconnect()
     
@@ -202,6 +203,9 @@ struct MarketView: View {
                                         .foregroundColor(.mainBlue)
                                         .font(.subheadline)
                                 }
+                                .onTapGesture {
+                                isPointTap.toggle()
+                                }
                         }
                     }
                     .fullScreenCover(isPresented: $isSheetOpen) {
@@ -238,6 +242,14 @@ struct MarketView: View {
         .onAppear {
             UIApplication.shared.hideKeyboard()
         }
+        .customAlert(isPresented: $isPointTap,
+                     title: "포인트를 얻는 방법",
+                     message: "1. 4번의 학습을 완료하고 도장을 받아봐요~!\n2. 사람들에게 나만의 암기장을 판매해봐요~!\n3. 구매한 암기장에 리뷰를 작성해봐요~!",
+                     primaryButtonTitle: "확인",
+                     primaryAction: {
+        },
+                     withCancelButton: false,
+                     cancelButtonText: "아니요")
     }
 }
 
