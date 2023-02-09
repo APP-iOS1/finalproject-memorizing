@@ -90,10 +90,10 @@
 		951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F7A3D29669F2B00976337 /* EditUserView.swift */; };
 		95595284297A290600C2B064 /* StudyingStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95595283297A290600C2B064 /* StudyingStampView.swift */; };
 		F203AD1C297533F30047A212 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F203AD1B297533F30047A212 /* .swiftlint.yml */; };
-		F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */; };
 		F28462962988A53000384255 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28462952988A53000384255 /* CoreDataStore.swift */; };
 		F29235F32989761F00F15E64 /* WordNoteProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29235F22989761F00F15E64 /* WordNoteProtocol.swift */; };
 		F2BDF9F32967AA9B007BA5DC /* LastTryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */; };
+		F2C97D6E2994DA0E00235EE6 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2C97D6C2994DA0E00235EE6 /* CoreDataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -172,10 +172,10 @@
 		951F7A3D29669F2B00976337 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		95595283297A290600C2B064 /* StudyingStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingStampView.swift; sourceTree = "<group>"; };
 		F203AD1B297533F30047A212 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		F23231DB2988E96B005399E5 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F28462952988A53000384255 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		F29235F22989761F00F15E64 /* WordNoteProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordNoteProtocol.swift; sourceTree = "<group>"; };
 		F2BDF9F22967AA9B007BA5DC /* LastTryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastTryCardView.swift; sourceTree = "<group>"; };
+		F2C97D6D2994DA0E00235EE6 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,8 +337,8 @@
 				26CC90A329778DA70039981B /* ReviewModel.swift */,
 				523C30D929790ECF00FAE229 /* MyWordNoteModel.swift */,
 				523C30DC2979195E00FAE229 /* UserModel.swift */,
-				F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */,
 				F29235F22989761F00F15E64 /* WordNoteProtocol.swift */,
+				F2C97D6C2994DA0E00235EE6 /* CoreDataModel.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -565,6 +565,7 @@
 				2645958829669FC6007114B7 /* NewMakeMemoryNote.swift in Sources */,
 				2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */,
 				3FF9B3E42966628C00A47C5A /* AddWordView.swift in Sources */,
+				F2C97D6E2994DA0E00235EE6 /* CoreDataModel.xcdatamodeld in Sources */,
 				3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */,
 				5215A72A298BB1FE00A25EF0 /* InfoPolicy.swift in Sources */,
 				66BD007B298A3E3E0001BA9B /* FirstLoginView.swift in Sources */,
@@ -573,7 +574,6 @@
 				488E7030299351CF008CA0D5 /* ShakeEffectModifier.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
 				48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */,
-				F23231DC2988E96B005399E5 /* CoreDataModel.xcdatamodeld in Sources */,
 				52D8F2522965F37E00755E5A /* WordModel.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
 				523C30DD2979195E00FAE229 /* UserModel.swift in Sources */,
@@ -930,12 +930,12 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		F23231DA2988E96B005399E5 /* CoreDataModel.xcdatamodeld */ = {
+		F2C97D6C2994DA0E00235EE6 /* CoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F23231DB2988E96B005399E5 /* CoreDataModel.xcdatamodel */,
+				F2C97D6D2994DA0E00235EE6 /* CoreDataModel.xcdatamodel */,
 			);
-			currentVersion = F23231DB2988E96B005399E5 /* CoreDataModel.xcdatamodel */;
+			currentVersion = F2C97D6D2994DA0E00235EE6 /* CoreDataModel.xcdatamodel */;
 			path = CoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -5,17 +5,18 @@
         <attribute name="firstTestResult" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="lastTestResult" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="nextStudyDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="noteCategory" optional="YES" attributeType="String"/>
         <attribute name="noteName" optional="YES" attributeType="String"/>
         <attribute name="repeatCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WordEntity" inverseName="note" inverseEntity="WordEntity"/>
+        <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WordEntity"/>
     </entity>
     <entity name="WordEntity" representedClassName="WordEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="wordLevel" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="wordMeaning" optional="YES" attributeType="String"/>
         <attribute name="wordString" optional="YES" attributeType="String"/>
-        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NoteEntity" inverseName="words" inverseEntity="NoteEntity"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NoteEntity"/>
     </entity>
 </model>
