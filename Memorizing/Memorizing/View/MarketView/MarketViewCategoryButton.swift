@@ -16,36 +16,29 @@ struct MarketViewCategoryButton: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(Array(zip(categoryArray.indices, categoryArray)), id: \.0) { (index, category) in
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(selectedCategory == category ? MarketView.colorArray[index] : Color.gray4)
-//                            .frame(width: 50, height: 30)
-                            .background(Color.black)
-                        
-                        
-                        Button {
-                            selectedCategory = category
-                            
-                        } label: {
-                            Text("\(category)")
-                                .font(.footnote)
-                                .fontWeight(.medium)
-                                .foregroundColor(selectedCategory == category
-                                                 ? MarketView.colorArray[index]
-                                                 : .gray2)
-                                .frame(width: 50, height: 30)
-                                .background(Color.gray1)
-                        }
-                    }
                     
-                    .background(Color.red)
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(selectedCategory == category ? MarketView.colorArray[index] : Color.gray4)
+                        .frame(width: 50, height: 30)
+                        .overlay {
+                            Button {
+                                selectedCategory = category
+                                
+                            } label: {
+                                Text("\(category)")
+                                    .font(.footnote)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(selectedCategory == category
+                                                     ? MarketView.colorArray[index]
+                                                     : .gray2)
+                            }
+                        }
                 }
-                .padding(.vertical, 5)
-                .background(Color.green)
             }
+            .padding(.vertical, 5)
+            .padding(.horizontal, 1)
         }
-        .frame(width: UIScreen.main.bounds.width * 0.9, height: 40)
-        .background(Color.blue)
+        .frame(width: UIScreen.main.bounds.width * 0.9)
     }
 }
 
