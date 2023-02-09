@@ -64,6 +64,7 @@ extension AuthStore: ASAuthorizationControllerDelegate {
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
+        
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent")
@@ -85,20 +86,20 @@ extension AuthStore: ASAuthorizationControllerDelegate {
             Task {
                 do {
                     let result = try await Auth.auth().signIn(with: credential)
-                    print("애플 credential에서 뽑은 fullName: \(String(describing: appleIDCredential.fullName))")
-                    print("애플 credential에서 뽑은 givenName: \(String(describing: appleIDCredential.fullName?.givenName))")
-                    print("애플 credential에서 뽑은 familyName: \(String(describing: appleIDCredential.fullName?.familyName))")
-                    print("애플 credential에서 뽑은 givenName: \(String(describing: appleIDCredential.fullName?.givenName))")
-                    print("애플 credential에서 뽑은 description: \(String(describing: appleIDCredential.fullName?.description))")
-                    print("애플 credential에서 뽑은 namePrefix: \(String(describing: appleIDCredential.fullName?.namePrefix))")
-                    print("애플 credential에서 뽑은 nameSuffix: \(String(describing: appleIDCredential.fullName?.nameSuffix))")
-                    print("애플 currentUser에서 뽑은 displayName: \(String(describing: result.user.displayName))")
-                    print("애플 credential에서 뽑은 email: \(String(describing: appleIDCredential.email))")
-
+                    
+                    var fullName: String?
+                    if let familyName = appleIDCredential.fullName?.familyName, let givenName = appleIDCredential.fullName?.givenName{
+                    fullName = familyName + givenName
+                    }
+                    
+                    var tempName: String = UUID().uuidString
+                    let startIndex = tempName.index(tempName.endIndex, offsetBy: -5)
+                    tempName = String(tempName[startIndex...])
+                    
                     self.user = User(
                         id: result.user.uid,
                         email: "\(result.user.email ?? "NO Email")",
-                        nickName: appleIDCredential.fullName?.nickname ?? "No Name",
+                        nickName: fullName ?? "사용자" + tempName,
                         coin: 1000,
                         signInPlatform: User.Platform.apple.rawValue
                     )

@@ -158,7 +158,7 @@ class AuthStore: UIViewController, ObservableObject {
                     await self.signInDidAuth(
                         email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
                         password: "\(String(describing: kakaoUser?.id))",
-                        name: kakaoUser?.kakaoAccount?.name ?? "No Name"
+                        name: kakaoUser?.kakaoAccount?.profile?.nickname ?? "No Name"
                     )
                 }
             }
@@ -200,7 +200,6 @@ class AuthStore: UIViewController, ObservableObject {
     @available(iOS 13, *)
     func signInDidAppleAuth() {
         let request = createAppleIDRequest()
-        print("request 허용범위: \(request.requestedScopes)")
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         
         authorizationController.delegate = self
