@@ -19,7 +19,6 @@
 		2645958C29673FB0007114B7 /* GoodJobStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958B29673FB0007114B7 /* GoodJobStampView.swift */; };
 		2645958E2967431B007114B7 /* TryAgainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958D2967431B007114B7 /* TryAgainView.swift */; };
 		26CC90A429778DA70039981B /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC90A329778DA70039981B /* ReviewModel.swift */; };
-		3F20026E29672F2900FCFC3A /* AddListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026D29672F2900FCFC3A /* AddListView.swift */; };
 		3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026F29672F3100FCFC3A /* AddListRow.swift */; };
 		3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F200271296754EB00FCFC3A /* LocalNotification.swift */; };
 		3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2002732967551400FCFC3A /* NotificationManager.swift */; };
@@ -110,7 +109,6 @@
 		2645958B29673FB0007114B7 /* GoodJobStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodJobStampView.swift; sourceTree = "<group>"; };
 		2645958D2967431B007114B7 /* TryAgainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryAgainView.swift; sourceTree = "<group>"; };
 		26CC90A329778DA70039981B /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
-		3F20026D29672F2900FCFC3A /* AddListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListView.swift; sourceTree = "<group>"; };
 		3F20026F29672F3100FCFC3A /* AddListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListRow.swift; sourceTree = "<group>"; };
 		3F200271296754EB00FCFC3A /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		3F2002732967551400FCFC3A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -214,7 +212,6 @@
 		3FF9B3E22966625900A47C5A /* WordNoteAddView */ = {
 			isa = PBXGroup;
 			children = (
-				3F20026D29672F2900FCFC3A /* AddListView.swift */,
 				3FF9B3E32966628C00A47C5A /* AddWordView.swift */,
 				3FDC1496297A5EC700AE186F /* EditListView.swift */,
 				3F20026F29672F3100FCFC3A /* AddListRow.swift */,
@@ -612,7 +609,6 @@
 				523C30DA29790ECF00FAE229 /* MyWordNoteModel.swift in Sources */,
 				484D657A29669E6600C56E87 /* MarketViewAddButton.swift in Sources */,
 				18C4485E2977C48000FEB345 /* hideKeyboradExtension.swift in Sources */,
-				3F20026E29672F2900FCFC3A /* AddListView.swift in Sources */,
 				488F0AA62967E8A1007EAAC1 /* OnBoardingTabView.swift in Sources */,
 				484D657329669B5F00C56E87 /* MarketViewCategoryButton.swift in Sources */,
 				48D86B0D2977D38E0085A4B5 /* MarketViewSheetReviewsMore.swift in Sources */,

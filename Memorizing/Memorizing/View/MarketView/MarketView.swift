@@ -228,7 +228,8 @@ struct MarketView: View {
                     y: UIScreen.main.bounds.height * 0.33)
         }
         .customToastMessage(isPresented: $isToastToggle,
-                            message: "구매가 완료되었습니다!")
+                            message: "구매가 완료되었습니다!",
+                            delay: 0)
         .refreshable {
             Task {
                 await marketStore.marketNotesWillFetchDB()

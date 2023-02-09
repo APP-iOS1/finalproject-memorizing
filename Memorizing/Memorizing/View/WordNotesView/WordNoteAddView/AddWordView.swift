@@ -29,7 +29,8 @@ struct AddWordView: View {
     @State private var wordMeaning: String = ""
     @State private var wordLevel: Int = 0
     @State private var displayLists: Bool = false
-    @Binding var isToastToggle: Bool
+    @State private var addWordToast: Bool = false
+    @Binding var isOnChangeToastToggle: Bool
     
     @State private var isWordCountCheckToggle = false
     
@@ -43,9 +44,18 @@ struct AddWordView: View {
                         // MARK: - 유형 제거. 일반 암기장 작성 양식
                         VStack(alignment: .leading, spacing: 20) {
                             HStack{
-                                Text("하나의 암기장에 암기항목은 최대 50개까지 추가 가능합니다.")
-                                    .font(.caption)
+                                HStack {
+                                    Text("하나의 암기장에 암기항목은 ")
+                                    + Text("최대 50개 ")
+                                        .bold()
+                                        .foregroundColor(.mainDarkBlue)
+                                    + Text("까지 추가 가능합니다.")
+                                }
+                                .font(.caption2)
+                                .padding(.leading, 10)
+                                
                                 Spacer()
+                                
                                 Button {
                                     dismiss()
                                 } label: {
@@ -53,11 +63,22 @@ struct AddWordView: View {
                                         .foregroundColor(.gray1)
                                 }
                             }
+                            .padding(.bottom, 10)
+                            
                             VStack(alignment: .leading) {
-                                Text("암기 항목 (단어/질문 등)")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .padding(.leading,10)
+                                HStack {
+                                    Text("암기 항목 (단어/질문 등)")
+                                    Spacer()
+                                    Text("\(wordNote.words?.count ?? 0)")
+                                        .foregroundColor(wordNote.words?.count != 50
+                                                         ? .mainDarkBlue
+                                                         : .red)
+                                    + Text(" / 50")
+                                }
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .padding(.horizontal, 10)
+                                
                                 TextField("암기해야 할 내용을 단어, 질문 등의 형식으로 자유롭게 입력해보세요:)!", text: $wordString, axis: .vertical)
                                     .padding(.leading, 10)
                                     .padding(.top, 10)
@@ -71,6 +92,7 @@ struct AddWordView: View {
                                     .multilineTextAlignment(.leading)
                                     
                             }
+                            
                             VStack(alignment: .leading) {
                                 Text("의미")
                                     .font(.subheadline)
@@ -88,7 +110,7 @@ struct AddWordView: View {
                                     .font(.footnote)
                                     .multilineTextAlignment(.leading)
                             }
-                            }
+                        }
                     }
                     // MARK: - 빈 공간을 눌렀을 때, 키보드 자동으로 감추기
                     .onAppear {
@@ -135,20 +157,59 @@ struct AddWordView: View {
                             wordString = ""
                             wordMeaning = ""
                             wordLevel = 0
-                            isToastToggle = true
+                            addWordToast = true
                         } else {
                             isWordCountCheckToggle.toggle()
                         }
                     } label: {
                         Text("등록하기")
                             .fontWeight(.semibold)
-                            .modifier(CustomButtonStyle(backgroundColor: wordString.isEmpty || wordMeaning.isEmpty || words.count >= 100 ? "Gray4" : "MainBlue"))
+                            .modifier(CustomButtonStyle(backgroundColor: wordString.isEmpty
+                                                        || wordMeaning.isEmpty
+                                                        || words.count >= 100
+                                                        ? "Gray4"
+                                                        : "MainBlue"))
+                            .overlay {
+                                if addWordToast {
+                                    HStack {
+                                        Image("LogoWhite")
+                                            .resizable()
+                                            .frame(width: UIScreen.main.bounds.size.width * 0.04,
+                                                   height: UIScreen.main.bounds.size.width * 0.03)
+                                            .padding(.leading, 7)
+                                        
+                                        Spacer()
+                                        
+                                        Text("단어 저장 완료!")
+                                            .foregroundColor(.primary)
+                                            .colorInvert()
+                                            .font(.footnote)
+                                            .bold()
+                                        
+                                        Spacer()
+                                        
+                                    }
+                                    .task {
+                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                                            addWordToast = false
+                                        }
+                                    }
+                                    .padding(10)
+                                    .modifier(CustomButtonStyle(backgroundColor: "MainDarkBlue"))
+                                }
+                            }
                     }
-                    .disabled(wordString.isEmpty || wordMeaning.isEmpty || words.count >= 100)
+                    .disabled(wordString.isEmpty
+                              || wordMeaning.isEmpty
+                              || words.count >= 100)
                 }
             }
         }
         .padding()
+        .onChange(of: wordNote.words?.count == 50) { _ in
+            dismiss()
+            isOnChangeToastToggle = true
+        }
         // MARK: - Section1 - 타이틀 및 취소/저장 버튼
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -162,14 +223,6 @@ struct AddWordView: View {
                 }
             }
         }
-        .customAlert(isPresented: $isWordCountCheckToggle,
-                     title: "암기장 내용 초과",
-                     message: "하나의 암기장에 최대 50개까지만 추가가 가능합니다.",
-                     primaryButtonTitle: "확인",
-                     primaryAction: {
-        },
-                     withCancelButton: false,
-                     cancelButtonText: "아니요")
     }
 }
 

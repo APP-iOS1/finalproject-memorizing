@@ -15,7 +15,7 @@ struct EditListView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var isShowingAddView = false
-    @State private var isToastToggle = false
+    @State private var isOnChangeToastToggle = false
     @State private var showingAlert = false
     @State private var todayDate = Date()
     @State private var isWordCountCheckToggle = false
@@ -85,20 +85,24 @@ struct EditListView: View {
                             Spacer()
                                 .frame(height: UIScreen.main.bounds.height * 0.23)
                             
-                            Text("단어가 없습니다.")
-                                .foregroundColor(Color.gray1)
-                                .font(.caption)
-                                .fontWeight(.medium)
-                            Text("우측하단의 버튼을 눌러 단어를 추가해주세요!")
-                                .foregroundColor(Color.gray1)
-                                .font(.caption)
-                                .fontWeight(.medium)
-                            
+                            Text("등록된 단어가 없습니다")
+                                .padding(.bottom, 5)
+                                .font(.headline)
+                            HStack(spacing: 0) {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.mainBlue)
+                                Text("를 눌러 단어를 추가해주세요!")
+                            }
+                            .font(.footnote)
                             Spacer()
                         }
+                        .foregroundColor(Color.gray1)
+                        .fontWeight(.medium)
                     } else {
                         List {
-                            ForEach((wordNote.words?.allObjects as? [WordEntity] ?? [])) { list in
+                            let words: [WordEntity] = wordNote.words?.allObjects as? [WordEntity] ?? []
+                            
+                            ForEach(words) { list in
                                 AddListRow(word: list)
                             }
                             .onDelete { indexSet in
@@ -109,6 +113,12 @@ struct EditListView: View {
                                     }
                                 }
                             }
+                            
+                            // 마지막 요소 밑에 여유공간
+                            Rectangle()
+                                .frame(height: 100)
+                                .foregroundColor(.white)
+                                .listRowSeparator(.hidden)
                         }
                         .listStyle(.inset)
                     }
@@ -139,9 +149,10 @@ struct EditListView: View {
             .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
             .sheet(isPresented: $isShowingAddView, content: {
                 AddWordView(wordNote: wordNote,
-                            isToastToggle: $isToastToggle)
-                .customToastMessage(isPresented: $isToastToggle,
-                                    message: "단어 저장 완료!")
+                            isOnChangeToastToggle: $isOnChangeToastToggle)
+//                .customToastMessage(isPresented: $isToastToggle,
+//                                    message: "단어 저장 완료!",
+//                                    delay: 0)
             })
             .customAlert(isPresented: $isWordCountCheckToggle,
                          title: "암기장 내용 초과",
@@ -183,7 +194,9 @@ struct EditListView: View {
         }
         .navigationTitle("나의 암기장")
         .navigationBarTitleDisplayMode(.inline)
-        
+        .customToastMessage(isPresented: $isOnChangeToastToggle,
+                            message: "더 이상 등록할 수 없습니다",
+                            delay: 0.5)
         // MARK: - 암기장 삭제 - 재혁추가
         .customAlert(isPresented: $isShownDeleteQuestionAlert,
                      title: "나의 암기장 삭제하기",

@@ -106,7 +106,8 @@ struct EditUserView: View {
                      withCancelButton: true,
                      cancelButtonText: "취소")
         .customToastMessage(isPresented: $isShownToastMessage,
-                            message: "이름이 변경이 완료되었습니다!")
+                            message: "이름이 변경이 완료되었습니다!",
+                            delay: 0)
         
     }// ZStack
     
