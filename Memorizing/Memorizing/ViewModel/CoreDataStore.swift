@@ -195,6 +195,12 @@ class CoreDataStore: ObservableObject {
                 let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0.0
                 let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                 let updateDate: Date = createdAtTimeStamp.dateValue()
+                var nextStudyDate: Date?
+
+                if let nextStudyTimeStamp: Timestamp = docData["nextStudyDate"] as? Timestamp {
+                    nextStudyDate = nextStudyTimeStamp.dateValue()
+                }
+
                 if id == "" {
                     continue
                 }
@@ -205,7 +211,8 @@ class CoreDataStore: ObservableObject {
                                                   repeatCount: repeatCount,
                                                   firstTestResult: firstTestResult,
                                                   lastTestResult: lastTestResult,
-                                                  updateDate: updateDate)
+                                                  updateDate: updateDate,
+                nextStudyDate: nextStudyDate)
                 await MainActor.run {
                     self.myWordNotes.append(note)
                 }

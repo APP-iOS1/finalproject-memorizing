@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ScheduleCell: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
-    @State var notiId: String
+    @Binding var pendingRequest: UNNotificationRequest
     @State private var date: Date = Date()
     @State private var wordNote: MyWordNote? = MyWordNote(
         id: "id",
@@ -55,7 +55,13 @@ struct ScheduleCell: View {
             } // HStack
         } // VStack
         .onAppear {
-            wordNote = myNoteStore.myWordNotes.first { $0.id == notiId }
+            print("알림 온어피어")
+            for note in myNoteStore.myWordNotes {
+                print("나의 스토어: \(note.id)")
+                print("나의 스토어 시간: \(note.nextStudyDate)")
+                print("나의 구매 시간: \(note.marketPurchaseDate)")
+                  }
+            wordNote = myNoteStore.myWordNotes.first { $0.id == pendingRequest.identifier }
         }
             
     } // body
@@ -63,7 +69,7 @@ struct ScheduleCell: View {
 
 struct ScheduleCell_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleCell(notiId: "notiId")
+        ScheduleCell(pendingRequest: .constant(UNNotificationRequest(identifier: "", content: UNNotificationContent(), trigger: nil)))
             .environmentObject(MyNoteStore())
         
     }

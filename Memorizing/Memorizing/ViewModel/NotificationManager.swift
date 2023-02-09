@@ -135,7 +135,9 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     // --------- 사용자가 작성하는 알림 정보를 처리하기 위한 함수
     func getPendingRequests() async {
         pendingRequests = await notificationCenter.pendingNotificationRequests()
-
+        for req in pendingRequests {
+            print("펜딩 함수: \(req.identifier)")
+        }
     }
     
     // ----- 사용자가 작성한 알림을 삭제하는 기능 추가

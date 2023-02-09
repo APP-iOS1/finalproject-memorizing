@@ -307,7 +307,7 @@ class AuthStore: UIViewController, ObservableObject {
                 self.user?.signInPlatform = docData?["signInPlatform"] as? String ?? User.Platform.google.rawValue
                 self.state = .signedIn
             } else {
-                self.state = .firstIn
+                self.state = .signedIn
                 self.userInfoDidSaveDB(platform: self.user!.signInPlatform)
             }
         } catch {

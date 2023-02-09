@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 // MARK: Login 상태에 따라 LoginView 또는 TabView를 보여주는 View
 struct ContentView: View {
+    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var authStore: AuthStore
     @StateObject var marketStore: MarketStore = MarketStore()
     @EnvironmentObject var notiManager: NotificationManager
@@ -58,7 +59,8 @@ struct ContentView: View {
             try? await notiManager.requestAuthorization()
             if Auth.auth().currentUser != nil {
                 await authStore.signInDidExistingAuth()
-
+                await notiManager.getPendingRequests()
+                await myNoteStore.myNotesWillBeFetchedFromDB()
             }
         }
     }
@@ -69,5 +71,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(email: "", password: "")
             .environmentObject(AuthStore())
             .environmentObject(NotificationManager())
+            .environmentObject(MyNoteStore())
     }
 }
