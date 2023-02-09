@@ -1,7 +1,7 @@
 # Memorizing - 나만의 암기장 <img src="https://user-images.githubusercontent.com/107039500/217715514-adf5eaa8-eda8-428a-9234-fd2254e42af2.png" width="25" height="25">
 > 스스로 만들고 학습하며, 타인과 함께 공유하는 암기장, Memorizing
 
-<a href="https://crystalline-honey-179.notion.site/7186dcfc77794dd593dc292be31df131" target="_blank"><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
+프로젝트 PAGE : <a href="https://crystalline-honey-179.notion.site/7186dcfc77794dd593dc292be31df131" target="_blank"><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
 
 <img src="https://user-images.githubusercontent.com/107039500/217719200-e3bc3e24-18b0-42c5-a6c7-30b2c1192546.png" width="100%" height="100%">
 
@@ -69,7 +69,7 @@
     
 #### Language & Tools
 
-<img src="https://img.shields.io/badge/Xcode-147EFB?style=flat&logo=Xcode&logoColor=white"/> <img src="https://img.shields.io/badge/SwiftUI-2396F3?style=flat&logo=Swift&logoColor=white"/> <img src="https://img.shields.io/badge/Swift-F05138?style=flat&logo=swift&logoColor=white"/><img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=Firebase&logoColor=white"/>
+<img src="https://img.shields.io/badge/Xcode-147EFB?style=flat&logo=Xcode&logoColor=white"/> <img src="https://img.shields.io/badge/SwiftUI-2396F3?style=flat&logo=Swift&logoColor=white"/> <img src="https://img.shields.io/badge/Swift-F05138?style=flat&logo=swift&logoColor=white"/> <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=Firebase&logoColor=white"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=Figma&logoColor=white"/>
  
 <br>
 
@@ -89,3 +89,6 @@ iPhone 14 Pro에서 최적화됨
 |  임재혁  <br/>[@onthelots](https://github.com/onthelots) | 윤현기 <br/> [@Yoon-Hyeongi](https://github.com/Yoon-Hyeongi) | 김혜지 <br/> [@hyehyehye99](https://github.com/hyehyehye99) |  전근섭 <br/>[@JKSeub](https://github.com/JKSeub) |
 | :----------------------------------------------------------: | :---------------------------------------------: | :------: | :-------------------------------------------------: |
 |<img src="https://avatars.githubusercontent.com/u/107039500?v=4" width=200> | <img src="https://avatars.githubusercontent.com/u/84693317?v=4" width=200> | <img src="https://avatars.githubusercontent.com/u/107675865?v=4" width=200>  | <img src="https://avatars.githubusercontent.com/u/86897750?v=4" width=200> |
+
+---
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FAPPSCHOOL1-REPO%2Ffinalproject-memorizing&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
