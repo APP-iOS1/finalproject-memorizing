@@ -77,13 +77,16 @@ struct WordNotesView: View {
                             }
                             .shadow(radius: 1, x: 1, y: 1)
                     }
-                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+                    .offset(x: UIScreen.main.bounds.width * 0.36,
+                            y: UIScreen.main.bounds.height * 0.33)
+//                    , y: UIScreen.main.bounds.height * 0.33
                     .sheet(isPresented: $isShowingNewMemorySheet) {
                         NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet,
                                           isToastToggle: $isToastToggle)
                     }
                 }
             }
+            
         }
         .customToastMessage(isPresented: $isToastToggle,
                             message: "새로운 암기장 등록완료!")
