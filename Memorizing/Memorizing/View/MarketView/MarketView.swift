@@ -209,7 +209,6 @@ struct MarketView: View {
                         MarketViewSheet(wordNote: marketStore.sendWordNote,
                                         isToastToggle: $isToastToggle)
                     }
-                    
                 }
             }
             
