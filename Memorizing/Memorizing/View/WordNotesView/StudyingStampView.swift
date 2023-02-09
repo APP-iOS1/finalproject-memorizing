@@ -76,6 +76,7 @@ struct StudyingStampView: View {
                                     firstTestResult: wordNote.firstTestResult,
                                     lastTestResult: wordNote.lastTestResult
                                 )
+                                wordNote.nextStudyDate = Date() + Double(3600)
                             } else {
                                 await myNoteStore.repeatCountWillBePlusOne(
                                     wordNote: wordNote,
@@ -83,7 +84,9 @@ struct StudyingStampView: View {
                                     firstTestResult: wordNote.firstTestResult,
                                     lastTestResult: wordNote.lastTestResult
                                 )
+                                wordNote.nextStudyDate = Date() + Double(86400)
                             }
+                            
                             coreDataStore.plusRepeatCount(note: wordNote,
                                                           firstTestResult: wordNote.firstTestResult,
                                                           lastTestResult: wordNote.lastTestResult)

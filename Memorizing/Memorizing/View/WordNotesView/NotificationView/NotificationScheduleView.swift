@@ -20,8 +20,8 @@ struct NotificationScheduleView: View {
                 .padding(.horizontal, 5)
                 .padding(.top, 10)
             List {
-                ForEach(notiManager.pendingRequests, id: \.self) {request in
-                    ScheduleCell(notiId: request.identifier)
+                ForEach($notiManager.pendingRequests, id: \.self) {$request in
+                    ScheduleCell(pendingRequest: $request)
                         .listRowSeparator(.hidden)
                         .padding(.horizontal, 5)
                 }
@@ -47,7 +47,9 @@ struct NotificationScheduleView: View {
                      withCancelButton: true,
                      cancelButtonText: "취소")
         .task {
-            await notiManager.getPendingRequests()
+            for noti in notiManager.pendingRequests {
+                print("예정된 알림: \(noti.identifier)")
+            }
         }
         .navigationTitle("예정 알림")
     } // body

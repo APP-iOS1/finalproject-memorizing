@@ -62,6 +62,7 @@ struct ContentView: View {
             try? await notiManager.requestAuthorization()
             if Auth.auth().currentUser != nil {
                 await authStore.signInDidExistingAuth()
+                await notiManager.getPendingRequests()
 
             }
         }

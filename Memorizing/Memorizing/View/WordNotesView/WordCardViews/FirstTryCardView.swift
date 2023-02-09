@@ -123,6 +123,7 @@ struct FirstTryCardView: View {
                                         firstTestResult: firstTestResult,
                                         lastTestResult: nil
                                     )
+                                    myWordNote.nextStudyDate = Date() + Double(1200)  // 나중에 리펙토링할것
                                     coreDataStore.plusRepeatCount(note: myWordNote,
                                                                   firstTestResult: firstTestResult,
                                                                   lastTestResult: nil)

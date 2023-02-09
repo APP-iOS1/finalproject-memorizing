@@ -51,7 +51,6 @@ class AuthStore: UIViewController, ObservableObject {
     func signInDidAuth(email: String, password: String, name: String) async {
         self.errorMessage = ""
         do {
-            self.user = User(id: "", email: "", nickName: "", coin: 0, signInPlatform: User.Platform.kakao.rawValue)
             try await Auth.auth().signIn(withEmail: email, password: password)
             if let result = Auth.auth().currentUser {
                 self.user = User(
