@@ -40,7 +40,7 @@ class AuthStore: UIViewController, ObservableObject {
             self.user = User(
                 id: user.uid,
                 email: user.email ?? "email",
-                nickName: "",
+                nickName: user.displayName ?? "NoName",
                 coin: 0,
                 signInPlatform: User.Platform.google.rawValue
             )
@@ -48,7 +48,7 @@ class AuthStore: UIViewController, ObservableObject {
     }
     
     // MARK: - FirebaseAuth SignIn Function / Auth에 signIn을 진행함
-    func signInDidAuth(email: String, password: String) async {
+    func signInDidAuth(email: String, password: String, name: String) async {
         self.errorMessage = ""
         do {
             self.user = User(id: "", email: "", nickName: "", coin: 0, signInPlatform: User.Platform.kakao.rawValue)
@@ -57,7 +57,7 @@ class AuthStore: UIViewController, ObservableObject {
                 self.user = User(
                     id: result.uid,
                     email: result.email ?? "No Email",
-                    nickName: result.displayName ?? "No Name",
+                    nickName: name,
                     coin: 0,
                     signInPlatform: User.Platform.kakao.rawValue
                 )
@@ -157,7 +157,8 @@ class AuthStore: UIViewController, ObservableObject {
                     )
                     await self.signInDidAuth(
                         email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
-                        password: "\(String(describing: kakaoUser?.id))"
+                        password: "\(String(describing: kakaoUser?.id))",
+                        name: kakaoUser?.kakaoAccount?.profile?.nickname ?? "No Name"
                     )
                 }
             }
@@ -307,7 +308,7 @@ class AuthStore: UIViewController, ObservableObject {
                 self.user?.signInPlatform = docData?["signInPlatform"] as? String ?? User.Platform.google.rawValue
                 self.state = .signedIn
             } else {
-                self.state = .firstIn
+                self.state = .signedIn
                 self.userInfoDidSaveDB(platform: self.user!.signInPlatform)
             }
         } catch {

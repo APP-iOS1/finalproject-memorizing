@@ -48,6 +48,7 @@ struct EditUserView: View {
                             // 이름변경에 성공시 ToastMessage 출력
                             isShownToastMessage
                                 = try await authStore.userInfoDidChangeDB(nickName: nickName)
+                            dismiss()
                         }
                     } label: {
                         Text("변경하기")
@@ -55,9 +56,10 @@ struct EditUserView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .padding(10)
-                            .background(Color.black)
+                            .background(nickName.isEmpty ? Color.gray4 : Color.black)
                             .cornerRadius(10)
                     }
+                    .disabled(nickName.isEmpty)
                 }
                 .padding(.leading, 3)
                 .padding(.vertical, 5)
