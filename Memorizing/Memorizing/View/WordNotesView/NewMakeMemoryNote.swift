@@ -190,7 +190,8 @@ struct NewMakeMemoryNote: View {
                                           noteCategory: noteCategory,
                                           firstTestResult: 0,
                                           lastTestResult: 0,
-                                          updateDate: Date())
+                                          updateDate: Date(),
+                                          nextStudyDate: nil)
                     
                     isToastToggle = true
                     

@@ -55,7 +55,7 @@ class CoreDataStore: ObservableObject {
                  firstTestResult: Double,
                  lastTestResult: Double,
                  updateDate: Date,
-                 nextStudyDate: Date) {
+                 nextStudyDate: Date?) {
         let newNote = NoteEntity(context: manager.context)
         newNote.id = id
         newNote.noteName = noteName
@@ -104,7 +104,7 @@ class CoreDataStore: ObservableObject {
                    firstTestResult: firstTestResult ?? 0,
                    lastTestResult: lastTestResult ?? 0,
                    updateDate: note.updateDate,
-                   nextStudyDate : nextStudyDate
+                   nextStudyDate : nextStudyDate ?? Date()
         )
         for word in words {
             let newWord = WordEntity(context: manager.context)
