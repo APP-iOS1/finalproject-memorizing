@@ -86,7 +86,8 @@ struct WordNotesView: View {
             }
         }
         .customToastMessage(isPresented: $isToastToggle,
-                            message: "새로운 암기장 등록완료!")
+                            message: "새로운 암기장 등록완료!",
+                            delay: 0)
     }
 }
 

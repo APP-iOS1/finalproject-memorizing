@@ -4,13 +4,16 @@ struct CustomToastMessageModifier: ViewModifier {
     
     @Binding var isPresented: Bool
     let message: String
+    var delay: Double
     
     init(
         isPresented: Binding<Bool>,
-        message: String
+        message: String,
+        delay: Double  = 0
     ) {
         _isPresented = isPresented
         self.message = message
+        self.delay = delay
     }
     
     func body(content: Content) -> some View {
@@ -29,7 +32,7 @@ struct CustomToastMessageModifier: ViewModifier {
                             removal: .move(edge: .bottom).combined(with: .opacity)))
                 }
             }
-            .animation(.easeInOut(duration: 0.3), value: isPresented)
+            .animation(.easeInOut(duration: 0.3).delay(delay), value: isPresented)
         }
     }
 }
@@ -38,12 +41,14 @@ extension View {
     
     func customToastMessage(
         isPresented: Binding<Bool>,
-        message: String) -> some View
+        message: String,
+        delay: Double) -> some View
     {
         modifier(
             CustomToastMessageModifier(
                 isPresented: isPresented,
-                message: message))
+                message: message,
+                delay: delay))
     }
 }
 
