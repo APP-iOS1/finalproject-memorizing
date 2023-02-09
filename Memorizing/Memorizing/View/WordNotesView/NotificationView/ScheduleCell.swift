@@ -58,11 +58,6 @@ struct ScheduleCell: View {
             } // HStack
         } // VStack
         .onAppear {
-            print("알림 온어피어")
-            for note in coreDataStore.notes {
-                print("나의 스토어: \(String(describing: note.id))")
-                print("나의 스토어 시간: \(note.nextStudyDate)")
-                  }
             wordNote = coreDataStore.notes.first { $0.id == pendingRequest.identifier }
         }
             

@@ -29,9 +29,6 @@ struct MainView: View {
                 }
             }
             .tag(1)
-            .fullScreenCover(isPresented: $isFirstLogin) {
-                FirstLoginView(isFirstLogin: $isFirstLogin)
-            }
             
             NavigationStack {
                 MarketView()
@@ -95,7 +92,6 @@ struct MainView: View {
             }
         })
         .task {
-            print("MainView: auth: \(authStore.user?.signInPlatform)")
             await authStore.userInfoWillFetchDB()
             await marketStore.marketNotesWillFetchDB()
             await marketStore.myNotesArrayWillFetchDB()

@@ -30,13 +30,6 @@ struct ContentView: View {
                 if authStore.state == .signedOut {
                     LoginView()
                         .environmentObject(marketStore)
-                } else if authStore.state == .firstIn {
-                    OnBoardingTabView(currentTab: self.email.isEmpty
-                                      && self.password.isEmpty
-                                      ? 0
-                                      : 3,
-                                      email: $email,
-                                      password: $password)
                 } else if authStore.state == .check {
                     FirstView()
                 }
