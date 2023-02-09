@@ -32,6 +32,52 @@ struct MainView: View {
             .fullScreenCover(isPresented: $isFirstLogin) {
                 FirstLoginView(isFirstLogin: $isFirstLogin)
             }
+//            .overlay {
+//                // 최초 로그인시에만 보이는 튜토리얼 화면
+//                if firstLogin == nil {
+//                    Color.black
+//                        .opacity(0.6)
+//                        .edgesIgnoringSafeArea(.all)
+//                        .overlay {
+//                            Text("우측 아래에 + 버튼을 눌러서\n첫 암기장을 만들기 시작해보세요!")
+//                                .font(.headline)
+//                                .foregroundColor(.white)
+//                                .multilineTextAlignment(.leading)
+//                                .offset(x: UIScreen.main.bounds.width * 0.02,
+//                                        y: UIScreen.main.bounds.height * 0.24)
+//                        }
+//                        .overlay {
+//                            Circle()
+//                                .foregroundColor(.mainBlue)
+//                                .frame(width: 85, height: 85)
+//                                .overlay {
+//                                    Image(systemName: "plus")
+//                                        .foregroundColor(.white)
+//                                        .font(.title)
+//                                        .bold()
+//                                }
+//                                .shadow(radius: 1, x: 1, y: 1)
+//                                .offset(x: UIScreen.main.bounds.width * 0.36,
+//                                        y: UIScreen.main.bounds.height * 0.3525)
+//                        }
+//                        .onTapGesture {
+//                            // 1초 뒤부터 onTapGesture 활성화 되도록 함
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+//                                firstLogin = true
+//                            }
+//                        }
+//                }
+//            }
+            
+            NavigationStack {
+                MarketView()
+            }.tabItem {
+                VStack {
+                    Image(systemName: "basket")
+                    Text("마켓")
+                }
+            }
+            .tag(2)
             .overlay {
                 // 최초 로그인시에만 보이는 튜토리얼 화면
                 if firstLogin == nil {
@@ -39,7 +85,7 @@ struct MainView: View {
                         .opacity(0.6)
                         .edgesIgnoringSafeArea(.all)
                         .overlay {
-                            Text("우측 아래에 + 버튼을 눌러서\n첫 암기장을 만들기 시작해보세요!")
+                            Text("내 암기장을 판매하여 포인트를 얻을 수 있어요")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.leading)
@@ -68,16 +114,6 @@ struct MainView: View {
                         }
                 }
             }
-            
-            NavigationStack {
-                MarketView()
-            }.tabItem {
-                VStack {
-                    Image(systemName: "basket")
-                    Text("마켓")
-                }
-            }
-            .tag(2)
             
             NavigationStack {
                 MyPageView()

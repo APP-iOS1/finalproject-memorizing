@@ -40,7 +40,9 @@ class CoreDataStore: ObservableObject {
     let manager = CoreDataManager.instance
     let database = Firestore.firestore()
     @Published var notes: [NoteEntity] = []
-    @Published var myWordNotes : [MyWordNote] = []
+    @Published var myWordNotes: [MyWordNote] = []
+    // 로그인 로그아웃 빠르게 반복 시 버그 발견 (해당 변수로 fix)
+    @Published var progressBool: Bool = true
     
     init() {
         getNotes()
@@ -143,34 +145,30 @@ class CoreDataStore: ObservableObject {
         
         request.sortDescriptors = [repeatCountFilter, categoryFilter]
         
-        DispatchQueue.main.async {
-            
-            self.notes.removeAll()
-            
             do {
                 self.notes = try self.manager.context.fetch(request)
             } catch {
                 print("Error fetching. \(error.localizedDescription)")
             }
         }
-    }
+    
     
     func save() {
         manager.save()
     }
     
     func deleteAll() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
-        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        let fetchNoteRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "NoteEntity")
+        let deleteNoteRequest = NSBatchDeleteRequest(fetchRequest: fetchNoteRequest)
 
         do {
-            try manager.context.execute(batchDeleteRequest)
+            try manager.context.execute(deleteNoteRequest)
+            save()
+
         } catch let error as NSError {
-            print("Error: \(error)")
+            // TODO: handle the error
+            print(" delete all error occured: \(error.localizedDescription)")
         }
-        
-        save()
-        getNotes()
     }
     
     func syncronizeNotes() async {
@@ -295,6 +293,7 @@ class CoreDataStore: ObservableObject {
         
         manager.context.delete(word)
         save()
+        getNotes()
     }
     
     // MARK: - 코어데이터 상에서도 note 자체를 지워줘야 하는데.. 왜 업데이트가 안되는거지?

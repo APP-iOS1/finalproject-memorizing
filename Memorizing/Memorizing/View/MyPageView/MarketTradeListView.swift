@@ -35,7 +35,6 @@ struct MarketTradeListView: View {
             // MARK: - 구매목록 / 판매목록 토글
             VStack(spacing: 5) {
                 HStack(spacing: 12) {
-                    
                     Text("구매목록")
                         .font(.headline)
                         .bold()
@@ -55,7 +54,6 @@ struct MarketTradeListView: View {
                         .onTapGesture {
                             marketTradeToggle = false
                         }
-                    
                     Spacer()
                 }
                 .padding(.leading, 23)

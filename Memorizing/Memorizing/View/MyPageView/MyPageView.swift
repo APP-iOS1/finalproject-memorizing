@@ -15,6 +15,7 @@ struct MyPageView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var marketStore: MarketStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @State private var signOutAlertToggle: Bool = false
     @State private var isShowingWeb: Bool = false
     @State private var isShowingKakaoTalk: Bool = false
@@ -250,6 +251,7 @@ struct MyPageView: View {
                      message: "정말 로그아웃 하시겠습니까?",
                      primaryButtonTitle: "로그아웃",
                      primaryAction: {
+            coreDataStore.deleteAll()
             authStore.signOutDidAuth()
             notiManager.removeAllRequest()
             myNoteStore.myWords = []
