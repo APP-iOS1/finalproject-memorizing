@@ -51,6 +51,8 @@ struct MarketView: View {
                 // MARK: - 카테고리 버튼들
                 MarketViewCategoryButton(selectedCategory: $selectedCategory,
                                          categoryArray: MarketView.categoryArray)
+//                .frame(width: UIScreen.main.bounds.width * 0.9,
+//                       height: UIScreen.main.bounds.height * 0.05)
                 
                 // MARK: - 정렬기준 선택하기
                 HStack(spacing: 10) {
