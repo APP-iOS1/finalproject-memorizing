@@ -27,7 +27,7 @@ struct WordNotesView: View {
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
                     
-                    if myNoteStore.myWordNotes.isEmpty {
+                    if coreDataStore.notes.isEmpty {
                         VStack {
                             Spacer()
                                 .frame(height: UIScreen.main.bounds.height * 0.23)
@@ -57,7 +57,7 @@ struct WordNotesView: View {
                     
                     
                 } else if memoryStepToggle == false && reviewStepToggle == true {
-                    if myNoteStore.myWordNotes.isEmpty {
+                    if coreDataStore.notes.isEmpty {
                         VStack {
                             Spacer()
                                 .frame(height: UIScreen.main.bounds.height * 0.23)

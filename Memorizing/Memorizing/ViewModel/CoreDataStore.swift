@@ -54,7 +54,8 @@ class CoreDataStore: ObservableObject {
                  noteCategory: String,
                  firstTestResult: Double,
                  lastTestResult: Double,
-                 updateDate: Date) {
+                 updateDate: Date,
+                 nextStudyDate: Date?) {
         let newNote = NoteEntity(context: manager.context)
         newNote.id = id
         newNote.noteName = noteName
@@ -64,6 +65,7 @@ class CoreDataStore: ObservableObject {
         newNote.firstTestResult = firstTestResult
         newNote.lastTestResult = lastTestResult
         newNote.updateDate = updateDate
+        newNote.nextStudyDate = nextStudyDate
         
         save()
         getNotes()
@@ -90,7 +92,8 @@ class CoreDataStore: ObservableObject {
                                          words: [Word],
                                          _ repeatCount: Int? = nil,
                                          firstTestResult: Double? = nil,
-                                         lastTestResult: Double? = nil)
+                                         lastTestResult: Double? = nil,
+                                         nextStudyDate: Date? = nil)
     {
         let returnedNote = returnNote(
                    id: note.id,
@@ -100,7 +103,8 @@ class CoreDataStore: ObservableObject {
                    repeatCount: repeatCount ?? 0,
                    firstTestResult: firstTestResult ?? 0,
                    lastTestResult: lastTestResult ?? 0,
-                   updateDate: note.updateDate
+                   updateDate: note.updateDate,
+                   nextStudyDate : nextStudyDate ?? Date()
         )
         for word in words {
             let newWord = WordEntity(context: manager.context)
@@ -123,7 +127,8 @@ class CoreDataStore: ObservableObject {
                     repeatCount: Int,
                     firstTestResult: Double,
                     lastTestResult: Double,
-                    updateDate: Date) -> NoteEntity {
+                    updateDate: Date,
+                    nextStudyDate: Date) -> NoteEntity {
         let newNote = NoteEntity(context: manager.context)
         newNote.id = id
         newNote.noteName = noteName
@@ -133,6 +138,7 @@ class CoreDataStore: ObservableObject {
         newNote.firstTestResult = firstTestResult
         newNote.lastTestResult = lastTestResult
         newNote.updateDate = updateDate
+        newNote.nextStudyDate = nextStudyDate
         save()
         return newNote
     }
@@ -193,6 +199,8 @@ class CoreDataStore: ObservableObject {
                 let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0.0
                 let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                 let updateDate: Date = createdAtTimeStamp.dateValue()
+                let nextStudyTimeStamp: Timestamp = docData["nextStudyDate"] as? Timestamp ?? Timestamp()
+                let nextStudyDate: Date = nextStudyTimeStamp.dateValue()
                 if id == "" {
                     continue
                 }
@@ -203,7 +211,8 @@ class CoreDataStore: ObservableObject {
                                                   repeatCount: repeatCount,
                                                   firstTestResult: firstTestResult,
                                                   lastTestResult: lastTestResult,
-                                                  updateDate: updateDate)
+                                                  updateDate: updateDate,
+                                                  nextStudyDate: nextStudyDate )
                 await MainActor.run {
                     self.myWordNotes.append(note)
                 }
@@ -253,7 +262,7 @@ class CoreDataStore: ObservableObject {
         
         for note in myWordNotes {
             let words = await self.syncronizeWords(id: note.id)
-            addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult)
+            addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult, nextStudyDate: note.nextStudyDate)
         }
     }
     
