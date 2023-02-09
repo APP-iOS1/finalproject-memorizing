@@ -40,7 +40,7 @@ class AuthStore: UIViewController, ObservableObject {
             self.user = User(
                 id: user.uid,
                 email: user.email ?? "email",
-                nickName: user.displayName ?? "NoName",
+                nickName: "signExistingName",
                 coin: 0,
                 signInPlatform: User.Platform.google.rawValue
             )
@@ -49,6 +49,7 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - FirebaseAuth SignIn Function / Auth에 signIn을 진행함
     func signInDidAuth(email: String, password: String, name: String) async {
+        print("카카오 로그인 이름: \(name)")
         self.errorMessage = ""
         do {
             try await Auth.auth().signIn(withEmail: email, password: password)
@@ -62,6 +63,8 @@ class AuthStore: UIViewController, ObservableObject {
                 )
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
+                
+                print("signInDidAuth finish")
             }
         } catch {
             errorMessage = "로그인 정보가 맞지 않습니다."
@@ -74,31 +77,30 @@ class AuthStore: UIViewController, ObservableObject {
     // MARK: - GoogleAuth SignIN Function
     func signInDidGoogleAuth() async {
         // 사전 로그인 기록이 있다면,
-            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-            let configuration = GIDConfiguration(clientID: clientID)
-            
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-            guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-        self.user = User(id: "", email: "", nickName: "", coin: 0, signInPlatform: User.Platform.google.rawValue)
-
-            GIDSignIn.sharedInstance.signIn(
-                with: configuration,
-                presenting: rootViewController
-            ) { [unowned self] user, error in
-                Task {
-                    await authenticateUser(for: user, with: error)
-                    
-                    guard error == nil else { return }
-                    guard let user = user else { return }
-                    self.user = User(
-                        id: Auth.auth().currentUser?.uid ?? "No ID",
-                        email: user.profile?.email ?? "No Email",
-                        nickName: user.profile?.name ?? "No name",
-                        coin: 0,
-                        signInPlatform: User.Platform.google.rawValue
-                    )
-                    UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-                }
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        let configuration = GIDConfiguration(clientID: clientID)
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
+        
+        GIDSignIn.sharedInstance.signIn(
+            with: configuration,
+            presenting: rootViewController
+        ) { [unowned self] user, error in
+            Task {
+                await authenticateUser(for: user, with: error)
+                
+                guard error == nil else { return }
+                guard let user = user else { return }
+                self.user = User(
+                    id: Auth.auth().currentUser?.uid ?? "No ID",
+                    email: user.profile?.email ?? "No Email",
+                    nickName: user.profile?.name ?? "No name",
+                    coin: 0,
+                    signInPlatform: User.Platform.google.rawValue
+                )
+                UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
+            }
         }
     }
     
@@ -157,7 +159,7 @@ class AuthStore: UIViewController, ObservableObject {
                     await self.signInDidAuth(
                         email: "Kakao_" + "\(kakaoUser?.kakaoAccount?.email ?? "No Email")",
                         password: "\(String(describing: kakaoUser?.id))",
-                        name: kakaoUser?.kakaoAccount?.profile?.nickname ?? "No Name"
+                        name: "\(kakaoUser?.kakaoAccount?.profile?.nickname ?? "No Name")"
                     )
                 }
             }
@@ -295,7 +297,7 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - FetchUser Function / FireStore-DB에서 UserInfo를 불러옴
     func userInfoWillFetchDB() async {
-       
+        print("fetch")
         do {
             let document = try await database.collection("users").document(Auth.auth().currentUser?.uid ?? "").getDocument()
             if document.exists {
@@ -334,7 +336,7 @@ class AuthStore: UIViewController, ObservableObject {
     func deleteAccount() async {
         self.errorMessage = ""
         let user = Auth.auth().currentUser
-
+        
         do {
             try await user?.delete()
             if self.user?.signInPlatform == User.Platform.kakao.rawValue {
@@ -385,7 +387,7 @@ class AuthStore: UIViewController, ObservableObject {
             print("plusUserPoint error occured: \(error.localizedDescription)")
         }
         
-
+        
         
     }
 }
