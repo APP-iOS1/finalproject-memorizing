@@ -84,9 +84,17 @@ extension AuthStore: ASAuthorizationControllerDelegate {
             )
             Task {
                 do {
-                    self.user = User(id: "", email: "", nickName: "", coin: 0, signInPlatform: User.Platform.apple.rawValue)
                     let result = try await Auth.auth().signIn(with: credential)
-                    
+                    print("애플 credential에서 뽑은 fullName: \(String(describing: appleIDCredential.fullName))")
+                    print("애플 credential에서 뽑은 givenName: \(String(describing: appleIDCredential.fullName?.givenName))")
+                    print("애플 credential에서 뽑은 familyName: \(String(describing: appleIDCredential.fullName?.familyName))")
+                    print("애플 credential에서 뽑은 givenName: \(String(describing: appleIDCredential.fullName?.givenName))")
+                    print("애플 credential에서 뽑은 description: \(String(describing: appleIDCredential.fullName?.description))")
+                    print("애플 credential에서 뽑은 namePrefix: \(String(describing: appleIDCredential.fullName?.namePrefix))")
+                    print("애플 credential에서 뽑은 nameSuffix: \(String(describing: appleIDCredential.fullName?.nameSuffix))")
+                    print("애플 currentUser에서 뽑은 displayName: \(String(describing: result.user.displayName))")
+                    print("애플 credential에서 뽑은 email: \(String(describing: appleIDCredential.email))")
+
                     self.user = User(
                         id: result.user.uid,
                         email: "\(result.user.email ?? "NO Email")",

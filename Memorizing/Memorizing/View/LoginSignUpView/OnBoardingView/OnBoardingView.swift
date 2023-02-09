@@ -31,7 +31,7 @@ struct OnBoardingView: View {
             if data.id == 3 {
                 Button {
                     Task.init {
-                        await authStore.signInDidAuth(email: email, password: password)
+                        await authStore.signInDidAuth(email: email, password: password, name: "")
                     }
                 } label: {
                     Text("메모라이징 시작하기")
