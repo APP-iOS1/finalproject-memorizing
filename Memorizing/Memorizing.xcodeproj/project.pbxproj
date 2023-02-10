@@ -71,6 +71,7 @@
 		52DE9D882966FAFB0037F64A /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE9D862966FAFB0037F64A /* TextFieldModifier.swift */; };
 		661BD91E2987974000F34317 /* NotificationScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661BD91D2987974000F34317 /* NotificationScheduleView.swift */; };
 		661BD9202987974E00F34317 /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661BD91F2987974E00F34317 /* ScheduleCell.swift */; };
+		662EEB142996394C00C7BAE7 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662EEB132996394C00C7BAE7 /* SplashView.swift */; };
 		6660EEBF2991D91700D8B72A /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 6660EEBE2991D91700D8B72A /* KakaoSDKTalk */; };
 		66982A0C297787A30052269D /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66982A0B297787A30052269D /* AuthStore.swift */; };
 		66982A132977A7660052269D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 66982A122977A7660052269D /* GoogleSignIn */; };
@@ -149,6 +150,7 @@
 		52DE9D862966FAFB0037F64A /* TextFieldModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
 		661BD91D2987974000F34317 /* NotificationScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduleView.swift; sourceTree = "<group>"; };
 		661BD91F2987974E00F34317 /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
+		662EEB132996394C00C7BAE7 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		66982A0B297787A30052269D /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		66982A0D297787AF0052269D /* MyNoteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteStore.swift; sourceTree = "<group>"; };
 		66982A162977B6820052269D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				52D8F23F2965F2C600755E5A /* ContentView.swift */,
+				662EEB132996394C00C7BAE7 /* SplashView.swift */,
 				488F0AA22967E802007EAAC1 /* FirstView.swift */,
 				52D8F2612965F72600755E5A /* MainView.swift */,
 				52D8F24E2965F2F500755E5A /* WordNotesView */,
@@ -545,6 +548,7 @@
 				48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */,
 				52D8F2522965F37E00755E5A /* WordModel.swift in Sources */,
 				52BCE8D62966915700A85A1F /* View+CornerRadius.swift in Sources */,
+				662EEB142996394C00C7BAE7 /* SplashView.swift in Sources */,
 				523C30DD2979195E00FAE229 /* UserModel.swift in Sources */,
 				52D8F25E2965F67C00755E5A /* MyPageView.swift in Sources */,
 				52D8F2572965F56300755E5A /* MarketStore.swift in Sources */,
