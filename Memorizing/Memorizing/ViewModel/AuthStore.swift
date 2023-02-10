@@ -42,7 +42,7 @@ class AuthStore: UIViewController, ObservableObject {
                 email: user.email ?? "email",
                 nickName: "signExistingName",
                 coin: 0,
-                signInPlatform: User.Platform.google.rawValue
+                signInPlatform: User.Platform.kakao.rawValue
             )
         }
     }
@@ -61,6 +61,7 @@ class AuthStore: UIViewController, ObservableObject {
                     coin: 0,
                     signInPlatform: User.Platform.kakao.rawValue
                 )
+                
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
                 

@@ -10,26 +10,21 @@ import FirebaseAuth
 // MARK: Login 상태에 따라 LoginView 또는 TabView를 보여주는 View
 struct ContentView: View {
     @EnvironmentObject var authStore: AuthStore
-    @StateObject var marketStore: MarketStore = MarketStore()
     @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var coreDataStore: CoreDataStore
-    @State var email: String
-    @State var password: String
     
     var body: some View {
         VStack {
-            if Auth.auth().currentUser != nil {
-                if coreDataStore.progressBool {
+            if authStore.user != nil {
+//                if coreDataStore.progressBool {
                         MainView()
-                            .environmentObject(marketStore)
-                } else {
-                    ProgressView()
-                }
+//                } else {
+//                ProgressView()
+//             }
                 
             } else {
                 if authStore.state == .signedOut {
                     LoginView()
-                        .environmentObject(marketStore)
                 } else if authStore.state == .check {
                     FirstView()
                 }
@@ -41,11 +36,11 @@ struct ContentView: View {
              if newValue != nil {
                 // CoreData 서버에서 페치해오기
                 Task {
-                    coreDataStore.progressBool = false
+              //      coreDataStore.progressBool = false
                     await coreDataStore.syncronizeNotes()
                     await coreDataStore.saveNotesInCoreData()
                     coreDataStore.getNotes()
-                    coreDataStore.progressBool = true
+               //     coreDataStore.progressBool = true
                 }
             }
             
@@ -53,18 +48,14 @@ struct ContentView: View {
         .task {
             // 알림 권한 여부 확인
             try? await notiManager.requestAuthorization()
-            if Auth.auth().currentUser != nil {
-                await authStore.signInDidExistingAuth()
-                await notiManager.getPendingRequests()
-
-            }
+            await notiManager.getPendingRequests()
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(email: "", password: "")
+        ContentView()
             .environmentObject(AuthStore())
             .environmentObject(NotificationManager())
     }

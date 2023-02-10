@@ -46,7 +46,7 @@ struct MemorizingApp: App {
     var body: some Scene {
         WindowGroup {
             
-            ContentView(email: "", password: "")
+            SplashView()
                 .environmentObject(authStore)
                 .environmentObject(myNoteStore)
                 .environmentObject(marketStore)
