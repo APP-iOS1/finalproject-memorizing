@@ -15,7 +15,8 @@ struct EditListView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var isShowingAddView = false
-    @State private var isOnChangeToastToggle = false
+    @State private var wordAddRestrictionToast = false
+    @State private var wordAddToast = false
     @State private var showingAlert = false
     @State private var todayDate = Date()
     @State private var isWordCountCheckToggle = false
@@ -146,13 +147,15 @@ struct EditListView: View {
                     }
                     .shadow(radius: 1, x: 1, y: 1)
             }
-            .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+            .offset(x: UIScreen.main.bounds.width * 0.36,
+                    y: UIScreen.main.bounds.height * 0.33)
             .sheet(isPresented: $isShowingAddView, content: {
                 AddWordView(wordNote: wordNote,
-                            isOnChangeToastToggle: $isOnChangeToastToggle)
-//                .customToastMessage(isPresented: $isToastToggle,
-//                                    message: "단어 저장 완료!",
-//                                    delay: 0)
+                            wordAddRestrictionToast: $wordAddRestrictionToast,
+                            wordAddToast: $wordAddToast)
+                .AddWordToastMessage(isPresented: $wordAddToast,
+                                    message: "암기 항목이 등록되었습니다!",
+                                    delay: 1)
             })
             .customAlert(isPresented: $isWordCountCheckToggle,
                          title: "암기장 내용 초과",
@@ -162,6 +165,12 @@ struct EditListView: View {
             },
                          withCancelButton: false,
                          cancelButtonText: "아니요")
+        }
+        .onAppear {
+            print("EditListView onAppear")
+        }
+        .onDisappear {
+            print("EditListView onDisappear")
         }
         .toolbar {
             // MARK: 뒤로가기 버튼
@@ -194,7 +203,7 @@ struct EditListView: View {
         }
         .navigationTitle("나의 암기장")
         .navigationBarTitleDisplayMode(.inline)
-        .customToastMessage(isPresented: $isOnChangeToastToggle,
+        .customToastMessage(isPresented: $wordAddRestrictionToast,
                             message: "더 이상 등록할 수 없습니다",
                             delay: 0.5)
         // MARK: - 암기장 삭제 - 재혁추가

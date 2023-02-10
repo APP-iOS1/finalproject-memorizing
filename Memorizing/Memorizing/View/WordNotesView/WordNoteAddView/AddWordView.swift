@@ -29,8 +29,8 @@ struct AddWordView: View {
     @State private var wordMeaning: String = ""
     @State private var wordLevel: Int = 0
     @State private var displayLists: Bool = false
-    @State private var addWordToast: Bool = false
-    @Binding var isOnChangeToastToggle: Bool
+    @Binding var wordAddRestrictionToast: Bool
+    @Binding var wordAddToast: Bool
     
     @State private var isWordCountCheckToggle = false
     
@@ -43,7 +43,8 @@ struct AddWordView: View {
                     VStack(alignment: .leading) {
                         // MARK: - 유형 제거. 일반 암기장 작성 양식
                         VStack(alignment: .leading, spacing: 20) {
-                            HStack{
+                            HStack {
+                                // MARK:
                                 HStack {
                                     Text("하나의 암기장에 암기항목은 ")
                                     + Text("최대 50개 ")
@@ -90,7 +91,6 @@ struct AddWordView: View {
                                     .fontWeight(.medium)
                                     .font(.footnote)
                                     .multilineTextAlignment(.leading)
-                                    
                             }
                             
                             VStack(alignment: .leading) {
@@ -157,7 +157,8 @@ struct AddWordView: View {
                             wordString = ""
                             wordMeaning = ""
                             wordLevel = 0
-                            addWordToast = true
+                            
+                            wordAddToast = true
                         } else {
                             isWordCountCheckToggle.toggle()
                         }
@@ -169,35 +170,6 @@ struct AddWordView: View {
                                                         || words.count >= 100
                                                         ? "Gray4"
                                                         : "MainBlue"))
-                            .overlay {
-                                if addWordToast {
-                                    HStack {
-                                        Image("LogoWhite")
-                                            .resizable()
-                                            .frame(width: UIScreen.main.bounds.size.width * 0.04,
-                                                   height: UIScreen.main.bounds.size.width * 0.03)
-                                            .padding(.leading, 7)
-                                        
-                                        Spacer()
-                                        
-                                        Text("단어 저장 완료!")
-                                            .foregroundColor(.primary)
-                                            .colorInvert()
-                                            .font(.footnote)
-                                            .bold()
-                                        
-                                        Spacer()
-                                        
-                                    }
-                                    .task {
-                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                                            addWordToast = false
-                                        }
-                                    }
-                                    .padding(10)
-                                    .modifier(CustomButtonStyle(backgroundColor: "MainDarkBlue"))
-                                }
-                            }
                     }
                     .disabled(wordString.isEmpty
                               || wordMeaning.isEmpty
@@ -205,10 +177,16 @@ struct AddWordView: View {
                 }
             }
         }
+        .onAppear {
+            print("AddWordView onAppear")
+        }
+        .onDisappear {
+            print("AddWordView onDisappear")
+        }
         .padding()
         .onChange(of: wordNote.words?.count == 50) { _ in
             dismiss()
-            isOnChangeToastToggle = true
+            wordAddRestrictionToast = true
         }
         // MARK: - Section1 - 타이틀 및 취소/저장 버튼
         .toolbar {

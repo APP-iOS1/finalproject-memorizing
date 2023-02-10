@@ -40,6 +40,8 @@
 		484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657E296733F900C56E87 /* FaceProgressView.swift */; };
 		488E7030299351CF008CA0D5 /* ShakeEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */; };
 		488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA22967E802007EAAC1 /* FirstView.swift */; };
+		4897B1F92995698F00A0305B /* AddWordToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4897B1F82995698F00A0305B /* AddWordToastMessage.swift */; };
+		4897B1FB299569A000A0305B /* AddWordToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4897B1FA299569A000A0305B /* AddWordToastMessageModifier.swift */; };
 		48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */; };
 		48A9CDF4298E194700CF1D27 /* CustomToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */; };
 		48D86B0B2977B8770085A4B5 /* MarketViewSheetReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */; };
@@ -118,6 +120,8 @@
 		484D657E296733F900C56E87 /* FaceProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceProgressView.swift; sourceTree = "<group>"; };
 		488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffectModifier.swift; sourceTree = "<group>"; };
 		488F0AA22967E802007EAAC1 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
+		4897B1F82995698F00A0305B /* AddWordToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordToastMessage.swift; sourceTree = "<group>"; };
+		4897B1FA299569A000A0305B /* AddWordToastMessageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordToastMessageModifier.swift; sourceTree = "<group>"; };
 		48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToastMessageModifier.swift; sourceTree = "<group>"; };
 		48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToastMessage.swift; sourceTree = "<group>"; };
 		48D86B0A2977B8770085A4B5 /* MarketViewSheetReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewSheetReviews.swift; sourceTree = "<group>"; };
@@ -229,6 +233,8 @@
 				48238A8C298D1A25000E1709 /* CustomAlert.swift */,
 				48A9CDF2298E194700CF1D27 /* CustomToastMessage.swift */,
 				48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */,
+				4897B1F82995698F00A0305B /* AddWordToastMessage.swift */,
+				4897B1FA299569A000A0305B /* AddWordToastMessageModifier.swift */,
 				488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */,
 				1865830829949476009B4119 /* DetermineDevice.swift */,
 			);
@@ -563,6 +569,7 @@
 				5280DDF82967248E00C959CA /* FirstTryCardView.swift in Sources */,
 				66982A25297A24BF0052269D /* SignInWithAppleButton.swift in Sources */,
 				661BD9202987974E00F34317 /* ScheduleCell.swift in Sources */,
+				4897B1FB299569A000A0305B /* AddWordToastMessageModifier.swift in Sources */,
 				3F2002742967551400FCFC3A /* NotificationManager.swift in Sources */,
 				F28462962988A53000384255 /* CoreDataStore.swift in Sources */,
 				F29235F32989761F00F15E64 /* WordNoteProtocol.swift in Sources */,
@@ -571,6 +578,7 @@
 				484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */,
 				951F7A3E29669F2B00976337 /* EditUserView.swift in Sources */,
 				52D8F25A2965F63700755E5A /* WordNotesView.swift in Sources */,
+				4897B1F92995698F00A0305B /* AddWordToastMessage.swift in Sources */,
 				523C30DA29790ECF00FAE229 /* MyWordNoteModel.swift in Sources */,
 				484D657A29669E6600C56E87 /* MarketViewAddButton.swift in Sources */,
 				18C4485E2977C48000FEB345 /* hideKeyboradExtension.swift in Sources */,
