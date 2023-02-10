@@ -17,14 +17,15 @@ struct SplashView: View {
             if isActive {
                 ContentView()
             } else {
-                ProgressView()
+                Image("LoginTitle")
+                    .animation(.spring(), value: true)
             }
         } // VStack
         .task {
             if Auth.auth().currentUser != nil {
                 await authStore.signInDidExistingAuth()
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 self.isActive = true
             }
         }
