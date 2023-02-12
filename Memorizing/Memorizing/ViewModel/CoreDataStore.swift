@@ -170,6 +170,7 @@ class CoreDataStore: ObservableObject {
         do {
             try manager.context.execute(deleteNoteRequest)
             save()
+            getNotes()
 
         } catch let error as NSError {
             // TODO: handle the error
