@@ -170,6 +170,7 @@ class CoreDataStore: ObservableObject {
         do {
             try manager.context.execute(deleteNoteRequest)
             save()
+            getNotes()
 
         } catch let error as NSError {
             // TODO: handle the error
@@ -262,7 +263,10 @@ class CoreDataStore: ObservableObject {
         
         for note in myWordNotes {
             let words = await self.syncronizeWords(id: note.id)
-            addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult, nextStudyDate: note.nextStudyDate)
+//            DispatchQueue.main.async {
+                self.addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult, nextStudyDate: note.nextStudyDate)
+//            }
+            
         }
     }
     

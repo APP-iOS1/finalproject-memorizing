@@ -11,6 +11,7 @@ import Combine
 struct EditUserView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @State private var nickName: String = ""
     @State private var isShownDeleteAccountAlert: Bool = false
     @State private var isShownSignOutAlert: Bool = false
@@ -102,6 +103,7 @@ struct EditUserView: View {
                      primaryAction: {
                         Task {
                             await authStore.deleteAccount()
+                            coreDataStore.deleteAll()
                         }},
                      withCancelButton: true,
                      cancelButtonText: "취소")
