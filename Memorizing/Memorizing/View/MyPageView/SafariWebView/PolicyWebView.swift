@@ -14,7 +14,7 @@ struct PolicyWebView: UIViewControllerRepresentable {
    
     func makeUIViewController(context: UIViewControllerRepresentableContext<PolicyWebView>) -> SFSafariViewController {
        
-        return SFSafariViewController(url: URL(string: "https://crystalline-honey-179.notion.site/4b2f1810b30e42ba84cd5706622db5cf")!)
+        return SFSafariViewController(url: URL(string: "https://memorizing.notion.site/4b2f1810b30e42ba84cd5706622db5cf")!)
      
     }
     
