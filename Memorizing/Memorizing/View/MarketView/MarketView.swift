@@ -110,8 +110,8 @@ struct MarketView: View {
                         // MARK: - Grid View
                         
                         let columns = [
-                            GridItem(.flexible(), spacing: 0, alignment: nil),
-                            GridItem(.flexible(), spacing: 0, alignment: nil)
+                            GridItem(.flexible(), spacing: 10, alignment: nil),
+                            GridItem(.flexible(), spacing: 10, alignment: nil)
                         ]
                         
                         LazyVGrid(
