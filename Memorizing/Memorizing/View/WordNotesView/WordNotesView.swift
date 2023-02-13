@@ -30,7 +30,6 @@ struct WordNotesView: View {
                     if coreDataStore.notes.isEmpty {
                         VStack {
                             Spacer()
-                                .frame(height: UIScreen.main.bounds.height * 0.23)
                             
                             Text("등록된 암기장이 없습니다")
                                 .padding(.bottom, 5)
@@ -41,6 +40,7 @@ struct WordNotesView: View {
                                 Text(" 를 눌러 단어를 추가해주세요!")
                             }
                             .font(.footnote)
+                            
                             Spacer()
                         }
                         .foregroundColor(Color.gray1)
@@ -60,7 +60,6 @@ struct WordNotesView: View {
                     if coreDataStore.notes.isEmpty {
                         VStack {
                             Spacer()
-                                .frame(height: UIScreen.main.bounds.height * 0.23)
                             
                             Text("등록된 암기장이 없습니다")
                                 .padding(.bottom, 5)
