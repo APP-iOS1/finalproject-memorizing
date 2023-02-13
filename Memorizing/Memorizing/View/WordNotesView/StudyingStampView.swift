@@ -48,51 +48,43 @@ struct StudyingStampView: View {
                     // MARK: - Notification -> 버튼을 눌렀을 시, identifier, title, body, timeInterval등을 설정한 후, 알림을 뿌려줌
                     // 여기서, 망각곡선 방식 혹은 값에 따라 알람 주기 (TimeInterval)를 설정함
                     // 첫 번째, repeatCount / 두 번째, 난이도? (Level)?
-                    if notiManager.isNotiAllow {
                         // 알림 설정 권한 확인
-                        if !notiManager.isGranted {
-                            notiManager.openSetting()  // 알림 설정 창
-                        } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
+                        if (wordNote.repeatCount + 1) < 4 {
                             let newTimeInterval: Double
                             if wordNote.repeatCount + 1 == 2 {
                                 newTimeInterval = 3600
                             } else {
                                 newTimeInterval = 86400
                             }
-                            var localNotification = LocalNotification(
-                                identifier: wordNote.id ?? "No Id",
-                                title: "MEMOrizing 암기 시간",
-                                body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
-                                timeInterval: newTimeInterval,
-                                repeats: false
-                            )
-                            localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
                             
-                            await notiManager.schedule(localNotification: localNotification)
-                            if wordNote.repeatCount == 1 {
-                                await myNoteStore.repeatCountWillBePlusOne(
-                                    wordNote: wordNote,
-                                    nextStudyDate: Date() + Double(3600),
-                                    firstTestResult: wordNote.firstTestResult,
-                                    lastTestResult: wordNote.lastTestResult
+                            if notiManager.isNotiAllow { // 알림 추가
+                                
+                                let localNotification = LocalNotification(
+                                    identifier: wordNote.id ?? "No Id",
+                                    title: "MEMOrizing 암기 시간",
+                                    subtitle: "\(wordNote.noteName ?? "No Name")",
+                                    body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
+                                    timeInterval: newTimeInterval,
+                                    repeats: false,
+                                    scheduleType: .time
                                 )
-                                wordNote.nextStudyDate = Date() + Double(3600)
-                            } else {
-                                await myNoteStore.repeatCountWillBePlusOne(
-                                    wordNote: wordNote,
-                                    nextStudyDate: Date() + Double(86400),
-                                    firstTestResult: wordNote.firstTestResult,
-                                    lastTestResult: wordNote.lastTestResult
-                                )
-                                wordNote.nextStudyDate = Date() + Double(86400)
+                                
+                                await notiManager.schedule(localNotification: localNotification)
+                                await notiManager.getPendingRequests()
                             }
+                            
+                            await myNoteStore.repeatCountWillBePlusOne(
+                                wordNote: wordNote,
+                                nextStudyDate: Date() + newTimeInterval,
+                                firstTestResult: wordNote.firstTestResult,
+                                lastTestResult: wordNote.lastTestResult
+                            )
+                            wordNote.nextStudyDate = Date() + newTimeInterval
                             
                             coreDataStore.plusRepeatCount(note: wordNote,
                                                           firstTestResult: wordNote.firstTestResult,
                                                           lastTestResult: wordNote.lastTestResult)
-                            await notiManager.getPendingRequests()
                             isDismiss.toggle()
-                        }
                     } else {
                         isDismiss.toggle()
                     }

@@ -13,27 +13,32 @@ struct LocalNotification {
     // 1. timeInterval 기능을 사용할 경우!
     internal init(identifier: String,
                   title: String,
+                  subtitle: String,
                   body: String,
                   timeInterval: Double,
-                  repeats: Bool) {
+                  repeats: Bool,
+                  scheduleType: ScheduleType) {
         self.identifier = identifier
         self.title = title
+        self.subtitle = subtitle
         self.body = body
         self.timeInterval = timeInterval
         self.dateComponets = nil
         self.repeats = repeats
-        
         self.scheduleType = .time
     }
     
     // 2. dateComponets를 사용하게 될 경우!
     internal init(identifier: String,
                   title: String,
+                  subtitle: String,
                   body: String,
                   dateComponets: DateComponents,
-                  repeats: Bool) {
+                  repeats: Bool,
+                  scheduleType: ScheduleType) {
         self.identifier = identifier
         self.title = title
+        self.subtitle = subtitle
         self.body = body
         self.timeInterval = nil
         self.dateComponets = dateComponets

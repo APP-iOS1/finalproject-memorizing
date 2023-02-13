@@ -101,22 +101,21 @@ struct FirstTryCardView: View {
                      primaryAction: {
                         Task {
                             if notiManager.isNotiAllow {
-                                if !notiManager.isGranted {
-                                    notiManager.openSetting()
-                                } else {
-                                    // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
-                                    var localNotification = LocalNotification(
-                                        identifier: myWordNote.id ?? "No Id",
-                                        title: "MEMOrizing 암기 시간",
-                                        body: "\(myWordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
-                                        timeInterval: 1200,
-                                        repeats: false
-                                    )
-                                    localNotification.subtitle = "\(myWordNote.noteName ?? "No Name")"
-                                    
+                                // MARK: - 첫 번째, 학습은 TimeInterval을 통해 10분 후 알려주기
+                                let localNotification = LocalNotification(
+                                    identifier: myWordNote.id ?? "No Id",
+                                    title: "MEMOrizing 암기 시간",
+                                    subtitle: "\(myWordNote.noteName ?? "No Name")",
+                                    body: "\(myWordNote.noteName ?? "No Name")" + " 1번째 복습할 시간이에요~!",
+                                    timeInterval: 1200,
+                                    repeats: false,
+                                    scheduleType: .time
+                                )
+                                await notiManager.schedule(localNotification: localNotification)
+                                await notiManager.getPendingRequests()
+                            }
                                     let firstTestResult = totalScore / Double(num * 3)
                                     
-                                    await notiManager.schedule(localNotification: localNotification)
                                     await myNoteStore.repeatCountWillBePlusOne(
                                         wordNote: myWordNote,
                                         nextStudyDate: Date() + Double(1200),
@@ -127,13 +126,8 @@ struct FirstTryCardView: View {
                                     coreDataStore.plusRepeatCount(note: myWordNote,
                                                                   firstTestResult: firstTestResult,
                                                                   lastTestResult: nil)
-                                    await notiManager.getPendingRequests()
                                     isDismiss.toggle()
                                 }
-                            } else {
-                                isDismiss.toggle()
-                            }
-                        }
                      },
                      withCancelButton: false,
                      cancelButtonText: "취소")
