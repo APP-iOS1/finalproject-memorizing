@@ -110,7 +110,7 @@ struct MarketViewSheet: View {
                 .padding(.horizontal, 23)
 
                 // MARK: - 암기장 구매하기 버튼
-                if marketStore.myWordNoteIdArray.contains(wordNote.id) {
+                if marketStore.myWordNoteIdArray.contains(wordNote.id) || wordNote.enrollmentUser == authStore.user?.id {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.gray4)
                         .frame(height: 44)

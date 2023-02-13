@@ -31,7 +31,7 @@ struct MarketViewNoteButton: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.gray4)
-                        .frame(width: UIScreen.main.bounds.width * 0.43)
+                        // .frame(width: UIScreen.main.bounds.width * 0.43)
                     
                     HStack {
                         Rectangle()
