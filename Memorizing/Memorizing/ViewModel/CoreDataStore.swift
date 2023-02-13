@@ -263,7 +263,10 @@ class CoreDataStore: ObservableObject {
         
         for note in myWordNotes {
             let words = await self.syncronizeWords(id: note.id)
-            addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult, nextStudyDate: note.nextStudyDate)
+//            DispatchQueue.main.async {
+                self.addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult, nextStudyDate: note.nextStudyDate)
+//            }
+            
         }
     }
     
