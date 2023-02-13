@@ -29,16 +29,6 @@ struct EditListView: View {
             VStack {
                 VStack(spacing: 5) {
                     
-                    // MARK: 단어장 날짜
-                    HStack {
-                        // FIXME: 날짜 변경
-                        Text("2023.01.18")
-                            .foregroundColor(.gray2)
-                            .font(.caption)
-                        
-                        Spacer()
-                    }
-                    
                     HStack(alignment: .top) {
                         // MARK: 단어장 제목
                         Text("\(wordNote.noteName ?? "No name")")
