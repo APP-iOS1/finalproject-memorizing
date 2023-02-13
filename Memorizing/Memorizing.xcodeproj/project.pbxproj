@@ -16,6 +16,7 @@
 		2645958A29672E87007114B7 /* StudyAgainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958929672E87007114B7 /* StudyAgainView.swift */; };
 		2645958C29673FB0007114B7 /* GoodJobStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958B29673FB0007114B7 /* GoodJobStampView.swift */; };
 		2645958E2967431B007114B7 /* TryAgainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645958D2967431B007114B7 /* TryAgainView.swift */; };
+		26B511BF2999DB740024076A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 26B511BE2999DB740024076A /* FirebaseAnalytics */; };
 		26CC90A429778DA70039981B /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC90A329778DA70039981B /* ReviewModel.swift */; };
 		3F20027029672F3100FCFC3A /* AddListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20026F29672F3100FCFC3A /* AddListRow.swift */; };
 		3F200272296754EB00FCFC3A /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F200271296754EB00FCFC3A /* LocalNotification.swift */; };
@@ -175,6 +176,7 @@
 			files = (
 				66982A1B2977B9BD0052269D /* KakaoSDKCommon in Frameworks */,
 				66982A192977B9BD0052269D /* KakaoSDKAuth in Frameworks */,
+				26B511BF2999DB740024076A /* FirebaseAnalytics in Frameworks */,
 				3F7DA3002987A8A3001EDFC8 /* FirebaseMessaging in Frameworks */,
 				66982A132977A7660052269D /* GoogleSignIn in Frameworks */,
 				66982A152977A7660052269D /* GoogleSignInSwift in Frameworks */,
@@ -427,6 +429,7 @@
 				3F7DA2FF2987A8A3001EDFC8 /* FirebaseMessaging */,
 				3F7DA3012987A8A3001EDFC8 /* FirebaseStorage */,
 				6660EEBE2991D91700D8B72A /* KakaoSDKTalk */,
+				26B511BE2999DB740024076A /* FirebaseAnalytics */,
 			);
 			productName = Memorizing;
 			productReference = 52D8F23A2965F2C600755E5A /* Memorizing.app */;
@@ -827,6 +830,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		26B511BE2999DB740024076A /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F7DA2F82987A8A2001EDFC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
 		3F7DA2F92987A8A3001EDFC8 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3F7DA2F82987A8A2001EDFC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

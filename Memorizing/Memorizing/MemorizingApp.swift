@@ -10,6 +10,7 @@ import FirebaseCore
 import KakaoSDKAuth
 import KakaoSDKCommon
 import Firebase
+import FirebaseAnalytics
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
