@@ -81,6 +81,14 @@ iPhone 14 Pro에서 최적화됨
 
 <br>
 
+## 라이센스
+
+Apache License
+Version 2.0, January 2004  
+http://www.apache.org/licenses/
+
+<br>
+
 ## 프로젝트 참여자
 |  염성필  <br/>[@strongyeom](https://github.com/strongyeom) | 진준호 <br/> [@jincode93](https://github.com/jincode93) | 이종현 <br/> [@JongHyunLee84](https://github.com/JongHyunLee84) |  진태영 <br/>[@elisha0103](https://github.com/elisha0103) |
 | :----------------------------------------------------------: | :---------------------------------------------: | :------: | :-------------------------------------------------: |
