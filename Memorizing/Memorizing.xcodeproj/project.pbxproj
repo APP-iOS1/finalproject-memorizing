@@ -40,7 +40,6 @@
 		484D657A29669E6600C56E87 /* MarketViewAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657929669E6600C56E87 /* MarketViewAddButton.swift */; };
 		484D657F296733F900C56E87 /* FaceProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D657E296733F900C56E87 /* FaceProgressView.swift */; };
 		488E7030299351CF008CA0D5 /* ShakeEffectModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */; };
-		488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F0AA22967E802007EAAC1 /* FirstView.swift */; };
 		4897B1F92995698F00A0305B /* AddWordToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4897B1F82995698F00A0305B /* AddWordToastMessage.swift */; };
 		4897B1FB299569A000A0305B /* AddWordToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4897B1FA299569A000A0305B /* AddWordToastMessageModifier.swift */; };
 		48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */; };
@@ -120,7 +119,6 @@
 		484D657929669E6600C56E87 /* MarketViewAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewAddButton.swift; sourceTree = "<group>"; };
 		484D657E296733F900C56E87 /* FaceProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceProgressView.swift; sourceTree = "<group>"; };
 		488E702F299351CF008CA0D5 /* ShakeEffectModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffectModifier.swift; sourceTree = "<group>"; };
-		488F0AA22967E802007EAAC1 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		4897B1F82995698F00A0305B /* AddWordToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordToastMessage.swift; sourceTree = "<group>"; };
 		4897B1FA299569A000A0305B /* AddWordToastMessageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordToastMessageModifier.swift; sourceTree = "<group>"; };
 		48A9CDF1298E194700CF1D27 /* CustomToastMessageModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToastMessageModifier.swift; sourceTree = "<group>"; };
@@ -290,7 +288,6 @@
 			children = (
 				52D8F23F2965F2C600755E5A /* ContentView.swift */,
 				662EEB132996394C00C7BAE7 /* SplashView.swift */,
-				488F0AA22967E802007EAAC1 /* FirstView.swift */,
 				52D8F2612965F72600755E5A /* MainView.swift */,
 				52D8F24E2965F2F500755E5A /* WordNotesView */,
 				52D8F24F2965F30D00755E5A /* MarketView */,
@@ -529,7 +526,6 @@
 				F2C97D6E2994DA0E00235EE6 /* CoreDataModel.xcdatamodeld in Sources */,
 				3FDC1497297A5EC700AE186F /* EditListView.swift in Sources */,
 				5215A72A298BB1FE00A25EF0 /* InfoPolicy.swift in Sources */,
-				488F0AA32967E802007EAAC1 /* FirstView.swift in Sources */,
 				488E7030299351CF008CA0D5 /* ShakeEffectModifier.swift in Sources */,
 				52BCE8D82966918100A85A1F /* ColorExtension.swift in Sources */,
 				48A9CDF3298E194700CF1D27 /* CustomToastMessageModifier.swift in Sources */,

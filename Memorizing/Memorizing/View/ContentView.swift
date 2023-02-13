@@ -16,19 +16,9 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if authStore.user != nil {
-//                if coreDataStore.progressBool {
-                        MainView()
-//                } else {
-//                ProgressView()
-//             }
-                
+                MainView()
             } else {
-                if authStore.state == .signedOut {
-                    LoginView()
-                } else if authStore.state == .check {
-                    FirstView()
-                }
-                
+                LoginView()
             }
             
         }
@@ -36,11 +26,9 @@ struct ContentView: View {
              if newValue != nil {
                 // CoreData 서버에서 페치해오기
                 Task {
-              //      coreDataStore.progressBool = false
                     await coreDataStore.syncronizeNotes()
                     await coreDataStore.saveNotesInCoreData()
                     coreDataStore.getNotes()
-               //     coreDataStore.progressBool = true
                 }
             }
             

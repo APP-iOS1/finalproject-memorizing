@@ -28,8 +28,6 @@ class AuthStore: UIViewController, ObservableObject {
     enum SignInState {
         case signedIn
         case signedOut
-        case firstIn    // 현기 추가
-        case check    // 현기 추가
     }
     
     let database = Firestore.firestore()

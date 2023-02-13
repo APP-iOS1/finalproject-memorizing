@@ -86,11 +86,6 @@ struct MainView: View {
             }
             .tag(3)
         }
-        .onChange(of: authStore.state, perform: { newValue in
-            if newValue == .firstIn {
-                isFirstLogin.toggle()
-            }
-        })
         .task {
             await authStore.userInfoWillFetchDB()
             await marketStore.marketNotesWillFetchDB()

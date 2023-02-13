@@ -41,7 +41,8 @@ struct MemorizingApp: App {
     @StateObject var coreData: CoreDataStore = CoreDataStore()
     init() {
         // Kakao SDK 초기화
-        KakaoSDK.initSDK(appKey: "f601fab092f88d03d3a95c1b5773efed")
+        let KAKAO_APP_KEY: String = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as? String ?? "KAKAO_APP_KEY is nil"
+        KakaoSDK.initSDK(appKey: KAKAO_APP_KEY)
     }
     
     var body: some Scene {
