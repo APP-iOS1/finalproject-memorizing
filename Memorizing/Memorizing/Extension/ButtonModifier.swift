@@ -16,7 +16,8 @@ struct CustomButtonStyle: ViewModifier {
         content
             .font(.subheadline)
             .foregroundColor(.white)
-            .frame(width: UIScreen.main.bounds.width * 0.77, height: UIScreen.main.bounds.height * 0.056)
+            .frame(width: UIScreen.main.bounds.width * 0.77,
+                   height: UIScreen.main.bounds.height * 0.056)
             .background(Color(backgroundColor))
             .cornerRadius(30)
         

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AVFoundation
 
 struct FirstTryCardView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore

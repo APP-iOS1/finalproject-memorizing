@@ -27,7 +27,7 @@ struct MyPageView: View {
 
             VStack {
     
-    // MARK: - 유저 정보
+                // MARK: - 유저 정보
                 VStack(alignment: .leading) {
                     
                     VStack(alignment: .leading, spacing: 2) {
@@ -97,7 +97,7 @@ struct MyPageView: View {
                 } // 유저정보
                 .padding(.bottom, 18)
                 
-    // MARK: - 유저 버튼
+                // MARK: - 유저 버튼
                 VStack {
                     VStack {
                         Divider()

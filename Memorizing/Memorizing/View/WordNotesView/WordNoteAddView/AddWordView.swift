@@ -177,12 +177,6 @@ struct AddWordView: View {
                 }
             }
         }
-        .onAppear {
-            print("AddWordView onAppear")
-        }
-        .onDisappear {
-            print("AddWordView onDisappear")
-        }
         .padding()
         .onChange(of: wordNote.words?.count == 50) { _ in
             dismiss()

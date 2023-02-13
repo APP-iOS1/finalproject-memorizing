@@ -49,7 +49,6 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - FirebaseAuth SignIn Function / Auth에 signIn을 진행함
     func signInDidAuth(email: String, password: String, name: String) async {
-        print("카카오 로그인 이름: \(name)")
         self.errorMessage = ""
         do {
             try await Auth.auth().signIn(withEmail: email, password: password)
@@ -64,8 +63,6 @@ class AuthStore: UIViewController, ObservableObject {
                 
                 // 기기에 로그인 정보 저장
                 UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-                
-                print("signInDidAuth finish")
             }
         } catch {
             errorMessage = "로그인 정보가 맞지 않습니다."
@@ -298,7 +295,6 @@ class AuthStore: UIViewController, ObservableObject {
     
     // MARK: - FetchUser Function / FireStore-DB에서 UserInfo를 불러옴
     func userInfoWillFetchDB() async {
-        print("fetch")
         do {
             let document = try await database.collection("users").document(Auth.auth().currentUser?.uid ?? "").getDocument()
             if document.exists {

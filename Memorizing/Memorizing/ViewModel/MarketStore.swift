@@ -5,7 +5,6 @@
 //  Created by 진준호 on 2023/01/05.
 //
 
-import Foundation
 import SwiftUI
 import Firebase
 import FirebaseFirestore

@@ -121,7 +121,6 @@ struct WordNotesView: View {
                     }
                     .offset(x: UIScreen.main.bounds.width * 0.36,
                             y: UIScreen.main.bounds.height * 0.33)
-//                    , y: UIScreen.main.bounds.height * 0.33
                     .sheet(isPresented: $isShowingNewMemorySheet) {
                         NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet,
                                           isToastToggle: $isToastToggle)

@@ -5,7 +5,6 @@
 //  Created by 이종현 on 2023/01/31.
 //
 
-import Foundation
 import CoreData
 import SwiftUI
 import FirebaseAuth

@@ -156,12 +156,6 @@ struct EditListView: View {
                          withCancelButton: false,
                          cancelButtonText: "아니요")
         }
-        .onAppear {
-            print("EditListView onAppear")
-        }
-        .onDisappear {
-            print("EditListView onDisappear")
-        }
         .toolbar {
             // MARK: 뒤로가기 버튼
             ToolbarItem(placement: .navigationBarLeading) {

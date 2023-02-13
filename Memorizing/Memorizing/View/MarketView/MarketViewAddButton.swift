@@ -32,7 +32,6 @@ struct MarketViewAddButton: View {
     @State private var selectedNoteWordCount: Int = 0
     
     var body: some View {
-        // FIXME: 왜 LazyVStack으로 하면 Spacer()로 안밀리는가...
         VStack {
             // MARK: - 내 암기장 리스트
             HStack {
