@@ -59,7 +59,7 @@ struct MyPageView: View {
                                 .foregroundColor(.gray1)
                                 .padding(.bottom, 3)
                             
-                            Text("\(myNoteStore.myWordNotes.count)")
+                            Text("\(coreDataStore.notes.count)")
                                 .bold()
                         }
                         .padding(.leading, 8)
@@ -72,7 +72,7 @@ struct MyPageView: View {
                                 .foregroundColor(.gray1)
                                 .padding(.bottom, 3)
                             
-                            Text("\(myNoteStore.calculateStamp(myWordNotes: myNoteStore.myWordNotes))")
+                            Text("\(myNoteStore.calculateStamp(myWordNotes: coreDataStore.notes))")
                                 .bold()
                         }
                         
@@ -277,7 +277,6 @@ struct MyPageView: View {
         func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
             
         }
-        
     }
 }
 
