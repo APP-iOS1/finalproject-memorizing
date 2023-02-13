@@ -220,7 +220,7 @@ struct MyPageView: View {
                     Divider()
                     
                     HStack{
-                        Text("버전 정보 1.0.0")
+                        Text("버전 정보 1.0.2")
                             .font(.footnote)
                             .fontWeight(.medium)
                             .foregroundColor(.gray3)
