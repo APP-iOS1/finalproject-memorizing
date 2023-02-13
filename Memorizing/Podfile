@@ -6,7 +6,7 @@ target 'Memorizing' do
   use_frameworks!
 
   # Pods for Memorizing
-Pod 'Firebase/Analytics'
-Pod 'Firebase/Messaging'
+pod 'Firebase/Analytics'
+pod 'Firebase/Messaging'
 
 end
