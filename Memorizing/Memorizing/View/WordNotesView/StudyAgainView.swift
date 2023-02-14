@@ -20,168 +20,161 @@ struct StudyAgainView: View {
         VStack {
             // if list.isEmpty가 빠졌으니 앱 빌드해서 꺼지는지 확인해보기
             VStack(spacing: 25) {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray4, lineWidth: 1)
-                    .foregroundColor(.white)
-                    // .frame(height: 140)
-                    .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.15)
-                    .overlay {
-                        HStack {
-                            Rectangle()
-                                .cornerRadius(10, corners: [.topLeft, .bottomLeft])
-                                .frame(width: UIScreen.main.bounds.width * 0.04)
-                                .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
-                            
-                            VStack(spacing: 5) {
-                                HStack(alignment: .top) {
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""),
-                                                lineWidth: 1)
-                                        .frame(width: 45, height: 23)
-                                        .overlay {
-                                            Text(myWordNote.noteCategory ?? "No Categoryname")
-                                                .font(.caption2)
-                                        }
-                                    Spacer()
-                                }
-                                .padding(.horizontal, 10)
-                                
-                                HStack {
-                                    HStack {
-                                        Text(myWordNote.noteName ?? "No Notename")
-                                            .foregroundColor(.mainBlack)
-                                            .font(.body)
-                                            .fontWeight(.semibold)
-                                            .padding(.top, 5)
-                                            .padding(.leading, 6)
-                                            .padding(.bottom, 3)
-                                            .lineLimit(1)
-                                        
-                                        Spacer()
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.gray4, lineWidth: 1)
+                        .foregroundColor(.white)
+                        .frame(width: UIScreen.main.bounds.width * 0.9)
+                    
+                    
+                    HStack {
+                        Rectangle()
+                            .cornerRadius(10, corners: [.topLeft, .bottomLeft])
+                            .frame(width: UIScreen.main.bounds.width * 0.04)
+                            .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
+                        
+                        VStack(spacing: 5) {
+                            HStack(alignment: .top) {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""),
+                                            lineWidth: 1)
+                                    .frame(width: 45, height: 23)
+                                    .overlay {
+                                        Text(myWordNote.noteCategory ?? "No Categoryname")
+                                            .font(.caption2)
                                     }
-                                    .frame(width: UIScreen.main.bounds.width * 0.64)
-                                    .padding(.leading, 6)
-                                    .padding(.bottom, 10)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 10)
+                            
+                            HStack {
+                                HStack {
+                                    Text(myWordNote.noteName ?? "No Notename")
+                                        .foregroundColor(.mainBlack)
+                                        .font(.body)
+                                        .fontWeight(.semibold)
+                                        .padding(.top, 5)
+                                        .padding(.leading, 6)
+                                        .padding(.bottom, 3)
+                                        .lineLimit(1)
                                     
                                     Spacer()
                                 }
-                                // MARK: 얼굴 진행도
-                                FaceProgressView(myWordNote: myWordNote)
-                                    .padding(.leading, -5)
-                            }
-//                            .padding(.trailing, 15)
-                        }
-                    }
-                    .overlay {
-                        HStack {
-                            Spacer()
-                            
-                            VStack {
-                                // 학습시작
-                                if myWordNote.repeatCount == 0 {
-                                    NavigationLink {
-                                        // 첫번째 단어 뷰
-                                        FirstTryCardView(myWordNote: myWordNote)
-                                    } label: {
-                                        RoundedRectangle(cornerRadius: 3)
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(coreDataStore.returnColor(category:
-                                                                                        myWordNote.noteCategory ?? ""))
-                                            .overlay {
-                                                VStack(spacing: 6) {
-                                                    Image(systemName: "play.circle")
-                                                        .font(.headline)
-                                                    Text("학습시작")
-                                                        .font(.caption2)
-                                                }
-                                                .foregroundColor(.white)
-                                            }
-                                    }
-                                } else if myWordNote.repeatCount == 1 {
-                                    // 복습시작
-                                    NavigationLink {
-                                        OtherTryCardView(myWordNote: myWordNote)
-                                    } label: {
-                                        RoundedRectangle(cornerRadius: 3)
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(coreDataStore.returnColor(category:
-                                                                                        myWordNote.noteCategory ?? ""))
-                                            .overlay {
-                                                VStack(spacing: 6) {
-                                                    Image(systemName: "play.circle")
-                                                        .font(.title3)
-                                                    Text("복습시작")
-                                                        .font(.caption2)
-                                                }
-                                                .foregroundColor(.white)
-                                            }
-                                    }
-                                } else if myWordNote.repeatCount == 2 {
-                                    NavigationLink {
-                                        OtherTryCardView(myWordNote: myWordNote)
-                                    } label: {
-                                        RoundedRectangle(cornerRadius: 3)
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(coreDataStore.returnColor(category:
-                                                                                        myWordNote.noteCategory ?? ""))
-                                            .overlay {
-                                                VStack(spacing: 6) {
-                                                    Image(systemName: "play.circle")
-                                                        .font(.title3)
-                                                    Text("복습시작")
-                                                        .font(.caption2)
-                                                }
-                                                .foregroundColor(.white)
-                                            }
-                                    }
-                                } else if myWordNote.repeatCount == 3 {
-                                    NavigationLink {
-                                        // 첫번째 단어 뷰
-                                        LastTryCardView(myWordNote: myWordNote)
-                                    } label: {
-                                        RoundedRectangle(cornerRadius: 3)
-                                            .frame(width: 50, height: 50)
-                                            .foregroundColor(coreDataStore.returnColor(category:
-                                                                                        myWordNote.noteCategory ?? ""))
-                                            .overlay {
-                                                VStack(spacing: 6) {
-                                                    Image(systemName: "play.circle")
-                                                        .font(.headline)
-                                                    Text("복습시작")
-                                                        .font(.caption2)
-                                                    
-                                                }
-                                                .foregroundColor(.white)
-                                            }
-                                    }
-                                } else {
-                                    // 도장 이미지
-                                    Image("goodicon")
-                                        .resizable()
-                                        .frame(width: 70, height: 70)
-                                        .rotationEffect(.degrees(10))
-                                        .padding(.top, 2)
-                                        .padding(.bottom, 35)
-                                        .padding(.leading, 55)
-                                }
+                                .frame(width: UIScreen.main.bounds.width * 0.64)
+                                .padding(.leading, 6)
+                                .padding(.bottom, 10)
                                 
                                 Spacer()
                             }
-                            .padding(.top, myWordNote.repeatCount == 4 ? 6 : 11)
+                            // MARK: 얼굴 진행도
+                            FaceProgressView(myWordNote: myWordNote)
+                                .padding(.leading, -5)
                         }
-                        .padding(.trailing, myWordNote.repeatCount == 4 ? 8 : 15 )
-                        .bold()
+                        .padding(.vertical)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 5)
+                    
+                    HStack {
+                        Spacer()
+                        
+                        VStack {
+                            // 학습시작
+                            if myWordNote.repeatCount == 0 {
+                                NavigationLink {
+                                    // 첫번째 단어 뷰
+                                    FirstTryCardView(myWordNote: myWordNote)
+                                } label: {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(coreDataStore.returnColor(category:
+                                                                                    myWordNote.noteCategory ?? ""))
+                                        .overlay {
+                                            VStack(spacing: 6) {
+                                                Image(systemName: "play.circle")
+                                                    .font(.headline)
+                                                Text("학습시작")
+                                                    .font(.caption2)
+                                            }
+                                            .foregroundColor(.white)
+                                        }
+                                }
+                            } else if myWordNote.repeatCount == 1 {
+                                // 복습시작
+                                NavigationLink {
+                                    OtherTryCardView(myWordNote: myWordNote)
+                                } label: {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(coreDataStore.returnColor(category:
+                                                                                    myWordNote.noteCategory ?? ""))
+                                        .overlay {
+                                            VStack(spacing: 6) {
+                                                Image(systemName: "play.circle")
+                                                    .font(.title3)
+                                                Text("복습시작")
+                                                    .font(.caption2)
+                                            }
+                                            .foregroundColor(.white)
+                                        }
+                                }
+                            } else if myWordNote.repeatCount == 2 {
+                                NavigationLink {
+                                    OtherTryCardView(myWordNote: myWordNote)
+                                } label: {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(coreDataStore.returnColor(category:
+                                                                                    myWordNote.noteCategory ?? ""))
+                                        .overlay {
+                                            VStack(spacing: 6) {
+                                                Image(systemName: "play.circle")
+                                                    .font(.title3)
+                                                Text("복습시작")
+                                                    .font(.caption2)
+                                            }
+                                            .foregroundColor(.white)
+                                        }
+                                }
+                            } else if myWordNote.repeatCount == 3 {
+                                NavigationLink {
+                                    // 첫번째 단어 뷰
+                                    LastTryCardView(myWordNote: myWordNote)
+                                } label: {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(coreDataStore.returnColor(category:
+                                                                                    myWordNote.noteCategory ?? ""))
+                                        .overlay {
+                                            VStack(spacing: 6) {
+                                                Image(systemName: "play.circle")
+                                                    .font(.headline)
+                                                Text("복습시작")
+                                                    .font(.caption2)
+                                                
+                                            }
+                                            .foregroundColor(.white)
+                                        }
+                                }
+                            } else {
+                                // 도장 이미지
+                                Image("goodicon")
+                                    .resizable()
+                                    .frame(width: 70, height: 70)
+                                    .rotationEffect(.degrees(10))
+                                    .padding(.top, 2)
+                                    .padding(.bottom, 35)
+                                    .padding(.leading, 55)
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding(.top, myWordNote.repeatCount == 4 ? 6 : 11)
+                    }
+                    .padding(.trailing, myWordNote.repeatCount == 4 ? 8 : 15 )
+                    .bold()
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 5)
             }
         }
     }
 }
-
-//
-// struct StudyAgainView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StudyAgainView()
-//    }
-// }

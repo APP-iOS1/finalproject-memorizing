@@ -7,20 +7,23 @@
 import SwiftUI
 
 struct ScheduleCell: View {
-    @EnvironmentObject var myNoteStore: MyNoteStore
-    @State var notiId: String
+    @EnvironmentObject var coreDataStore: CoreDataStore
+    @Binding var pendingRequest: UNNotificationRequest
+
     @State private var date: Date = Date()
-    @State private var wordNote: MyWordNote? = MyWordNote(
-        id: "id",
-        noteName: "노트 이름",
-        noteCategory: "카테고리",
-        enrollmentUser: "작성자",
-        repeatCount: 0,
-        firstTestResult: 0,
-        lastTestResult: 0,
-        updateDate: Date(),
-        nextStudyDate: Date()
-    )
+//    @State private var wordNote: MyWordNote? = MyWordNote(
+//        id: "id",
+//        noteName: "노트 이름",
+//        noteCategory: "카테고리",
+//        enrollmentUser: "작성자",
+//        repeatCount: 0,
+//        firstTestResult: 0,
+//        lastTestResult: 0,
+//        updateDate: Date(),
+//        nextStudyDate: Date()
+//    )
+    @State private var wordNote: NoteEntity?
+
     @State private var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
@@ -34,7 +37,6 @@ struct ScheduleCell: View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .foregroundColor(.mainBlue)
-                   // .padding(.leading, 10)
                 
                 VStack(alignment: .leading) {
                     Text("\(wordNote?.noteName ?? "NoteName")")
@@ -56,7 +58,7 @@ struct ScheduleCell: View {
             } // HStack
         } // VStack
         .onAppear {
-            wordNote = myNoteStore.myWordNotes.first { $0.id == notiId }
+            wordNote = coreDataStore.notes.first { $0.id == pendingRequest.identifier }
         }
             
     } // body
@@ -64,8 +66,9 @@ struct ScheduleCell: View {
 
 struct ScheduleCell_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleCell(notiId: "notiId")
+        ScheduleCell(pendingRequest: .constant(UNNotificationRequest(identifier: "", content: UNNotificationContent(), trigger: nil)))
             .environmentObject(MyNoteStore())
-        
+            .environmentObject(CoreDataStore())
+
     }
 }

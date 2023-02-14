@@ -114,31 +114,10 @@ struct CreateReviewView: View {
                 }
                 .padding(.bottom, 10)
             
-            //            ZStack {
-            //                if reviewText.isEmpty {
-            //                    TextEditor(text: $reviewPlaceholder)
-            //                        .font(.body)
-            //                        .foregroundColor(.red)
-            //                        .disabled(true)
-            //                        .padding()
-            //                        .scrollContentBackground(.hidden) // <- Hide it
-            //                        .background(Color.gray6) // To see this
-            //                }
-            //                TextEditor(text: $reviewText)
-            //                    .font(.body)
-            //                    .opacity(self.reviewText.isEmpty ? 0.25 : 1)
-            //                    .padding()
-            //                    .foregroundColor(Color.mainBlack)
-            //                    .scrollContentBackground(.hidden) // <- Hide it
-            //                    .background(Color.gray6) // To see this
-            //            }
-            //            .frame(width: 350, height: 160)
-            
             Spacer()
             }
         // MARK: - 버튼 아래 추가 -태영
         Button {
-            
             // review에 setdata로 등록
             reviewStore.reviewDidSaveDB(
                 wordNoteID: wordNote.id ?? "No Id",
@@ -173,18 +152,3 @@ struct CreateReviewView: View {
         }
     }
 }
-
-// struct CreateReviewView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CreateReviewView(wordNote: MarketWordNote(id: "",
-//                                                  noteName: "",
-//                                                  noteCategory: "",
-//                                                  enrollmentUser: "",
-//                                                  notePrice: 0,
-//                                                  updateDate: Date.now,
-//                                                  salesCount: 0,
-//                                                  starScoreTotal: 0,
-//                                                  reviewCount: 0))
-//        .environmentObject(ReviewStore())
-//    }
-// }

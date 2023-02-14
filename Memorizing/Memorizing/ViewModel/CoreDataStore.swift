@@ -5,7 +5,6 @@
 //  Created by 이종현 on 2023/01/31.
 //
 
-import Foundation
 import CoreData
 import SwiftUI
 import FirebaseAuth
@@ -40,7 +39,9 @@ class CoreDataStore: ObservableObject {
     let manager = CoreDataManager.instance
     let database = Firestore.firestore()
     @Published var notes: [NoteEntity] = []
-    @Published var myWordNotes : [MyWordNote] = []
+    @Published var myWordNotes: [MyWordNote] = []
+    // 로그인 로그아웃 빠르게 반복 시 버그 발견 (해당 변수로 fix)
+    @Published var progressBool: Bool = true
     
     init() {
         getNotes()
@@ -52,7 +53,8 @@ class CoreDataStore: ObservableObject {
                  noteCategory: String,
                  firstTestResult: Double,
                  lastTestResult: Double,
-                 updateDate: Date) {
+                 updateDate: Date,
+                 nextStudyDate: Date?) {
         let newNote = NoteEntity(context: manager.context)
         newNote.id = id
         newNote.noteName = noteName
@@ -62,6 +64,7 @@ class CoreDataStore: ObservableObject {
         newNote.firstTestResult = firstTestResult
         newNote.lastTestResult = lastTestResult
         newNote.updateDate = updateDate
+        newNote.nextStudyDate = nextStudyDate
         
         save()
         getNotes()
@@ -88,7 +91,8 @@ class CoreDataStore: ObservableObject {
                                          words: [Word],
                                          _ repeatCount: Int? = nil,
                                          firstTestResult: Double? = nil,
-                                         lastTestResult: Double? = nil)
+                                         lastTestResult: Double? = nil,
+                                         nextStudyDate: Date? = nil)
     {
         let returnedNote = returnNote(
                    id: note.id,
@@ -98,7 +102,8 @@ class CoreDataStore: ObservableObject {
                    repeatCount: repeatCount ?? 0,
                    firstTestResult: firstTestResult ?? 0,
                    lastTestResult: lastTestResult ?? 0,
-                   updateDate: note.updateDate
+                   updateDate: note.updateDate,
+                   nextStudyDate : nextStudyDate ?? Date()
         )
         for word in words {
             let newWord = WordEntity(context: manager.context)
@@ -121,7 +126,8 @@ class CoreDataStore: ObservableObject {
                     repeatCount: Int,
                     firstTestResult: Double,
                     lastTestResult: Double,
-                    updateDate: Date) -> NoteEntity {
+                    updateDate: Date,
+                    nextStudyDate: Date) -> NoteEntity {
         let newNote = NoteEntity(context: manager.context)
         newNote.id = id
         newNote.noteName = noteName
@@ -131,6 +137,7 @@ class CoreDataStore: ObservableObject {
         newNote.firstTestResult = firstTestResult
         newNote.lastTestResult = lastTestResult
         newNote.updateDate = updateDate
+        newNote.nextStudyDate = nextStudyDate
         save()
         return newNote
     }
@@ -143,34 +150,31 @@ class CoreDataStore: ObservableObject {
         
         request.sortDescriptors = [repeatCountFilter, categoryFilter]
         
-        DispatchQueue.main.async {
-            
-            self.notes.removeAll()
-            
             do {
                 self.notes = try self.manager.context.fetch(request)
             } catch {
                 print("Error fetching. \(error.localizedDescription)")
             }
         }
-    }
+    
     
     func save() {
         manager.save()
     }
     
     func deleteAll() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
-        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        let fetchNoteRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "NoteEntity")
+        let deleteNoteRequest = NSBatchDeleteRequest(fetchRequest: fetchNoteRequest)
 
         do {
-            try manager.context.execute(batchDeleteRequest)
+            try manager.context.execute(deleteNoteRequest)
+            save()
+            getNotes()
+
         } catch let error as NSError {
-            print("Error: \(error)")
+            // TODO: handle the error
+            print(" delete all error occured: \(error.localizedDescription)")
         }
-        
-        save()
-        getNotes()
     }
     
     func syncronizeNotes() async {
@@ -195,6 +199,8 @@ class CoreDataStore: ObservableObject {
                 let lastTestResult: Double = docData["lastTestResult"] as? Double ?? 0.0
                 let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
                 let updateDate: Date = createdAtTimeStamp.dateValue()
+                let nextStudyTimeStamp: Timestamp = docData["nextStudyDate"] as? Timestamp ?? Timestamp()
+                let nextStudyDate: Date = nextStudyTimeStamp.dateValue()
                 if id == "" {
                     continue
                 }
@@ -205,7 +211,8 @@ class CoreDataStore: ObservableObject {
                                                   repeatCount: repeatCount,
                                                   firstTestResult: firstTestResult,
                                                   lastTestResult: lastTestResult,
-                                                  updateDate: updateDate)
+                                                  updateDate: updateDate,
+                                                  nextStudyDate: nextStudyDate )
                 await MainActor.run {
                     self.myWordNotes.append(note)
                 }
@@ -255,7 +262,10 @@ class CoreDataStore: ObservableObject {
         
         for note in myWordNotes {
             let words = await self.syncronizeWords(id: note.id)
-            addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult)
+            DispatchQueue.main.async {
+                self.addNoteAndWord(note: note, words: words, note.repeatCount, firstTestResult: note.firstTestResult, lastTestResult: note.lastTestResult, nextStudyDate: note.nextStudyDate)
+            }
+            
         }
     }
     
@@ -295,6 +305,7 @@ class CoreDataStore: ObservableObject {
         
         manager.context.delete(word)
         save()
+        getNotes()
     }
     
     // MARK: - 코어데이터 상에서도 note 자체를 지워줘야 하는데.. 왜 업데이트가 안되는거지?

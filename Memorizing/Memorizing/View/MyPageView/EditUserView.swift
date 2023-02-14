@@ -11,6 +11,7 @@ import Combine
 struct EditUserView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @State private var nickName: String = ""
     @State private var isShownDeleteAccountAlert: Bool = false
     @State private var isShownSignOutAlert: Bool = false
@@ -48,6 +49,7 @@ struct EditUserView: View {
                             // 이름변경에 성공시 ToastMessage 출력
                             isShownToastMessage
                                 = try await authStore.userInfoDidChangeDB(nickName: nickName)
+                            dismiss()
                         }
                     } label: {
                         Text("변경하기")
@@ -55,9 +57,10 @@ struct EditUserView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .padding(10)
-                            .background(Color.black)
+                            .background(nickName.isEmpty ? Color.gray4 : Color.black)
                             .cornerRadius(10)
                     }
+                    .disabled(nickName.isEmpty)
                 }
                 .padding(.leading, 3)
                 .padding(.vertical, 5)
@@ -100,11 +103,13 @@ struct EditUserView: View {
                      primaryAction: {
                         Task {
                             await authStore.deleteAccount()
+                            coreDataStore.deleteAll()
                         }},
                      withCancelButton: true,
                      cancelButtonText: "취소")
         .customToastMessage(isPresented: $isShownToastMessage,
-                            message: "이름이 변경이 완료되었습니다!")
+                            message: "이름이 변경이 완료되었습니다!",
+                            delay: 0)
         
     }// ZStack
     

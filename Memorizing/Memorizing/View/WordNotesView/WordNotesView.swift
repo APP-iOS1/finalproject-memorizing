@@ -6,19 +6,16 @@
 //
 
 import SwiftUI
-import SwiftUIProgressiveOnboard
 
 // MARK: 암기장 탭에서 가장 메인으로 보여주는 View
 struct WordNotesView: View {
-    
+    @EnvironmentObject var myNoteStore: MyNoteStore
     @State private var isShowingSheet: Bool = false
     @State private var memoryStepToggle: Bool = true
     @State private var reviewStepToggle: Bool = false
     @State private var isToastToggle: Bool = false
     @State private var isShowingNewMemorySheet: Bool = false
     @Namespace var namespace
-    // @State private var isShownNotification: Bool = false
-    //    @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var coreDataStore: CoreDataStore
     
     var body: some View {
@@ -29,17 +26,59 @@ struct WordNotesView: View {
                        namespace: namespace.self)
                 
                 if memoryStepToggle == true && reviewStepToggle == false {
-                    ScrollView(showsIndicators: false) {
-                        ForEach(coreDataStore.notes) { myWordNote in
-                            MyMemoryNote(myWordNote: myWordNote)
+                    
+                    if coreDataStore.notes.isEmpty {
+                        VStack {
+                            Spacer()
+                            
+                            Text("등록된 암기장이 없습니다")
+                                .padding(.bottom, 5)
+                                .font(.headline)
+                            HStack(spacing: 0) {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.mainBlue)
+                                Text(" 를 눌러 단어를 추가해주세요!")
+                            }
+                            .font(.footnote)
+                            
+                            Spacer()
                         }
-                        .padding(.bottom, 80)
+                        .foregroundColor(Color.gray1)
+                        .fontWeight(.medium)
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            ForEach(coreDataStore.notes) { myWordNote in
+                                MyMemoryNote(myWordNote: myWordNote)
+                            }
+                            .padding(.bottom, 80)
+                        }
                     }
                     
+                    
+                    
                 } else if memoryStepToggle == false && reviewStepToggle == true {
-                    ScrollView(showsIndicators: false) {
-                        ForEach(coreDataStore.notes.filter({$0.words?.count != 0})) { myWordNote in
-                            StudyAgainView(myWordNote: myWordNote)
+                    if coreDataStore.notes.isEmpty {
+                        VStack {
+                            Spacer()
+                            
+                            Text("등록된 암기장이 없습니다")
+                                .padding(.bottom, 5)
+                                .font(.headline)
+                            HStack(spacing: 0) {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.mainBlue)
+                                Text(" 를 눌러 단어를 추가해주세요!")
+                            }
+                            .font(.footnote)
+                            Spacer()
+                        }
+                        .foregroundColor(Color.gray1)
+                        .fontWeight(.medium)
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            ForEach(coreDataStore.notes.filter({$0.words?.count != 0})) { myWordNote in
+                                StudyAgainView(myWordNote: myWordNote)
+                            }
                         }
                     }
                 }
@@ -80,28 +119,19 @@ struct WordNotesView: View {
                             }
                             .shadow(radius: 1, x: 1, y: 1)
                     }
-                    .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
-                    // .position(x: UIScreen.main.bounds.width * 0.86, y: UIScreen.main.bounds.height * 0.58)
+                    .offset(x: UIScreen.main.bounds.width * 0.36,
+                            y: UIScreen.main.bounds.height * 0.33)
                     .sheet(isPresented: $isShowingNewMemorySheet) {
                         NewMakeMemoryNote(isShowingNewMemorySheet: $isShowingNewMemorySheet,
                                           isToastToggle: $isToastToggle)
                     }
                 }
             }
-            //            if(onboard.showOnboardScreen) {
-            //                ProgressiveOnboardView.init(withProgressiveOnboard: self.onboard)
-            //            }
+            
         }
         .customToastMessage(isPresented: $isToastToggle,
-                            message: "새로운 암기장 등록완료!")
-        //        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        //        .coordinateSpace(name: "OnboardSpace")
-        //        .onAppear() {
-        //            // Start onboard on appear
-        //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { /// Delay for the UI did load
-        //                self.onboard.showOnboardScreen = true
-        //            }
-        //        }
+                            message: "새로운 암기장 등록완료!",
+                            delay: 0)
     }
 }
 
@@ -115,7 +145,7 @@ struct Header: View {
         VStack(spacing: 5) {
             HStack(spacing: 25) {
                 VStack(spacing: 5) {
-                    Text("메모 암기장")
+                    Text("나의 암기장")
                         .foregroundColor(memoryStepToggle ? .mainDarkBlue : .gray3)
                         .fontWeight(.bold)
                         .onTapGesture {

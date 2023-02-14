@@ -26,7 +26,6 @@ struct CustomTextField: TextFieldStyle {
             .padding(.horizontal, 25)
             .background(Color("Gray5"))
             .cornerRadius(30)
-        //            .frame(width: 287, height: 39)
             .frame(width: 300, height: 30)
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)

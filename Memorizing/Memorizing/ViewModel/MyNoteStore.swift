@@ -240,7 +240,7 @@ class MyNoteStore: ObservableObject {
     }
     
     // MARK: - 도장 숫자 계산 함수
-    func calculateStamp(myWordNotes: [MyWordNote]) -> Int {
+    func calculateStamp(myWordNotes: [NoteEntity]) -> Int {
         var count: Int = 0
         
         for wordNote in myWordNotes where wordNote.repeatCount == 4 {

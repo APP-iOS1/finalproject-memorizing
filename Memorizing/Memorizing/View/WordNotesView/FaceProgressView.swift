@@ -47,8 +47,6 @@ struct FaceProgressView: View {
                            height: 8)
                     .foregroundColor(coreDataStore.returnColor(category: myWordNote.noteCategory ?? ""))
                     .padding(.leading, 25)
-//                    .animation(.linear(duration: 1),
-//                               value: coreDataStore.returnWidth(width: myWordNote.repeatCount))
                 
                 Spacer()
             }
@@ -82,8 +80,6 @@ struct FaceProgressView: View {
                             }
                         }
                     }
-//                    .animation(.easeInOut.delay(0.9),
-//                               value: myWordNote.repeatCount)
                 
                 Spacer()
                 
@@ -113,8 +109,6 @@ struct FaceProgressView: View {
                             }
                         }
                     }
-//                    .animation(.linear.delay(0.6),
-//                               value: myWordNote.repeatCount)
                 
                 Spacer()
                 
@@ -144,8 +138,6 @@ struct FaceProgressView: View {
                             }
                         }
                     }
-//                    .animation(.easeInOut.delay(0.6),
-//                               value: myWordNote.repeatCount)
                 
                 Spacer()
                 
@@ -176,8 +168,6 @@ struct FaceProgressView: View {
                             }
                         }
                     }
-//                    .animation(.easeInOut.delay(0.6),
-//                               value: myWordNote.repeatCount)
             }
             .frame(width: UIScreen.main.bounds.width * 0.74)
         }

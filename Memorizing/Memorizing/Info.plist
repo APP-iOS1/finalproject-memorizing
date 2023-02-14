@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>KAKAO_APP_KEY</key>
+	<string>f601fab092f88d03d3a95c1b5773efed</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

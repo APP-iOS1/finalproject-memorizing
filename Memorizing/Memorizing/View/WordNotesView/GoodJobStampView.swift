@@ -47,23 +47,6 @@ struct GoodJobStampView: View {
                 .padding(.bottom)
                 VStack {
                     Button {
-                        // FIXME: - 현기 수정
-//                        Task.init {
-//                            async let repeatCountWillBePlusOne: ()
-//                                = myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote,
-//                                                                       nextStudyDate: nil,
-//                                                                       firstTestResult: wordNote.firstTestResult,
-//                                                                       lastTestResult: lastTestResult)
-//                            async let plusUserPoint: () = authStore.plusUserPoint(point: 5)
-//
-//                            let _ = await (repeatCountWillBePlusOne, plusUserPoint)
-//
-//                            coreDataStore.plusRepeatCount(note: wordNote,
-//                                                          firstTestResult: wordNote.firstTestResult,
-//                                                          lastTestResult: lastTestResult)
-//
-//                            isDismiss = true
-//                        }
                         Task.init {
                             await myNoteStore.repeatCountWillBePlusOne(wordNote: wordNote,
                                                                        nextStudyDate: nil,
@@ -136,9 +119,3 @@ struct GoodJobStampView: View {
         }
     }
 }
-
-// struct GoodJobStampView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GoodJobStampView()
-//    }
-// }

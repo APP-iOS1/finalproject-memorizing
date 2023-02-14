@@ -17,10 +17,6 @@ import UserNotifications
 @MainActor
 class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     
-    // MARK: - MyWordNote에서 아래의 데이터를 가져옴
-    // 그리고 Time Interval을 위해
-  //  @Published var myWordNotes: [MyWordNote] = []
-    
     // MARK: - 알림의 모든 기능을 담는 인스턴스 [notificationCenter]
     let notificationCenter = UNUserNotificationCenter.current()
     
@@ -114,8 +110,8 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         // scheduleType이 time, 즉 trigger가 timeInterval일 경우
         if localNotification.scheduleType == .time {
             guard let timeInterval = localNotification.timeInterval else { return }
-            //            // 2. 인터벌, 특정 시간대 등 사용자가 알림 시점을 설정할 수 있도록 함 -> [Trigger]
-            //            // 여기서는 UNTimeInterval (인터벌) 형태로 선언
+            // 2. 인터벌, 특정 시간대 등 사용자가 알림 시점을 설정할 수 있도록 함 -> [Trigger]
+            // 여기서는 UNTimeInterval (인터벌) 형태로 선언
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval,
                                                             repeats: localNotification.repeats)
             let request = UNNotificationRequest(identifier: localNotification.identifier,
@@ -132,13 +128,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
             try? await notificationCenter.add(request)
         }
         
-        // 3. 내용(Content) + 사용자 설정(Trigger)을 모아 일괄로 할당받음
-        // identifier는 일종의 식별자로, 개별 알림의 임의 id 값을 부여함
-       // let request = UNNotificationRequest(identifier: localNotification.identifier,
-       // content: content, trigger: trigger)
-        
         // 4. notificationCenter, 즉 request(content + trigger) -> center 저장소로 이동!
-       // try? await notificationCenter.add(request)
         await getPendingRequests()
     }
     

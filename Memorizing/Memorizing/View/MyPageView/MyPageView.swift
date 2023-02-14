@@ -15,9 +15,10 @@ struct MyPageView: View {
     @EnvironmentObject var myNoteStore: MyNoteStore
     @EnvironmentObject var notiManager: NotificationManager
     @EnvironmentObject var marketStore: MarketStore
+    @EnvironmentObject var coreDataStore: CoreDataStore
     @State private var signOutAlertToggle: Bool = false
-//    @State private var isShownNickNameToggle: Bool = false
     @State private var isShowingWeb: Bool = false
+    @State private var isShowingPolicyWeb: Bool = false
     @State private var isShowingKakaoTalk: Bool = false
     
     var body: some View {
@@ -26,7 +27,7 @@ struct MyPageView: View {
 
             VStack {
     
-    // MARK: - 유저 정보
+                // MARK: - 유저 정보
                 VStack(alignment: .leading) {
                     
                     VStack(alignment: .leading, spacing: 2) {
@@ -58,7 +59,7 @@ struct MyPageView: View {
                                 .foregroundColor(.gray1)
                                 .padding(.bottom, 3)
                             
-                            Text("\(myNoteStore.myWordNotes.count)")
+                            Text("\(coreDataStore.notes.count)")
                                 .bold()
                         }
                         .padding(.leading, 8)
@@ -71,7 +72,7 @@ struct MyPageView: View {
                                 .foregroundColor(.gray1)
                                 .padding(.bottom, 3)
                             
-                            Text("\(myNoteStore.calculateStamp(myWordNotes: myNoteStore.myWordNotes))")
+                            Text("\(myNoteStore.calculateStamp(myWordNotes: coreDataStore.notes))")
                                 .bold()
                         }
                         
@@ -96,7 +97,7 @@ struct MyPageView: View {
                 } // 유저정보
                 .padding(.bottom, 18)
                 
-    // MARK: - 유저 버튼
+                // MARK: - 유저 버튼
                 VStack {
                     VStack {
                         Divider()
@@ -121,28 +122,6 @@ struct MyPageView: View {
                         .isDetailLink(false)
                     }
 
-//                    VStack {
-//                        Divider()
-//                        
-//                        NavigationLink {
-//                            // 파라미터 추가
-//                            MyReviewView(wordNote: marketStore.sendWordNote)
-//                        } label: {
-//                            HStack {
-//                                Text("내가 작성한 리뷰")
-//                                    .font(.subheadline)
-//                                    .fontWeight(.medium)
-//                                Spacer()
-//                                Image(systemName: "chevron.right")
-//                                    .font(.body)
-//                                    .fontWeight(.light)
-//                            } // 문의하기
-//                            .padding(.horizontal, 8)
-//                            .padding(.vertical, 12)
-//                            .foregroundColor(.mainBlack)
-//                        }
-//                    }
-                    
                     VStack {
                         Divider()
                         
@@ -173,8 +152,6 @@ struct MyPageView: View {
                         
                         Button {
                             isShowingKakaoTalk.toggle()
-//                            let kakaoPlusFriendsURL = URL(string: "https://pf.kakao.com/_hZrWxj/chat")!
-//                            UIApplication.shared.open(kakaoPlusFriendsURL)
                         } label: {
                             HStack {
                                 Text("1:1 문의하기")
@@ -197,11 +174,11 @@ struct MyPageView: View {
                     VStack {
                         Divider()
                         
-                        NavigationLink {
-                            InfoPolicy()
+                        Button {
+                            isShowingPolicyWeb.toggle()
                         } label: {
                             HStack {
-                                Text("개인정보 처리 방침")
+                                Text("이용약관 및 개인정보 처리방침")
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                                 Spacer()
@@ -212,6 +189,9 @@ struct MyPageView: View {
                             .padding(.horizontal, 8)
                             .padding(.vertical, 12)
                             .foregroundColor(.mainBlack)
+                        }
+                        .sheet(isPresented: $isShowingPolicyWeb) {
+                            PolicyWebView()
                         }
                     }
                     
@@ -240,7 +220,7 @@ struct MyPageView: View {
                     Divider()
                     
                     HStack{
-                        Text("버전 정보 1.0.0")
+                        Text("버전 정보 1.0.2")
                             .font(.footnote)
                             .fontWeight(.medium)
                             .foregroundColor(.gray3)
@@ -275,6 +255,7 @@ struct MyPageView: View {
                      message: "정말 로그아웃 하시겠습니까?",
                      primaryButtonTitle: "로그아웃",
                      primaryAction: {
+            coreDataStore.deleteAll()
             authStore.signOutDidAuth()
             notiManager.removeAllRequest()
             myNoteStore.myWords = []
@@ -289,8 +270,6 @@ struct MyPageView: View {
             let safariViewController: SFSafariViewController = SFSafariViewController(url: TalkApi.shared.makeUrlForChannelChat(channelPublicId: "_hZrWxj")!)            
             safariViewController.modalTransitionStyle = .crossDissolve
             safariViewController.modalPresentationStyle = .overCurrentContext
-            
-          //  safariViewController.present(safariViewController, animated: true)
             return safariViewController
 
         }
@@ -298,7 +277,6 @@ struct MyPageView: View {
         func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
             
         }
-        
     }
 }
 

@@ -28,9 +28,6 @@ struct LastTryCardView: View {
     @State var isFlipped = false
     
     var body: some View {
-        //        if num > wordCount {
-        //            GoodJobStampView(wordNote: myWordNote, isDismiss: $isDismiss)
-        //        } else {
         VStack {
             ZStack {
                 // 진행바

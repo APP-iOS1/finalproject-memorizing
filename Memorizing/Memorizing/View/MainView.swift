@@ -29,9 +29,16 @@ struct MainView: View {
                 }
             }
             .tag(1)
-            .fullScreenCover(isPresented: $isFirstLogin) {
-                FirstLoginView(isFirstLogin: $isFirstLogin)
+            
+            NavigationStack {
+                MarketView()
+            }.tabItem {
+                VStack {
+                    Image(systemName: "basket")
+                    Text("마켓")
+                }
             }
+            .tag(2)
             .overlay {
                 // 최초 로그인시에만 보이는 튜토리얼 화면
                 if firstLogin == nil {
@@ -39,7 +46,7 @@ struct MainView: View {
                         .opacity(0.6)
                         .edgesIgnoringSafeArea(.all)
                         .overlay {
-                            Text("우측 아래에 + 버튼을 눌러서\n첫 암기장을 만들기 시작해보세요!")
+                            Text("내 암기장을 판매하여 포인트를 얻을 수 있어요")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.leading)
@@ -70,16 +77,6 @@ struct MainView: View {
             }
             
             NavigationStack {
-                MarketView()
-            }.tabItem {
-                VStack {
-                    Image(systemName: "basket")
-                    Text("마켓")
-                }
-            }
-            .tag(2)
-            
-            NavigationStack {
                 MyPageView()
             }.tabItem {
                 VStack {
@@ -89,18 +86,10 @@ struct MainView: View {
             }
             .tag(3)
         }
-        .onChange(of: authStore.state, perform: { newValue in
-            if newValue == .firstIn {
-                isFirstLogin.toggle()
-            }
-        })
         .task {
             await authStore.userInfoWillFetchDB()
-                // MARK: coreData가 정상작동하면 이제 매번 페치 안해줘도됨 ( 정상 작동 시 코드 삭제)
-//                myNoteStore.myNotesWillBeFetchedFromDB()
-
-                    await marketStore.marketNotesWillFetchDB()
-                    await marketStore.myNotesArrayWillFetchDB()
+            await marketStore.marketNotesWillFetchDB()
+            await marketStore.myNotesArrayWillFetchDB()
         }
     }
 }

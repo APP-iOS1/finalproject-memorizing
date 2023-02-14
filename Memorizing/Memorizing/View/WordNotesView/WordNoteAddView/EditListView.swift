@@ -15,7 +15,8 @@ struct EditListView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var isShowingAddView = false
-    @State private var isToastToggle = false
+    @State private var wordAddRestrictionToast = false
+    @State private var wordAddToast = false
     @State private var showingAlert = false
     @State private var todayDate = Date()
     @State private var isWordCountCheckToggle = false
@@ -27,16 +28,6 @@ struct EditListView: View {
         ZStack {
             VStack {
                 VStack(spacing: 5) {
-                    
-                    // MARK: 단어장 날짜
-                    HStack {
-                        // FIXME: 날짜 변경
-                        Text("2023.01.18")
-                            .foregroundColor(.gray2)
-                            .font(.caption)
-                        
-                        Spacer()
-                    }
                     
                     HStack(alignment: .top) {
                         // MARK: 단어장 제목
@@ -74,7 +65,6 @@ struct EditListView: View {
                         }
                         .font(.callout)
                         .padding(.horizontal, 25)
-//                    }
                 }
                 .bold()
                 .padding(.top, 7)
@@ -86,20 +76,24 @@ struct EditListView: View {
                             Spacer()
                                 .frame(height: UIScreen.main.bounds.height * 0.23)
                             
-                            Text("단어가 없습니다.")
-                                .foregroundColor(Color.gray1)
-                                .font(.caption)
-                                .fontWeight(.medium)
-                            Text("우측하단의 버튼을 눌러 단어를 추가해주세요!")
-                                .foregroundColor(Color.gray1)
-                                .font(.caption)
-                                .fontWeight(.medium)
-                            
+                            Text("등록된 단어가 없습니다")
+                                .padding(.bottom, 5)
+                                .font(.headline)
+                            HStack(spacing: 0) {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.mainBlue)
+                                Text("를 눌러 단어를 추가해주세요!")
+                            }
+                            .font(.footnote)
                             Spacer()
                         }
+                        .foregroundColor(Color.gray1)
+                        .fontWeight(.medium)
                     } else {
                         List {
-                            ForEach((wordNote.words?.allObjects as? [WordEntity] ?? [])) { list in
+                            let words: [WordEntity] = wordNote.words?.allObjects as? [WordEntity] ?? []
+                            
+                            ForEach(words) { list in
                                 AddListRow(word: list)
                             }
                             .onDelete { indexSet in
@@ -110,6 +104,12 @@ struct EditListView: View {
                                     }
                                 }
                             }
+                            
+                            // 마지막 요소 밑에 여유공간
+                            Rectangle()
+                                .frame(height: 100)
+                                .foregroundColor(.white)
+                                .listRowSeparator(.hidden)
                         }
                         .listStyle(.inset)
                     }
@@ -137,12 +137,15 @@ struct EditListView: View {
                     }
                     .shadow(radius: 1, x: 1, y: 1)
             }
-            .offset(x: UIScreen.main.bounds.width * 0.36, y: UIScreen.main.bounds.height * 0.33)
+            .offset(x: UIScreen.main.bounds.width * 0.36,
+                    y: UIScreen.main.bounds.height * 0.33)
             .sheet(isPresented: $isShowingAddView, content: {
                 AddWordView(wordNote: wordNote,
-                            isToastToggle: $isToastToggle)
-                .customToastMessage(isPresented: $isToastToggle,
-                                    message: "단어 저장 완료!")
+                            wordAddRestrictionToast: $wordAddRestrictionToast,
+                            wordAddToast: $wordAddToast)
+                .AddWordToastMessage(isPresented: $wordAddToast,
+                                    message: "암기 항목이 등록되었습니다!",
+                                    delay: 1)
             })
             .customAlert(isPresented: $isWordCountCheckToggle,
                          title: "암기장 내용 초과",
@@ -184,7 +187,9 @@ struct EditListView: View {
         }
         .navigationTitle("나의 암기장")
         .navigationBarTitleDisplayMode(.inline)
-        
+        .customToastMessage(isPresented: $wordAddRestrictionToast,
+                            message: "더 이상 등록할 수 없습니다",
+                            delay: 0.5)
         // MARK: - 암기장 삭제 - 재혁추가
         .customAlert(isPresented: $isShownDeleteQuestionAlert,
                      title: "나의 암기장 삭제하기",
@@ -197,29 +202,4 @@ struct EditListView: View {
                      withCancelButton: true,
                      cancelButtonText: "아니요")
     }
-    
-    
-    // MARK: 리스트 순서 수정 함수
-    //    func moveList(from source: IndexSet, to destination: Int) {
-    //        word.move(fromOffsets: source, toOffset: destination)
-    //    }
 }
-
-// struct EditListView_Previews: PreviewProvider {#imageLiteral(resourceName: "simulator_screenshot_0F806C70-E81C-435B-9F0C-F05B34247268.png")
-//    static var previews: some View {
-//        NavigationStack {
-//            EditListView(wordNote: MyWordNote(id: "",
-//                                             noteName: "이상한 나라의 노트",
-//                                             noteCategory: "IT",
-//                                             enrollmentUser: "",
-//                                             repeatCount: 0,
-//                                             firstTestResult: 0,
-//                                             lastTestResult: 0,
-//                                             updateDate: Date()),
-//                        myWords: .constant([Word(id: "",
-//                                   wordString: "앨리스는 누구인가?",
-//                                   wordMeaning: "이상한 나라에 사는 공주",
-//                                   wordLevel: 1)]))
-//        }
-//    }
-// }

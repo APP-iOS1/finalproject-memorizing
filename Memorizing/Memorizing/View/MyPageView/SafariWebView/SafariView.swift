@@ -12,7 +12,7 @@ struct SafariView: UIViewControllerRepresentable {
    
     func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
        
-        return SFSafariViewController(url: URL(string: "https://crystalline-honey-179.notion.site/7186dcfc77794dd593dc292be31df131")!)
+        return SFSafariViewController(url: URL(string: "https://memorizing.notion.site/7186dcfc77794dd593dc292be31df131")!)
      
     }
     

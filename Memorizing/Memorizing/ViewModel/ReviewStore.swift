@@ -67,7 +67,6 @@ class ReviewStore: ObservableObject {
         }
     }
     
-    
     // MARK: - 리뷰 컬렉션 그룹
     func reviewsWillEqualToFetchDB(currentUserID: String) async{
        
@@ -102,9 +101,6 @@ class ReviewStore: ObservableObject {
                 await MainActor.run(body: {
                     self.reviews.append(myReview)
                 })
-                
-              
-               
             }
         } catch {
             print("reviewsWillFetchDB: \(error)")

@@ -19,8 +19,6 @@ struct MarketViewCategoryButton: View {
                     
                     RoundedRectangle(cornerRadius: 15)
                         .stroke(selectedCategory == category ? MarketView.colorArray[index] : Color.gray4)
-                    // FIXME: 왜 타입추론 에러가...?
-                    //                    .backgroundStyle(selectedCategory == category ? MarketView.colorArray[index] : Color.white)
                         .frame(width: 50, height: 30)
                         .overlay {
                             Button {
@@ -45,14 +43,14 @@ struct MarketViewCategoryButton: View {
 }
 
 struct MarketViewCategoryButton_Previews: PreviewProvider {
-   static var previews: some View {
-       MarketViewCategoryButton(selectedCategory: .constant("전체"),
-                                categoryArray: ["전체",
-                                                "영어",
-                                                "한국사",
-                                                "IT",
-                                                "경제",
-                                                "시사",
-                                                "기타"])
-   }
+    static var previews: some View {
+        MarketViewCategoryButton(selectedCategory: .constant("전체"),
+                                 categoryArray: ["전체",
+                                                 "영어",
+                                                 "한국사",
+                                                 "IT",
+                                                 "경제",
+                                                 "시사",
+                                                 "기타"])
+    }
 }

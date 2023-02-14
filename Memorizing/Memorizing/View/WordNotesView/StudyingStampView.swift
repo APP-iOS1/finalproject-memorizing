@@ -48,48 +48,43 @@ struct StudyingStampView: View {
                     // MARK: - Notification -> 버튼을 눌렀을 시, identifier, title, body, timeInterval등을 설정한 후, 알림을 뿌려줌
                     // 여기서, 망각곡선 방식 혹은 값에 따라 알람 주기 (TimeInterval)를 설정함
                     // 첫 번째, repeatCount / 두 번째, 난이도? (Level)?
-                    if notiManager.isNotiAllow {
                         // 알림 설정 권한 확인
-                        if !notiManager.isGranted {
-                            notiManager.openSetting()  // 알림 설정 창
-                        } else if notiManager.isGranted && (wordNote.repeatCount + 1) < 4 { // 알림 추가
+                        if (wordNote.repeatCount + 1) < 4 {
                             let newTimeInterval: Double
                             if wordNote.repeatCount + 1 == 2 {
                                 newTimeInterval = 3600
                             } else {
                                 newTimeInterval = 86400
                             }
-                            var localNotification = LocalNotification(
-                                identifier: wordNote.id ?? "No Id",
-                                title: "MEMOrizing 암기 시간",
-                                body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
-                                timeInterval: newTimeInterval,
-                                repeats: false
-                            )
-                            localNotification.subtitle = "\(wordNote.noteName ?? "No Name")"
                             
-                            await notiManager.schedule(localNotification: localNotification)
-                            if wordNote.repeatCount == 1 {
-                                await myNoteStore.repeatCountWillBePlusOne(
-                                    wordNote: wordNote,
-                                    nextStudyDate: Date() + Double(3600),
-                                    firstTestResult: wordNote.firstTestResult,
-                                    lastTestResult: wordNote.lastTestResult
+                            if notiManager.isNotiAllow { // 알림 추가
+                                
+                                let localNotification = LocalNotification(
+                                    identifier: wordNote.id ?? "No Id",
+                                    title: "MEMOrizing 암기 시간",
+                                    subtitle: "\(wordNote.noteName ?? "No Name")",
+                                    body: "\(wordNote.repeatCount + 1)번째 복습할 시간이에요~!",
+                                    timeInterval: newTimeInterval,
+                                    repeats: false,
+                                    scheduleType: .time
                                 )
-                            } else {
-                                await myNoteStore.repeatCountWillBePlusOne(
-                                    wordNote: wordNote,
-                                    nextStudyDate: Date() + Double(86400),
-                                    firstTestResult: wordNote.firstTestResult,
-                                    lastTestResult: wordNote.lastTestResult
-                                )
+                                
+                                await notiManager.schedule(localNotification: localNotification)
+                                await notiManager.getPendingRequests()
                             }
+                            
+                            await myNoteStore.repeatCountWillBePlusOne(
+                                wordNote: wordNote,
+                                nextStudyDate: Date() + newTimeInterval,
+                                firstTestResult: wordNote.firstTestResult,
+                                lastTestResult: wordNote.lastTestResult
+                            )
+                            wordNote.nextStudyDate = Date() + newTimeInterval
+                            
                             coreDataStore.plusRepeatCount(note: wordNote,
                                                           firstTestResult: wordNote.firstTestResult,
                                                           lastTestResult: wordNote.lastTestResult)
-                            await notiManager.getPendingRequests()
                             isDismiss.toggle()
-                        }
                     } else {
                         isDismiss.toggle()
                     }
@@ -107,37 +102,10 @@ struct StudyingStampView: View {
             }
             
             HStack {
-//                VStack(alignment: .leading) {
-//                    Text("구매한 암기장은 어떠셨나요?")
-//                    Text("후기를 작성해보시면 10P을 드립니다!")
-//                }.font(.caption) .foregroundColor(.gray2)
-//                Spacer()
                 
-//                Button {
-//                    // 후기작성
-//                } label: {
-//                    HStack {
-//                        Text("후기 작성 하기")
-//                        Image(systemName: "chevron.right")
-//                    }
-//                    .font(.subheadline) .fontWeight(.semibold)
-//                }
             }
             .frame(width: 320, alignment: .leading)
             .padding(.top, 20)
         }
     }
 }
-// struct StudyingStampView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StudyingStampView(wordNote: MyWordNote(id: "1",
-//                                               noteName: "hi",
-//                                               noteCategory: "경제",
-//                                               enrollmentUser: "",
-//                                               repeatCount: 1,
-//                                               firstTestResult: 1.0,
-//                                               lastTestResult: 0,
-//                                               updateDate: Date()),
-//                          isDismiss: .constant(false))
-//    }
-// }

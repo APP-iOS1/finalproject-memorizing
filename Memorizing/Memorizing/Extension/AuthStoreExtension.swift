@@ -64,6 +64,7 @@ extension AuthStore: ASAuthorizationControllerDelegate {
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
+        
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent")
@@ -84,19 +85,25 @@ extension AuthStore: ASAuthorizationControllerDelegate {
             )
             Task {
                 do {
-                    self.user = User(id: "", email: "", nickName: "", coin: 0, signInPlatform: User.Platform.apple.rawValue)
                     let result = try await Auth.auth().signIn(with: credential)
+                    
+                    var fullName: String?
+                    if let familyName = appleIDCredential.fullName?.familyName, let givenName = appleIDCredential.fullName?.givenName{
+                    fullName = familyName + givenName
+                    }
+                    
+                    var tempName: String = UUID().uuidString
+                    let startIndex = tempName.index(tempName.endIndex, offsetBy: -5)
+                    tempName = String(tempName[startIndex...])
                     
                     self.user = User(
                         id: result.user.uid,
                         email: "\(result.user.email ?? "NO Email")",
-                        nickName: appleIDCredential.fullName?.nickname ?? "No Name",
+                        nickName: fullName ?? "사용자" + tempName,
                         coin: 1000,
                         signInPlatform: User.Platform.apple.rawValue
                     )
                     UserDefaults.standard.set(true, forKey: UserDefaults.Keys.isExistingAuth.rawValue)
-//                    await self.userInfoWillFetchDB()
-              //      self.state = .signedIn
                 } catch let error as NSError {
                     self.errorMessage = error.localizedDescription
                     print("Apple SignIn Error: ", self.errorMessage)

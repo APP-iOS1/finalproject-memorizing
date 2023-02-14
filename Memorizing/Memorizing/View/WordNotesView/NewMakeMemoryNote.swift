@@ -34,7 +34,6 @@ struct NewMakeMemoryNote: View {
     @StateObject var manager = TFManamger()
 
     @Binding var isToastToggle: Bool
-    // @State private var noteName: String = ""
 
     // 카테고리를 눌렀을때 담기는 변수
     @State private var noteCategory: String = ""
@@ -47,13 +46,10 @@ struct NewMakeMemoryNote: View {
             makeNewNote
             // 암기장 이름
             noteTitle
-            // 카테고리
-//            category
+            
             Spacer()
-//                .frame(height: 50)
             // 버튼
             makeNoteButton
-//            Spacer()
         }
         .padding()
     }
@@ -167,38 +163,6 @@ struct NewMakeMemoryNote: View {
         }
     }
     
-    // 중 하단 ( 카테고리 )
-//    var category: some View {
-//
-//        VStack(alignment: .leading, spacing: 20) {
-//            Text("카테고리")
-//                .font(.headline)
-//                .fontWeight(.bold)
-//                .multilineTextAlignment(.leading)
-//
-//            HStack {
-//
-//                ForEach(Array(zip(noteCategories.indices, noteCategories)), id: \.0) { (index, category) in
-//                    Button {
-//                        noteCategory = category
-//                        print("선택된 카테고리 : \(noteCategory)")
-//                    } label: {
-//                        RoundedRectangle(cornerRadius: 30)
-//                            .stroke(noteCategory == category ? noteCategoryColor[index] : Color.gray4)
-//                            .frame(width: 50, height: 25)
-//                            .overlay {
-//                                Text("\(category)")
-//                                    .font(.footnote)
-//                                    .foregroundColor(
-//                                        noteCategory == category ? noteCategoryColor[index] : Color.gray4
-//                                    )
-//                            }
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
     // 하단 ( 버튼 )
     var makeNoteButton: some View {
         RoundedRectangle(cornerRadius: 30)
@@ -226,7 +190,8 @@ struct NewMakeMemoryNote: View {
                                           noteCategory: noteCategory,
                                           firstTestResult: 0,
                                           lastTestResult: 0,
-                                          updateDate: Date())
+                                          updateDate: Date(),
+                                          nextStudyDate: nil)
                     
                     isToastToggle = true
                     

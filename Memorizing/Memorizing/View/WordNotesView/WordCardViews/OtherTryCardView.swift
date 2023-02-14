@@ -10,17 +10,6 @@ import SwiftUI
 // MARK: 두번째, 세번째 복습하기 뷰
 struct OtherTryCardView: View {
     
-    //    // FIXME: 단어장 이름 firebase에서 가져오기...?
-    //    @State private var wordListName: String = "혜지의 감자 목록 100가지 단어장"
-    //    // FIXME: 단어장 단어 총 수
-    //    @State private var listLength: Int = 100
-    //    // FIXME: 단어장 현재 단어 x번째
-    //    @State private var currentListLength: Int = 30
-    //    // FIXME: 현재 단어
-    //    @State private var currentWord: String = "정우성"
-    //    // FIXME: 현재 단어 뜻
-    //    @State private var currentWordDef: String = "현기"
-    
     @Environment(\.dismiss) private var dismiss
     var myWordNote: NoteEntity
     var words: [WordEntity] {

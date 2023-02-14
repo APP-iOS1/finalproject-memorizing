@@ -16,8 +16,6 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-//                LinearGradient(gradient: Gradient(colors: [Color("MainBlue"), Color("MainDarkBlue")]), startPoint: .top, endPoint: .bottom)
-//                    .ignoresSafeArea()
                 Color("LoginViewBackgroundColor")
                 
                 VStack(spacing: 35) {
@@ -33,6 +31,27 @@ struct LoginView: View {
                         .frame(height: UIScreen.main.bounds.height * 0.01)
                     
                     VStack(spacing: 10) {
+                        // MARK: 애플 로그인
+                        HStack {
+                            Button {
+                                authStore.signInDidAppleAuth()
+                                
+                            } label: {
+                                HStack {
+                                    Image("AppleLogo")
+                                    
+                                    Spacer()
+                                    
+                                    Text("Apple로 로그인")
+                                        .foregroundColor(.white)
+                                    
+                                    Spacer()
+                                }
+                                .frame(width: UIScreen.main.bounds.width * 0.6)
+                                .modifier(CustomButtonStyle(backgroundColor: "MainBlack"))
+                            }
+                        }
+                        
                         // MARK: 카카오 로그인 버튼
                         HStack {
                             Button {
@@ -47,40 +66,13 @@ struct LoginView: View {
                                     
                                     Spacer()
                                     
-                                    Text("카카오로 시작하기")
+                                    Text("카카오로 로그인")
                                         .foregroundColor(.black)
                                     
                                     Spacer()
                                 }
                                 .frame(width: UIScreen.main.bounds.width * 0.6)
                                 .modifier(CustomButtonStyle(backgroundColor: "KakaoYellow"))
-                            }
-                            // MARK: 카카오 로그아웃
-//                            Button {
-//                                authStore.signOutDidKakao()
-//                            } label: {
-//                                Text("Logout")
-//                            }
-                        }
-                        
-                        // MARK: 애플 로그인
-                        HStack {
-                            Button {
-                                authStore.signInDidAppleAuth()
-                                
-                            } label: {
-                                HStack {
-                                    Image("AppleLogo")
-                                    
-                                    Spacer()
-                                    
-                                    Text("Apple ID로 시작하기")
-                                        .foregroundColor(.white)
-                                    
-                                    Spacer()
-                                }
-                                .frame(width: UIScreen.main.bounds.width * 0.6)
-                                .modifier(CustomButtonStyle(backgroundColor: "MainBlack"))
                             }
                         }
                         
@@ -98,7 +90,7 @@ struct LoginView: View {
                                     
                                     Spacer()
                                     
-                                    Text("Google로 시작하기")
+                                    Text("Google로 로그인")
                                         .foregroundColor(.black)
                                     
                                     Spacer()

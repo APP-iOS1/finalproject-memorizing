@@ -5,7 +5,6 @@
 //  Created by 진준호 on 2023/01/05.
 //
 
-import Foundation
 import SwiftUI
 import Firebase
 import FirebaseFirestore
@@ -17,15 +16,6 @@ class MarketStore: ObservableObject {
     @Published var words: [Word] = []
     @Published var filterMyWordNotes: [MyWordNote] = []
     @Published var myWordNoteIdArray: [String] = []
-    
-    // 리스너를 위해 필요한 프로퍼티
-    // @Published var currentCoin: Int = 0
-    
-    // MARK: - Pagination(InfiniteScroll) 구현 코드
-    // @Published var snapshotCounter: Int = 19
-    // private var lastDocumentSnapshot: DocumentSnapshot?
-    // MARK: - 여기까지
-    
     @Published var sendWordNote = MarketWordNote(id: "",
                                                  noteName: "",
                                                  noteCategory: "",
@@ -39,19 +29,11 @@ class MarketStore: ObservableObject {
     let database = Firestore.firestore()
     
     // MARK: - 마켓의 전체 단어장들을 fetch 하는 함수 / Market View에서 전체 Notes를 Fetch 함
-    // sortingCategory 현재에는 salesCount도 없는 데이터가 많고 reviewCount도 그렇기 때문에 고정값을 noteName으로 해놓음
-    // 나중에 데이터를 유의미하게 바꾼다음 sortingCategory 고정값을 salesCount나 reviewCount, 리뷰 점수 중에 선택해서 넣으면 될 듯
     func marketNotesWillFetchDB(sortingCategory: String = "noteName") async {
         do {
             await MainActor.run(body: {
                 marketWordNotes.removeAll()
             })
-            
-            // MARK: - Pagination(InfiniteScroll) 구현 코드
-            // 현재 데이터가 많지않아서 limit가 10인데 나중에 private 변수 하나 만들어서 20으로 고정해주고 20개씩 데이터 받아오면 좋을 듯
-            // let documents = try await database.collection("marketWordNotes")
-            //     .order(by: sortingCategory).limit(to: 10).getDocuments()
-            // MARK: - 여기까지
             
             let documents = try await database.collection("marketWordNotes").getDocuments()
             
@@ -83,65 +65,10 @@ class MarketStore: ObservableObject {
                     self.marketWordNotes.append(marketWordNote)
                 })
             }
-            
-            // MARK: - Pagination(InfiniteScroll) 구현 코드
-            // self.lastDocumentSnapshot = documents.documents.last
         } catch {
             print("marketNotesWillFetchDB Function Error: \(error)")
         }
     }
-    
-    // MARK: - Pagination(InfiniteScroll) 구현 코드
-//    func marketNotesWillPagingUpdateFetchDB(sortingCategory: String = "noteName") async {
-//        do {
-//            if let documentSnapshot = lastDocumentSnapshot {
-//                await MainActor.run(body: {
-//                    snapshotCounter = 0
-//                })
-//
-//                위 메서드와 동일하게 데이터가 많아지면 limit를 변수에서 받아와서 20으로 고정해줘도 괜찮을 듯
-//                let documents = try await database.collection("marketWordNotes")
-//                    .order(by: sortingCategory).start(afterDocument: documentSnapshot).limit(to: 5).getDocuments()
-//
-//                if !documents.documents.isEmpty {
-//                    for document in documents.documents {
-//                        let docData = document.data()
-//
-//                        let id: String = docData["id"] as? String ?? ""
-//                        let noteName: String = docData["noteName"] as? String ?? ""
-//                        let noteCategory: String = docData["noteCategory"] as? String ?? ""
-//                        let enrollmentUser: String = docData["enrollmentUser"] as? String ?? ""
-//                        let notePrice: Int = docData["notePrice"] as? Int ?? 0
-//                        let createdAtTimeStamp: Timestamp = docData["updateDate"] as? Timestamp ?? Timestamp()
-//                        let updateDate: Date = createdAtTimeStamp.dateValue()
-//                        let salesCount: Int = docData["salesCount"] as? Int ?? 0
-//                        let starScoreTotal: Double = docData["starScoreTotal"] as? Double ?? 0
-//                        let reviewCount: Int = docData["reviewCount"] as? Int ?? 0
-//
-//                        let marketWordNote = MarketWordNote(id: id,
-//                                                            noteName: noteName,
-//                                                            noteCategory: noteCategory,
-//                                                            enrollmentUser: enrollmentUser,
-//                                                            notePrice: notePrice,
-//                                                            updateDate: updateDate,
-//                                                            salesCount: salesCount,
-//                                                            starScoreTotal: starScoreTotal,
-//                                                            reviewCount: reviewCount)
-//
-//                        await MainActor.run(body: {
-//                            self.marketWordNotes.append(marketWordNote)
-//                            self.snapshotCounter += 1
-//                        })
-//                    }
-//                }
-//                print("패치된 마켓 노트 갯수: \(marketWordNotes.count)")
-//                self.lastDocumentSnapshot = documents.documents.last
-//            }
-//        } catch {
-//            print("marketNotesWillPagingUpdateFetchDB Function Error: \(error)")
-//        }
-//    }
-    // MARK: - 여기까지
     
     // MARK: - 단어장을 들어가면 해당 단어장의 단어들을 fetch 하는 함수 / 마켓에 위치한 Notes의 단어를 Fetch
     func wordsWillFetchDB(wordNoteID: String) async {
@@ -171,7 +98,6 @@ class MarketStore: ObservableObject {
             await MainActor.run(body: {
                 // 띠리릭 갯수가 올라가지 않게 한번에 할당해줌
                     self.words = wordsInMethod
-                
             })
         } catch {
             print("wordsWillFetchDB Function Error: \(error)")
@@ -436,25 +362,4 @@ class MarketStore: ObservableObject {
             print("myNotesArrayWillFetchDB Function Error: \(error)")
         }
     }
-    
-    // MARK: - 코인이 업데이트되면 읽어서 반영해주는 메서드
-    // 근데 이거 없이도 기존 메서드로 잘됨...ㅎ
-    /*
-    func myCoinWillFetchDBWithListener() {
-        database.collection("users").document(Auth.auth().currentUser?.uid ?? "")
-            .addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
-                }
-                guard let data = document.data() else {
-                    print("Document data was empty.")
-                    return
-                }
-                let currentCoin: Int = data["coin"] as? Int ?? 0
-                
-                self.currentCoin = currentCoin
-            }
-    }
-     */
 }
