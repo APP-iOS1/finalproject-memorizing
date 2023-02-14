@@ -92,7 +92,9 @@ struct StudyAgainView: View {
                                                 Image(systemName: "play.circle")
                                                     .font(.headline)
                                                 Text("학습시작")
-                                                    .font(.caption2)
+                                                    .font(UIApplication.shared.preferredContentSizeCategory > .extraLarge
+                                                          ? .system(size: 12)
+                                                          : .caption2)
                                             }
                                             .foregroundColor(.white)
                                         }
@@ -109,9 +111,11 @@ struct StudyAgainView: View {
                                         .overlay {
                                             VStack(spacing: 6) {
                                                 Image(systemName: "play.circle")
-                                                    .font(.title3)
+                                                    .font(.headline)
                                                 Text("복습시작")
-                                                    .font(.caption2)
+                                                    .font(UIApplication.shared.preferredContentSizeCategory > .extraLarge
+                                                          ? .system(size: 12)
+                                                          : .caption2)
                                             }
                                             .foregroundColor(.white)
                                         }
@@ -127,9 +131,11 @@ struct StudyAgainView: View {
                                         .overlay {
                                             VStack(spacing: 6) {
                                                 Image(systemName: "play.circle")
-                                                    .font(.title3)
+                                                    .font(.headline)
                                                 Text("복습시작")
-                                                    .font(.caption2)
+                                                    .font(UIApplication.shared.preferredContentSizeCategory > .extraLarge
+                                                          ? .system(size: 12)
+                                                          : .caption2)
                                             }
                                             .foregroundColor(.white)
                                         }
@@ -148,7 +154,9 @@ struct StudyAgainView: View {
                                                 Image(systemName: "play.circle")
                                                     .font(.headline)
                                                 Text("복습시작")
-                                                    .font(.caption2)
+                                                    .font(UIApplication.shared.preferredContentSizeCategory > .extraLarge
+                                                          ? .system(size: 12)
+                                                          : .caption2)
                                                 
                                             }
                                             .foregroundColor(.white)

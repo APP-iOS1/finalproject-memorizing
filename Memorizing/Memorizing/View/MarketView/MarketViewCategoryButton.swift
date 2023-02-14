@@ -26,7 +26,9 @@ struct MarketViewCategoryButton: View {
                                 
                             } label: {
                                 Text("\(category)")
-                                    .font(.footnote)
+                                    .font(UIApplication.shared.preferredContentSizeCategory > .extraLarge
+                                          ? .caption2
+                                          : .footnote)
                                     .fontWeight(.medium)
                                     .foregroundColor(selectedCategory == category
                                                      ? MarketView.colorArray[index]

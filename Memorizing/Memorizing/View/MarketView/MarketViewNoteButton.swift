@@ -49,7 +49,9 @@ struct MarketViewNoteButton: View {
                                     .frame(width: 40, height: 18)
                                     .overlay {
                                         Text(selectedWordNote.noteCategory)
-                                            .font(.caption2)
+                                            .font(UIApplication.shared.preferredContentSizeCategory > .extraLarge
+                                                  ? .system(size: 12)
+                                                  : .caption2)
                                             .fontWeight(.bold)
                                             .foregroundColor(selectedWordNote.noteColor)
                                     }
@@ -73,12 +75,12 @@ struct MarketViewNoteButton: View {
                             .frame(width: UIScreen.main.bounds.width * 0.34,
                                    height: UIScreen.main.bounds.height * 0.045)
                             
-                            // 암기장 판매 가격
+                            // 암기장 별점, 리뷰, 판매 가격
                             HStack {
                                 HStack(spacing: 2) {
                                     let reviewCount: Int = selectedWordNote.reviewCount
                                     let reviewScore: Double = selectedWordNote.starScoreTotal / Double(reviewCount)
-                                    let score: String = String(format: "%.1f", reviewScore) // "5.1"
+                                    let score: String = String(format: "%.1f", reviewScore) // ex) "5.1"
                                     
                                     if reviewCount == 0 {
                                         Text(" ")

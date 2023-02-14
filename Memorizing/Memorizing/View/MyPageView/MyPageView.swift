@@ -87,13 +87,15 @@ struct MyPageView: View {
                                     .frame(width: 120, height: 45)
                                 Text("내 정보 수정하기")
                                     .foregroundColor(.mainBlack)
-                                    .font(.footnote)
                                     .fontWeight(.medium)
                             }
                         }
 
                     } // 내 암기장개수 . 받은 도장 개수
-                    .font(.footnote)
+                    .font(UIApplication.shared.preferredContentSizeCategory > .extraLarge
+                          ? .caption2
+                          : .footnote)
+                    
                 } // 유저정보
                 .padding(.bottom, 18)
                 
@@ -221,7 +223,7 @@ struct MyPageView: View {
                     
                     HStack{
                         Text("버전 정보 1.0.2")
-                            .font(.footnote)
+                            .font(.caption)
                             .fontWeight(.medium)
                             .foregroundColor(.gray3)
                         Spacer()
