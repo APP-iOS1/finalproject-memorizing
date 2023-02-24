@@ -3,7 +3,7 @@
 
 #### 프로젝트 페이지<a href="https://www.notion.so/memorizing/7186dcfc77794dd593dc292be31df131?pvs=4" target="_blank"><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/></a>
 
-<img src="https://user-images.githubusercontent.com/107039500/217719200-e3bc3e24-18b0-42c5-a6c7-30b2c1192546.png" width="100%" height="100%">
+<img src="https://user-images.githubusercontent.com/111134273/221109890-c30a3515-dcd8-47d7-9d5c-e21d86af7343.png" width="13%" height="13%"> <img src="https://user-images.githubusercontent.com/111134273/221109898-48744fab-f69b-49ed-b817-03e12a7ab578.png" width="13%" height="13%"> <img src="https://user-images.githubusercontent.com/111134273/221109908-99342b0a-21ce-4e55-8614-b5c516941c9f.png" width="13%" height="13%"> <img src="https://user-images.githubusercontent.com/111134273/221109918-0ac8e8a4-08dd-4c6c-a432-2ad31158d696.png" width="13%" height="13%"> <img src="https://user-images.githubusercontent.com/111134273/221109927-f9031d1b-2c8d-42c2-8642-5cec2f54ddb0.png" width="13%" height="13%"> <img src="https://user-images.githubusercontent.com/111134273/221109937-046a163b-778f-4365-a5a7-006dc43f63ae.png" width="13%" height="13%"> <img src="https://user-images.githubusercontent.com/111134273/221109942-9c24a636-4129-4778-a9df-f67731f12ca0.png" width="13%" height="13%">
 
 <br>
 
