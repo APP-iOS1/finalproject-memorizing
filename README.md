@@ -28,6 +28,38 @@
 
 <br>
 
+## 📚 실행 가이드 및 설치 방법(How to build)
+### 설치/실행 방법
+* ❗️❗️아래 1가지 파일은 필수 파일임으로 실행이 필요할 시 jincode93@gmail.com을 통해 파일을 요청해주세요.
+```
+- Info.plist           // KAKAO_APP_KEY
+```
+
+<br>
+<details>
+<summary>1. 개별적으로 Firebase 세팅을 진행해주세요.</summary>
+<div markdown="1">
+
+```
+* Memorizing 번들 ID: com.codelion.Memorizing
+```
+
+</div>
+</details>
+
+<details>
+<summary>2. Firebase에서 Firestore Database, Storage를 설정해주세요.</summary>
+<div markdown="1">
+
+```
+* 보안 규칙을 `테스트 모드에서 시작`으로 설정해주세요
+```
+
+</div>
+</details>
+
+<br>
+
 ## 프로젝트 특징
 `💡암기가 쉬워지는 반복학습, 타인과 함께 공유하는 단어장 마켓`
 
