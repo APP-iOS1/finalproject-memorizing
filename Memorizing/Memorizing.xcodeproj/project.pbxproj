@@ -270,7 +270,7 @@
 				52BCE8D42966912C00A85A1F /* Extension */,
 				52D8F24D2965F2E500755E5A /* Model */,
 				52D8F24C2965F2DA00755E5A /* ViewModel */,
-				52D8F24B2965F2D000755E5A /* View */,
+				52D8F24B2965F2D000755E5A /* Views */,
 				52D8F2412965F2C800755E5A /* Assets.xcassets */,
 				52D8F2432965F2C800755E5A /* Preview Content */,
 			);
@@ -285,7 +285,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		52D8F24B2965F2D000755E5A /* View */ = {
+		52D8F24B2965F2D000755E5A /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				52D8F23F2965F2C600755E5A /* ContentView.swift */,
@@ -296,7 +296,7 @@
 				52D8F2502965F31E00755E5A /* MyPageView */,
 				52D8F25F2965F6AE00755E5A /* LoginSignUpView */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		52D8F24C2965F2DA00755E5A /* ViewModel */ = {
