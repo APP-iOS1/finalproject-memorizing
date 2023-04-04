@@ -93,6 +93,41 @@
 
 <br>
 
+## 폴더 컨벤션
+```
+📦 Memorizing
+|
++ 🗂 Extension // Custom Component 구현을 위한 Extension, ViewModifier 파일 관리
+|
++ 🗂 Model // 프로젝트에서 사용되는 객체 관리
+|
++ 🗂 ViewModel // 프로젝트에서 사용되는 ViewMdoel, Store 관리
+│
++ 🗂 Views       // 여러 View를 모음
+|
++------🗂 ViewModifier      // View에 사용되는 Custom Coponent ViewModifier 관리
+│
++------🗂 Views       // 여러 View를 모음
+│       |
+│       +------🗂 WordNotesView // 첫 Screen View
+│               │
+│               +------🗂 NotificationView // Note 알림 설정 View
+│               │
+│               +------🗂 WordCardViews // 암기 카드 View
+│               │
+│               +------🗂 WordNoteAddView // 암기장 추가 View
+│               
+│       +------🗂 MarketView // 암기장 마켓 관리 View
+│       |
+│       +------🗂 MyPageView // 마이페이지 관리 View
+│               │
+│               +------🗂 SafariWebView // 메모라이징 소개 웹페이지 View
+│        
+│       +------🗂 LoginSignUpView // 로그인, 회원가입 View
+
+```
+
+
 ## Troubleshooting
 ### **DB관련**
 
@@ -114,6 +149,7 @@
 
 - MVVM 패턴 사용 중 일부 ViewModel의 크기가 비대해져 유지보수에 어려움 발생
     - **문제해결** - 토의를 통해 ViewModel 보다 유연하게 적용하기 위해 특정뷰에 얽매이지 않는  Flux적인 **Store 패턴**으로 리팩토링 진행
+
 
 ## 활용기술
 
